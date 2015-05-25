@@ -9,7 +9,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.feilong.platform.commons</groupId>
+			<groupId>com.feilong.platform</groupId>
 			<artifactId>feilong-servlet</artifactId>
 		</dependency>
 
@@ -24,7 +24,6 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 		</dependency>
-
 
 		<!-- spring-web -->
 		<dependency>
