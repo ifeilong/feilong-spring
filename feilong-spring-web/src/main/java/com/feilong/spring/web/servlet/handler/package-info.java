@@ -16,7 +16,7 @@
 /**
  *
  * @author <a href="mailto:venusdrogon@163.com">feilong</a> 
- * @version 1.1.2 2015年5月1日 上午12:35:01 
- * @since 1.1.2
+ * @version 1.2.0 2015年5月1日 上午12:35:01 
+ * @since 1.2.0
  */
 package com.feilong.spring.web.servlet.handler;

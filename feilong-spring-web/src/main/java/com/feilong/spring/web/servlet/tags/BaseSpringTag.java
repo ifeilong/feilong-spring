@@ -33,9 +33,9 @@ import com.feilong.core.io.UncheckedIOException;
  *
  * @author <a href="mailto:venusdrogon@163.com">feilong</a>
  * @version 1.0.0 2009年10月28日 10:50:06
- * @version 1.1.2 2015年5月24日 上午4:20:05
+ * @version 1.2.0 2015年5月24日 上午4:20:05
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag
- * @since 1.1.2
+ * @since 1.2.0
  */
 public class BaseSpringTag extends RequestContextAwareTag{
 

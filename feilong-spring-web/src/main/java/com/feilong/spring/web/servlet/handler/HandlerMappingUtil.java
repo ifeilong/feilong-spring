@@ -69,8 +69,8 @@ import com.feilong.spring.web.util.WebSpringUtil;
  * </blockquote>
  *
  * @author <a href="mailto:venusdrogon@163.com">feilong</a>
- * @version 1.1.2 2015年5月15日 下午9:56:33
- * @since 1.1.2
+ * @version 1.2.0 2015年5月15日 下午9:56:33
+ * @since 1.2.0
  * @see org.springframework.web.servlet.HandlerMapping
  * @see org.springframework.web.servlet.handler.AbstractHandlerMethodMapping
  * @see org.springframework.web.servlet.handler.AbstractUrlHandlerMapping

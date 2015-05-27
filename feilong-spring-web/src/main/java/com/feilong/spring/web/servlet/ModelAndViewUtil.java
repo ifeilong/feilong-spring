@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author <a href="mailto:venusdrogon@163.com">feilong</a>
- * @version 1.1.2 2015年5月16日 上午9:13:29
- * @since 1.1.2
+ * @version 1.2.0 2015年5月16日 上午9:13:29
+ * @since 1.2.0
  */
 public class ModelAndViewUtil{
 

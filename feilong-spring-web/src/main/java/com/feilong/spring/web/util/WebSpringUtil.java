@@ -170,7 +170,7 @@ public final class WebSpringUtil{
      * @param servletContext
      *            the servlet context
      * @return the web application context
-     * @since 1.1.2
+     * @since 1.2.0
      * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
      * @see org.springframework.web.context.support.WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext)
      */

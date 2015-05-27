@@ -24,9 +24,9 @@ package com.feilong.spring.web.servlet.tags;
  * 
  * @author <a href="mailto:venusdrogon@163.com">feilong</a>
  * @version 1.0.0 2010-8-27 下午01:33:05
- * @version 1.1.2 2015年5月24日 上午4:20:05
+ * @version 1.2.0 2015年5月24日 上午4:20:05
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag
- * @since 1.1.2
+ * @since 1.2.0
  */
 public abstract class AbstractSpringScopeTag extends BaseSpringTag{
 
