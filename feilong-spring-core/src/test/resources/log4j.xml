@@ -30,7 +30,7 @@
 		<priority value="debug" />
 	</category>
 
-	<category name="com.feilong.commons.core.security">
+	<category name="com.feilong.tools.security">
 		<priority value="debug" />
 	</category>
 

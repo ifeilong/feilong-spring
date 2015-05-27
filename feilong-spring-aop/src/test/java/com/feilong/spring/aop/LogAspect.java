@@ -44,12 +44,12 @@ public class LogAspect extends AbstractAspect{
     /** The _log. */
     private Log          _log;
 
-    // && @annotation(com.feilong.commons.core.aop.Log)
+    // && @annotation(com.feilong.core.aop.Log)
     /**
      * Pointcut.
      */
     @Pointcut("execution(* com.feilong.spring.aspects.**.*(..))")
-    // @Pointcut("execution(* @annotation(com.feilong.commons.core.aop.Log))")
+    // @Pointcut("execution(* @annotation(com.feilong.core.aop.Log))")
     private void pointcut(){
     }
 

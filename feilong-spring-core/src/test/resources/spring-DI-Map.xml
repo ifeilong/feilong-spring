@@ -15,13 +15,13 @@
 			<description>五子良将</description>
 			<map>
 				<entry key="五子良将">
-					<bean class="com.feilong.commons.core.entity.BackWarnEntity">
+					<bean class="com.feilong.core.entity.BackWarnEntity">
 						<property name="isSuccess" value="false"></property>
 						<property name="description" value="哈哈哈"></property>
 					</bean>
 				</entry>
 				<entry key="八虎骑">
-					<bean class="com.feilong.commons.core.entity.BackWarnEntity">
+					<bean class="com.feilong.core.entity.BackWarnEntity">
 						<property name="isSuccess" value="true"></property>
 						<property name="description" value="呵呵呵"></property>
 					</bean>

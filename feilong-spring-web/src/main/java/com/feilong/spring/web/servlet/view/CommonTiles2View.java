@@ -26,7 +26,7 @@ package com.feilong.spring.web.servlet.view;
 //import org.slf4j.LoggerFactory;
 //import org.springframework.web.servlet.view.tiles2.TilesView;
 //
-//import com.feilong.commons.core.enumeration.CharsetType;
+//import com.feilong.core.enumeration.CharsetType;
 //import com.feilong.servlet.ServletContextUtil;
 //import com.feilong.servlet.http.RequestUtil;
 //import com.feilong.servlet.http.SessionUtil;
