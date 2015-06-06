@@ -23,13 +23,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 多数据源注解.
+ * 
  * <h3>使用方式:</h3>
  * 
  * <blockquote>
  * <p>
- * 在业务类 manager或者方法上,使用 {@code @MultipleGroupDataSource("exampleDatabase")}来标识
+ * 在业务类 manager或者方法上,使用 {@code @MultipleGroupDataSource("exampleDatabase")}来标识.
  * </p>
- * </blockquote>.
+ * </blockquote>
  *
  * @author <a href="mailto:venusdrogon@163.com">feilong</a>
  * @version 1.1.0 2014-6-25 16:28:08
@@ -49,5 +51,4 @@ public @interface MultipleGroupDataSource{
      * @return the string
      */
     String value() default MultipleGroupReadWriteUtil.DEFAULT_GROUP_NAME;
-
 }
