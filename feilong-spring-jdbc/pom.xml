@@ -12,9 +12,6 @@
 		<version.postgresql>9.2-1004-jdbc4</version.postgresql>
 
 		<version.loxia>2.5.2</version.loxia>
-
-		<maven-compiler-plugin.source>1.6</maven-compiler-plugin.source>
-		<maven-compiler-plugin.target>1.6</maven-compiler-plugin.target>
 	</properties>
 
 	<dependencies>
