@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.res.SkuItem;
 import org.springframework.core.res.SkuItemRepositoryImpl4;
 
-import com.feilong.core.tools.json.JsonUtil;
+import com.feilong.core.tools.jsonlib.JsonUtil;
 
 /**
  * The Class GenericTypeResolverTest.

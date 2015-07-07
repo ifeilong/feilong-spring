@@ -29,7 +29,7 @@ import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.feilong.core.tools.json.JsonUtil;
+import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.spring.web.util.WebSpringUtil;
 
 /**

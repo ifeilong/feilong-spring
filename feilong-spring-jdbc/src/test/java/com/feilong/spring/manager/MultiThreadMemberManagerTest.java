@@ -25,7 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.feilong.core.date.TimeInterval;
 import com.feilong.core.lang.ThreadUtil;
-import com.feilong.core.tools.json.JsonUtil;
+import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.spring.manager.java.MemberManager;
 import com.feilong.spring.manager.java.SalesOrderManager;
 

@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.feilong.core.tools.json.JsonUtil;
+import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.entity.ConstructorPropertiesEntity;
 
 @ContextConfiguration(locations = { "classpath:spring-DI-ConstructorProperties.xml" })

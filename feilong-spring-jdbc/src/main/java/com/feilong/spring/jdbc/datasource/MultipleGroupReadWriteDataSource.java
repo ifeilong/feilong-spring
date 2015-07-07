@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import com.feilong.core.lang.ThreadUtil;
-import com.feilong.core.tools.json.JsonUtil;
+import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.util.Validator;
 
 /**
