@@ -45,7 +45,7 @@ public class JavaMailSenderUtilTest{
         context = new ClassPathXmlApplicationContext("classpath*:spring-mail.xml");
         // String[] array = context.getBeanDefinitionNames();
         // for (int i = 0; i < array.length; ++i){
-        // log.debug(array[i]);
+        // LOGGER.debug(array[i]);
         // }
         mailUtil = context.getBean(JavaMailSenderUtil.class);
     }

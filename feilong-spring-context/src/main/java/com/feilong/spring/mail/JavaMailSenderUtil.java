@@ -45,8 +45,8 @@ import com.feilong.core.io.CharsetType;
  */
 public class JavaMailSenderUtil{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(JavaMailSenderUtil.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaMailSenderUtil.class);
 
     /** The java mail sender. */
     @Resource
@@ -60,7 +60,7 @@ public class JavaMailSenderUtil{
      * Inits the.
      */
     public void init(){
-        log.debug("init...");
+        LOGGER.debug("init...");
     }
 
     /**
@@ -146,9 +146,9 @@ public class JavaMailSenderUtil{
             mimeMessageHelper.setFrom(new InternetAddress("sanguoxuhuang@163.com", encodeText));
             mimeMessageHelper.setText(text, true);
         }catch (UnsupportedEncodingException e){
-            log.error(e.getClass().getName(), e);
+            LOGGER.error(e.getClass().getName(), e);
         }catch (MessagingException e){
-            log.error(e.getClass().getName(), e);
+            LOGGER.error(e.getClass().getName(), e);
         }
         // add attachments
         // for (Entry<String, InputStreamSource> entry : getAttachments(mi).entrySet()){
@@ -178,7 +178,7 @@ public class JavaMailSenderUtil{
                 try{
                     javaMailSender.send(message);
                 }catch (MailException e){
-                    log.error("Error occurs while sending mail", e);
+                    LOGGER.error("Error occurs while sending mail", e);
                 }finally{}
             }
         });
