@@ -34,8 +34,8 @@ import com.feilong.core.tools.json.JsonUtil;
 @ContextConfiguration(locations = { "classpath:spring-property-placeholder.xml" })
 public class SpringPropertyPlaceholderTest extends AbstractJUnit4SpringContextTests{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(SpringPropertyPlaceholderTest.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringPropertyPlaceholderTest.class);
 
     //	@Value("#{p_testProperties['name']}")
     /** The name. */
@@ -58,9 +58,9 @@ public class SpringPropertyPlaceholderTest extends AbstractJUnit4SpringContextTe
      */
     @Test
     public void testDIUserArray(){
-        log.info(name);
-        log.info(skills);
-        log.info(JsonUtil.format(skillsArray));
-        log.info(JsonUtil.format(skillsArray2));
+        LOGGER.info(name);
+        LOGGER.info(skills);
+        LOGGER.info(JsonUtil.format(skillsArray));
+        LOGGER.info(JsonUtil.format(skillsArray2));
     }
 }

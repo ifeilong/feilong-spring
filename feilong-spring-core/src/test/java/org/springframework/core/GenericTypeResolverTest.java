@@ -29,8 +29,8 @@ import com.feilong.core.tools.json.JsonUtil;
  */
 public class GenericTypeResolverTest{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(GenericTypeResolverTest.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenericTypeResolverTest.class);
 
     /**
      * TestGenericTypeResolverTest.
@@ -38,6 +38,6 @@ public class GenericTypeResolverTest{
     @Test
     public void testGenericTypeResolverTest(){
         SkuItemRepositoryImpl4<SkuItem> skuItemRepositoryImpl4 = new SkuItemRepositoryImpl4<SkuItem>();
-        log.info(JsonUtil.format(GenericTypeResolver.getTypeVariableMap(skuItemRepositoryImpl4.getClass())));
+        LOGGER.info(JsonUtil.format(GenericTypeResolver.getTypeVariableMap(skuItemRepositoryImpl4.getClass())));
     }
 }

@@ -31,8 +31,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SpringVersionTest{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(SpringVersionTest.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringVersionTest.class);
 
     /**
      * Gets the version.
@@ -40,6 +40,6 @@ public class SpringVersionTest{
      */
     @Test
     public void testGetVersion(){
-        log.info(SpringVersion.getVersion());
+        LOGGER.info(SpringVersion.getVersion());
     }
 }

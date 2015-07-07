@@ -29,14 +29,14 @@ import org.springframework.beans.factory.InitializingBean;
  */
 public abstract class BaseDIUser implements InitializingBean,DisposableBean{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(BaseDIUser.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseDIUser.class);
 
     /**
      * Inits the.
      */
     public void init(){
-        log.info("init.....:[{}]", this.getClass().getName());
+        LOGGER.info("init.....:[{}]", this.getClass().getName());
     }
 
     /*
@@ -46,7 +46,7 @@ public abstract class BaseDIUser implements InitializingBean,DisposableBean{
      */
     @Override
     public void afterPropertiesSet() throws Exception{
-        log.info("afterPropertiesSet.....:[{}]", this.getClass().getName());
+        LOGGER.info("afterPropertiesSet.....:[{}]", this.getClass().getName());
     }
 
     /*
@@ -56,6 +56,6 @@ public abstract class BaseDIUser implements InitializingBean,DisposableBean{
      */
     @Override
     public void destroy() throws Exception{
-        log.info("destroy.....:[{}]", this.getClass().getName());
+        LOGGER.info("destroy.....:[{}]", this.getClass().getName());
     }
 }

@@ -42,8 +42,8 @@ import com.feilong.core.net.URIUtil;
  */
 public class URLDecoderEditor extends PropertyEditorSupport{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(URLDecoderEditor.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(URLDecoderEditor.class);
 
     /** 编码. */
     private String              charsetType;
@@ -66,7 +66,7 @@ public class URLDecoderEditor extends PropertyEditorSupport{
     @Override
     public void setAsText(String text) throws IllegalArgumentException{
         String newText = URIUtil.decode(text, charsetType);
-        log.debug("the old text:{},new text:{}", text, newText);
+        LOGGER.debug("the old text:{},new text:{}", text, newText);
         setValue(newText);
     }
 }

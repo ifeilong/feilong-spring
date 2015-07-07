@@ -33,8 +33,8 @@ import com.feilong.entity.DIUser;
  */
 public class SpringDISimpleTest{
 
-    /** The Constant log. */
-    private static final Logger       log = LoggerFactory.getLogger(SpringDISimpleTest.class);
+    /** The Constant LOGGER. */
+    private static final Logger       LOGGER = LoggerFactory.getLogger(SpringDISimpleTest.class);
 
     /** The file system context. */
     private static ApplicationContext fileSystemContext;
@@ -53,8 +53,8 @@ public class SpringDISimpleTest{
     @Test
     public void testUser(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("spring-DI-simple");
-        if (log.isInfoEnabled()){
-            log.info(JsonUtil.format(diUser));
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(JsonUtil.format(diUser));
         }
     }
 }

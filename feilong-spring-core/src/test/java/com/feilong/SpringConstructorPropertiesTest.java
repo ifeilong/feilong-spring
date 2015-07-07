@@ -30,8 +30,8 @@ import com.feilong.entity.ConstructorPropertiesEntity;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SpringConstructorPropertiesTest{
 
-    /** The Constant log. */
-    private static final Logger         log = LoggerFactory.getLogger(SpringConstructorPropertiesTest.class);
+    /** The Constant LOGGER. */
+    private static final Logger         LOGGER = LoggerFactory.getLogger(SpringConstructorPropertiesTest.class);
 
     @Autowired
     private ConstructorPropertiesEntity constructorPropertiesEntity;
@@ -41,6 +41,6 @@ public class SpringConstructorPropertiesTest{
      */
     @Test
     public void testDIConstructorProperties(){
-        log.info(JsonUtil.format(constructorPropertiesEntity));
+        LOGGER.info(JsonUtil.format(constructorPropertiesEntity));
     }
 }

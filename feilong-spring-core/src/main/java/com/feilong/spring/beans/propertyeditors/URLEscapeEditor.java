@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
  */
 public class URLEscapeEditor extends PropertyEditorSupport{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(URLEscapeEditor.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(URLEscapeEditor.class);
 
     /*
      * (non-Javadoc)
@@ -58,7 +58,7 @@ public class URLEscapeEditor extends PropertyEditorSupport{
 
         String newText = sb.toString();
 
-        log.debug("the old text:{},new text:{}", text, newText);
+        LOGGER.debug("the old text:{},new text:{}", text, newText);
         setValue(newText);
     }
 }

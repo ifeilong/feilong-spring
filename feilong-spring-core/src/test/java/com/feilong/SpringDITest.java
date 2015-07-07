@@ -38,8 +38,8 @@ import com.feilong.entity.DIUser;
  */
 public class SpringDITest{
 
-    /** The Constant log. */
-    private static final Logger       log = LoggerFactory.getLogger(SpringDITest.class);
+    /** The Constant LOGGER. */
+    private static final Logger       LOGGER = LoggerFactory.getLogger(SpringDITest.class);
 
     /** The file system context. */
     private static ApplicationContext fileSystemContext;
@@ -60,29 +60,29 @@ public class SpringDITest{
     @Test
     public void testUser(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("feitian@");
-        if (log.isInfoEnabled()){
-            log.info(JsonUtil.format(diUser));
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(JsonUtil.format(diUser));
         }
-        log.info(diUser.getUserName());
+        LOGGER.info(diUser.getUserName());
         // -----------------------------
         List<String> list = diUser.getList();
-        log.info("list:{}", JsonUtil.format(list));
+        LOGGER.info("list:{}", JsonUtil.format(list));
         // --------------------------------
         Map<String, Object> map = diUser.getMap();
-        log.info("map:{}", JsonUtil.format(map));
+        LOGGER.info("map:{}", JsonUtil.format(map));
         @SuppressWarnings("unchecked")
         List<String> list2 = (List<String>) map.get("五子良将");
-        log.info("list2:{}", JsonUtil.format(list2));
+        LOGGER.info("list2:{}", JsonUtil.format(list2));
         // -----------------------------------------
         @SuppressWarnings("unchecked")
         List<String> list3 = (List<String>) map.get("八虎骑");
-        log.info("list3:{}", JsonUtil.format(list3));
+        LOGGER.info("list3:{}", JsonUtil.format(list3));
         // -----------------------------------------
         Properties properties = diUser.getProperties();
-        log.info("properties:{}", JsonUtil.format(properties));
+        LOGGER.info("properties:{}", JsonUtil.format(properties));
         // *********************************
         Set<String> set = diUser.getSet();
-        log.info("set:{}", JsonUtil.format(set));
+        LOGGER.info("set:{}", JsonUtil.format(set));
     }
 
     /**
@@ -92,10 +92,10 @@ public class SpringDITest{
     @Deprecated
     public void testUtilProperties(){
         Properties props = fileSystemContext.getBean("testProperties", Properties.class);
-        // log.info(aString);
-        log.info("props:{}", JsonUtil.format(props));
+        // LOGGER.info(aString);
+        LOGGER.info("props:{}", JsonUtil.format(props));
 
         // Locale locale = new Locale("zh", "CN");
-        // log.info("================" + context.getMessage("name", null, locale));
+        // LOGGER.info("================" + context.getMessage("name", null, locale));
     }
 }

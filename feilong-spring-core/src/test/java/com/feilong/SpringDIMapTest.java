@@ -33,8 +33,8 @@ import com.feilong.entity.DIUser;
  */
 public class SpringDIMapTest{
 
-    /** The Constant log. */
-    private static final Logger       log = LoggerFactory.getLogger(SpringDIMapTest.class);
+    /** The Constant LOGGER. */
+    private static final Logger       LOGGER = LoggerFactory.getLogger(SpringDIMapTest.class);
 
     /** The file system context. */
     private static ApplicationContext fileSystemContext;
@@ -53,6 +53,6 @@ public class SpringDIMapTest{
     @Test
     public void testUser(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("feitian@");
-        log.info("diUser:{}", JsonUtil.format(diUser));
+        LOGGER.info("diUser:{}", JsonUtil.format(diUser));
     }
 }
