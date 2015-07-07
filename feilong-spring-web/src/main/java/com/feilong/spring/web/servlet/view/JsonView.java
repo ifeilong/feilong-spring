@@ -38,8 +38,8 @@ import com.feilong.servlet.http.ResponseUtil;
  */
 public class JsonView extends AbstractView{
 
-    /** The Constant log. */
-    private static final Logger log                  = LoggerFactory.getLogger(JsonView.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER                  = LoggerFactory.getLogger(JsonView.class);
 
     /**
      * Default content type. Overridable as bean property.
@@ -106,8 +106,8 @@ public class JsonView extends AbstractView{
             writeStr = "{} && ";
             response.getWriter().write(writeStr);
 
-            if (log.isDebugEnabled()){
-                log.debug(writeStr);
+            if (LOGGER.isDebugEnabled()){
+                LOGGER.debug(writeStr);
             }
         }
         if (model.size() > 0){
@@ -123,9 +123,9 @@ public class JsonView extends AbstractView{
 
         response.getWriter().write(writeStr);
 
-        if (log.isDebugEnabled()){
+        if (LOGGER.isDebugEnabled()){
             Object[] objects = { RequestUtil.getRequestFullURL(request, CharsetType.UTF8), filterString, writeStr };
-            log.debug("{} \t filterString:[{}] \n{}", objects);
+            LOGGER.debug("{} \t filterString:[{}] \n{}", objects);
         }
     }
 

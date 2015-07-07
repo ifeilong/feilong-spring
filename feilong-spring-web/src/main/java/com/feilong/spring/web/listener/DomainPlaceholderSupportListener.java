@@ -105,8 +105,8 @@ import com.feilong.spring.web.util.WebSpringUtil;
  */
 public class DomainPlaceholderSupportListener extends com.feilong.web.domain.DomainListener{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(DomainPlaceholderSupportListener.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomainPlaceholderSupportListener.class);
 
     /*
      * (non-Javadoc)
@@ -141,7 +141,7 @@ public class DomainPlaceholderSupportListener extends com.feilong.web.domain.Dom
                 return PropertiesLoaderUtils.loadProperties(resource);
             }catch (IOException e){
                 String messagePattern = "load domainConfigLocation:[{}] exception";
-                log.error(Slf4jUtil.formatMessage(messagePattern, domainConfigLocation), e);
+                LOGGER.error(Slf4jUtil.formatMessage(messagePattern, domainConfigLocation), e);
                 throw new UncheckedIOException(e);
             }
         }else{

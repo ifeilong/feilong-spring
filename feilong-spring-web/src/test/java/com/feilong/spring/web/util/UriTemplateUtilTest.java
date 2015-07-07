@@ -35,8 +35,8 @@ import com.feilong.core.tools.json.JsonUtil;
  */
 public class UriTemplateUtilTest{
 
-    /** The Constant log. */
-    private static final Logger log             = LoggerFactory.getLogger(UriTemplateUtilTest.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER             = LoggerFactory.getLogger(UriTemplateUtilTest.class);
 
     /** The uri template path. */
     String                      uriTemplatePath = "/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
@@ -48,7 +48,7 @@ public class UriTemplateUtilTest{
     public void testGetVariableNames(){
         List<String> list = UriTemplateUtil.getVariableNames(uriTemplatePath);
 
-        log.info("list:{}", JsonUtil.format(list));
+        LOGGER.info("list:{}", JsonUtil.format(list));
     }
 
     /**
@@ -57,7 +57,7 @@ public class UriTemplateUtilTest{
     @Test
     public void testExpandWithVariable(){
         String list = UriTemplateUtil.expandWithVariable(uriTemplatePath, "color", "a");
-        log.info(list);
+        LOGGER.info(list);
     }
 
     /**
@@ -116,7 +116,7 @@ public class UriTemplateUtilTest{
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String variableName = "color";
         String value = "100";
-        log.info(UriTemplateUtil.expandWithVariable(requestPath, matchingPatternPath, variableName, value));
+        LOGGER.info(UriTemplateUtil.expandWithVariable(requestPath, matchingPatternPath, variableName, value));
     }
 
     /**
@@ -127,7 +127,7 @@ public class UriTemplateUtilTest{
         String requestPath = "/s/c500-m60-cred-s-k-s100-o6.htm";
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String[] variableNames = { "color", "style" };
-        log.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
+        LOGGER.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
     }
 
     /**
@@ -138,7 +138,7 @@ public class UriTemplateUtilTest{
         String requestPath = "/s/c500-m60-cred-s-k-s100-o6.htm";
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String[] variableNames = { "color", "style" };
-        log.info(UriTemplateUtil.retainVariablesValue(requestPath, matchingPatternPath, variableNames));
+        LOGGER.info(UriTemplateUtil.retainVariablesValue(requestPath, matchingPatternPath, variableNames));
     }
 
     /**
@@ -149,7 +149,7 @@ public class UriTemplateUtilTest{
         String requestPath = "/c/m-caaa-s-k-s-o.htm";
         String matchingPatternPath = uriTemplatePath;
         Map<String, String> map = UriTemplateUtil.extractUriTemplateVariables(requestPath, matchingPatternPath);
-        log.info("map:{}", JsonUtil.format(map));
+        LOGGER.info("map:{}", JsonUtil.format(map));
     }
 
     /**
@@ -162,7 +162,7 @@ public class UriTemplateUtilTest{
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String variableName = "color";
         String value = "100";
-        log.info(UriTemplateUtil.expandWithVariable(matchingPatternPath, variableName, value));
+        LOGGER.info(UriTemplateUtil.expandWithVariable(matchingPatternPath, variableName, value));
 
     }
 
@@ -176,6 +176,6 @@ public class UriTemplateUtilTest{
         map.put("color", "100");
         map.put("size", "L");
         map.put("K", "aaaa");
-        log.info(UriTemplateUtil.expand(uriTemplatePath, map));
+        LOGGER.info(UriTemplateUtil.expand(uriTemplatePath, map));
     }
 }

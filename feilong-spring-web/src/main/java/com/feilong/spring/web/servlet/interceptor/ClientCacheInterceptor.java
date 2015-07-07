@@ -30,8 +30,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class ClientCacheInterceptor extends HandlerInterceptorAdapter implements ServletContextAware{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(ClientCacheInterceptor.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientCacheInterceptor.class);
 
     /** The servlet context. */
     private ServletContext      servletContext;

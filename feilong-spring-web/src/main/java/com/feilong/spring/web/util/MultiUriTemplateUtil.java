@@ -42,8 +42,8 @@ import com.feilong.servlet.http.RequestUtil;
  */
 public class MultiUriTemplateUtil{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(MultiUriTemplateUtil.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultiUriTemplateUtil.class);
 
     /**
      * 自动寻找matchingPatternPath 扩充模板值<br>
@@ -66,8 +66,8 @@ public class MultiUriTemplateUtil{
         String expandUrl = expandWithMultiVariable(requestPath, matchingPatternPath, variableName, value, valueSeparator);
         String queryString = request.getQueryString();
         Map<String, Object> map = UrlPathHelperUtil.getUrlPathHelperMapForLog(request);
-        if (log.isDebugEnabled()){
-            log.debug(JsonUtil.format(map));
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(JsonUtil.format(map));
         }
 
         UrlPathHelper urlPathHelper = new UrlPathHelper();
@@ -131,7 +131,7 @@ public class MultiUriTemplateUtil{
      * String variableName = &quot;style&quot;;
      * String value = &quot;900&quot;;
      * String valueSeparator = &quot;,&quot;;
-     * log.info(MultiUriTemplateUtil.expandWithMultiVariable(matchingPatternPath, map, variableName, value, valueSeparator));
+     * LOGGER.info(MultiUriTemplateUtil.expandWithMultiVariable(matchingPatternPath, map, variableName, value, valueSeparator));
      * 
      * 
      * return "/s/c2541-m-c-s-k-s100,900-o.htm"
@@ -169,7 +169,7 @@ public class MultiUriTemplateUtil{
 
             // 保证重复的value 不会被反复添加
             if (list.contains(value)){
-                log.debug("list contains value:{}", value);
+                LOGGER.debug("list contains value:{}", value);
             }else{
                 list.add(value);
             }
@@ -188,7 +188,7 @@ public class MultiUriTemplateUtil{
      * String variableName = &quot;style&quot;;
      * String value = &quot;200&quot;;
      * String valueSeparator = &quot;,&quot;;
-     * log.info(MultiUriTemplateUtil.removeMultiVariableValue(requestPath, matchingPatternPath, variableName, value, valueSeparator));
+     * LOGGER.info(MultiUriTemplateUtil.removeMultiVariableValue(requestPath, matchingPatternPath, variableName, value, valueSeparator));
      * 
      * return /s/c-m-c-s-k-s<span style="color:red">500,100,9000</span>-o.htm
      * 
@@ -222,7 +222,7 @@ public class MultiUriTemplateUtil{
         // 如果没有值
         if (Validator.isNullOrEmpty(oldValue)){
             Object[] objects = { requestPath, matchingPatternPath, variableName };
-            log.debug("the requestPath:{},matchingPatternPath:{},variableName:{},value is null or empty~~~", objects);
+            LOGGER.debug("the requestPath:{},matchingPatternPath:{},variableName:{},value is null or empty~~~", objects);
         }else{
             String[] oldValues = oldValue.split(valueSeparator);
 
@@ -239,7 +239,7 @@ public class MultiUriTemplateUtil{
                 return UriTemplateUtil.expand(matchingPatternPath, map);
             }else{
                 Object[] objects = { requestPath, matchingPatternPath, variableName, oldValue, value };
-                log.debug("the requestPath:{},matchingPatternPath:{},variableName:{},oldValue:{},not contains({})~~~", objects);
+                LOGGER.debug("the requestPath:{},matchingPatternPath:{},variableName:{},oldValue:{},not contains({})~~~", objects);
             }
         }
         // 原样输出

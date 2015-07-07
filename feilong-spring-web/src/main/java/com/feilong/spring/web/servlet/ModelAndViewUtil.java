@@ -26,14 +26,14 @@ import org.slf4j.LoggerFactory;
  */
 public class ModelAndViewUtil{
 
-    private static final Logger log = LoggerFactory.getLogger(ModelAndViewUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModelAndViewUtil.class);
 
     //    public final static Map<String, String> getModelAndViewMapInfoForLog(ModelAndView modelAndView){
     //        Map<String, String> object = new LinkedHashMap<String, String>();
     //        String viewName = modelAndView.getViewName();
     //        Map<String, Object> model = modelAndView.getModel();
-    //        log.info("viewName:{}", viewName);
-    //        log.info("model attribute:{}", model.get("isSuccess").toString());
+    //        LOGGER.info("viewName:{}", viewName);
+    //        LOGGER.info("model attribute:{}", model.get("isSuccess").toString());
     //        object.put("", "");
     //        object.put("", "");
     //        object.put("", "");

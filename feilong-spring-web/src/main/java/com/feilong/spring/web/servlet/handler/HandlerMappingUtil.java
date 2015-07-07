@@ -96,11 +96,11 @@ import com.feilong.spring.web.util.WebSpringUtil;
  */
 public class HandlerMappingUtil{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(HandlerMappingUtil.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(HandlerMappingUtil.class);
 
     /**
-     * 获得 request mapping handler mapping info map for log.
+     * 获得 request mapping handler mapping info map for LOGGER.
      *
      * @param webApplicationContext
      *            the web application context
@@ -135,12 +135,12 @@ public class HandlerMappingUtil{
             PatternsRequestCondition patternsCondition = requestMappingInfo.getPatternsCondition();
             Set<String> patterns = patternsCondition.getPatterns();
 
-            if (log.isDebugEnabled()){
-                log.debug(JsonUtil.format(patterns));
+            if (LOGGER.isDebugEnabled()){
+                LOGGER.debug(JsonUtil.format(patterns));
             }
 
-            if (log.isDebugEnabled()){
-                log.debug(
+            if (LOGGER.isDebugEnabled()){
+                LOGGER.debug(
                                 "RequestMappingInfo:[{}],HandlerMethod:[{}],[{}],requestMappingInfo:{}",
                                 JsonUtil.format(requestMappingInfo),
                                 handlerMethod,

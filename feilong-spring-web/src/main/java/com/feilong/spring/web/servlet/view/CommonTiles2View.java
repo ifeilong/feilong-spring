@@ -37,7 +37,7 @@ package com.feilong.spring.web.servlet.view;
 // */
 //public class CommonTiles2View extends TilesView{
 //
-//	/** The Constant log. */
+//	/** The Constant LOGGER. */
 //	private static final Logger	log	= LoggerFactory.getLogger(CommonTiles2View.class);
 //
 //	/*
@@ -49,7 +49,7 @@ package com.feilong.spring.web.servlet.view;
 //			throws Exception{
 //		super.renderMergedOutputModel(model, request, response);
 //
-//		if (log.isDebugEnabled()){
+//		if (LOGGER.isDebugEnabled()){
 //			Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
 //			// 这个key format 有问题
 //			attributeMap.remove(Config.FMT_LOCALIZATION_CONTEXT + ".request");
@@ -65,7 +65,7 @@ package com.feilong.spring.web.servlet.view;
 //					JsonUtil.format(SessionUtil.getAttributeMap(request.getSession())),
 //					JsonUtil.format(ServletContextUtil.getAttributeMap(request.getSession().getServletContext())) };
 //
-//			log.debug(
+//			LOGGER.debug(
 //					"requestAllURL:{},\n request attributeMap:{},\n session attributeMap:{} , \n servletContext attributeMap:{} ",
 //					argsObjects);
 //		}

@@ -31,7 +31,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  */
 public class ConfigurableRequestMappingHandlerMapping extends RequestMappingHandlerMapping{
 
-    private static final Logger        log = LoggerFactory.getLogger(ConfigurableRequestMappingHandlerMapping.class);
+    private static final Logger        LOGGER = LoggerFactory.getLogger(ConfigurableRequestMappingHandlerMapping.class);
 
     private List<RequestMappingConfig> requestMappingConfigList;
 
@@ -87,8 +87,8 @@ public class ConfigurableRequestMappingHandlerMapping extends RequestMappingHand
     @Override
     protected boolean isHandler(Class<?> beanType){
         boolean handler = super.isHandler(beanType);
-        if (log.isInfoEnabled()){
-            log.info("beanType:[{}],isHandler:[{}]", beanType.getCanonicalName(), handler);
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("beanType:[{}],isHandler:[{}]", beanType.getCanonicalName(), handler);
         }
         return handler;
     }

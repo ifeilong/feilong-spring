@@ -43,8 +43,8 @@ import com.feilong.servlet.http.RequestUtil;
  */
 public class UriTemplateUtil{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(UriTemplateUtil.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(UriTemplateUtil.class);
 
     /**
      * 获得当前uri template 变量值.
@@ -126,8 +126,8 @@ public class UriTemplateUtil{
         String expandUrl = expandWithVariable(requestPath, matchingPatternPath, variableName, value);
         String queryString = request.getQueryString();
         Map<String, Object> map = UrlPathHelperUtil.getUrlPathHelperMapForLog(request);
-        if (log.isDebugEnabled()){
-            log.debug(JsonUtil.format(map));
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(JsonUtil.format(map));
         }
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         return urlPathHelper.getOriginatingContextPath(request) + expandUrl
@@ -176,7 +176,7 @@ public class UriTemplateUtil{
      * @return the map
      */
     public static Map<String, String> extractUriTemplateVariables(String requestPath,String matchingPatternPath){
-        log.debug("the param requestPath:{}", requestPath);
+        LOGGER.debug("the param requestPath:{}", requestPath);
         PathMatcher matcher = new AntPathMatcher();
         Map<String, String> map = matcher.extractUriTemplateVariables(matchingPatternPath, requestPath);
         return map;
@@ -216,7 +216,7 @@ public class UriTemplateUtil{
      * String requestPath = &quot;/s/c500-m60-cred-s-k-s100-o6.htm&quot;;
      * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;;
      * String[] variableNames = { &quot;color&quot;, &quot;style&quot; };
-     * log.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
+     * LOGGER.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
      * 
      * return /s/c500-m60-c-s-k-s-o6.htm
      * </pre>
@@ -248,7 +248,7 @@ public class UriTemplateUtil{
      * String requestPath = &quot;/s/c500-m60-cred-s-k-s100-o6.htm&quot;;
      * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;;
      * String[] variableNames = { &quot;color&quot;, &quot;style&quot; };
-     * log.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
+     * LOGGER.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
      * 
      * return /s/c-m-cred-s-k-s100-o.htm
      * </pre>
