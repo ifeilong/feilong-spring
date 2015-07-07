@@ -38,11 +38,11 @@ import com.feilong.core.util.StringUtil;
 public class LogAspect extends AbstractAspect{
 
     // log4j
-    /** The log. */
-    private final Logger log = Logger.getLogger(LogAspect.class);
+    /** The LOGGER. */
+    private static final Logger LOGGER = Logger.getLogger(LogAspect.class);
 
-    /** The _log. */
-    private Log          _log;
+    /** The _LOGGER. */
+    private Log                 log;
 
     // && @annotation(com.feilong.core.aop.Log)
     /**
@@ -65,7 +65,7 @@ public class LogAspect extends AbstractAspect{
     @Around(value = "pointcut()")
     public void around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
         // LoggerFactory.
-        // log.
+        // LOGGER.
 
         Method method = getMethod(proceedingJoinPoint, Log.class);
         String methodName = method.getName();
@@ -76,13 +76,13 @@ public class LogAspect extends AbstractAspect{
         Date end = new Date();
         Object[] args = proceedingJoinPoint.getArgs();
         // for (Object arg : args){
-        // log.info("arg:{}", arg.toString());
+        // LOGGER.info("arg:{}", arg.toString());
         // }
-        // log.info("{},{}", begin, end);
+        // LOGGER.info("{},{}", begin, end);
 
-        _log = getAnnotation(proceedingJoinPoint, Log.class);
-        String level = _log.level();
-        // log.debug("level:{}", level);
+        log = getAnnotation(proceedingJoinPoint, Log.class);
+        String level = log.level();
+        // LOGGER.debug("level:{}", level);
         // 输出的日志 怪怪的 02:13:10 INFO (NativeMethodAccessorImpl.java:?) [invoke0()] method:addUser([1018, Jummy]),耗时:0
         // ReflectUtil.invokeMethod(log, level, "method:{}({}),耗时:{}", objects);
 
@@ -90,6 +90,6 @@ public class LogAspect extends AbstractAspect{
         Object[] objects = { methodName, args, DateExtensionUtil.getIntervalForView(begin, end) };
 
         Object message = StringUtil.format(format, objects);
-        log.log(Level.toLevel(level), message);
+        LOGGER.log(Level.toLevel(level), message);
     }
 }

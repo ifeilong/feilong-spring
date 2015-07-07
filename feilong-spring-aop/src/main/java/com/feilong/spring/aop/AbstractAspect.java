@@ -39,8 +39,8 @@ import com.feilong.core.util.Validator;
  */
 public abstract class AbstractAspect implements Ordered{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(AbstractAspect.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAspect.class);
 
     /**
      * 获得运行的annotaion.
@@ -128,7 +128,7 @@ public abstract class AbstractAspect implements Ordered{
                 return m1;
             }
         }catch (Exception e){
-            log.error(e.getClass().getName(), e);
+            LOGGER.error(e.getClass().getName(), e);
         }
         throw new RuntimeException("No Proper annotation found.");
     }
@@ -162,7 +162,7 @@ public abstract class AbstractAspect implements Ordered{
                 return true;
             }
         }catch (Exception e){
-            log.error(e.getClass().getName(), e);
+            LOGGER.error(e.getClass().getName(), e);
         }
         return false;
     }

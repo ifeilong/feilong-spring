@@ -33,7 +33,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 public class ProceedingJoinPointUtil{
 
     /**
-     * 获得 map for log.
+     * 获得 map for LOGGER.
      *
      * @param proceedingJoinPoint
      *            the proceeding join point

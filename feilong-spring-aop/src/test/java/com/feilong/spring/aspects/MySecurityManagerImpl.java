@@ -58,14 +58,14 @@ public class MySecurityManagerImpl implements MySecurityManager{
     public void security(JoinPoint joinPoint){
         // 在来得到方法名吧，就是通知所要织入目标对象中的方法名称
         //		String method = joinPoint.getSignature().getName();
-        //		log.info("methodName:{}", method);
+        //		LOGGER.info("methodName:{}", method);
         //		Object[] args = joinPoint.getArgs();
-        //		log.info("begin log args......");
+        //		LOGGER.info("begin log args......");
         //		for (Object o : args){
-        //			log.info(o.toString());
+        //			LOGGER.info(o.toString());
         //		}
-        //		log.info("end log args......");
-        //		log.info("@Before -----调用security方法-------");
+        //		LOGGER.info("end log args......");
+        //		LOGGER.info("@Before -----调用security方法-------");
     }
 
     /**
@@ -73,6 +73,6 @@ public class MySecurityManagerImpl implements MySecurityManager{
      */
     // @Before("addAllMethod()")
     public void security2(){
-        //log.info("@Before -----调用security方法2-------");
+        //LOGGER.info("@Before -----调用security方法2-------");
     }
 }

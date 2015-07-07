@@ -28,8 +28,8 @@ import com.feilong.spring.aop.Log;
  */
 public class UserManagerImpl implements UserManager{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(UserManagerImpl.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserManagerImpl.class);
 
     /*
      * (non-Javadoc)
@@ -39,7 +39,7 @@ public class UserManagerImpl implements UserManager{
     @Override
     @Log(level = "debug")
     public void addUser(String id,String name){
-        log.info("---UsreManagerImpl中的addUser方法的实现-----");
+        LOGGER.info("---UsreManagerImpl中的addUser方法的实现-----");
     }
 
     /*
@@ -49,7 +49,7 @@ public class UserManagerImpl implements UserManager{
      */
     @Override
     public void delUser(int id){
-        log.info("-----UserManagerImpl delUser方法的实现-----");
+        LOGGER.info("-----UserManagerImpl delUser方法的实现-----");
     }
 
     /*
@@ -59,6 +59,6 @@ public class UserManagerImpl implements UserManager{
      */
     @Override
     public void modifyUser(int id,String name,int age){
-        log.info("----UserManagerImpl modifyUser方法的实现-----");
+        LOGGER.info("----UserManagerImpl modifyUser方法的实现-----");
     }
 }

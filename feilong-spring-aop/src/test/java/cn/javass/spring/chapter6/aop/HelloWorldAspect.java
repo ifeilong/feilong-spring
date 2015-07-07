@@ -29,8 +29,8 @@ import com.feilong.core.date.DateExtensionUtil;
 @SuppressWarnings("all")
 public class HelloWorldAspect{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(HelloWorldAspect.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldAspect.class);
 
     /** The begin. */
     private Date                begin;
@@ -44,7 +44,7 @@ public class HelloWorldAspect{
      */
     public void beforeAdvice(){
         begin = new Date();
-        log.info("1.......before advice,{}", begin);
+        LOGGER.info("1.......before advice,{}", begin);
     }
 
     // 后置最终通知
@@ -53,7 +53,7 @@ public class HelloWorldAspect{
      */
     public void afterFinallyAdvice(){
         end = new Date();
-        log.info("2.......after finally advice,{},耗时:{}", begin, DateExtensionUtil.getIntervalForView(begin, end));
+        LOGGER.info("2.......after finally advice,{},耗时:{}", begin, DateExtensionUtil.getIntervalForView(begin, end));
     }
 
     /**
@@ -67,6 +67,6 @@ public class HelloWorldAspect{
     public void around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
         Object[] args = { "a" };
         proceedingJoinPoint.proceed();
-        log.info("around");
+        LOGGER.info("around");
     }
 }

@@ -26,7 +26,7 @@ import org.apache.log4j.Level;
 
 // 表示产生文档，比如通过javadoc产生文档, 将此注解包含在 javadoc 中, 这个Annotation可以被写入javadoc
 /**
- * The Interface Log.
+ * The Interface LOGGER.
  * 
  * @author <a href="mailto:venusdrogon@163.com">feilong</a>
  * @version 1.0.7 2014-6-25 16:28:08

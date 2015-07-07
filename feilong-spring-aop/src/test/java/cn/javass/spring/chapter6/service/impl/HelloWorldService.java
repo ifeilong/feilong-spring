@@ -26,14 +26,14 @@ import cn.javass.spring.chapter6.service.IHelloWorldService;
 @SuppressWarnings("all")
 public class HelloWorldService implements IHelloWorldService{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(HelloWorldService.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldService.class);
 
     /* (non-Javadoc)
      * @see cn.javass.spring.chapter6.service.IHelloWorldService#sayHello()
      */
     @Override
     public void sayHello(){
-        log.info("============Hello World!");
+        LOGGER.info("============Hello World!");
     }
 }
