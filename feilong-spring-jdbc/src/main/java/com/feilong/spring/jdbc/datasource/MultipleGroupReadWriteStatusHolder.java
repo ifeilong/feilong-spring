@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.feilong.spring.jdbc.datasource;
 /**
  * 以 {@link ThreadLocal} 形式,维护数据源的key.
  *
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.1.1 2015年3月31日 下午3:19:15
  * @see MultipleGroupReadWriteDataSource
  * @see java.lang.ThreadLocal

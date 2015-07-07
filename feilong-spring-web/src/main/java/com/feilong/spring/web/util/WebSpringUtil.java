@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * 我们推荐使用后者，因为它能提前发现错误的时间，强制开发者搭建好必备的基础设施。
  * </p>
  * 
- * @author <a href="mailto:venusdrogon@163.com">金鑫</a>
+ * @author feilong
  * @version 1.0 2011-3-31 下午06:08:20
  * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
  * @see org.springframework.web.context.support.WebApplicationContextUtils#getWebApplicationContext(ServletContext)

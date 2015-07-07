@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.feilong.spring.web.servlet.tags;
 /**
  * 条件父类标签,需要条件控制的(需要和业务层打交道).
  *
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.0.0 2010-3-31 上午11:21:51
  * @version 1.2.0 2015年5月24日 上午4:20:05
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ package com.feilong.spring.web.servlet.tags;
  * 只需要重写doExecute()方法即可
  * </pre>
  * 
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.0.0 2010-8-27 下午01:33:05
  * @version 1.2.0 2015年5月24日 上午4:20:05
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import com.feilong.servlet.http.RequestUtil;
  * MultiUriTemplateUtil,某些商城筛选条件可以是多值,比如 既是 儿童 又是 男子<br>
  * 此时url 应该是混合式的 而不是覆盖.
  * 
- * @author <a href="mailto:venusdrogon@163.com">金鑫</a>
+ * @author feilong
  * @version 1.0 2012-5-22 上午11:24:41
  */
 public class MultiUriTemplateUtil{

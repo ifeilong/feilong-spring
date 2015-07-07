@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import com.feilong.core.io.UncheckedIOException;
 /**
  * 自定义标签的父类,需要和spring控制的业务层交互的请使用这个基类.
  *
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.0.0 2009年10月28日 10:50:06
  * @version 1.2.0 2015年5月24日 上午4:20:05
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag

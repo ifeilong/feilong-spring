@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,7 +93,7 @@ import com.feilong.spring.web.util.WebSpringUtil;
  * 
  * </blockquote>
  *
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.1.1 2015年4月17日 下午9:35:03
  * @see com.feilong.web.domain.DomainListener#CONFIG_LOCATION_PARAM
  * @see com.feilong.spring.web.util.WebSpringUtil#getWebApplicationContext(ServletContext)

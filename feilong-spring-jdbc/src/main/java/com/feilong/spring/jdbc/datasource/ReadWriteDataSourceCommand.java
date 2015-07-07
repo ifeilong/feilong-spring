@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 /**
  * 包含 读({@link #readDataSource}),写 ({@link #writeDataSource})数据源配置.
  *
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.1.1 2015年4月1日 上午3:42:04
  * @since 1.1.1
  * @see javax.sql.DataSource

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import com.feilong.core.util.Validator;
  * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ，而参数中传入了 不存在的/不支持的 locale 调用
  * {@link org.springframework.util.StringUtils#parseLocaleString(String)}会报错
  *
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.0.9 2014年12月18日 上午2:29:55
  * @since 1.0.9
  */

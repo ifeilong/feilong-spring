@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ import com.feilong.spring.transaction.interceptor.TransactionAttributeUtil;
  * </ol>
  * </blockquote>
  * 
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.1.1 2015年4月5日 下午6:59:04
  * @see com.feilong.spring.aop.AbstractAspect
  * @see org.aspectj.lang.annotation.Aspect

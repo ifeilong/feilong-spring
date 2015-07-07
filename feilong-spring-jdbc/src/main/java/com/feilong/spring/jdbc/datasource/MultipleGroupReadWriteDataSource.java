@@ -32,7 +32,7 @@ import com.feilong.core.util.Validator;
  * </blockquote>
  * 
  * 
- * @author <a href="mailto:venusdrogon@163.com">feilong</a>
+ * @author feilong
  * @version 1.1.1 2015年4月1日 下午1:58:15
  * @see org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource
  * @since 1.1.1
