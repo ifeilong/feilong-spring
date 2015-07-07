@@ -33,7 +33,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 public class TransactionAttributeUtil{
 
     /**
-     * 获得 map for log.
+     * 获得 map for LOGGER.
      *
      * @param transactionAttribute
      *            the transaction attribute

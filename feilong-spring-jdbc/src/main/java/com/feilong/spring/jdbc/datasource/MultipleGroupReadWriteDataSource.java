@@ -39,8 +39,8 @@ import com.feilong.core.util.Validator;
  */
 public class MultipleGroupReadWriteDataSource extends AbstractRoutingDataSource{
 
-    /** The Constant log. */
-    private static final Logger                     log = LoggerFactory.getLogger(MultipleGroupReadWriteDataSource.class);
+    /** The Constant LOGGER. */
+    private static final Logger                     LOGGER = LoggerFactory.getLogger(MultipleGroupReadWriteDataSource.class);
 
     /** key 是 dataSource group 名字;. */
     private Map<String, ReadWriteDataSourceCommand> readWriteDataSourceCommandMap;
@@ -95,7 +95,7 @@ public class MultipleGroupReadWriteDataSource extends AbstractRoutingDataSource{
     @Override
     protected Object determineCurrentLookupKey(){
         String dataSourceName = MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName();
-        log.info("Current LookupKey:[{}],thread info:{}", dataSourceName, JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
+        LOGGER.info("Current LookupKey:[{}],thread info:{}", dataSourceName, JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
         return dataSourceName;
     }
 

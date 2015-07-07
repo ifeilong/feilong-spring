@@ -35,8 +35,8 @@ import com.feilong.test.User;
 @Service
 public class SalesOrderManagerImpl implements SalesOrderManager{
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(SalesOrderManagerImpl.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SalesOrderManagerImpl.class);
 
     /** The member manager. */
     @Autowired
@@ -62,13 +62,13 @@ public class SalesOrderManagerImpl implements SalesOrderManager{
     public void addUser(String name){
         memberManager.addUser(name);
 
-        log.debug(StringUtils.center("before getUserReadOnly", 50, "*"));
+        LOGGER.debug(StringUtils.center("before getUserReadOnly", 50, "*"));
         getUserReadOnly(name);
-        log.debug(StringUtils.center("end getUserReadOnly", 50, "*"));
+        LOGGER.debug(StringUtils.center("end getUserReadOnly", 50, "*"));
 
-        log.debug(StringUtils.center("before deleteUser", 50, "*"));
+        LOGGER.debug(StringUtils.center("before deleteUser", 50, "*"));
         deleteUser(name);
-        log.debug(StringUtils.center("end deleteUser", 50, "*"));
+        LOGGER.debug(StringUtils.center("end deleteUser", 50, "*"));
     }
 
     /*

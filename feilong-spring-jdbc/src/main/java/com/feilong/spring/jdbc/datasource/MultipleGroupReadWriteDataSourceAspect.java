@@ -82,7 +82,7 @@ import com.feilong.spring.transaction.interceptor.TransactionAttributeUtil;
 public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
     /** The Constant logger. */
-    private static final Logger        log = LoggerFactory.getLogger(MultipleGroupReadWriteDataSourceAspect.class);
+    private static final Logger        LOGGER = LoggerFactory.getLogger(MultipleGroupReadWriteDataSourceAspect.class);
 
     /** The transaction attribute souce. */
     @Autowired(required = false)
@@ -143,16 +143,16 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         String previousDataSourceNameHolder = MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName();
 
         String currentThreadInfo = JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog());
-        if (log.isInfoEnabled()){
+        if (LOGGER.isInfoEnabled()){
 
-            Map<String, Object> mapForLog = new LinkedHashMap<String, Object>();
-            mapForLog.put("groupName", groupName);
-            mapForLog.put("previousDataSourceNameHolder", previousDataSourceNameHolder);
-            mapForLog.put("transactionAttribute:", TransactionAttributeUtil.getMapForLog(transactionAttribute));
+            Map<String, Object> map = new LinkedHashMap<String, Object>();
+            map.put("groupName", groupName);
+            map.put("previousDataSourceNameHolder", previousDataSourceNameHolder);
+            map.put("transactionAttribute:", TransactionAttributeUtil.getMapForLog(transactionAttribute));
 
-            log.info(
+            LOGGER.info(
                             "before determine datasource :[{}],proceedingJoinPoint info:[{}],current thread info:[{}]",
-                            JsonUtil.format(mapForLog),
+                            JsonUtil.format(map),
                             getProceedingJoinPointJsonInfoExcludeJsonException(proceedingJoinPoint),
                             currentThreadInfo);
         }
@@ -165,7 +165,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
             String readWriteSupport = this.getReadWriteSupport(transactionAttribute);
 
             String targetDataSourcesKey = MultipleGroupReadWriteUtil.getTargetDataSourcesKey(groupName, readWriteSupport);
-            log.info("set targetDataSourcesKey:[{}],current thread info:[{}]", targetDataSourcesKey, currentThreadInfo);
+            LOGGER.info("set targetDataSourcesKey:[{}],current thread info:[{}]", targetDataSourcesKey, currentThreadInfo);
             MultipleGroupReadWriteStatusHolder.setMultipleDataSourceGroupName(targetDataSourcesKey);
         }
 
@@ -175,7 +175,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
             throw e;
         }finally{
             if (Validator.isNotNullOrEmpty(previousDataSourceNameHolder)){
-                log.info(
+                LOGGER.info(
                                 "Back to previous Read/Write Status:[{}],current thread info:[{}]",
                                 previousDataSourceNameHolder,
                                 currentThreadInfo);
@@ -186,7 +186,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
             //TODO 可能还可以优化 现规则和loxia相同
             //不存在previousDataSourceNameHolder,则清空
             else{
-                log.info(
+                LOGGER.info(
                                 "previousDataSourceNameHolder is NullOrEmpty,Clear Read/Write Status:[{}],current thread info:[{}]",
                                 MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName(),
                                 currentThreadInfo);
@@ -278,7 +278,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         }
 
         if (mustWrite){
-            log.info("New writable connection is required for new transaction.");
+            LOGGER.info("New writable connection is required for new transaction.");
             readWriteSupport = loxia.dao.ReadWriteSupport.WRITE;
         }else{
             //see "org.postgresql.jdbc2.AbstractJdbc2Connection#setReadOnly(boolean)"
@@ -302,8 +302,8 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         Object[] args = proceedingJoinPoint.getArgs();
         String format = getProceedingJoinPointJsonInfoExcludeJsonException(proceedingJoinPoint);
 
-        if (log.isInfoEnabled()){
-            log.info(
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(
                             "begin proceed ,ProceedingJoinPoint info:[{}],Thread info:{}",
                             format,
                             JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
@@ -317,8 +317,8 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         //***********************************************************
         Date endDate = new Date();
 
-        if (log.isInfoEnabled()){
-            log.info(
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(
                             "end proceed:[{}],thread info:[{}],time:{},return:[{}]",
                             format,
                             JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()),
@@ -342,7 +342,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
             format = JsonUtil.format(ProceedingJoinPointUtil.getMapForLog(proceedingJoinPoint));
         }catch (JSONException e){
             format = e.getMessage();
-            log.error("", e);
+            LOGGER.error("", e);
         }
         return format;
     }

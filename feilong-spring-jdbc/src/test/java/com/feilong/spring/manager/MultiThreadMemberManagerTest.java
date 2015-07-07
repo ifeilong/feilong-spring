@@ -41,8 +41,8 @@ import com.feilong.spring.manager.java.SalesOrderManager;
 public class MultiThreadMemberManagerTest //extends AbstractJUnit4SpringContextTests
 {
 
-    /** The Constant log. */
-    private static final Logger log = LoggerFactory.getLogger(MultiThreadMemberManagerTest.class);
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultiThreadMemberManagerTest.class);
 
     /** The member manager. */
     @Autowired
@@ -78,8 +78,8 @@ public class MultiThreadMemberManagerTest //extends AbstractJUnit4SpringContextT
          */
         @Override
         public void run(){
-            if (log.isInfoEnabled()){
-                log.info("run thread,thread info:{}", JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
+            if (LOGGER.isInfoEnabled()){
+                LOGGER.info("run thread,thread info:{}", JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
             }
             // memberManager.addUser("feilong");
             salesOrderManager.addUser("feilong");
