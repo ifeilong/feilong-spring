@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.jstl.core.Config;
 
-import net.sf.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.view.AbstractView;
@@ -39,7 +37,7 @@ import com.feilong.servlet.http.ResponseUtil;
 public class JsonView extends AbstractView{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER                  = LoggerFactory.getLogger(JsonView.class);
+    private static final Logger LOGGER               = LoggerFactory.getLogger(JsonView.class);
 
     /**
      * Default content type. Overridable as bean property.
@@ -115,10 +113,12 @@ public class JsonView extends AbstractView{
                 filterString = "**";
             }
 
+            //TODO
             // writeStr = JsonUtil.format(model, filterString);
             writeStr = JsonUtil.format(model);
         }else{
-            writeStr = new JSONObject().toString(4);
+            //writeStr = new JSONObject().toString(4);
+            writeStr = "{}";
         }
 
         response.getWriter().write(writeStr);
