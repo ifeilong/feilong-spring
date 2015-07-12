@@ -23,7 +23,7 @@
 		<property name="diUserArray" ref="diUserArray" />
 
 		<property name="userName">
-			<value type="">金鑫</value>
+			<value type="">关羽</value>
 		</property>
 
 		<property name="list">

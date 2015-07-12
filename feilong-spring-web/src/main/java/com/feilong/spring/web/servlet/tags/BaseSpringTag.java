@@ -73,8 +73,6 @@ public class BaseSpringTag extends RequestContextAwareTag{
     /**
      * 获得spring管理的实体bean.
      *
-     * @author 金鑫
-     * @version 1.0 时间:2009-10-28上午11:04:17
      * @param <T>
      *            the generic type
      * @param beanName
@@ -90,8 +88,6 @@ public class BaseSpringTag extends RequestContextAwareTag{
     /**
      * 显示.
      *
-     * @author 金鑫
-     * @version 1.0 2010-3-31 上午11:13:45
      * @return the object
      */
     protected Object writeContent(){
@@ -102,8 +98,6 @@ public class BaseSpringTag extends RequestContextAwareTag{
     /**
      * 获得HttpServletRequest.
      *
-     * @author 金鑫
-     * @version 1.0 2010-2-3 下午01:59:09
      * @return the http servlet request
      */
     protected HttpServletRequest getHttpServletRequest(){
@@ -113,8 +107,6 @@ public class BaseSpringTag extends RequestContextAwareTag{
     /**
      * 获得ServletRequest.
      *
-     * @author 金鑫
-     * @version 1.0 2010-2-3 下午01:58:55
      * @return the servlet request
      */
     protected ServletRequest getServletRequest(){
@@ -124,8 +116,6 @@ public class BaseSpringTag extends RequestContextAwareTag{
     /**
      * 获得 HttpSession.
      *
-     * @author 金鑫
-     * @version 1.0 2010-3-18 上午11:04:27
      * @return HttpSession
      */
     protected HttpSession getHttpSession(){
@@ -135,8 +125,6 @@ public class BaseSpringTag extends RequestContextAwareTag{
     /**
      * 获得HttpServletResponse.
      *
-     * @author 金鑫
-     * @version 1.0 2010-3-15 下午06:25:18
      * @return the http servlet response
      */
     protected HttpServletResponse getHttpServletResponse(){

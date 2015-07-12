@@ -51,9 +51,6 @@ public abstract class AbstractSpringScopeTag extends BaseSpringTag{
 
     /**
      * 执行方法,重写该方法.
-     *
-     * @author 金鑫
-     * @version 1.0 2010-8-27 下午01:37:40
      */
     protected abstract void doExecute();
 

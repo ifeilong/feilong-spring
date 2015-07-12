@@ -25,7 +25,7 @@ import org.springframework.web.util.UrlPathHelper;
 /**
  * UrlPathHelper.
  * 
- * @author <a href="mailtovenusdrogon@163.com">金鑫</a>
+ * @author feilong
  * @version 1.0 2012-5-30 下午91957
  */
 public class UrlPathHelperUtil{
