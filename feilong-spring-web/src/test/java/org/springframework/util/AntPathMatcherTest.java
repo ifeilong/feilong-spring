@@ -34,14 +34,15 @@ import com.feilong.core.tools.jsonlib.JsonUtil;
 public class AntPathMatcherTest{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AntPathMatcherTest.class);
+    private static final Logger      LOGGER       = LoggerFactory.getLogger(AntPathMatcherTest.class);
+
+    private static final PathMatcher PATH_MATCHER = new AntPathMatcher();
 
     /**
      * Test match.
      */
     @Test
     public void testMatch(){
-        PathMatcher matcher = new AntPathMatcher();
         // 完全路径url方式路径匹配
         // String requestPath="http://localhost:8080/pub/login.jsp";//请求路径
         // String patternPath="**/login.jsp";//路径匹配模式
@@ -58,9 +59,9 @@ public class AntPathMatcherTest{
         patternPath = "/c{categoryCode}-{material}-{color}-{size}-{kind}-{style}.htm";// 路径匹配模式
         requestPath = "/s/c-m-c-s-k-s-o.htm";// 请求路径
         patternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";// 路径匹配模式
-        boolean result = matcher.match(patternPath, requestPath);
+        boolean result = PATH_MATCHER.match(patternPath, requestPath);
         LOGGER.info(result + "");
-        Map<String, String> map = matcher.extractUriTemplateVariables(patternPath, requestPath);
+        Map<String, String> map = PATH_MATCHER.extractUriTemplateVariables(patternPath, requestPath);
         LOGGER.info("map:{}", JsonUtil.format(map));
         map.put("color", "XL");
         UriTemplate uriTemplate = new UriTemplate(patternPath);
@@ -68,5 +69,10 @@ public class AntPathMatcherTest{
         LOGGER.info(uri.toString());
         // UriComponents uriComponents = UriComponentsBuilder.fromPath(patternPath).buildAndExpand(map);
         // LOGGER.info(uriComponents.toString());
+    }
+
+    @Test
+    public void testMatch1(){
+        LOGGER.info("" + PATH_MATCHER.match("/**/*.json", "/storelocator/list.json"));
     }
 }
