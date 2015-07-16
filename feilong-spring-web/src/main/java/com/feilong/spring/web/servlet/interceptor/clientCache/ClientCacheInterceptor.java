@@ -13,64 +13,59 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.servlet.interceptor;
+package com.feilong.spring.web.servlet.interceptor.clientCache;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * The Class ClientCacheInterceptor.
+ * ClientCacheInterceptor.
+ *
+ * @author feilong
+ * @version 1.2.2 2015年7月17日 上午12:45:06
+ * @since 1.2.2
  */
-public class ClientCacheInterceptor extends HandlerInterceptorAdapter implements ServletContextAware{
+public class ClientCacheInterceptor extends HandlerInterceptorAdapter{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientCacheInterceptor.class);
 
-    /** The servlet context. */
-    private ServletContext      servletContext;
-
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#preHandle(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse, java.lang.Object)
+     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#postHandle(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
      */
     @Override
-    public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
+    public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
+                    throws Exception{
         if (handler instanceof HandlerMethod){
             HandlerMethod method = (HandlerMethod) handler;
+            //TODO 目前仅支持方法体上面
+            //将来支持类上面
             ClientCache clientCache = method.getMethodAnnotation(ClientCache.class);
             if (clientCache != null){
-
                 long value = clientCache.value();
-
                 if (value <= 0){
                     response.addHeader("Pragma", "no-cache");
                     response.setHeader("Cache-Control", "no-cache");
                     response.setDateHeader("Expires", 0);
 
+                    //TODO log
                 }else{
-                    response.setHeader("Cache-Control", "max-age=" + value);
+                    String cacheControlValue = "max-age=" + value;
+                    response.setHeader("Cache-Control", cacheControlValue);
+                    LOGGER.debug("set response setHeader:[Cache-Control],value is :[{}]", cacheControlValue);
                 }
+            }else{
+                //TODO log
             }
         }
-        return true;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.web.context.ServletContextAware#setServletContext(javax.servlet.ServletContext)
-     */
-    @Override
-    public void setServletContext(ServletContext servletContext){
-        this.servletContext = servletContext;
     }
 }
