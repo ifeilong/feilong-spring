@@ -37,7 +37,7 @@ import com.feilong.core.io.UncheckedIOException;
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag
  * @since 1.2.0
  */
-public class BaseSpringTag extends RequestContextAwareTag{
+public abstract class BaseSpringTag extends RequestContextAwareTag{
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5289127954140428690L;
@@ -59,6 +59,13 @@ public class BaseSpringTag extends RequestContextAwareTag{
         }
         return SKIP_BODY;
     }
+
+    /**
+     * 显示.
+     *
+     * @return the object
+     */
+    protected abstract Object writeContent();
 
     /*
      * (non-Javadoc)
@@ -86,12 +93,17 @@ public class BaseSpringTag extends RequestContextAwareTag{
     }
 
     /**
-     * 显示.
+     * 获得spring管理的实体bean.
      *
-     * @return the object
+     * @param <T>
+     *            the generic type
+     * @param beanName
+     *            实体bean名称
+     * @return the bean
      */
-    protected Object writeContent(){
-        return "";
+    protected <T> T getBean(Class<T> requiredType){
+        WebApplicationContext webApplicationContext = this.getRequestContext().getWebApplicationContext();
+        return webApplicationContext.getBean(requiredType);
     }
 
     // [start] 公用方法
