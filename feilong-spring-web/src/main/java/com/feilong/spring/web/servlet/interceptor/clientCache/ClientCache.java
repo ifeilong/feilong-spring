@@ -20,6 +20,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.feilong.core.date.TimeInterval;
+
 /**
  * (为了提高速度一些浏览器会缓存浏览者浏览过的页面,通过下面的相关参数的定义,浏览器一般不会缓存页面,而且浏览器无法脱机浏览.<br>
  * 借鉴了 胡总的 {@link "NoClientCache"}
@@ -45,11 +47,13 @@ public @interface ClientCache{
      * if value <=0 表示不缓存<br>
      * 默认:0 不缓存
      * </p>
+     * 
+     * 设置为int类型,int 最大值是{@link Integer#MAX_VALUE} 为 68.096259734906,参见 {@link TimeInterval} ,绝对够用了
      *
-     * @return the long
+     * @return the int
      * @since 1.0.9
      */
-    long value() default 0;
+    int value() default 0;
 
     /**
      * Pragma头域用来包含实现特定的指令，最常用的是Pragma:no-cache。<br>
@@ -111,7 +115,7 @@ public @interface ClientCache{
      * @deprecated
      */
     @SuppressWarnings("dep-ann")
-    long expires() default -1;
+    int expires() default -1;
 
     /**
      * HTTP 1.1介绍了另外一组头信息属性：Cache-Control响应头信息，让网站的发布者可以更全面的控制他们的内容，并定位过期时间的限制。
@@ -139,7 +143,7 @@ public @interface ClientCache{
      * </tr>
      * <tr valign="top">
      * <td>public</td>
-     * <td>标记认证内容也可以被缓存，一般来说： 经过HTTP认证才能访问的内容，输出是自动不可以缓存的；</td>
+     * <td>标记认证内容也可以被缓存， 一般来说： 经过HTTP认证才能访问的内容，输出是自动不可以缓存的；</td>
      * </tr>
      * <tr valign="top" style="background-color:#eeeeff">
      * <td>no-cache</td>

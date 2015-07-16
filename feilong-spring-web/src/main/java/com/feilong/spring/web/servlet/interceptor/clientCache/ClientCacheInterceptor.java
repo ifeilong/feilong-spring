@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.web.servlet.interceptor.clientCache;
 
+import java.lang.reflect.Method;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,10 +48,10 @@ public class ClientCacheInterceptor extends HandlerInterceptorAdapter{
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
         if (handler instanceof HandlerMethod){
-            HandlerMethod method = (HandlerMethod) handler;
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
             //TODO 目前仅支持方法体上面
             //将来支持类上面
-            ClientCache clientCache = method.getMethodAnnotation(ClientCache.class);
+            ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
             if (clientCache != null){
                 long value = clientCache.value();
                 if (value <= 0){
@@ -61,7 +63,9 @@ public class ClientCacheInterceptor extends HandlerInterceptorAdapter{
                 }else{
                     String cacheControlValue = "max-age=" + value;
                     response.setHeader("Cache-Control", cacheControlValue);
-                    LOGGER.debug("set response setHeader:[Cache-Control],value is :[{}]", cacheControlValue);
+                    Method method = handlerMethod.getMethod();
+                    LOGGER.debug("[{}.{}()],set response setHeader:[Cache-Control],value is :[{}]", method.getDeclaringClass()
+                                    .getSimpleName(), method.getName(), cacheControlValue);
                 }
             }else{
                 //TODO log
