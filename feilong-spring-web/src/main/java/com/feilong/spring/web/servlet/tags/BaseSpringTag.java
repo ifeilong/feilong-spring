@@ -27,6 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.tags.RequestContextAwareTag;
 
 import com.feilong.core.io.UncheckedIOException;
+import com.feilong.spring.web.util.WebSpringUtil;
 
 /**
  * 自定义标签的父类,需要和spring控制的业务层交互的请使用这个基类.
@@ -34,9 +35,13 @@ import com.feilong.core.io.UncheckedIOException;
  * @author feilong
  * @version 1.0.0 2009年10月28日 10:50:06
  * @version 1.2.0 2015年5月24日 上午4:20:05
+ * @version 1.2.2 2015-7-18 15:13 mark deprecated
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag
  * @since 1.2.0
+ * @deprecated 建议不直接使用 {@link RequestContextAwareTag},使用feilong 原生的 {@link "BaseTag"},如果要想在tag里面得到 spring相关的bean ,可以单独使用
+ *             {@link WebSpringUtil#getBean(HttpServletRequest, Class)}等方法
  */
+@Deprecated
 public abstract class BaseSpringTag extends RequestContextAwareTag{
 
     /** The Constant serialVersionUID. */
@@ -97,8 +102,8 @@ public abstract class BaseSpringTag extends RequestContextAwareTag{
      *
      * @param <T>
      *            the generic type
-     * @param beanName
-     *            实体bean名称
+     * @param requiredType
+     *            the required type
      * @return the bean
      */
     protected <T> T getBean(Class<T> requiredType){
