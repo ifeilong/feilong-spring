@@ -225,10 +225,14 @@ public abstract class BrowsingHistoryInterceptor extends HandlerInterceptorAdapt
         //****************************************************************************
         //cookie value 是  itemid join--->aes hex 加密格式字符串
         ToStringConfig toStringConfig = new ToStringConfig(DEFAULT_CONNECTOR);
-        String join = CollectionsUtil.toString(linkedList, toStringConfig);
+        String original = CollectionsUtil.toString(linkedList, toStringConfig);
 
         //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
-        String encryptHex = symmetricEncryption.encryptHex(join, cookieCharsetName);
+        String encryptHex = symmetricEncryption.encryptHex(original, cookieCharsetName);
+
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, encryptHex);
+        }
         return encryptHex;
     }
 
