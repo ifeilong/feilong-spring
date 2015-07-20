@@ -13,31 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.servlet.interceptor.browsingHistory;
+package com.feilong.spring.web.servlet.interceptor.browsingHistory.command;
 
 import java.io.Serializable;
 
 /**
  * 目前只支持 主键, 以后视情况而定吧 看看要不要把价格等信息放这里.
- *
- * @author feilong
- * @version 1.2.2 2015年7月19日 下午11:29:32
- * @since 1.2.2
  */
-public interface BrowsingHistoryCommand{
+public class DefaultBrowsingHistoryCommand implements BrowsingHistoryCommand,Serializable{
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -2860276539206053398L;
+
+    /** The id. */
+    private Serializable      id;
 
     /**
-     * 获得 id.
+     * 获得 the id.
      *
      * @return the id
      */
-    Serializable getId();
+    @Override
+    public Serializable getId(){
+        return id;
+    }
 
     /**
-     * 设置 id.
+     * 设置 the id.
      *
      * @param id
-     *            the id
+     *            the id to set
      */
-    void setId(Serializable id);
+    @Override
+    public void setId(Serializable id){
+        this.id = id;
+    }
 }
