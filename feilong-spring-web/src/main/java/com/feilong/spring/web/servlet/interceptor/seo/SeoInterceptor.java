@@ -140,15 +140,13 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
         }
 
         if (!isFindSeoViewCommand){
-            LOGGER.debug("can not find SeoViewCommand object in total request attribute");
-
             SeoViewCommand defaultSeoViewCommand = constructDefaultSeoViewCommand();
 
             request.setAttribute(seoViewCommandRequestAttributeName, defaultSeoViewCommand);
 
             if (LOGGER.isInfoEnabled()){
                 LOGGER.info(
-                                "set defaultSeoViewCommand to request,attributeName is:[{}],value is:{}",
+                                "can not find SeoViewCommand object in total data map,set defaultSeoViewCommand to request,attributeName is:[{}],value is:{}",
                                 seoViewCommandRequestAttributeName,
                                 JsonUtil.format(defaultSeoViewCommand));
             }
@@ -169,6 +167,7 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
      * @return the data map
      */
     private Map<String, Object> getDataMap(HttpServletRequest request,ModelAndView modelAndView){
+        //XXX 深入研究下 modelAndView是 null的情况
         if (null == modelAndView){
             LOGGER.warn("modelAndView is null,request info:[{}]", JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
         }
