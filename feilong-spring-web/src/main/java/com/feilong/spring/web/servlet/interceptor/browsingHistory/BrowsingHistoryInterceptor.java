@@ -17,6 +17,7 @@ package com.feilong.spring.web.servlet.interceptor.browsingHistory;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -210,8 +211,16 @@ public abstract class BrowsingHistoryInterceptor extends HandlerInterceptorAdapt
                 linkedList.addFirst(id);
 
                 //如果超长了 ,截取
-                if (linkedList.size() > maxCount){
-                    linkedList.subList(0, maxCount);
+                int size = linkedList.size();
+                if (size > maxCount){
+                    if (LOGGER.isDebugEnabled()){
+                        LOGGER.debug("linkedList size:[{}] > maxCount[{}],linkedList:[{}],will sub subList", size, maxCount, linkedList);
+                    }
+
+                    // so non-structural changes in the returned list
+                    List<Serializable> subList = linkedList.subList(0, maxCount);
+                    //linkedList = (LinkedList<Serializable>) subList;  //java.util.SubList cannot be cast to java.util.LinkedList
+                    linkedList = new LinkedList<Serializable>(subList);
                 }
             }catch (EncryptionException e){
                 LOGGER.error(Slf4jUtil.formatMessage("decryptHex cookie error,value:{},cookieCharsetName:{}", value, cookieCharsetName), e);
