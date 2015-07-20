@@ -110,14 +110,14 @@ public abstract class BrowsingHistoryInterceptor extends HandlerInterceptorAdapt
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
 
-        if (handler instanceof HandlerMethod) {
+        if (handler instanceof HandlerMethod){
             BrowsingHistoryCommand browsingHistoryCommand = constructBrowsingHistoryCommand(request, response, handler, modelAndView);
 
-            if (Validator.isNotNullOrEmpty(browsingHistoryCommand)) {
+            if (Validator.isNotNullOrEmpty(browsingHistoryCommand)){
                 try{
                     String cookieValue = constructItemBrowsingHistoryCookieValue(request, response, browsingHistoryCommand);
 
-                    if (Validator.isNotNullOrEmpty(cookieValue)) {
+                    if (Validator.isNotNullOrEmpty(cookieValue)){
                         CookieEntity cookieEntity = new CookieEntity(cookieName, cookieValue, cookieMaxAge);
                         cookieEntity.setHttpOnly(true);
                         CookieUtil.addCookie(cookieEntity, response);
@@ -172,7 +172,7 @@ public abstract class BrowsingHistoryInterceptor extends HandlerInterceptorAdapt
                     HttpServletResponse response,
                     BrowsingHistoryCommand browsingHistoryCommand){
 
-        if (Validator.isNullOrEmpty(browsingHistoryCommand)) {
+        if (Validator.isNullOrEmpty(browsingHistoryCommand)){
             return null;
         }
 
@@ -183,7 +183,7 @@ public abstract class BrowsingHistoryInterceptor extends HandlerInterceptorAdapt
         Cookie cookie = CookieUtil.getCookie(request, cookieName);
 
         //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
-        if (Validator.isNullOrEmpty(cookie)) {
+        if (Validator.isNullOrEmpty(cookie)){
             //如果没有 添加一个
             linkedList.add(id);
         }else{
@@ -198,27 +198,26 @@ public abstract class BrowsingHistoryInterceptor extends HandlerInterceptorAdapt
                 Serializable first = linkedList.getFirst();
                 //如果 list 里面的数据 第一个是当前item  那么一般表示刷新页面 或者重新打开新窗口
                 //这种case 没有必要操作 cookie
-                if (first.equals(id)) {
+                if (first.equals(id)){
                     LOGGER.info("in cookie, decryptHex:[{}] first pk is:[{}],current pk:[{}], nothing to do", decryptHex, first, id);
                     return null;
                 }
 
                 //如果有当前商品,那么删除掉 并将 当前的item id 塞第一个
-                if (linkedList.contains(id)) {
+                if (linkedList.contains(id)){
                     linkedList.remove(id);
                 }
                 linkedList.addFirst(id);
 
                 //如果超长了 ,截取
-                if (linkedList.size() > maxCount) {
+                if (linkedList.size() > maxCount){
                     linkedList.subList(0, maxCount);
                 }
             }catch (EncryptionException e){
                 LOGGER.error(Slf4jUtil.formatMessage("decryptHex cookie error,value:{},cookieCharsetName:{}", value, cookieCharsetName), e);
-            }finally{
+
                 //如果出错了,那么就将cookie删掉
                 CookieUtil.deleteCookie(cookieName, response);
-
                 linkedList.add(id);
             }
         }
