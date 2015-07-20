@@ -42,8 +42,7 @@ import com.feilong.servlet.http.RequestUtil;
  * <ol>
  * 
  * <li>
- * Model1:什么都不设置,那么使用默认配置的 {@link #defaultSeoTitle},{@link #defaultSeoKeywords},{@link #defaultSeoDescription},如果这些参数也没有设置,那么页面相关地方会输出空
- * </li>
+ * Model1:什么都不设置,那么使用默认配置的 {@link #defaultSeoTitle},{@link #defaultSeoKeywords},{@link #defaultSeoDescription},如果这些参数也没有设置,那么页面相关地方会输出空</li>
  * 
  * <li>
  * Model2:可以在controller {@link RequestMapping} 方法体里面,使用
@@ -59,13 +58,11 @@ import com.feilong.servlet.http.RequestUtil;
  * <li>
  * 
  * <li>
- * Model3:如果使用了 {@link ViewCommand}作为整体数据返回,那么只需要让 您自己的{@link ViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可
- * </li>
+ * Model3:如果使用了 {@link ViewCommand}作为整体数据返回,那么只需要让 您自己的{@link ViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
  * 
  * <li>
  * Model4:如果使用了 {@link ViewCommand}作为整体数据返回,并且也使用了 {@link SubViewCommand},并且想将参数设置到该{@link SubViewCommand}内,你可以让 您自己的{@link SubViewCommand}
- * 实现 {@link SeoViewCommand}接口,实现里面的方法即可
- * </li>
+ * 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
  * </ol>
  * </blockquote>
  *
@@ -106,22 +103,16 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
 
         Date beginDate = new Date();
 
-        Map<String, Object> model = modelAndView.getModel();
-        Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
-
-        //新创建个map对象, 这样操作不会影响原始数据
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.putAll(model);
-        map.putAll(attributeMap);
+        Map<String, Object> dataMap = getDataMap(request, modelAndView);
 
         boolean isFindSeoViewCommand = false;
-        for (Map.Entry<String, Object> entry : map.entrySet()){
+        for (Map.Entry<String, Object> entry : dataMap.entrySet()){
             String requestAttributeName = entry.getKey();
             Object requestAttributeValue = entry.getValue();
             //XXX seoViewCommandRequestAttributeName 优先
             //*************************如果有 seoViewCommandRequestAttributeName变量,那么log 并且直接跳出*****************************************
-            if (requestAttributeName.equals(seoViewCommandRequestAttributeName)) {
-                if (LOGGER.isInfoEnabled()) {
+            if (requestAttributeName.equals(seoViewCommandRequestAttributeName)){
+                if (LOGGER.isInfoEnabled()){
                     LOGGER.info(
                                     "find attributeName:[{}] in map,value is:{},break and go-on",
                                     seoViewCommandRequestAttributeName,
@@ -133,10 +124,10 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
             ///********************findSeoViewCommand*********************************
             SeoViewCommand seoViewCommand = findSeoViewCommand(requestAttributeName, requestAttributeValue);
 
-            if (null != seoViewCommand) {
+            if (null != seoViewCommand){
                 request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
 
-                if (LOGGER.isInfoEnabled()) {
+                if (LOGGER.isInfoEnabled()){
                     LOGGER.info(
                                     "set seoViewCommand to request,attributeName is:[{}],value is:{}",
                                     seoViewCommandRequestAttributeName,
@@ -148,14 +139,14 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
             }
         }
 
-        if (!isFindSeoViewCommand) {
+        if (!isFindSeoViewCommand){
             LOGGER.debug("can not find SeoViewCommand object in total request attribute");
 
             SeoViewCommand defaultSeoViewCommand = constructDefaultSeoViewCommand();
 
             request.setAttribute(seoViewCommandRequestAttributeName, defaultSeoViewCommand);
 
-            if (LOGGER.isInfoEnabled()) {
+            if (LOGGER.isInfoEnabled()){
                 LOGGER.info(
                                 "set defaultSeoViewCommand to request,attributeName is:[{}],value is:{}",
                                 seoViewCommandRequestAttributeName,
@@ -165,6 +156,31 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
 
         Date endDate = new Date();
         LOGGER.info("use time:{}", DateExtensionUtil.getIntervalForView(beginDate, endDate));
+    }
+
+    /**
+     * 获得 data map.
+     *
+     * @param request
+     *            the request
+     * @param modelAndView
+     *            the ModelAndView that the handler returned (can also be null) <br>
+     *            with the name of the view and the required model data, or null if the request has been handled directly
+     * @return the data map
+     */
+    private Map<String, Object> getDataMap(HttpServletRequest request,ModelAndView modelAndView){
+        if (null == modelAndView){
+            LOGGER.warn("modelAndView is null,request info:[{}]", JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
+        }
+        Map<String, Object> model = (null == modelAndView) ? null : modelAndView.getModel();
+        Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
+
+        //新创建个map对象, 这样操作不会影响原始数据
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.putAll(model);
+        map.putAll(attributeMap);
+
+        return map;
     }
 
     /**
@@ -191,7 +207,7 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
      * @return the seo view command
      */
     private SeoViewCommand findSeoViewCommand(String requestAttributeName,Object requestAttributeValue){
-        if (ClassUtil.isInstance(requestAttributeValue, SeoViewCommand.class)) {
+        if (ClassUtil.isInstance(requestAttributeValue, SeoViewCommand.class)){
             return (SeoViewCommand) requestAttributeValue;
         }
         return consttructSeoViewCommand(requestAttributeName, requestAttributeValue);

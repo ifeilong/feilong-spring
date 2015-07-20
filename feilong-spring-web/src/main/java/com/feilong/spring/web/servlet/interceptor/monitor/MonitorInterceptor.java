@@ -16,6 +16,7 @@
 package com.feilong.spring.web.servlet.interceptor.monitor;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -96,10 +97,6 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
                     throws Exception{
 
         if (handler instanceof HandlerMethod){
-
-            Map<String, Object> model = modelAndView.getModel();
-            Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
-
             RequestLogSwitch requestLogSwitch = new RequestLogSwitch();
             requestLogSwitch.setShowForwardInfos(true);
             //requestLogSwitch.setShowIncludeInfos(true);
@@ -115,13 +112,34 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
                 LOGGER.info(
                                 "RequestInfoMapForLog:{},request attribute keys:{},model keys:[{}],postHandle [{}.{}()], use time:[{}]",
                                 JsonUtil.format(requestInfoMapForLog),
-                                JsonUtil.format(new TreeSet(attributeMap.keySet())),
-                                JsonUtil.format(new TreeSet(model.keySet())),
+                                JsonUtil.format(new TreeSet(RequestUtil.getAttributeMap(request).keySet())),
+                                (null == modelAndView || null == modelAndView.getModel()) ? null : JsonUtil.format(new TreeSet(modelAndView
+                                                .getModel().keySet())),
                                 method.getDeclaringClass().getSimpleName(),
                                 method.getName(),
                                 DateExtensionUtil.getIntervalForView(splitTime));
             }
         }
+    }
+
+    /**
+     * 获得 data map.
+     *
+     * @param request
+     *            the request
+     * @param modelAndView
+     *            the ModelAndView that the handler returned (can also be null)
+     * @return the data map
+     */
+    private Map<String, Object> getDataMap(HttpServletRequest request,ModelAndView modelAndView){
+        Map<String, Object> model = (null == modelAndView) ? null : modelAndView.getModel();
+        Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
+
+        //新创建个map对象, 这样操作不会影响原始数据
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.putAll(model);
+        map.putAll(attributeMap);
+        return map;
     }
 
     /*
