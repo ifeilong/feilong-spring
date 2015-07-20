@@ -162,7 +162,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
 
         LinkedList<Serializable> linkedList = null;
         try{
-            linkedList = getBrowsingHistory(request);
+            linkedList = getBrowsingHistory(request, Serializable.class);
         }catch (Exception e){
             //如果出错了,那么就将cookie删掉
             CookieUtil.deleteCookie(cookieName, response);
@@ -224,8 +224,8 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
      * HttpServletRequest)
      */
     @Override
-    public LinkedList<Serializable> getBrowsingHistory(HttpServletRequest request){
-        LinkedList<Serializable> linkedList = new LinkedList<Serializable>();
+    public <T extends Serializable> LinkedList<T> getBrowsingHistory(HttpServletRequest request,Class<T> klass){
+        LinkedList<T> linkedList = new LinkedList<T>();
 
         Cookie cookie = CookieUtil.getCookie(request, cookieName);
 
@@ -237,7 +237,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
                     String decryptHex = symmetricEncryption.decryptHex(value, cookieCharsetName);
                     String[] tokenizeToStringArray = StringUtil.tokenizeToStringArray(decryptHex, DEFAULT_CONNECTOR);
                     for (String string : tokenizeToStringArray){
-                        linkedList.add(Long.parseLong(string));
+                        linkedList.add((T) StringUtil.toT(string, klass));
                     }
                 }catch (NumberFormatException e){
                     LOGGER.error("", e);

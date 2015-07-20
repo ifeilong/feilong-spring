@@ -40,13 +40,13 @@ import com.feilong.spring.web.servlet.interceptor.browsingHistory.command.Browsi
  * &#64;Controller
  * public class StdRecommendationEngineController {
  * 
- *     &#64;Autowired
- *     private BrowsingHistoryResolver browsingHistoryResolver;
+ *    &#64;Autowired
+ *    private BrowsingHistoryResolver browsingHistoryResolver;
  * 
  * &#64;RequestMapping("******")
- *     public ModelAndView doHandler(HttpServletRequest request,HttpServletResponse response){
- *         LinkedList<Serializable> browsingHistory = browsingHistoryResolver.getBrowsingHistory(request);
- *        ......
+ *    public ModelAndView doHandler(HttpServletRequest request,HttpServletResponse response){
+ *        LinkedList<Serializable> browsingHistory = browsingHistoryResolver.getBrowsingHistory(request);
+ *       ......
  * </pre>
  * 
  * 就可以很方便的得到历史浏览记录了
@@ -55,8 +55,8 @@ import com.feilong.spring.web.servlet.interceptor.browsingHistory.command.Browsi
  *
  * @author feilong
  * @version 1.2.2 2015年7月20日 下午6:44:27
- * @since 1.2.2
  * @see com.feilong.spring.web.servlet.interceptor.browsingHistory.BrowsingHistoryInterceptor
+ * @since 1.2.2
  */
 public interface BrowsingHistoryResolver{
 
@@ -75,11 +75,15 @@ public interface BrowsingHistoryResolver{
     /**
      * 获得 browsing history.
      *
+     * @param <T>
+     *            the generic type
      * @param request
      *            the request
+     * @param klass
+     *            the klass
      * @return the browsing history
      */
     //TODO 设置成  BrowsingHistoryCommand
-    LinkedList<Serializable> getBrowsingHistory(HttpServletRequest request);
+    <T extends Serializable> LinkedList<T> getBrowsingHistory(HttpServletRequest request,Class<T> klass);
 
 }
