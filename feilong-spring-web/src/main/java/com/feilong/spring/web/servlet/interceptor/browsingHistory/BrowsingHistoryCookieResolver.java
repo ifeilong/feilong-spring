@@ -160,34 +160,36 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
 
         Serializable id = browsingHistoryCommand.getId();
 
-        LinkedList<Serializable> linkedList = null;
+        LinkedList<String> linkedList = null;
         try{
-            linkedList = getBrowsingHistory(request, Serializable.class);
+            linkedList = getBrowsingHistory(request, String.class);
         }catch (Exception e){
             //如果出错了,那么就将cookie删掉
             CookieUtil.deleteCookie(cookieName, response);
         }
 
         //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
+        String idStr = id.toString();
         if (Validator.isNullOrEmpty(linkedList)){
-            linkedList = new LinkedList<Serializable>();
+            linkedList = new LinkedList<String>();
             //如果没有 添加一个
-            linkedList.add(id);
+            linkedList.add(idStr);
         }else{
             @SuppressWarnings("null")
-            Serializable first = linkedList.getFirst();
+            String first = linkedList.getFirst();
             //如果 list 里面的数据 第一个是当前item  那么一般表示刷新页面 或者重新打开新窗口
             //这种case 没有必要操作 cookie
-            if (first.equals(id)){
+            if (first.equals(idStr)){
                 LOGGER.info("in cookie,first pk is:[{}],current pk:[{}], nothing to do", first, id);
                 return null;
             }
 
             //如果有当前商品,那么删除掉 并将 当前的item id 塞第一个
-            if (linkedList.contains(id)){
-                linkedList.remove(id);
+            if (linkedList.contains(idStr)){
+                LOGGER.info("in cookie,linkedList:[{}],contains:[{}],remove it~", linkedList, idStr);
+                linkedList.remove(idStr);
             }
-            linkedList.addFirst(id);
+            linkedList.addFirst(idStr);
 
             //如果超长了 ,截取
             int size = linkedList.size();
@@ -197,9 +199,9 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
                 }
 
                 // so non-structural changes in the returned list
-                List<Serializable> subList = linkedList.subList(0, maxCount);
+                List<String> subList = linkedList.subList(0, maxCount);
                 //linkedList = (LinkedList<Serializable>) subList;  //java.util.SubList cannot be cast to java.util.LinkedList
-                linkedList = new LinkedList<Serializable>(subList);
+                linkedList = new LinkedList<String>(subList);
             }
         }
 
@@ -237,7 +239,8 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
                     String decryptHex = symmetricEncryption.decryptHex(value, cookieCharsetName);
                     String[] tokenizeToStringArray = StringUtil.tokenizeToStringArray(decryptHex, DEFAULT_CONNECTOR);
                     for (String string : tokenizeToStringArray){
-                        linkedList.add((T) StringUtil.toT(string, klass));
+                        //TODO
+                        linkedList.add(StringUtil.toT(string, klass));
                     }
                 }catch (NumberFormatException e){
                     LOGGER.error("", e);
