@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,7 +33,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.core.date.DateExtensionUtil;
+import com.feilong.core.date.TimeInterval;
+import com.feilong.core.log.Slf4jUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
+import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
 
@@ -52,10 +56,13 @@ import com.feilong.servlet.http.entity.RequestLogSwitch;
 public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ordered{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MonitorInterceptor.class);
+    private static final Logger  LOGGER                = LoggerFactory.getLogger(MonitorInterceptor.class);
 
-    /** The stop watch. */
-    private StopWatch           stopWatch;
+    /** 性能阀值<code>{@value}</code>,目前初步设置为1.5s,如果构建command 超过1.5s,会有 error log 记录. */
+    private static final Integer PERFORMANCE_THRESHOLD = (int) (TimeInterval.MILLISECOND_PER_SECONDS * 1.5);
+
+    /** The Constant STOPWATCH_ATTRIBUTE. */
+    private static final String  STOPWATCH_ATTRIBUTE   = MonitorInterceptor.class.getName() + ".stopWatch";
 
     /*
      * (non-Javadoc)
@@ -65,8 +72,10 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
      */
     @Override
     public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
-        stopWatch = new StopWatch();
+        StopWatch stopWatch = new StopWatch();
         stopWatch.start();
+
+        request.setAttribute(STOPWATCH_ATTRIBUTE, stopWatch);
 
         if (LOGGER.isDebugEnabled()){
 
@@ -74,13 +83,15 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
 
             RequestLogSwitch requestLogSwitch = new RequestLogSwitch();
             requestLogSwitch.setShowForwardInfos(true);
-            //requestLogSwitch.setShowIncludeInfos(true);
-            //requestLogSwitch.setShowURLs(true);
+
             Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
-            LOGGER.debug(
-                            "RequestInfoMapForLog:{},request attribute keys:{},start StopWatch",
-                            JsonUtil.format(requestInfoMapForLog),
-                            JsonUtil.format(new TreeSet(attributeMap.keySet())));
+
+            if (LOGGER.isDebugEnabled()){
+                LOGGER.debug(
+                                "RequestInfoMapForLog:{},request attribute keys:{},start StopWatch",
+                                JsonUtil.format(requestInfoMapForLog),
+                                JsonUtil.format(new TreeSet(attributeMap.keySet())));
+            }
         }
 
         return super.preHandle(request, response, handler);
@@ -102,22 +113,54 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
             //requestLogSwitch.setShowIncludeInfos(true);
             //requestLogSwitch.setShowURLs(true);
             Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
-            if (LOGGER.isInfoEnabled()){
-                stopWatch.split();
-                long splitTime = stopWatch.getSplitTime();
 
-                HandlerMethod handlerMethod = (HandlerMethod) handler;
-                Method method = handlerMethod.getMethod();
+            StopWatch stopWatch = (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
+            stopWatch.split();
+            long useTime = stopWatch.getSplitTime();
+
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            Method method = handlerMethod.getMethod();
+            String methodName = method.getName();
+            String className = method.getDeclaringClass().getSimpleName();
+
+            if (LOGGER.isInfoEnabled()){
+                String customerLog = "";
+                if (Validator.isNotNullOrEmpty(modelAndView)){
+                    String modelMapKeys = null == modelAndView.getModel() ? null : JsonUtil.format(new TreeSet(modelAndView.getModel()
+                                    .keySet()));
+                    String viewName = Validator.isNullOrEmpty(modelAndView.getView()) ? modelAndView.getViewName() : modelAndView.getView()
+                                    .toString();
+                    customerLog = Slf4jUtil.formatMessage("model keys:[{}],view:[{}]", modelMapKeys, viewName);
+                }else{
+                    customerLog = "modelAndView is null!!";
+                }
 
                 LOGGER.info(
-                                "RequestInfoMapForLog:{},request attribute keys:{},model keys:[{}],postHandle [{}.{}()], use time:[{}]",
+                                "RequestInfoMapForLog:{},request attribute keys:{},customerLog:[{}],\n postHandle [{}.{}()] ",
                                 JsonUtil.format(requestInfoMapForLog),
                                 JsonUtil.format(new TreeSet(RequestUtil.getAttributeMap(request).keySet())),
-                                (null == modelAndView || null == modelAndView.getModel()) ? null : JsonUtil.format(new TreeSet(modelAndView
-                                                .getModel().keySet())),
-                                method.getDeclaringClass().getSimpleName(),
-                                method.getName(),
-                                DateExtensionUtil.getIntervalForView(splitTime));
+                                customerLog,
+                                className,
+                                methodName);
+            }
+
+            //**********************************************************************************
+            boolean isMoreThanPerformanceThreshold = useTime > PERFORMANCE_THRESHOLD;
+            String message = Slf4jUtil.formatMessage(
+                            " [{}.{}()], use time:[{}],[{}] PERFORMANCE_THRESHOLD:[{}]",
+                            className,
+                            methodName,
+                            DateExtensionUtil.getIntervalForView(useTime),
+                            isMoreThanPerformanceThreshold ? ">" : "<=",
+                            PERFORMANCE_THRESHOLD);
+
+            //如果超过阀值, 那么以error的形式记录
+            if (isMoreThanPerformanceThreshold){
+                ServletContext servletContext = request.getSession().getServletContext();
+                servletContext.log(message);
+                LOGGER.error(message);
+            }else{
+                LOGGER.info(message);
             }
         }
     }
@@ -151,16 +194,19 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
     @Override
     public void afterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
         if (handler instanceof HandlerMethod){
+            StopWatch stopWatch = (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
             stopWatch.split();
             long splitTime = stopWatch.getSplitTime();
 
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-            LOGGER.info(
-                            "afterConcurrentHandlingStarted [{}.{}()], use time:[{}]",
-                            method.getDeclaringClass().getSimpleName(),
-                            method.getName(),
-                            DateExtensionUtil.getIntervalForView(splitTime));
+            if (LOGGER.isInfoEnabled()){
+                HandlerMethod handlerMethod = (HandlerMethod) handler;
+                Method method = handlerMethod.getMethod();
+                LOGGER.info(
+                                "afterConcurrentHandlingStarted [{}.{}()], use time:[{}]",
+                                method.getDeclaringClass().getSimpleName(),
+                                method.getName(),
+                                DateExtensionUtil.getIntervalForView(splitTime));
+            }
         }
     }
 
@@ -173,20 +219,32 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
     @Override
     public void afterCompletion(HttpServletRequest request,HttpServletResponse response,Object handler,Exception ex) throws Exception{
         if (handler instanceof HandlerMethod){
-            stopWatch.split();
-            long splitTime = stopWatch.getSplitTime();
+            StopWatch stopWatch = (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
 
-            stopWatch.stop();
-            long time = stopWatch.getTime();
+            if (null == stopWatch || stopWatch.isStopped()){
+                String message = Slf4jUtil.formatMessage(
+                                "stopWatch is null or stopWatch isStopped!!,request info is:{}",
+                                RequestUtil.getRequestInfoMapForLog(request));
+                LOGGER.error(message);
+                request.getSession().getServletContext().log("[" + MonitorInterceptor.class.getSimpleName() + "]," + message);
+            }else{
+                stopWatch.split();
+                long splitTime = stopWatch.getSplitTime();
 
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-            LOGGER.info(
-                            "afterCompletion [{}.{}()], use time:[{}],total time:[{}]",
-                            method.getDeclaringClass().getSimpleName(),
-                            method.getName(),
-                            DateExtensionUtil.getIntervalForView(splitTime),
-                            DateExtensionUtil.getIntervalForView(time));
+                stopWatch.stop();
+                long time = stopWatch.getTime();
+
+                if (LOGGER.isInfoEnabled()){
+                    HandlerMethod handlerMethod = (HandlerMethod) handler;
+                    Method method = handlerMethod.getMethod();
+                    LOGGER.info(
+                                    "afterCompletion [{}.{}()], use time:[{}],total time:[{}]",
+                                    method.getDeclaringClass().getSimpleName(),
+                                    method.getName(),
+                                    DateExtensionUtil.getIntervalForView(splitTime),
+                                    DateExtensionUtil.getIntervalForView(time));
+                }
+            }
         }
     }
 

@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.date.TimeInterval;
 import com.feilong.core.io.CharsetType;
 import com.feilong.core.log.Slf4jUtil;
@@ -240,7 +241,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
                     String[] tokenizeToStringArray = StringUtil.tokenizeToStringArray(decryptHex, DEFAULT_CONNECTOR);
                     for (String string : tokenizeToStringArray){
                         //TODO
-                        linkedList.add(StringUtil.toT(string, klass));
+                        linkedList.add(ConvertUtil.toT(string, klass));
                     }
                 }catch (NumberFormatException e){
                     LOGGER.error("", e);
