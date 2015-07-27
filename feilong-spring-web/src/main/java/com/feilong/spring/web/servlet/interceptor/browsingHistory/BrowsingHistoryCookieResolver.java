@@ -240,8 +240,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
                     String decryptHex = symmetricEncryption.decryptHex(value, cookieCharsetName);
                     String[] tokenizeToStringArray = StringUtil.tokenizeToStringArray(decryptHex, DEFAULT_CONNECTOR);
                     for (String string : tokenizeToStringArray){
-                        //TODO
-                        linkedList.add(ConvertUtil.toT(string, klass));
+                        linkedList.add(ConvertUtil.convert(string, klass));
                     }
                 }catch (NumberFormatException e){
                     LOGGER.error("", e);
