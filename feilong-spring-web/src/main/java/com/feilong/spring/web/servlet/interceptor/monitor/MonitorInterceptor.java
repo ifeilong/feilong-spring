@@ -39,6 +39,7 @@ import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
+import com.feilong.spring.web.servlet.handler.HandlerMappingUtil;
 
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
@@ -88,12 +89,12 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
 
             if (LOGGER.isDebugEnabled()){
                 LOGGER.debug(
-                                "RequestInfoMapForLog:{},request attribute keys:{},start StopWatch",
+                                "RequestInfoMapForLog:{},request attribute keys:{},spring VARIABLES map info:{},start StopWatch",
                                 JsonUtil.format(requestInfoMapForLog),
-                                JsonUtil.format(new TreeSet(attributeMap.keySet())));
+                                JsonUtil.format(new TreeSet<String>(attributeMap.keySet())),
+                                JsonUtil.format(HandlerMappingUtil.getHandlerMappingVariablesInfoForLog(request)));
             }
         }
-
         return super.preHandle(request, response, handler);
     }
 
@@ -126,8 +127,8 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
             if (LOGGER.isInfoEnabled()){
                 String customerLog = "";
                 if (Validator.isNotNullOrEmpty(modelAndView)){
-                    String modelMapKeys = null == modelAndView.getModel() ? null : JsonUtil.format(new TreeSet(modelAndView.getModel()
-                                    .keySet()));
+                    String modelMapKeys = null == modelAndView.getModel() ? null : JsonUtil.format(new TreeSet<String>(modelAndView
+                                    .getModel().keySet()));
                     String viewName = Validator.isNullOrEmpty(modelAndView.getView()) ? modelAndView.getViewName() : modelAndView.getView()
                                     .toString();
                     customerLog = Slf4jUtil.formatMessage("model keys:[{}],view:[{}]", modelMapKeys, viewName);
@@ -138,7 +139,7 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
                 LOGGER.info(
                                 "RequestInfoMapForLog:{},request attribute keys:{},customerLog:[{}],\n postHandle [{}.{}()] ",
                                 JsonUtil.format(requestInfoMapForLog),
-                                JsonUtil.format(new TreeSet(RequestUtil.getAttributeMap(request).keySet())),
+                                JsonUtil.format(new TreeSet<String>(RequestUtil.getAttributeMap(request).keySet())),
                                 customerLog,
                                 className,
                                 methodName);
@@ -156,9 +157,9 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
 
             //如果超过阀值, 那么以error的形式记录
             if (isMoreThanPerformanceThreshold){
+                LOGGER.error(message);
                 ServletContext servletContext = request.getSession().getServletContext();
                 servletContext.log(message);
-                LOGGER.error(message);
             }else{
                 LOGGER.info(message);
             }

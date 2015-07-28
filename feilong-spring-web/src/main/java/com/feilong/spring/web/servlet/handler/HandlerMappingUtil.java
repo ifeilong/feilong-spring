@@ -18,6 +18,7 @@ package com.feilong.spring.web.servlet.handler;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -70,34 +72,47 @@ import com.feilong.spring.web.util.WebSpringUtil;
  *
  * @author feilong
  * @version 1.2.0 2015年5月15日 下午9:56:33
- * @since 1.2.0
  * @see org.springframework.web.servlet.HandlerMapping
  * @see org.springframework.web.servlet.handler.AbstractHandlerMethodMapping
  * @see org.springframework.web.servlet.handler.AbstractUrlHandlerMapping
- * 
  * @see org.springframework.web.servlet.HandlerExecutionChain
- * 
  * @see org.springframework.web.servlet.HandlerAdapter
- * 
  * @see org.springframework.web.bind.annotation.RequestMapping
  * @see org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping#handleMatch(RequestMappingInfo, String,
  *      HttpServletRequest)
- * 
  * @see org.springframework.web.servlet.HandlerMapping#PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE
  * @see org.springframework.web.servlet.HandlerMapping#BEST_MATCHING_PATTERN_ATTRIBUTE
  * @see org.springframework.web.servlet.HandlerMapping#URI_TEMPLATE_VARIABLES_ATTRIBUTE
  * @see org.springframework.web.servlet.HandlerMapping#MATRIX_VARIABLES_ATTRIBUTE
  * @see org.springframework.web.servlet.HandlerMapping#PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE
- * 
  * @see org.springframework.web.servlet.HandlerMapping#getHandler(HttpServletRequest)
  * @see org.springframework.web.servlet.handler.AbstractHandlerMapping#getHandler(HttpServletRequest)
- * 
  * @see org.springframework.web.servlet.handler.AbstractHandlerMethodMapping#lookupHandlerMethod(String, HttpServletRequest)
+ * @since 1.2.0
  */
 public class HandlerMappingUtil{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(HandlerMappingUtil.class);
+
+    /**
+     * 获得 handler mapping variables info for log.
+     *
+     * @param request
+     *            the request
+     * @return the handler mapping variables info for log
+     * @since 1.3.0
+     */
+    public final static Map<String, Object> getHandlerMappingVariablesInfoForLog(HttpServletRequest request){
+        Map<String, Object> map = new TreeMap<String, Object>();
+        map.put("bestMatchingPattern", request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE));
+        map.put("introspectTypeLevelMapping", request.getAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING));
+        map.put("matrixVariables", request.getAttribute(HandlerMapping.MATRIX_VARIABLES_ATTRIBUTE));
+        map.put("pathWithinHandlerMapping", request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE));
+        map.put("producibleMediaTypes", request.getAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE));
+        map.put("uriTemplateVariables", request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
+        return map;
+    }
 
     /**
      * 获得 request mapping handler mapping info map for LOGGER.
