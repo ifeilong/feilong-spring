@@ -39,7 +39,6 @@ import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
-import com.feilong.spring.web.servlet.handler.HandlerMappingUtil;
 
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
@@ -79,9 +78,6 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
         request.setAttribute(STOPWATCH_ATTRIBUTE, stopWatch);
 
         if (LOGGER.isDebugEnabled()){
-
-            Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
-
             RequestLogSwitch requestLogSwitch = new RequestLogSwitch();
             requestLogSwitch.setShowForwardInfos(true);
 
@@ -89,10 +85,9 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
 
             if (LOGGER.isDebugEnabled()){
                 LOGGER.debug(
-                                "RequestInfoMapForLog:{},request attribute keys:{},spring VARIABLES map info:{},start StopWatch",
+                                "RequestInfoMapForLog:{},request attribute keys:{},start StopWatch",
                                 JsonUtil.format(requestInfoMapForLog),
-                                JsonUtil.format(new TreeSet<String>(attributeMap.keySet())),
-                                JsonUtil.format(HandlerMappingUtil.getHandlerMappingVariablesInfoForLog(request)));
+                                JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request)));
             }
         }
         return super.preHandle(request, response, handler);
@@ -111,8 +106,7 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
         if (handler instanceof HandlerMethod){
             RequestLogSwitch requestLogSwitch = new RequestLogSwitch();
             requestLogSwitch.setShowForwardInfos(true);
-            //requestLogSwitch.setShowIncludeInfos(true);
-            //requestLogSwitch.setShowURLs(true);
+
             Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
 
             StopWatch stopWatch = (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
@@ -139,7 +133,7 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
                 LOGGER.info(
                                 "RequestInfoMapForLog:{},request attribute keys:{},customerLog:[{}],\n postHandle [{}.{}()] ",
                                 JsonUtil.format(requestInfoMapForLog),
-                                JsonUtil.format(new TreeSet<String>(RequestUtil.getAttributeMap(request).keySet())),
+                                JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request)),
                                 customerLog,
                                 className,
                                 methodName);
