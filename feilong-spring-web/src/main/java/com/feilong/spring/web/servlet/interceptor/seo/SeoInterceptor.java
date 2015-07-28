@@ -127,8 +127,8 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
             if (null != seoViewCommand){
                 request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
 
-                if (LOGGER.isInfoEnabled()){
-                    LOGGER.info(
+                if (LOGGER.isDebugEnabled()){
+                    LOGGER.debug(
                                     "set seoViewCommand to request,attributeName is:[{}],value is:{}",
                                     seoViewCommandRequestAttributeName,
                                     JsonUtil.format(seoViewCommand));
@@ -144,8 +144,8 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
 
             request.setAttribute(seoViewCommandRequestAttributeName, defaultSeoViewCommand);
 
-            if (LOGGER.isInfoEnabled()){
-                LOGGER.info(
+            if (LOGGER.isDebugEnabled()){
+                LOGGER.debug(
                                 "can not find SeoViewCommand object in total data map,set defaultSeoViewCommand to request,attributeName is:[{}],value is:{}",
                                 seoViewCommandRequestAttributeName,
                                 JsonUtil.format(defaultSeoViewCommand));
