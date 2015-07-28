@@ -91,7 +91,7 @@ public class JavaMailSenderUtil{
             public void prepare(MimeMessage mimeMessage) throws Exception{
                 // 这是一个生成Mime邮件简单工具，如果不使用GBK这个，中文会出现乱码
                 // 如果您使用的都是英文，那么可以使用MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                String encoding = CharsetType.GBK;
+                String encoding = CharsetType.UTF8;
                 MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, encoding);
                 // 设置接收方的email地址
                 mimeMessageHelper.setTo(mailTo);
@@ -142,7 +142,7 @@ public class JavaMailSenderUtil{
         try{
             mimeMessageHelper.setTo(to);
             mimeMessageHelper.setSubject(subject);
-            String encodeText = MimeUtility.encodeText("三国徐晃", CharsetType.GBK, "B");
+            String encodeText = MimeUtility.encodeText("三国徐晃", CharsetType.UTF8, "B");
             mimeMessageHelper.setFrom(new InternetAddress("sanguoxuhuang@163.com", encodeText));
             mimeMessageHelper.setText(text, true);
         }catch (UnsupportedEncodingException e){
