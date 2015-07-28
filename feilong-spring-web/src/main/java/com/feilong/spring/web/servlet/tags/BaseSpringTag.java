@@ -51,11 +51,9 @@ public abstract class BaseSpringTag extends RequestContextAwareTag{
      * 标签开始.
      *
      * @return the int
-     * @throws UncheckedIOException
-     *             the unchecked io exception
      */
     @Override
-    public int doStartTagInternal() throws UncheckedIOException{
+    public int doStartTagInternal(){
         JspWriter jspWriter = pageContext.getOut();// 重要
         try{
             jspWriter.println(this.writeContent());
