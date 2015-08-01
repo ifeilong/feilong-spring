@@ -48,7 +48,7 @@ import com.feilong.servlet.http.RequestUtil;
  * </blockquote>
  * 
  * @author feilong
- * @version 1.0 2012-5-22 上午11:24:41
+ * @version 1.0.4 2012-5-22 上午11:24:41
  * @see org.springframework.util.AntPathMatcher
  * @see org.springframework.web.servlet.HandlerMapping#URI_TEMPLATE_VARIABLES_ATTRIBUTE
  * @see org.springframework.web.servlet.handler.AbstractUrlHandlerMapping#exposeUriTemplateVariables(Map, HttpServletRequest)
@@ -75,12 +75,11 @@ public class UriTemplateUtil{
         if (uriTemplateVariables == null || !uriTemplateVariables.containsKey(pathVarName)){
             throw new IllegalStateException("Could not find @PathVariable [" + pathVarName + "] in @RequestMapping");
         }
-        String value = uriTemplateVariables.get(pathVarName);
-        return value;
+        return uriTemplateVariables.get(pathVarName);
     }
 
     /**
-     * 判断模板请求里面 是否有指定的 变量名称.
+     * 判断模板请求里面是否有指定的变量名称.
      * 
      * @param request
      *            the request
@@ -91,10 +90,7 @@ public class UriTemplateUtil{
      */
     public static boolean hasPathVarName(HttpServletRequest request,String pathVarName){
         Map<String, String> uriTemplateVariables = getUriTemplateVariables(request);
-        if (uriTemplateVariables == null || !uriTemplateVariables.containsKey(pathVarName)){
-            return false;
-        }
-        return true;
+        return null != uriTemplateVariables && uriTemplateVariables.containsKey(pathVarName);
     }
 
     /**
@@ -109,11 +105,9 @@ public class UriTemplateUtil{
      * @return request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE)
      * @see org.springframework.web.servlet.HandlerMapping#URI_TEMPLATE_VARIABLES_ATTRIBUTE
      */
+    @SuppressWarnings("unchecked")
     public static Map<String, String> getUriTemplateVariables(HttpServletRequest request){
-        @SuppressWarnings("unchecked")
-        Map<String, String> uriTemplateVariables = (Map<String, String>) request
-                        .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-        return uriTemplateVariables;
+        return (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
     }
 
     /**
@@ -125,8 +119,7 @@ public class UriTemplateUtil{
      * @see org.springframework.web.servlet.HandlerMapping#BEST_MATCHING_PATTERN_ATTRIBUTE
      */
     public static String getBestMatchingPattern(HttpServletRequest request){
-        String bestMatchingPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
-        return bestMatchingPattern;
+        return (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
     }
 
     /**
@@ -206,8 +199,7 @@ public class UriTemplateUtil{
     public static Map<String, String> extractUriTemplateVariables(String requestPath,String matchingPatternPath){
         LOGGER.debug("the param requestPath:{}", requestPath);
         PathMatcher matcher = new AntPathMatcher();
-        Map<String, String> map = matcher.extractUriTemplateVariables(matchingPatternPath, requestPath);
-        return map;
+        return matcher.extractUriTemplateVariables(matchingPatternPath, requestPath);
     }
 
     /**
@@ -357,7 +349,6 @@ public class UriTemplateUtil{
      */
     public static List<String> getVariableNames(String uriTemplatePath){
         UriTemplate uriTemplate = new UriTemplate(uriTemplatePath);
-        List<String> variableNames = uriTemplate.getVariableNames();
-        return variableNames;
+        return uriTemplate.getVariableNames();
     }
 }

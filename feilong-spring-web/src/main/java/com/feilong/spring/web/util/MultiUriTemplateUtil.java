@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.web.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,17 +26,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.feilong.core.tools.jsonlib.JsonUtil;
+import com.feilong.core.util.ArrayUtil;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.core.util.ToStringConfig;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
 
 /**
- * MultiUriTemplateUtil,某些商城筛选条件可以是多值,比如 既是 儿童 又是 男子<br>
- * 此时url 应该是混合式的 而不是覆盖.
+ * MultiUriTemplateUtil,某些商城筛选条件可以是多值,比如 既是 儿童 又是 男子,此时url应该是混合式的而不是覆盖.
  * 
  * @author feilong
- * @version 1.0 2012-5-22 上午11:24:41
+ * @version 1.0.4 2012-5-22 上午11:24:41
  */
 public class MultiUriTemplateUtil{
 
@@ -46,8 +44,11 @@ public class MultiUriTemplateUtil{
     private static final Logger LOGGER = LoggerFactory.getLogger(MultiUriTemplateUtil.class);
 
     /**
-     * 自动寻找matchingPatternPath 扩充模板值<br>
+     * 自动寻找matchingPatternPath 扩充模板值.
+     * 
+     * <p>
      * urlPathHelper.getOriginatingContextPath(request) + expandUrl + (Validator.isNotNull(queryString) ? "?" + queryString : "");
+     * <p>
      * 
      * @param request
      *            the request
@@ -76,7 +77,7 @@ public class MultiUriTemplateUtil{
     }
 
     /**
-     * 多值,扩充模板值
+     * 多值,扩充模板值.
      * 
      * <pre>
      * String requestPath = "/s/c-m-c-s-k-s100-o.htm";
@@ -119,7 +120,7 @@ public class MultiUriTemplateUtil{
     }
 
     /**
-     * 多值,扩充模板值
+     * 多值,扩充模板值.
      * 
      * <pre>
      * 
@@ -164,8 +165,8 @@ public class MultiUriTemplateUtil{
             map.put(variableName, value);
         }else{
             String[] oldValues = oldValue.split(valueSeparator);
-            // Arrays.asList(oldValues)如果 直接使用 Arrays.asList(oldValues) 下面一行 会抛出java.lang.UnsupportedOperationException
-            List<String> list = new ArrayList<String>(Arrays.asList(oldValues));
+
+            List<String> list = ArrayUtil.toList(oldValues);
 
             // 保证重复的value 不会被反复添加
             if (list.contains(value)){
@@ -180,7 +181,7 @@ public class MultiUriTemplateUtil{
     }
 
     /**
-     * 将一个值 从一个变量多值中以除掉
+     * 将一个值从一个变量多值中以除掉.
      * 
      * <pre>
      * String requestPath = &quot;/s/c-m-c-s-k-s<span style="color:red">500,100,200,9000</span>-o.htm&quot;;
@@ -217,32 +218,31 @@ public class MultiUriTemplateUtil{
                     String value,
                     String valueSeparator){
         Map<String, String> map = UriTemplateUtil.extractUriTemplateVariables(requestPath, matchingPatternPath);
-
         String oldValue = map.get(variableName);
         // 如果没有值
         if (Validator.isNullOrEmpty(oldValue)){
             Object[] objects = { requestPath, matchingPatternPath, variableName };
             LOGGER.debug("the requestPath:{},matchingPatternPath:{},variableName:{},value is null or empty~~~", objects);
-        }else{
-            String[] oldValues = oldValue.split(valueSeparator);
-
-            // Arrays.asList(oldValues)如果 直接使用 Arrays.asList(oldValues) 下面一行 会抛出java.lang.UnsupportedOperationException
-            List<String> list = new ArrayList<String>(Arrays.asList(oldValues));
-
-            // 如果值里面有 就移除
-            if (list.contains(value)){
-                list.remove(value);
-
-                ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-                map.put(variableName, CollectionsUtil.toString(list, toStringConfig));
-
-                return UriTemplateUtil.expand(matchingPatternPath, map);
-            }else{
-                Object[] objects = { requestPath, matchingPatternPath, variableName, oldValue, value };
-                LOGGER.debug("the requestPath:{},matchingPatternPath:{},variableName:{},oldValue:{},not contains({})~~~", objects);
-            }
+            // 原样输出
+            return requestPath;
         }
-        // 原样输出
-        return requestPath;
+
+        String[] oldValues = oldValue.split(valueSeparator);
+        List<String> list = ArrayUtil.toList(oldValues);
+
+        if (!list.contains(value)){
+            Object[] objects = { requestPath, matchingPatternPath, variableName, oldValue, value };
+            LOGGER.debug("the requestPath:{},matchingPatternPath:{},variableName:{},oldValue:{},not contains({})~~~", objects);
+            // 原样输出
+            return requestPath;
+        }
+
+        // 如果值里面有 就移除
+        list.remove(value);
+
+        ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
+        map.put(variableName, CollectionsUtil.toString(list, toStringConfig));
+
+        return UriTemplateUtil.expand(matchingPatternPath, map);
     }
 }
