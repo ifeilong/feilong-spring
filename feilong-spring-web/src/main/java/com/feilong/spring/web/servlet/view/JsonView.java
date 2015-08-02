@@ -25,8 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.view.AbstractView;
 
-import com.feilong.core.io.CharsetType;
 import com.feilong.core.io.MimeType;
+import com.feilong.core.lang.CharsetType;
 import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.ResponseUtil;

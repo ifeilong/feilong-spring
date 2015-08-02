@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.date.TimeInterval;
-import com.feilong.core.io.CharsetType;
+import com.feilong.core.lang.CharsetType;
 import com.feilong.core.lang.StringUtil;
 import com.feilong.core.lang.entity.ToStringConfig;
 import com.feilong.core.tools.slf4j.Slf4jUtil;
