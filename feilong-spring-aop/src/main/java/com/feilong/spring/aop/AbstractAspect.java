@@ -20,13 +20,13 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 
-import com.feilong.core.util.ArrayUtil;
 import com.feilong.core.util.Validator;
 
 /**
@@ -68,7 +68,7 @@ public abstract class AbstractAspect implements Ordered{
 
         // ElementType.METHOD
         // 是否支持方法级别ElementType.METHOD的annotation
-        boolean isMethodAnnotation = ArrayUtil.isContain(elementTypes, ElementType.METHOD);
+        boolean isMethodAnnotation = ArrayUtils.contains(elementTypes, ElementType.METHOD);
         if (isMethodAnnotation){
 
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -83,7 +83,7 @@ public abstract class AbstractAspect implements Ordered{
         // ElementType.TYPE
         if (null == annotation){
             // 是否支持 类型级别ElementType.TYPE的annotation
-            boolean isTypeAnnotation = ArrayUtil.isContain(elementTypes, ElementType.TYPE);
+            boolean isTypeAnnotation = ArrayUtils.contains(elementTypes, ElementType.TYPE);
             if (isTypeAnnotation){
                 Object target = joinPoint.getTarget();
                 // 运行期间 实现类的 类型
