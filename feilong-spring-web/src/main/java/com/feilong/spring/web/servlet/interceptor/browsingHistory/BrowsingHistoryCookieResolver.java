@@ -31,7 +31,7 @@ import com.feilong.core.date.TimeInterval;
 import com.feilong.core.io.CharsetType;
 import com.feilong.core.lang.StringUtil;
 import com.feilong.core.lang.entity.ToStringConfig;
-import com.feilong.core.log.Slf4jUtil;
+import com.feilong.core.tools.slf4j.Slf4jUtil;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.CookieUtil;

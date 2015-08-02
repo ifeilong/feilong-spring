@@ -28,7 +28,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.feilong.core.io.UncheckedIOException;
-import com.feilong.core.log.Slf4jUtil;
+import com.feilong.core.tools.slf4j.Slf4jUtil;
 import com.feilong.spring.web.util.WebSpringUtil;
 
 /**
