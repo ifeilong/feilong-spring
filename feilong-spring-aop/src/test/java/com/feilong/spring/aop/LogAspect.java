@@ -26,7 +26,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
 import com.feilong.core.date.DateExtensionUtil;
-import com.feilong.core.util.StringUtil;
+import com.feilong.core.lang.StringUtil;
 
 /**
  * 日志切面 aspect.
