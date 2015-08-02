@@ -54,5 +54,12 @@ public interface MemberManager extends ReadWriteSupport{
      */
     void addUser(String name);
 
+    /**
+     * 获得 user exclude json exception.
+     *
+     * @param inputStream
+     *            the input stream
+     * @return the user exclude json exception
+     */
     User getUserExcludeJsonException(Object inputStream);
 }

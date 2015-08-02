@@ -51,10 +51,17 @@ public class MemberManagerTest //extends AbstractJUnit4SpringContextTests
     @Autowired
     private SalesOrderManager salesOrderManager;
 
+    /** The data source. */
     @Autowired()
     @Qualifier("readSource")
     private DataSource        dataSource;
 
+    /**
+     * Test get user exclude json exception.
+     *
+     * @throws SQLException
+     *             the SQL exception
+     */
     @Test
     public final void testGetUserExcludeJsonException() throws SQLException{
         Connection object = DataSourceUtils.doGetConnection(dataSource);

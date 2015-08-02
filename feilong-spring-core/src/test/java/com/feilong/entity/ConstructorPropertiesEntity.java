@@ -18,6 +18,7 @@ package com.feilong.entity;
 import java.beans.ConstructorProperties;
 
 /**
+ * The Class ConstructorPropertiesEntity.
  *
  * @author feilong
  * @version 1.1.1 2015年4月10日 上午2:08:42
@@ -25,12 +26,19 @@ import java.beans.ConstructorProperties;
  */
 public class ConstructorPropertiesEntity{
 
+    /** The name. */
     private final String  name;
 
+    /** The age. */
     private final Integer age;
 
     /**
-     * 
+     * The Constructor.
+     *
+     * @param name
+     *            the name
+     * @param age
+     *            the age
      */
     @ConstructorProperties({ "name", "age" })
     public ConstructorPropertiesEntity(String name, Integer age){

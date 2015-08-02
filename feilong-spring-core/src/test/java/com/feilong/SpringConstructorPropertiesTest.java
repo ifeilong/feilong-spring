@@ -26,6 +26,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.entity.ConstructorPropertiesEntity;
 
+/**
+ * The Class SpringConstructorPropertiesTest.
+ */
 @ContextConfiguration(locations = { "classpath:spring-DI-ConstructorProperties.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SpringConstructorPropertiesTest{
@@ -33,6 +36,7 @@ public class SpringConstructorPropertiesTest{
     /** The Constant LOGGER. */
     private static final Logger         LOGGER = LoggerFactory.getLogger(SpringConstructorPropertiesTest.class);
 
+    /** The constructor properties entity. */
     @Autowired
     private ConstructorPropertiesEntity constructorPropertiesEntity;
 

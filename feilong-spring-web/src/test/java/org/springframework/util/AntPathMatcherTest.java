@@ -36,6 +36,7 @@ public class AntPathMatcherTest{
     /** The Constant LOGGER. */
     private static final Logger      LOGGER       = LoggerFactory.getLogger(AntPathMatcherTest.class);
 
+    /** The Constant PATH_MATCHER. */
     private static final PathMatcher PATH_MATCHER = new AntPathMatcher();
 
     /**
@@ -71,6 +72,9 @@ public class AntPathMatcherTest{
         // LOGGER.info(uriComponents.toString());
     }
 
+    /**
+     * Test match1.
+     */
     @Test
     public void testMatch1(){
         LOGGER.info("" + PATH_MATCHER.match("/**/*.json", "/storelocator/list.json"));
