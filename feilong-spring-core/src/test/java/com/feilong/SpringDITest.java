@@ -60,9 +60,7 @@ public class SpringDITest{
     @Test
     public void testUser(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("feitian@");
-        if (LOGGER.isInfoEnabled()){
-            LOGGER.info(JsonUtil.format(diUser));
-        }
+        LOGGER.info(JsonUtil.format(diUser));
         LOGGER.info(diUser.getUserName());
         // -----------------------------
         List<String> list = diUser.getList();

@@ -53,8 +53,6 @@ public class SpringDISimpleTest{
     @Test
     public void testUser(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("spring-DI-simple");
-        if (LOGGER.isInfoEnabled()){
-            LOGGER.info(JsonUtil.format(diUser));
-        }
+        LOGGER.info(JsonUtil.format(diUser));
     }
 }
