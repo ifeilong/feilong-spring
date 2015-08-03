@@ -80,6 +80,7 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
         if (LOGGER.isDebugEnabled()){
             RequestLogSwitch requestLogSwitch = new RequestLogSwitch();
             requestLogSwitch.setShowForwardInfos(true);
+            requestLogSwitch.setShowIncludeInfos(true);
 
             Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
 
@@ -106,6 +107,7 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
         if (handler instanceof HandlerMethod){
             RequestLogSwitch requestLogSwitch = new RequestLogSwitch();
             requestLogSwitch.setShowForwardInfos(true);
+            requestLogSwitch.setShowIncludeInfos(true);
 
             Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
 
