@@ -18,8 +18,8 @@ package com.feilong.spring.web.servlet.interceptor.monitor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeSet;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +34,12 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.date.TimeInterval;
+import com.feilong.core.lang.reflect.FieldUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.tools.slf4j.Slf4jUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
-import com.feilong.servlet.http.entity.RequestLogSwitch;
+import com.feilong.servlet.http.builder.RequestLogSwitch;
 
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
@@ -64,6 +65,35 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
     /** The Constant STOPWATCH_ATTRIBUTE. */
     private static final String  STOPWATCH_ATTRIBUTE   = MonitorInterceptor.class.getName() + ".stopWatch";
 
+    /**
+     * 性能阀值,单位毫秒,默认 {@link #PERFORMANCE_THRESHOLD}.
+     * 
+     * @since 1.4.0
+     */
+    private Integer              performanceThreshold  = PERFORMANCE_THRESHOLD;
+
+    /**
+     * 允许被json log输出的 request&&model 对象类型, 默认只有基本类型以及数组才会被输出.
+     * 
+     * @see JsonUtil#formatSimpleMap(Map, Class...)
+     * @since 1.4.0
+     */
+    private Class<?>[]           allowFormatClassTypes;
+
+    /** The request log switch. */
+    private RequestLogSwitch     requestLogSwitch;
+
+    /**
+     * Post construct.
+     */
+    @PostConstruct
+    protected void postConstruct(){
+        if (LOGGER.isInfoEnabled()){
+            Map<String, Object> map = FieldUtil.getFieldValueMap(this);
+            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.format(map));
+        }
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -78,17 +108,14 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
         request.setAttribute(STOPWATCH_ATTRIBUTE, stopWatch);
 
         if (LOGGER.isDebugEnabled()){
-            RequestLogSwitch requestLogSwitch = new RequestLogSwitch();
-            requestLogSwitch.setShowForwardInfos(true);
-            requestLogSwitch.setShowIncludeInfos(true);
 
             Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
 
             if (LOGGER.isDebugEnabled()){
                 LOGGER.debug(
-                                "RequestInfoMapForLog:{},request attribute keys:{},start StopWatch",
+                                "RequestInfoMapForLog:{},request attribute:{},start StopWatch",
                                 JsonUtil.format(requestInfoMapForLog),
-                                JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request)));
+                                JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request), allowFormatClassTypes));
             }
         }
         return super.preHandle(request, response, handler);
@@ -105,81 +132,82 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
                     throws Exception{
 
         if (handler instanceof HandlerMethod){
-            RequestLogSwitch requestLogSwitch = new RequestLogSwitch();
-            requestLogSwitch.setShowForwardInfos(true);
-            requestLogSwitch.setShowIncludeInfos(true);
 
-            Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-            StopWatch stopWatch = (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
+            StopWatch stopWatch = getStopWatch(request);
             stopWatch.split();
             long useTime = stopWatch.getSplitTime();
 
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-            String methodName = method.getName();
-            String className = method.getDeclaringClass().getSimpleName();
-
-            if (LOGGER.isInfoEnabled()){
-                String customerLog = "";
-                if (Validator.isNotNullOrEmpty(modelAndView)){
-                    String modelMapKeys = null == modelAndView.getModel() ? null : JsonUtil.format(new TreeSet<String>(modelAndView
-                                    .getModel().keySet()));
-                    String viewName = Validator.isNullOrEmpty(modelAndView.getView()) ? modelAndView.getViewName() : modelAndView.getView()
-                                    .toString();
-                    customerLog = Slf4jUtil.formatMessage("model keys:[{}],view:[{}]", modelMapKeys, viewName);
-                }else{
-                    customerLog = "modelAndView is null!!";
-                }
-
-                LOGGER.info(
-                                "RequestInfoMapForLog:{},request attribute keys:{},customerLog:[{}],\n postHandle [{}.{}()] ",
-                                JsonUtil.format(requestInfoMapForLog),
-                                JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request)),
-                                customerLog,
-                                className,
-                                methodName);
-            }
-
-            //**********************************************************************************
-            boolean isMoreThanPerformanceThreshold = useTime > PERFORMANCE_THRESHOLD;
-            String message = Slf4jUtil.formatMessage(
-                            " [{}.{}()], use time:[{}],[{}] PERFORMANCE_THRESHOLD:[{}]",
-                            className,
-                            methodName,
-                            DateExtensionUtil.getIntervalForView(useTime),
-                            isMoreThanPerformanceThreshold ? ">" : "<=",
-                            PERFORMANCE_THRESHOLD);
+            boolean isMoreThanPerformanceThreshold = useTime > performanceThreshold;
 
             //如果超过阀值, 那么以error的形式记录
+
             if (isMoreThanPerformanceThreshold){
+                String message = getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime);
                 LOGGER.error(message);
+
                 ServletContext servletContext = request.getSession().getServletContext();
                 servletContext.log(message);
             }else{
-                LOGGER.info(message);
+                LOGGER.info(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
             }
         }
     }
 
     /**
-     * 获得 data map.
+     * 获得 post handle log message.
      *
      * @param request
      *            the request
+     * @param handlerMethod
+     *            the handler method
      * @param modelAndView
-     *            the ModelAndView that the handler returned (can also be null)
-     * @return the data map
+     *            the model and view
+     * @param useTime
+     *            the use time
+     * @return the log message
+     * @since 1.4.0
      */
-    private Map<String, Object> getDataMap(HttpServletRequest request,ModelAndView modelAndView){
-        Map<String, Object> model = (null == modelAndView) ? null : modelAndView.getModel();
-        Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
+    private String getPostHandleLogMessage(HttpServletRequest request,HandlerMethod handlerMethod,ModelAndView modelAndView,long useTime){
+        Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
 
-        //新创建个map对象, 这样操作不会影响原始数据
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.putAll(model);
-        map.putAll(attributeMap);
-        return map;
+        Method method = handlerMethod.getMethod();
+        String methodName = method.getName();
+        String className = method.getDeclaringClass().getSimpleName();
+
+        String logicOperator = useTime > performanceThreshold ? ">" : useTime == performanceThreshold ? "=" : "<";
+
+        //一条日志输出, 这样的话,在并发的情况, 日志还是有上下文的
+        return Slf4jUtil.formatMessage(
+                        "postHandle [{}.{}()],RequestInfoMapForLog:{},request attribute:{},modelAndView info:[{}],use time:[{}],[{}] performanceThreshold:[{}]",
+                        className,
+                        methodName,
+                        JsonUtil.format(requestInfoMapForLog),
+                        JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request)),
+                        getModelAndViewLogInfo(modelAndView),
+                        DateExtensionUtil.getIntervalForView(useTime),
+                        logicOperator,
+                        performanceThreshold);
+    }
+
+    /**
+     * 获得 model and view log info.
+     *
+     * @param modelAndView
+     *            the model and view
+     * @return the model and view log info
+     * @since 1.4.0
+     */
+    private String getModelAndViewLogInfo(ModelAndView modelAndView){
+        if (Validator.isNullOrEmpty(modelAndView)){
+            return "modelAndView is null!!";
+        }
+
+        Map<String, Object> model = modelAndView.getModel();
+        String viewName = Validator.isNullOrEmpty(modelAndView.getView()) ? modelAndView.getViewName() : modelAndView.getView().toString();
+
+        return Slf4jUtil.formatMessage("model:[{}],view:[{}]", JsonUtil.formatSimpleMap(model, allowFormatClassTypes), viewName);
     }
 
     /*
@@ -191,7 +219,8 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
     @Override
     public void afterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
         if (handler instanceof HandlerMethod){
-            StopWatch stopWatch = (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
+
+            StopWatch stopWatch = getStopWatch(request);
             stopWatch.split();
             long splitTime = stopWatch.getSplitTime();
 
@@ -207,6 +236,18 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
         }
     }
 
+    /**
+     * 获得 stop watch.
+     *
+     * @param request
+     *            the request
+     * @return the stop watch
+     * @since 1.4.0
+     */
+    private StopWatch getStopWatch(HttpServletRequest request){
+        return (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -216,7 +257,7 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
     @Override
     public void afterCompletion(HttpServletRequest request,HttpServletResponse response,Object handler,Exception ex) throws Exception{
         if (handler instanceof HandlerMethod){
-            StopWatch stopWatch = (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
+            StopWatch stopWatch = getStopWatch(request);
 
             if (null == stopWatch || stopWatch.isStopped()){
                 String message = Slf4jUtil.formatMessage(
@@ -253,6 +294,62 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
     @Override
     public int getOrder(){
         return 99999;
+    }
+
+    /**
+     * 获得 data map.
+     *
+     * @param request
+     *            the request
+     * @param modelAndView
+     *            the ModelAndView that the handler returned (can also be null)
+     * @return the data map
+     * @deprecated will remove
+     */
+    @Deprecated
+    private Map<String, Object> getDataMap(HttpServletRequest request,ModelAndView modelAndView){
+        Map<String, Object> model = (null == modelAndView) ? null : modelAndView.getModel();
+        Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
+
+        //新创建个map对象, 这样操作不会影响原始数据
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.putAll(model);
+        map.putAll(attributeMap);
+        return map;
+    }
+
+    /**
+     * 允许被json log输出的 request&&model 对象类型, 默认只有基本类型以及数组才会被输出.
+     *
+     * @param allowFormatClassTypes
+     *            the allowFormatClassTypes to set
+     * @see JsonUtil#formatSimpleMap(Map, Class...)
+     * @see JsonUtil#formatSimpleMap(Map, Class...)
+     * @since 1.4.0
+     */
+    public void setAllowFormatClassTypes(Class<?>[] allowFormatClassTypes){
+        this.allowFormatClassTypes = allowFormatClassTypes;
+    }
+
+    /**
+     * 设置 性能阀值,单位毫秒,默认 {@link #PERFORMANCE_THRESHOLD}.
+     *
+     * @param performanceThreshold
+     *            the performanceThreshold to set
+     * @since 1.4.0
+     */
+    public void setPerformanceThreshold(Integer performanceThreshold){
+        this.performanceThreshold = performanceThreshold;
+    }
+
+    /**
+     * 设置 request log switch.
+     *
+     * @param requestLogSwitch
+     *            the requestLogSwitch to set
+     */
+    public void setRequestLogSwitch(RequestLogSwitch requestLogSwitch){
+        this.requestLogSwitch = requestLogSwitch;
     }
 
 }
