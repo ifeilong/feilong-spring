@@ -32,6 +32,8 @@ import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.lang.ClassUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.servlet.http.RequestUtil;
+import com.feilong.web.command.SubViewCommand;
+import com.feilong.web.command.ViewCommand;
 
 /**
  * 专门处理每个页面的seo信息,在 {@link HandlerInterceptorAdapter#preHandle(HttpServletRequest, HttpServletResponse, Object)}流程中,查找 request作用域中的数据.
@@ -112,8 +114,8 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
             //XXX seoViewCommandRequestAttributeName 优先
             //*************************如果有 seoViewCommandRequestAttributeName变量,那么log 并且直接跳出*****************************************
             if (requestAttributeName.equals(seoViewCommandRequestAttributeName)){
-                if (LOGGER.isInfoEnabled()){
-                    LOGGER.info(
+                if (LOGGER.isDebugEnabled()){
+                    LOGGER.debug(
                                     "find attributeName:[{}] in map,value is:{},break and go-on",
                                     seoViewCommandRequestAttributeName,
                                     JsonUtil.format(requestAttributeValue));
@@ -144,8 +146,8 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
 
             request.setAttribute(seoViewCommandRequestAttributeName, defaultSeoViewCommand);
 
-            if (LOGGER.isDebugEnabled()){
-                LOGGER.debug(
+            if (LOGGER.isInfoEnabled()){
+                LOGGER.info(
                                 "can not find SeoViewCommand object in total data map,set defaultSeoViewCommand to request,attributeName is:[{}],value is:{}",
                                 seoViewCommandRequestAttributeName,
                                 JsonUtil.format(defaultSeoViewCommand));
@@ -209,7 +211,7 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
         if (ClassUtil.isInstance(requestAttributeValue, SeoViewCommand.class)){
             return (SeoViewCommand) requestAttributeValue;
         }
-        return consttructSeoViewCommand(requestAttributeName, requestAttributeValue);
+        return constructSeoViewCommand(requestAttributeName, requestAttributeValue);
     }
 
     /**
@@ -222,7 +224,7 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
      * @return the seo view command
      * @since 1.2.2
      */
-    protected SeoViewCommand consttructSeoViewCommand(String requestAttributeName,Object requestAttributeValue){
+    protected SeoViewCommand constructSeoViewCommand(String requestAttributeName,Object requestAttributeValue){
         return null;
     }
 
