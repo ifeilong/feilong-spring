@@ -27,12 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.core.bean.ConvertUtil;
+import com.feilong.core.bean.ToStringConfig;
 import com.feilong.core.date.TimeInterval;
 import com.feilong.core.lang.CharsetType;
 import com.feilong.core.lang.StringUtil;
-import com.feilong.core.lang.entity.ToStringConfig;
 import com.feilong.core.tools.slf4j.Slf4jUtil;
-import com.feilong.core.util.CollectionsUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.CookieUtil;
 import com.feilong.servlet.http.entity.CookieEntity;
@@ -209,7 +208,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
         //****************************************************************************
         //cookie value 是  itemid join--->aes hex 加密格式字符串
         ToStringConfig toStringConfig = new ToStringConfig(DEFAULT_CONNECTOR);
-        String original = CollectionsUtil.toString(linkedList, toStringConfig);
+        String original = ConvertUtil.toString(linkedList, toStringConfig);
 
         //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
         String encryptHex = symmetricEncryption.encryptHex(original, cookieCharsetName);

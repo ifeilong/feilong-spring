@@ -25,10 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UrlPathHelper;
 
+import com.feilong.core.bean.ConvertUtil;
+import com.feilong.core.bean.ToStringConfig;
 import com.feilong.core.lang.ArrayUtil;
-import com.feilong.core.lang.entity.ToStringConfig;
 import com.feilong.core.tools.jsonlib.JsonUtil;
-import com.feilong.core.util.CollectionsUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
 
@@ -175,7 +175,7 @@ public class MultiUriTemplateUtil{
                 list.add(value);
             }
             ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-            map.put(variableName, CollectionsUtil.toString(list, toStringConfig));
+            map.put(variableName, ConvertUtil.toString(list, toStringConfig));
         }
         return UriTemplateUtil.expand(matchingPatternPath, map);
     }
@@ -241,7 +241,7 @@ public class MultiUriTemplateUtil{
         list.remove(value);
 
         ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-        map.put(variableName, CollectionsUtil.toString(list, toStringConfig));
+        map.put(variableName, ConvertUtil.toString(list, toStringConfig));
 
         return UriTemplateUtil.expand(matchingPatternPath, map);
     }
