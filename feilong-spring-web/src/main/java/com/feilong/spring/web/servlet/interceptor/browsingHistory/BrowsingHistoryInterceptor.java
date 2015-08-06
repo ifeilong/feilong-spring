@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.spring.web.servlet.interceptor.browsingHistory.command.BrowsingHistoryCommand;
 
 /**
@@ -58,7 +58,7 @@ import com.feilong.spring.web.servlet.interceptor.browsingHistory.command.Browsi
  * @version 1.2.2 2015年7月19日 下午7:22:00
  * @since 1.2.2
  */
-public abstract class BrowsingHistoryInterceptor extends HandlerInterceptorAdapter{
+public abstract class BrowsingHistoryInterceptor extends AbstractHandlerInterceptorAdapter{
 
     /** The browsing history resolver. */
     private BrowsingHistoryResolver browsingHistoryResolver;

@@ -16,10 +16,8 @@
 package com.feilong.spring.web.servlet.interceptor.monitor;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,19 +25,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.date.TimeInterval;
-import com.feilong.core.lang.reflect.FieldUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.tools.slf4j.Slf4jUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.builder.RequestLogSwitch;
+import com.feilong.spring.web.servlet.ModelAndViewUtil;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
@@ -54,7 +51,7 @@ import com.feilong.servlet.http.builder.RequestLogSwitch;
  * @version 1.2.2 2015年7月18日 下午2:22:36
  * @since 1.2.2
  */
-public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ordered{
+public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
 
     /** The Constant LOGGER. */
     private static final Logger  LOGGER                = LoggerFactory.getLogger(MonitorInterceptor.class);
@@ -82,17 +79,6 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
 
     /** The request log switch. */
     private RequestLogSwitch     requestLogSwitch;
-
-    /**
-     * Post construct.
-     */
-    @PostConstruct
-    protected void postConstruct(){
-        if (LOGGER.isInfoEnabled()){
-            Map<String, Object> map = FieldUtil.getFieldValueMap(this);
-            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.format(map));
-        }
-    }
 
     /*
      * (non-Javadoc)
@@ -205,7 +191,7 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
         }
 
         Map<String, Object> model = modelAndView.getModel();
-        String viewName = Validator.isNullOrEmpty(modelAndView.getView()) ? modelAndView.getViewName() : modelAndView.getView().toString();
+        String viewName = ModelAndViewUtil.getViewName(modelAndView);
 
         return Slf4jUtil.formatMessage("model:[{}],view:[{}]", JsonUtil.formatSimpleMap(model, allowFormatClassTypes), viewName);
     }
@@ -294,28 +280,6 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter implements Ord
     @Override
     public int getOrder(){
         return 99999;
-    }
-
-    /**
-     * 获得 data map.
-     *
-     * @param request
-     *            the request
-     * @param modelAndView
-     *            the ModelAndView that the handler returned (can also be null)
-     * @return the data map
-     * @deprecated will remove
-     */
-    @Deprecated
-    private Map<String, Object> getDataMap(HttpServletRequest request,ModelAndView modelAndView){
-        Map<String, Object> model = (null == modelAndView) ? null : modelAndView.getModel();
-        Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
-
-        //新创建个map对象, 这样操作不会影响原始数据
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.putAll(model);
-        map.putAll(attributeMap);
-        return map;
     }
 
     /**

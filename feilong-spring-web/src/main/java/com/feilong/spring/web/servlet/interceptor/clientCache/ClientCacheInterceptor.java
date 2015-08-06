@@ -24,7 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 
 /**
  * ClientCacheInterceptor.
@@ -33,7 +34,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @version 1.2.2 2015年7月17日 上午12:45:06
  * @since 1.2.2
  */
-public class ClientCacheInterceptor extends HandlerInterceptorAdapter{
+public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientCacheInterceptor.class);
@@ -49,16 +50,17 @@ public class ClientCacheInterceptor extends HandlerInterceptorAdapter{
                     throws Exception{
         if (handler instanceof HandlerMethod){
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            //TODO 目前仅支持方法体上面
-            //将来支持类上面
+
+            //TODO 目前仅支持方法体上面,将来支持类上面
             ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
+
             if (clientCache != null){
                 long value = clientCache.value();
+
                 if (value <= 0){
                     response.addHeader("Pragma", "no-cache");
                     response.setHeader("Cache-Control", "no-cache");
                     response.setDateHeader("Expires", 0);
-
                     //TODO log
                 }else{
                     String cacheControlValue = "max-age=" + value;
@@ -67,8 +69,6 @@ public class ClientCacheInterceptor extends HandlerInterceptorAdapter{
                     LOGGER.debug("[{}.{}()],set response setHeader:[Cache-Control],value is :[{}]", method.getDeclaringClass()
                                     .getSimpleName(), method.getName(), cacheControlValue);
                 }
-            }else{
-                //TODO log
             }
         }
     }

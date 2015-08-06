@@ -19,8 +19,6 @@ package com.feilong.spring.web.servlet.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import com.feilong.web.browser.Browser;
 
 /**
@@ -32,7 +30,7 @@ import com.feilong.web.browser.Browser;
  * @deprecated 最好考虑在session开始的那刻 实用
  */
 @Deprecated
-public class BrowserInterceptor extends HandlerInterceptorAdapter{
+public class BrowserInterceptor extends AbstractHandlerInterceptorAdapter{
 
     /** 默认的 变量名称 <code>{@value}</code>. */
     public static final String DEFAULT_BROWSER_REQUEST_NAME = "feilongBrowser";

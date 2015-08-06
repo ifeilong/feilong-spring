@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 package com.feilong.spring.web.servlet.interceptor.seo;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.lang.ClassUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
-import com.feilong.servlet.http.RequestUtil;
+import com.feilong.spring.web.servlet.ModelAndViewUtil;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.web.command.SubViewCommand;
 import com.feilong.web.command.ViewCommand;
 
@@ -42,12 +42,8 @@ import com.feilong.web.command.ViewCommand;
  * 
  * <blockquote>
  * <ol>
- * 
- * <li>
- * Model1:什么都不设置,那么使用默认配置的 {@link #defaultSeoTitle},{@link #defaultSeoKeywords},{@link #defaultSeoDescription},如果这些参数也没有设置,那么页面相关地方会输出空</li>
- * 
- * <li>
- * Model2:可以在controller {@link RequestMapping} 方法体里面,使用
+ * <li>Model1:什么都不设置,那么使用默认配置的 {@link #defaultSeoViewCommand},如果这些参数也没有设置,那么页面相关地方会输出空</li>
+ * <li>Model2:可以在controller {@link RequestMapping} 方法体里面,使用
  * 
  * <pre>
  * SeoViewCommand defaultSeoViewCommand = new DefaultSeoViewCommand();
@@ -56,15 +52,12 @@ import com.feilong.web.command.ViewCommand;
  * defaultSeoViewCommand.setSeoTitle(xxx);
  * </pre>
  * 
- * 自定义设置一个SeoViewCommand对象, 然后,将此对象 设置到 request/model中
- * <li>
+ * 自定义设置一个SeoViewCommand对象, 然后,将此对象 设置到 request/model中</li>
  * 
- * <li>
- * Model3:如果使用了 {@link ViewCommand}作为整体数据返回,那么只需要让 您自己的{@link ViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
+ * <li>Model3:如果使用了 {@link ViewCommand}作为整体数据返回,那么只需要让 您自己的{@link ViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
  * 
- * <li>
- * Model4:如果使用了 {@link ViewCommand}作为整体数据返回,并且也使用了 {@link SubViewCommand},并且想将参数设置到该{@link SubViewCommand}内,你可以让 您自己的{@link SubViewCommand}
- * 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
+ * <li>Model4:如果使用了 {@link ViewCommand}作为整体数据返回,并且也使用了 {@link SubViewCommand},并且想将参数设置到该{@link SubViewCommand}内,你可以让 您自己的
+ * {@link SubViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
  * </ol>
  * </blockquote>
  *
@@ -72,7 +65,7 @@ import com.feilong.web.command.ViewCommand;
  * @version 1.2.2 2015年7月14日 下午8:30:14
  * @since 1.2.2
  */
-public class SeoInterceptor extends HandlerInterceptorAdapter{
+public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER                             = LoggerFactory.getLogger(SeoInterceptor.class);
@@ -83,16 +76,9 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
     /** 您可以修改seoViewCommand在 作用域里面的名称,默认是 {@link #REQUEST_ATTRIBUTE_SEOVIEWCOMMAND}. */
     private String              seoViewCommandRequestAttributeName = REQUEST_ATTRIBUTE_SEOVIEWCOMMAND;
 
-    /** The default seo title. */
-    private String              defaultSeoTitle;
+    /** The default seo view command. */
+    private SeoViewCommand      defaultSeoViewCommand;
 
-    /** 默认的 SeoKeywords. */
-    private String              defaultSeoKeywords;
-
-    /** 默认的 SeoDescription. */
-    private String              defaultSeoDescription;
-
-    //TODO map cache 
     /*
      * (non-Javadoc)
      * 
@@ -102,116 +88,69 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
     @Override
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
-
         Date beginDate = new Date();
 
-        Map<String, Object> dataMap = getDataMap(request, modelAndView);
+        SeoViewCommand seoViewCommand = findSeoViewCommandFromRequestAndModelAndViewAttributeMap(request, modelAndView);
 
-        boolean isFindSeoViewCommand = false;
-        for (Map.Entry<String, Object> entry : dataMap.entrySet()){
-            String requestAttributeName = entry.getKey();
-            Object requestAttributeValue = entry.getValue();
-            //XXX seoViewCommandRequestAttributeName 优先
-            //*************************如果有 seoViewCommandRequestAttributeName变量,那么log 并且直接跳出*****************************************
-            if (requestAttributeName.equals(seoViewCommandRequestAttributeName)){
-                if (LOGGER.isDebugEnabled()){
-                    LOGGER.debug(
-                                    "find attributeName:[{}] in map,value is:{},break and go-on",
-                                    seoViewCommandRequestAttributeName,
-                                    JsonUtil.format(requestAttributeValue));
-                }
-                break;
-            }
-
-            ///********************findSeoViewCommand*********************************
-            SeoViewCommand seoViewCommand = findSeoViewCommand(requestAttributeName, requestAttributeValue);
-
-            if (null != seoViewCommand){
-                request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
-
-                if (LOGGER.isDebugEnabled()){
-                    LOGGER.debug(
-                                    "set seoViewCommand to request,attributeName is:[{}],value is:{}",
-                                    seoViewCommandRequestAttributeName,
-                                    JsonUtil.format(seoViewCommand));
-                }
-
-                isFindSeoViewCommand = true;
-                break;
-            }
+        if (null == seoViewCommand){
+            LOGGER.debug("can not find SeoViewCommand object in Request And ModelAndView attribute,use defaultSeoViewCommand.");
+            seoViewCommand = defaultSeoViewCommand;
         }
 
-        if (!isFindSeoViewCommand){
-            SeoViewCommand defaultSeoViewCommand = constructDefaultSeoViewCommand();
-
-            request.setAttribute(seoViewCommandRequestAttributeName, defaultSeoViewCommand);
-
-            if (LOGGER.isInfoEnabled()){
-                LOGGER.info(
-                                "can not find SeoViewCommand object in total data map,set defaultSeoViewCommand to request,attributeName is:[{}],value is:{}",
-                                seoViewCommandRequestAttributeName,
-                                JsonUtil.format(defaultSeoViewCommand));
-            }
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(
+                            "set seoViewCommand to request,attributeName is:[{}],value is:{}",
+                            seoViewCommandRequestAttributeName,
+                            JsonUtil.format(seoViewCommand));
         }
+
+        request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
 
         Date endDate = new Date();
         LOGGER.info("use time:{}", DateExtensionUtil.getIntervalForView(beginDate, endDate));
     }
 
     /**
-     * 获得 data map.
+     * Find seo view command from request and model and view.
      *
      * @param request
      *            the request
      * @param modelAndView
-     *            the ModelAndView that the handler returned (can also be null) <br>
-     *            with the name of the view and the required model data, or null if the request has been handled directly
-     * @return the data map
-     */
-    private Map<String, Object> getDataMap(HttpServletRequest request,ModelAndView modelAndView){
-        //XXX 深入研究下 modelAndView是 null的情况
-        if (null == modelAndView){
-            LOGGER.warn("modelAndView is null,request info:[{}]", JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
-        }
-        Map<String, Object> model = (null == modelAndView) ? null : modelAndView.getModel();
-        Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
-
-        //新创建个map对象, 这样操作不会影响原始数据
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.putAll(model);
-        map.putAll(attributeMap);
-
-        return map;
-    }
-
-    /**
-     * Constract default seo view command.
-     *
+     *            the model and view
      * @return the seo view command
+     * @since 1.4.0
      */
-    private SeoViewCommand constructDefaultSeoViewCommand(){
-        //XXX 可以抽取 提高性能
-        SeoViewCommand defaultSeoViewCommand = new DefaultSeoViewCommand();
-        defaultSeoViewCommand.setSeoDescription(defaultSeoDescription);
-        defaultSeoViewCommand.setSeoKeywords(defaultSeoKeywords);
-        defaultSeoViewCommand.setSeoTitle(defaultSeoTitle);
-        return defaultSeoViewCommand;
-    }
+    private SeoViewCommand findSeoViewCommandFromRequestAndModelAndViewAttributeMap(HttpServletRequest request,ModelAndView modelAndView){
+        Map<String, Object> requestAndModelAttributeMap = ModelAndViewUtil.getRequestAndModelAttributeMap(request, modelAndView);
 
-    /**
-     * Find seo view command.
-     *
-     * @param requestAttributeName
-     *            the request attribute name
-     * @param requestAttributeValue
-     *            the request attribute value
-     * @return the seo view command
-     */
-    private SeoViewCommand findSeoViewCommand(String requestAttributeName,Object requestAttributeValue){
-        if (ClassUtil.isInstance(requestAttributeValue, SeoViewCommand.class)){
-            return (SeoViewCommand) requestAttributeValue;
+        for (Map.Entry<String, Object> entry : requestAndModelAttributeMap.entrySet()){
+            String attributeName = entry.getKey();
+            Object attributeValue = entry.getValue();
+
+            //*************************如果有 seoViewCommandRequestAttributeName变量,那么log 并且直接跳出*****************************************
+            if (attributeName.equals(seoViewCommandRequestAttributeName)){
+                if (LOGGER.isDebugEnabled()){
+                    LOGGER.debug(
+                                    "find attributeName:[{}] in map,value is:{},break and go-on",
+                                    seoViewCommandRequestAttributeName,
+                                    JsonUtil.format(attributeValue));
+                }
+
+                // may be case exception,if somebody cover the seoViewCommandRequestAttributeName
+                return (SeoViewCommand) attributeValue;
+            }
+
+            ///********************findSeoViewCommand*********************************
+            if (ClassUtil.isInstance(attributeValue, SeoViewCommand.class)){
+                return (SeoViewCommand) attributeValue;
+            }
+
+            SeoViewCommand seoViewCommand = constructSeoViewCommand(attributeName, attributeValue);
+            if (null != seoViewCommand){
+                return seoViewCommand;
+            }
         }
-        return constructSeoViewCommand(requestAttributeName, requestAttributeValue);
+        return null;
     }
 
     /**
@@ -224,7 +163,9 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
      * @return the seo view command
      * @since 1.2.2
      */
-    protected SeoViewCommand constructSeoViewCommand(String requestAttributeName,Object requestAttributeValue){
+    protected SeoViewCommand constructSeoViewCommand(
+                    @SuppressWarnings("unused") String requestAttributeName,
+                    @SuppressWarnings("unused") Object requestAttributeValue){
         return null;
     }
 
@@ -239,32 +180,12 @@ public class SeoInterceptor extends HandlerInterceptorAdapter{
     }
 
     /**
-     * 设置 default seo title.
+     * 设置 default seo view command.
      *
-     * @param defaultSeoTitle
-     *            the defaultSeoTitle to set
+     * @param defaultSeoViewCommand
+     *            the defaultSeoViewCommand to set
      */
-    public void setDefaultSeoTitle(String defaultSeoTitle){
-        this.defaultSeoTitle = defaultSeoTitle;
-    }
-
-    /**
-     * 设置 默认的 SeoKeywords.
-     *
-     * @param defaultSeoKeywords
-     *            the defaultSeoKeywords to set
-     */
-    public void setDefaultSeoKeywords(String defaultSeoKeywords){
-        this.defaultSeoKeywords = defaultSeoKeywords;
-    }
-
-    /**
-     * 设置 默认的 SeoDescription.
-     *
-     * @param defaultSeoDescription
-     *            the defaultSeoDescription to set
-     */
-    public void setDefaultSeoDescription(String defaultSeoDescription){
-        this.defaultSeoDescription = defaultSeoDescription;
+    public void setDefaultSeoViewCommand(SeoViewCommand defaultSeoViewCommand){
+        this.defaultSeoViewCommand = defaultSeoViewCommand;
     }
 }
