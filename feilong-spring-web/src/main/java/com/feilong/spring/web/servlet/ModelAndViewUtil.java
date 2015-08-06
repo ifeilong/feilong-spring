@@ -100,7 +100,7 @@ public class ModelAndViewUtil{
      */
     public static Map<String, Object> getRequestAndModelAttributeMap(HttpServletRequest request,ModelAndView modelAndView){
         if (null == modelAndView){
-            LOGGER.warn("modelAndView is null,request info:[{}]", JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
+            LOGGER.debug("modelAndView is null,request info:[{}]", JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
         }
         Map<String, Object> model = (null == modelAndView) ? null : modelAndView.getModel();
         return getRequestAndModelAttributeMap(request, model);
