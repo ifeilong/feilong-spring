@@ -27,7 +27,6 @@ import org.springframework.web.util.UrlPathHelper;
 
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.bean.ToStringConfig;
-import com.feilong.core.lang.ArrayUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
@@ -166,7 +165,7 @@ public class MultiUriTemplateUtil{
         }else{
             String[] oldValues = oldValue.split(valueSeparator);
 
-            List<String> list = ArrayUtil.toList(oldValues);
+            List<String> list = ConvertUtil.toList(oldValues);
 
             // 保证重复的value 不会被反复添加
             if (list.contains(value)){
@@ -175,7 +174,7 @@ public class MultiUriTemplateUtil{
                 list.add(value);
             }
             ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-            map.put(variableName, ConvertUtil.toString(list, toStringConfig));
+            map.put(variableName, ConvertUtil.toString(toStringConfig, list));
         }
         return UriTemplateUtil.expand(matchingPatternPath, map);
     }
@@ -228,7 +227,7 @@ public class MultiUriTemplateUtil{
         }
 
         String[] oldValues = oldValue.split(valueSeparator);
-        List<String> list = ArrayUtil.toList(oldValues);
+        List<String> list = ConvertUtil.toList(oldValues);
 
         if (!list.contains(value)){
             Object[] objects = { requestPath, matchingPatternPath, variableName, oldValue, value };
@@ -241,7 +240,7 @@ public class MultiUriTemplateUtil{
         list.remove(value);
 
         ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-        map.put(variableName, ConvertUtil.toString(list, toStringConfig));
+        map.put(variableName, ConvertUtil.toString(toStringConfig, list));
 
         return UriTemplateUtil.expand(matchingPatternPath, map);
     }

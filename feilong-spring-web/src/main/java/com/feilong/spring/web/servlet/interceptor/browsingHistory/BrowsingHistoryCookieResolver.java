@@ -208,7 +208,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
         //****************************************************************************
         //cookie value 是  itemid join--->aes hex 加密格式字符串
         ToStringConfig toStringConfig = new ToStringConfig(DEFAULT_CONNECTOR);
-        String original = ConvertUtil.toString(linkedList, toStringConfig);
+        String original = ConvertUtil.toString(toStringConfig, linkedList);
 
         //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
         String encryptHex = symmetricEncryption.encryptHex(original, cookieCharsetName);
