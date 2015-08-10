@@ -15,7 +15,6 @@
  */
 package com.feilong.spring.web.servlet.interceptor.monitor;
 
-import java.lang.reflect.Method;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -35,6 +34,7 @@ import com.feilong.core.tools.slf4j.Slf4jUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.builder.RequestLogSwitch;
+import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 
@@ -94,15 +94,10 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         request.setAttribute(STOPWATCH_ATTRIBUTE, stopWatch);
 
         if (LOGGER.isDebugEnabled()){
-
-            Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
-
-            if (LOGGER.isDebugEnabled()){
-                LOGGER.debug(
-                                "RequestInfoMapForLog:{},request attribute:{},start StopWatch",
-                                JsonUtil.format(requestInfoMapForLog),
-                                JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request), allowFormatClassTypes));
-            }
+            LOGGER.debug(
+                            "RequestInfoMapForLog:{},request attribute:{},start StopWatch",
+                            JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
+                            JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request), allowFormatClassTypes));
         }
         return super.preHandle(request, response, handler);
     }
@@ -127,16 +122,23 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
 
             boolean isMoreThanPerformanceThreshold = useTime > performanceThreshold;
 
-            //如果超过阀值, 那么以error的形式记录
+            try{
+                //如果超过阀值, 那么以error的形式记录
+                if (isMoreThanPerformanceThreshold){
+                    String message = getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime);
+                    LOGGER.error(message);
 
-            if (isMoreThanPerformanceThreshold){
-                String message = getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime);
-                LOGGER.error(message);
-
-                ServletContext servletContext = request.getSession().getServletContext();
-                servletContext.log(message);
-            }else{
-                LOGGER.info(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
+                    ServletContext servletContext = request.getSession().getServletContext();
+                    servletContext.log(message);
+                }else{
+                    LOGGER.info(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
+                }
+            }catch (Exception e){//可能有异常,比如  往request/model里面设置了 不能被json处理的对象或者字段
+                LOGGER.error(Slf4jUtil.formatMessage(
+                                "postHandle [{}.{}()] occur exception,but we need goon!,just log it,request info:[{}]",
+                                HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                                HandlerMethodUtil.getHandlerMethodName(handlerMethod),
+                                JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch))), e);
             }
         }
     }
@@ -156,20 +158,14 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
      * @since 1.4.0
      */
     private String getPostHandleLogMessage(HttpServletRequest request,HandlerMethod handlerMethod,ModelAndView modelAndView,long useTime){
-        Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch);
-
-        Method method = handlerMethod.getMethod();
-        String methodName = method.getName();
-        String className = method.getDeclaringClass().getSimpleName();
-
         String logicOperator = useTime > performanceThreshold ? ">" : useTime == performanceThreshold ? "=" : "<";
 
         //一条日志输出, 这样的话,在并发的情况, 日志还是有上下文的
         return Slf4jUtil.formatMessage(
                         "postHandle [{}.{}()],RequestInfoMapForLog:{},request attribute:{},modelAndView info:[{}],use time:[{}],[{}] performanceThreshold:[{}]",
-                        className,
-                        methodName,
-                        JsonUtil.format(requestInfoMapForLog),
+                        HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                        HandlerMethodUtil.getHandlerMethodName(handlerMethod),
+                        JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
                         JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request)),
                         getModelAndViewLogInfo(modelAndView),
                         DateExtensionUtil.getIntervalForView(useTime),
@@ -212,11 +208,10 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
 
             if (LOGGER.isInfoEnabled()){
                 HandlerMethod handlerMethod = (HandlerMethod) handler;
-                Method method = handlerMethod.getMethod();
                 LOGGER.info(
                                 "afterConcurrentHandlingStarted [{}.{}()], use time:[{}]",
-                                method.getDeclaringClass().getSimpleName(),
-                                method.getName(),
+                                HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                                HandlerMethodUtil.getHandlerMethodName(handlerMethod),
                                 DateExtensionUtil.getIntervalForView(splitTime));
             }
         }
@@ -259,12 +254,10 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                 long time = stopWatch.getTime();
 
                 if (LOGGER.isInfoEnabled()){
-                    HandlerMethod handlerMethod = (HandlerMethod) handler;
-                    Method method = handlerMethod.getMethod();
                     LOGGER.info(
                                     "afterCompletion [{}.{}()], use time:[{}],total time:[{}]",
-                                    method.getDeclaringClass().getSimpleName(),
-                                    method.getName(),
+                                    HandlerMethodUtil.getDeclaringClassSimpleName((HandlerMethod) handler),
+                                    HandlerMethodUtil.getHandlerMethodName((HandlerMethod) handler),
                                     DateExtensionUtil.getIntervalForView(splitTime),
                                     DateExtensionUtil.getIntervalForView(time));
                 }

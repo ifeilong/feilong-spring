@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.web.servlet.interceptor.clientCache;
 
-import java.lang.reflect.Method;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 
 /**
@@ -65,9 +64,11 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
                 }else{
                     String cacheControlValue = "max-age=" + value;
                     response.setHeader("Cache-Control", cacheControlValue);
-                    Method method = handlerMethod.getMethod();
-                    LOGGER.debug("[{}.{}()],set response setHeader:[Cache-Control],value is :[{}]", method.getDeclaringClass()
-                                    .getSimpleName(), method.getName(), cacheControlValue);
+                    LOGGER.debug(
+                                    "[{}.{}()],set response setHeader:[Cache-Control],value is :[{}]",
+                                    HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                                    HandlerMethodUtil.getHandlerMethodName(handlerMethod),
+                                    cacheControlValue);
                 }
             }
         }
