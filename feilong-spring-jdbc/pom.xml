@@ -20,6 +20,11 @@
 			<artifactId>feilong-spring-aop</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.feilong.platform</groupId>
+			<artifactId>feilong-core-extension</artifactId>
+		</dependency>
+
 		<!-- spring-tx -->
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -9,9 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-import com.feilong.core.lang.ThreadUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.util.Validator;
+import com.feilong.coreextension.lang.ThreadUtil;
 
 /**
  * 多数据源,带分组的概念 {@link #readWriteDataSourceCommandMap}
