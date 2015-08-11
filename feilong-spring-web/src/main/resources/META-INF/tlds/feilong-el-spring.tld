@@ -5,7 +5,7 @@
 	<tlib-version>1.0</tlib-version>
 	<short-name>flsp</short-name>
 	<description>feilong spring el</description>
-	<uri>http://java.feilong.com/tags-el-spring</uri>
+	<uri>http://java.feilong.com/el-spring</uri>
 
 	<function>
 		<description>自动寻找matchingPatternPath 扩充模板值</description>
