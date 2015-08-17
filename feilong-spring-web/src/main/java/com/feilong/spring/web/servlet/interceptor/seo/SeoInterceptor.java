@@ -30,6 +30,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.lang.ClassUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
+import com.feilong.core.util.Validator;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.web.command.SubViewCommand;
@@ -90,12 +91,11 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
                     throws Exception{
         Date beginDate = new Date();
 
+        //查找
         SeoViewCommand seoViewCommand = findSeoViewCommandFromRequestAndModelAndViewAttributeMap(request, modelAndView);
 
-        if (null == seoViewCommand){
-            LOGGER.debug("can not find SeoViewCommand object in Request And ModelAndView attribute,use defaultSeoViewCommand.");
-            seoViewCommand = defaultSeoViewCommand;
-        }
+        //解析,如果有些参数没有值,将采用默认的 
+        seoViewCommand = detectSeoViewCommand(seoViewCommand);
 
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(
@@ -108,6 +108,40 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
 
         Date endDate = new Date();
         LOGGER.info("use time:{}", DateExtensionUtil.getIntervalForView(beginDate, endDate));
+    }
+
+    /**
+     * 检测以下信息.
+     * <ul>
+     * <li>如果 null==seoViewCommand,return <code>defaultSeoViewCommand</code></li>
+     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoDescription()),将设置<code>defaultSeoViewCommand</code>的Description</li>
+     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoKeywords()),将设置 <code>defaultSeoViewCommand</code>的SeoKeywords</li>
+     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoTitle()),将设置 <code>defaultSeoViewCommand</code>的SeoTitle</li>
+     * </ul>
+     *
+     * @param seoViewCommand
+     *            the seo view command
+     * @return the seo view command
+     * @since 1.4.0
+     */
+    private SeoViewCommand detectSeoViewCommand(SeoViewCommand seoViewCommand){
+        if (null == seoViewCommand){
+            LOGGER.debug("can not find SeoViewCommand object in Request And ModelAndView attribute,use defaultSeoViewCommand.");
+            return defaultSeoViewCommand;
+        }
+        //SeoDescription
+        if (Validator.isNullOrEmpty(seoViewCommand.getSeoDescription())){
+            seoViewCommand.setSeoDescription(defaultSeoViewCommand.getSeoDescription());
+        }
+        //SeoKeywords
+        if (Validator.isNullOrEmpty(seoViewCommand.getSeoKeywords())){
+            seoViewCommand.setSeoKeywords(defaultSeoViewCommand.getSeoKeywords());
+        }
+        //SeoTitle
+        if (Validator.isNullOrEmpty(seoViewCommand.getSeoTitle())){
+            seoViewCommand.setSeoTitle(defaultSeoViewCommand.getSeoTitle());
+        }
+        return seoViewCommand;
     }
 
     /**
