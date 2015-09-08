@@ -17,7 +17,6 @@ package com.feilong.spring.web.servlet.interceptor.monitor;
 
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -125,11 +124,10 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
             try{
                 //如果超过阀值, 那么以error的形式记录
                 if (isMoreThanPerformanceThreshold){
-                    String message = getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime);
-                    LOGGER.error(message);
+                    LOGGER.error(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
 
-                    ServletContext servletContext = request.getSession().getServletContext();
-                    servletContext.log(message);
+                    //这里的request.getSession() 可能会报错 Cannot create a session after the response has been committed 
+                    //ServletContext servletContext = request.getSession().getServletContext();
                 }else{
                     LOGGER.info(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
                 }
@@ -217,18 +215,6 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         }
     }
 
-    /**
-     * 获得 stop watch.
-     *
-     * @param request
-     *            the request
-     * @return the stop watch
-     * @since 1.4.0
-     */
-    private StopWatch getStopWatch(HttpServletRequest request){
-        return (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -241,11 +227,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
             StopWatch stopWatch = getStopWatch(request);
 
             if (null == stopWatch || stopWatch.isStopped()){
-                String message = Slf4jUtil.formatMessage(
-                                "stopWatch is null or stopWatch isStopped!!,request info is:{}",
-                                RequestUtil.getRequestInfoMapForLog(request));
-                LOGGER.error(message);
-                request.getSession().getServletContext().log("[" + MonitorInterceptor.class.getSimpleName() + "]," + message);
+                LOGGER.error("stopWatch is null or stopWatch isStopped!!,request info is:{}", RequestUtil.getRequestInfoMapForLog(request));
             }else{
                 stopWatch.split();
                 long splitTime = stopWatch.getSplitTime();
@@ -263,6 +245,18 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                 }
             }
         }
+    }
+
+    /**
+     * 获得 stop watch.
+     *
+     * @param request
+     *            the request
+     * @return the stop watch
+     * @since 1.4.0
+     */
+    private StopWatch getStopWatch(HttpServletRequest request){
+        return (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
     }
 
     /*
