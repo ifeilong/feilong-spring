@@ -39,7 +39,7 @@ public class ProceedingJoinPointUtil{
      *            the proceeding join point
      * @return the map for log
      */
-    public final static Map<String, Object> getMapForLog(ProceedingJoinPoint proceedingJoinPoint){
+    public static final Map<String, Object> getMapForLog(ProceedingJoinPoint proceedingJoinPoint){
         Map<String, Object> map = new LinkedHashMap<String, Object>();
 
         Signature signature = proceedingJoinPoint.getSignature();

@@ -167,8 +167,7 @@ public final class WebSpringUtil{
      */
     public static WebApplicationContext getWebApplicationContext(ServletContext servletContext){
         // getWebApplicationContext 如果是空,返回null
-        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-        return webApplicationContext;
+        return WebApplicationContextUtils.getWebApplicationContext(servletContext);
     }
 
     /**
@@ -183,8 +182,7 @@ public final class WebSpringUtil{
      */
     public static WebApplicationContext getRequiredWebApplicationContext(ServletContext servletContext){
         // getWebApplicationContext 如果是空,返回null
-        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
-        return webApplicationContext;
+        return WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
     }
 
     /**

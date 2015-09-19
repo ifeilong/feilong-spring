@@ -39,7 +39,7 @@ public class TransactionAttributeUtil{
      *            the transaction attribute
      * @return the map for log
      */
-    public final static Map<String, Object> getMapForLog(TransactionAttribute transactionAttribute){
+    public static final Map<String, Object> getMapForLog(TransactionAttribute transactionAttribute){
 
         if (null == transactionAttribute){
             return null;

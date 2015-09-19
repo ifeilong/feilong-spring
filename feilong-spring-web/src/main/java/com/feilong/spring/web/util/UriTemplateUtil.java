@@ -298,9 +298,9 @@ public class UriTemplateUtil{
         Map<String, String> map = new HashMap<String, String>();
 
         if (Validator.isNotNullOrEmpty(variableNames)){
-            Map<String, String> _map = extractUriTemplateVariables(requestPath, matchingPatternPath);
+            Map<String, String> opMap = extractUriTemplateVariables(requestPath, matchingPatternPath);
             for (String variableName : variableNames){
-                map.put(variableName, _map.get(variableName));
+                map.put(variableName, opMap.get(variableName));
             }
         }
         return expand(matchingPatternPath, map);
@@ -332,16 +332,16 @@ public class UriTemplateUtil{
     public static String expand(String uriTemplatePath,Map<String, String> map){
         // 所有的变量
         List<String> variableNames = getVariableNames(uriTemplatePath);
-        Map<String, String> _map = new LinkedHashMap<String, String>();
+        Map<String, String> opMap = new LinkedHashMap<String, String>();
         // 基于变量 生成对应的 值空map
         for (String variableName : variableNames){
-            _map.put(variableName, null);
+            opMap.put(variableName, null);
         }
         if (Validator.isNotNullOrEmpty(map)){
-            _map.putAll(map);// map如果是null 会报错
+            opMap.putAll(map);// map如果是null 会报错
         }
         UriTemplate uriTemplate = new UriTemplate(uriTemplatePath);
-        URI uri = uriTemplate.expand(_map);
+        URI uri = uriTemplate.expand(opMap);
         return uri.toString();
     }
 

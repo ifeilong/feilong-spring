@@ -76,7 +76,7 @@ public @interface ClientCache{
      * @since HTTP/1.0
      * @deprecated
      */
-    @SuppressWarnings("dep-ann")
+    @Deprecated
     String pragma() default "no-cache";
 
     /**
@@ -114,7 +114,7 @@ public @interface ClientCache{
      * 
      * @deprecated
      */
-    @SuppressWarnings("dep-ann")
+    @Deprecated
     int expires() default -1;
 
     /**
@@ -181,6 +181,6 @@ public @interface ClientCache{
      * @since HTTP/1.1
      * @deprecated
      */
-    @SuppressWarnings("dep-ann")
+    @Deprecated
     String cacheControl() default "no-cache";
 }

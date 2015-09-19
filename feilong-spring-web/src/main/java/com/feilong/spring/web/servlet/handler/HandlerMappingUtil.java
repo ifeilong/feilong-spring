@@ -110,7 +110,7 @@ public class HandlerMappingUtil{
      * @return the handler mapping variables info for log
      * @since 1.3.0
      */
-    public final static Map<String, Object> getHandlerMappingVariablesInfoForLog(HttpServletRequest request){
+    public static final Map<String, Object> getHandlerMappingVariablesInfoForLog(HttpServletRequest request){
         Map<String, Object> map = new TreeMap<String, Object>();
         map.put("bestMatchingPattern", request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE));
         map.put("introspectTypeLevelMapping", request.getAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING));
@@ -128,7 +128,7 @@ public class HandlerMappingUtil{
      *            the web application context
      * @return the request mapping handler mapping info map for log
      */
-    public final static Map<String, Object> getRequestMappingHandlerMappingInfoMapForLog(WebApplicationContext webApplicationContext){
+    public static final Map<String, Object> getRequestMappingHandlerMappingInfoMapForLog(WebApplicationContext webApplicationContext){
         RequestMappingHandlerMapping requestMappingHandlerMapping = WebSpringUtil.getBean(
                         webApplicationContext,
                         RequestMappingHandlerMapping.class);
