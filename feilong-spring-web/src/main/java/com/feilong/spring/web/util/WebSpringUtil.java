@@ -52,20 +52,20 @@ public final class WebSpringUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
-    //	/**
-    //	 * 获得消息信息
-    //	 * 
-    //	 * @param request
-    //	 * @param messageSourceResolvable
-    //	 *            适用于 ObjectError 以及 FieldError
-    //	 * @return
-    //	 */
-    //	public static String getMessage(MessageSourceResolvable messageSourceResolvable,HttpServletRequest request){
-    //		HttpSession session = request.getSession();
-    //		ServletContext servletContext = session.getServletContext();
-    //		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
-    //		return webApplicationContext.getMessage(messageSourceResolvable, request.getLocale());
-    //	}
+    //  /**
+    //   * 获得消息信息
+    //   * 
+    //   * @param request
+    //   * @param messageSourceResolvable
+    //   *            适用于 ObjectError 以及 FieldError
+    //   * @return
+    //   */
+    //  public static String getMessage(MessageSourceResolvable messageSourceResolvable,HttpServletRequest request){
+    //      HttpSession session = request.getSession();
+    //      ServletContext servletContext = session.getServletContext();
+    //      WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
+    //      return webApplicationContext.getMessage(messageSourceResolvable, request.getLocale());
+    //  }
 
     /**
      * 普通类获得spring 注入的类方法<br>
