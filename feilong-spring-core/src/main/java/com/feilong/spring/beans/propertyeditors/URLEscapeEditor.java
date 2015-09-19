@@ -44,7 +44,7 @@ public class URLEscapeEditor extends PropertyEditorSupport{
      * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
      */
     @Override
-    public void setAsText(String text) throws IllegalArgumentException{
+    public void setAsText(String text){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < text.length(); i++){
             char c = text.charAt(i);

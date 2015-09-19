@@ -162,13 +162,13 @@ public class MultiUriTemplateUtil{
                     String variableName,
                     String value,
                     String valueSeparator){
-        if (Validator.isNullOrEmpty(map)){
-            map = new HashMap<String, String>();
-        }
+
+        Map<String, String> opMap = Validator.isNullOrEmpty(map) ? new HashMap<String, String>() : map;
+
         // 原值
-        String oldValue = map.get(variableName);
+        String oldValue = opMap.get(variableName);
         if (Validator.isNullOrEmpty(oldValue)){
-            map.put(variableName, value);
+            opMap.put(variableName, value);
         }else{
             String[] oldValues = oldValue.split(valueSeparator);
 
@@ -181,9 +181,9 @@ public class MultiUriTemplateUtil{
                 list.add(value);
             }
             ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-            map.put(variableName, ConvertUtil.toString(toStringConfig, list));
+            opMap.put(variableName, ConvertUtil.toString(toStringConfig, list));
         }
-        return UriTemplateUtil.expand(matchingPatternPath, map);
+        return UriTemplateUtil.expand(matchingPatternPath, opMap);
     }
 
     /**

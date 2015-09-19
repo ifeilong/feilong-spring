@@ -26,16 +26,15 @@ import com.feilong.core.net.URIUtil;
  * 使用 URIUtil.decode(text, charsetType) 解码<br>
  * 使用方法:
  * 
+ * <code>
  * <pre>
- * 
  * &#064;InitBinder({ &quot;categoryCode&quot; })
  * // 此处的参数也可以是ServletRequestDataBinder类型
  * public void initBinder(WebDataBinder binder) throws Exception{
  *     // 注册自定义的属性编辑器
  *     binder.registerCustomEditor(String.class, new URLDecoderEditor(CharsetType.UTF8));
  * }
- * 
- * </pre>
+ * </pre></code>
  * 
  * @author feilong
  * @version 1.0 Oct 5, 2012 10:59:38 PM
@@ -46,7 +45,7 @@ public class URLDecoderEditor extends PropertyEditorSupport{
     private static final Logger LOGGER = LoggerFactory.getLogger(URLDecoderEditor.class);
 
     /** 编码. */
-    private String              charsetType;
+    private final String        charsetType;
 
     /**
      * Instantiates a new uRL decoder editor.
@@ -64,7 +63,7 @@ public class URLDecoderEditor extends PropertyEditorSupport{
      * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
      */
     @Override
-    public void setAsText(String text) throws IllegalArgumentException{
+    public void setAsText(String text){
         String newText = URIUtil.decode(text, charsetType);
         LOGGER.debug("the old text:{},new text:{}", text, newText);
         setValue(newText);

@@ -135,7 +135,6 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
         }else{
             LOGGER.warn("browsingHistoryCommand is null or empty");
         }
-
     }
 
     /**
@@ -194,9 +193,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
             //如果超长了 ,截取
             int size = linkedList.size();
             if (size > maxCount){
-                if (LOGGER.isDebugEnabled()){
-                    LOGGER.debug("linkedList size:[{}] > maxCount[{}],linkedList:[{}],will sub subList", size, maxCount, linkedList);
-                }
+                LOGGER.debug("linkedList size:[{}] > maxCount[{}],linkedList:[{}],will sub subList", size, maxCount, linkedList);
 
                 // so non-structural changes in the returned list
                 List<String> subList = linkedList.subList(0, maxCount);
@@ -213,9 +210,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
         //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
         String encryptHex = symmetricEncryption.encryptHex(original, cookieCharsetName);
 
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, encryptHex);
-        }
+        LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, encryptHex);
         return encryptHex;
     }
 
@@ -227,33 +222,31 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
      */
     @Override
     public <T extends Serializable> LinkedList<T> getBrowsingHistory(HttpServletRequest request,Class<T> klass){
-        LinkedList<T> linkedList = new LinkedList<T>();
 
         Cookie cookie = CookieUtil.getCookie(request, cookieName);
 
-        if (Validator.isNotNullOrEmpty(cookie)){
-            String value = cookie.getValue();
+        LinkedList<T> linkedList = new LinkedList<T>();
+        if (Validator.isNullOrEmpty(cookie)){
+            return linkedList;
+        }
 
-            if (Validator.isNotNullOrEmpty(value)){
-                try{
-                    String decryptHex = symmetricEncryption.decryptHex(value, cookieCharsetName);
-                    String[] tokenizeToStringArray = StringUtil.tokenizeToStringArray(decryptHex, DEFAULT_CONNECTOR);
-                    for (String string : tokenizeToStringArray){
-                        linkedList.add(ConvertUtil.convert(string, klass));
-                    }
-                }catch (NumberFormatException e){
-                    LOGGER.error("", e);
-                    throw new IllegalArgumentException(e);
-                }catch (EncryptionException e){
-                    LOGGER.error(
-                                    Slf4jUtil.formatMessage(
-                                                    "decryptHex cookie error,value:{},cookieCharsetName:{}",
-                                                    value,
-                                                    cookieCharsetName),
-                                    e);
-                    throw new IllegalArgumentException(e);
-                }
+        String value = cookie.getValue();
+        if (Validator.isNullOrEmpty(value)){
+            return linkedList;
+        }
+
+        try{
+            String decryptHex = symmetricEncryption.decryptHex(value, cookieCharsetName);
+            String[] tokenizeToStringArray = StringUtil.tokenizeToStringArray(decryptHex, DEFAULT_CONNECTOR);
+            for (String string : tokenizeToStringArray){
+                linkedList.add(ConvertUtil.convert(string, klass));
             }
+        }catch (NumberFormatException e){
+            LOGGER.error("", e);
+            throw new IllegalArgumentException(e);
+        }catch (EncryptionException e){
+            LOGGER.error(Slf4jUtil.formatMessage("decryptHex cookie error,value:{},cookieCharsetName:{}", value, cookieCharsetName), e);
+            throw new IllegalArgumentException(e);
         }
         return linkedList;
     }
