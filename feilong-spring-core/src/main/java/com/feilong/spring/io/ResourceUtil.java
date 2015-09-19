@@ -15,6 +15,11 @@
  */
 package com.feilong.spring.io;
 
+import java.io.FileNotFoundException;
+import java.net.URL;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -23,6 +28,9 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
+import org.springframework.util.ResourceUtils;
+
+import com.feilong.core.io.UncheckedIOException;
 
 /**
  * {@link org.springframework.core.io.Resource} 工具类.
@@ -117,6 +125,9 @@ import org.springframework.core.io.UrlResource;
  */
 public final class ResourceUtil{
 
+    /** The Constant log. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceUtil.class);
+
     /** Don't let anyone instantiate this class. */
     private ResourceUtil(){
         //AssertionError不是必须的. 但它可以避免不小心在类的内部调用构造器. 保证该类在任何情况下都不会被实例化.
@@ -135,7 +146,27 @@ public final class ResourceUtil{
      */
     public static Resource getResource(String urlOrPath){
         ResourceLoader resourceLoader = new DefaultResourceLoader();
-        Resource resource = resourceLoader.getResource(urlOrPath);
-        return resource;
+        return resourceLoader.getResource(urlOrPath);
+    }
+
+    /**
+     * Resolve the given resource location to a {@code java.net.URL}.
+     * <p>
+     * Does not check whether the URL actually exists; simply returns the URL that the given location would correspond to.
+     * </p>
+     * 
+     * @param resourceLocation
+     *            the resource location to resolve: either a "classpath:" pseudo URL, a "file:" URL, or a plain file path
+     * @return a corresponding URL object
+     * @see org.springframework.util.ResourceUtils#getURL(String)
+     * @since 1.4.1
+     */
+    public static URL toURL(String resourceLocation){
+        try{
+            return ResourceUtils.getURL(resourceLocation);
+        }catch (FileNotFoundException e){
+            LOGGER.error("", e);
+            throw new UncheckedIOException("resourceLocation:[" + resourceLocation + "] not found!!!", e);
+        }
     }
 }
