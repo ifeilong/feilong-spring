@@ -8,6 +8,8 @@
 	<artifactId>feilong-spring-web</artifactId>
 
 	<dependencies>
+
+		<!--*******************feilong************************* -->
 		<dependency>
 			<groupId>com.feilong.platform</groupId>
 			<artifactId>feilong-servlet</artifactId>
@@ -19,24 +21,12 @@
 			<version>${version.feilong-platform}</version>
 		</dependency>
 
-		<!--*******************feilong************************* -->
 		<dependency>
 			<groupId>com.feilong.platform.tools</groupId>
 			<artifactId>feilong-tools-security</artifactId>
 		</dependency>
 
-		<!-- 父 platform中 jsp-api -->
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-		</dependency>
-
-		<!-- 父 platform 中 servlet-api -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-		</dependency>
-
+		<!--*******************spring************************* -->
 		<!-- spring-web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -48,5 +38,18 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
+
+		<!--*******************servlet-api && jsp-api************************* -->
+		<!-- servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+
 	</dependencies>
 </project>
