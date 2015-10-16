@@ -78,5 +78,17 @@ public class AntPathMatcherTest{
     @Test
     public void testMatch1(){
         LOGGER.info("" + PATH_MATCHER.match("/**/*.json", "/storelocator/list.json"));
+        LOGGER.info("" + PATH_MATCHER.match("/**/*.json", "/list.json"));
+    }
+
+    @Test
+    public void testMatch2(){
+        LOGGER.info("" + PATH_MATCHER.match("/**/*", "/"));
+        LOGGER.info("" + PATH_MATCHER.match("/**/*", "/a.jsp"));
+        LOGGER.info("" + PATH_MATCHER.match("/**/*", "/s/a.jsp"));
+        LOGGER.info("" + PATH_MATCHER.match("/**", "/"));
+        LOGGER.info("" + PATH_MATCHER.match("/**", "/a.jsp"));
+        LOGGER.info("" + PATH_MATCHER.match("/**", "/s/a.jsp"));
+        LOGGER.info("" + PATH_MATCHER.match("/**", "/s/a/a.jsp"));
     }
 }
