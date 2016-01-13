@@ -11,7 +11,7 @@
 		<!-- 9.2-1004-jdbc3 -->
 		<version.postgresql>9.2-1004-jdbc4</version.postgresql>
 		<version.loxia>2.5.2</version.loxia>
-		<version.c3p0>0.9.1.2</version.c3p0>
+		<version.c3p0>0.9.5.2</version.c3p0>
 	</properties>
 
 	<dependencies>
@@ -127,7 +127,7 @@
 
 		<!--note: c3p0 放到每个 brandstore 便于各自调整版本,或者选用其他连接池 -->
 		<dependency>
-			<groupId>c3p0</groupId>
+			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>${version.c3p0}</version>
 			<scope>test</scope>
