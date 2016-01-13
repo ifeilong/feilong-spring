@@ -38,6 +38,7 @@ import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.coreextension.lang.ThreadUtil;
 import com.feilong.spring.aop.AbstractAspect;
+import com.feilong.spring.aop.JoinPointUtil;
 import com.feilong.spring.aop.ProceedingJoinPointUtil;
 import com.feilong.spring.transaction.interceptor.TransactionAttributeUtil;
 
@@ -109,7 +110,9 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
                             .getTarget().getClass());
         }
 
-        MultipleGroupDataSource multipleGroupDataSourceAnnotation = getAnnotation(proceedingJoinPoint, MultipleGroupDataSource.class);
+        MultipleGroupDataSource multipleGroupDataSourceAnnotation = JoinPointUtil.findAnnotation(
+                        proceedingJoinPoint,
+                        MultipleGroupDataSource.class);
         //组名
         String groupName;
         //没有配置multipleGroupDataSourceAnnotation
@@ -162,7 +165,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         //***************************************************************************
         if (isSetHolder){
             //read or write
-            String readWriteSupport = this.getReadWriteSupport(transactionAttribute);
+            String readWriteSupport = getReadWriteSupport(transactionAttribute);
 
             String targetDataSourcesKey = MultipleGroupReadWriteUtil.getTargetDataSourcesKey(groupName, readWriteSupport);
             LOGGER.info("set targetDataSourcesKey:[{}],current thread info:[{}]", targetDataSourcesKey, currentThreadInfo);
@@ -170,7 +173,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         }
 
         try{
-            return this.proceed(proceedingJoinPoint);
+            return proceed(proceedingJoinPoint);
         }catch (Throwable e){
             throw e;
         }finally{
@@ -205,19 +208,18 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      * @return true, if checks if is set holder
      * @since 1.1.1
      */
-    private boolean isSetHolder(TransactionAttribute transactionAttribute,String groupName){
+    private static boolean isSetHolder(TransactionAttribute transactionAttribute,String groupName){
         if (Validator.isNotNullOrEmpty(groupName)){
             return true;
-        }else{
-
-            if (null == transactionAttribute){
-                return true;
-            }
-
-            int propagationBehavior = transactionAttribute.getPropagationBehavior();
-            //TODO 可能还可以优化 现规则和loxia相同
-            return propagationBehavior != TransactionDefinition.PROPAGATION_REQUIRES_NEW;
         }
+
+        if (null == transactionAttribute){
+            return true;
+        }
+
+        int propagationBehavior = transactionAttribute.getPropagationBehavior();
+        //TODO 可能还可以优化 现规则和loxia相同
+        return propagationBehavior != TransactionDefinition.PROPAGATION_REQUIRES_NEW;
     }
 
     /**
@@ -230,7 +232,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      * @see "org.postgresql.jdbc2.AbstractJdbc2Connection#setReadOnly(boolean)"
      * @since 1.1.1
      */
-    private String getReadWriteSupport(TransactionAttribute transactionAttribute){
+    private static String getReadWriteSupport(TransactionAttribute transactionAttribute){
 
         String readWriteSupport = "";
 
@@ -298,7 +300,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      *             the throwable
      * @since 1.1.1
      */
-    private Object proceed(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+    private static Object proceed(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
         Object[] args = proceedingJoinPoint.getArgs();
         String format = getProceedingJoinPointJsonInfoExcludeJsonException(proceedingJoinPoint);
 
@@ -336,7 +338,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      * @return the proceeding join point json info exclude json exception
      * @since 1.1.1
      */
-    private String getProceedingJoinPointJsonInfoExcludeJsonException(ProceedingJoinPoint proceedingJoinPoint){
+    private static String getProceedingJoinPointJsonInfoExcludeJsonException(ProceedingJoinPoint proceedingJoinPoint){
         String format = "";
         try{
             format = JsonUtil.format(ProceedingJoinPointUtil.getMapForLog(proceedingJoinPoint));

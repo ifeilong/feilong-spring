@@ -9,5 +9,9 @@
 	<aop:aspectj-autoproxy />
 
 	<!-- <aop:scoped-proxy proxy-target-class="true" /> -->
-	<bean class="com.feilong.spring.aop.LogAspect" />
+	<bean class="com.feilong.spring.aop.log.LogAspect" />
+
+
+	<!-- 用来给 所有实现 {@link UseTimeLogable}接口 的方法 输出耗时日志用的 -->
+	<bean class="com.feilong.spring.aop.log.UseTimeLogableAspect" />
 </beans>

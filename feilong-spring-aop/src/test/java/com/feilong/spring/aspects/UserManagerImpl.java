@@ -18,7 +18,8 @@ package com.feilong.spring.aspects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.spring.aop.Log;
+import com.feilong.spring.aop.log.Log;
+import com.feilong.spring.aop.log.UseTimeLogable;
 
 /**
  * The Class UserManagerImpl.
@@ -26,7 +27,7 @@ import com.feilong.spring.aop.Log;
  * @author feilong
  * @version 1.0.7 2014-6-25 16:23:02
  */
-public class UserManagerImpl implements UserManager{
+public class UserManagerImpl implements UserManager,UseTimeLogable{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(UserManagerImpl.class);

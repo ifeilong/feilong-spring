@@ -34,11 +34,18 @@ public class AspectsTest extends AbstractJUnit4SpringContextTests{
     private UserManager userManager;
 
     /**
-     * Name.
+     * 添加 user.
      */
     @Test
-    public void name(){
+    public void addUser(){
         userManager.addUser("1018", "Jummy");
-        // userManager.delUser(5);
+    }
+
+    /**
+     * Del user.
+     */
+    @Test
+    public void delUser(){
+        userManager.delUser(5);
     }
 }

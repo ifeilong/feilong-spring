@@ -13,27 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.aop;
-
-import org.springframework.core.Ordered;
+package com.feilong.spring.aop.log;
 
 /**
- * {@link org.aspectj.lang.annotation.Aspect}相关父类.
+ * 耗时时间.标识接口
+ * 
+ * <p>
+ * 通常和 {@link com.feilong.spring.aop.log.UseTimeLogableAspect} 搭配使用,用来输出执行方法耗时时间
+ * </p>
  * 
  * @author feilong
- * @version 1.0 2012-4-13 上午1:14:20
- * @version 1.1.1 add implements Ordered
- * @see org.springframework.core.Ordered
+ * @version 1.5.0 2016年1月5日 下午2:31:49
+ * @since 1.5.0
  */
-public abstract class AbstractAspect implements Ordered{
+public interface UseTimeLogable{
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.core.Ordered#getOrder()
-     */
-    @Override
-    public int getOrder(){
-        return 0;
-    }
 }
