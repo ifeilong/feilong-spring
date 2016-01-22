@@ -45,6 +45,6 @@ public class ApplicationContextUtilTest extends AbstractJUnit4SpringContextTests
     public final void test(){
         Map<String, Object> applicationContextForLogMap = ApplicationContextUtil.getApplicationContextForLogMap(applicationContext);
         LOGGER.debug("ApplicationContextForLogMap:{}", JsonUtil.format(applicationContextForLogMap));
-        LOGGER.info("" + applicationContext.containsBean("paymentAdaptorFactory"));
+        LOGGER.info("" + applicationContext.containsBean("feitian@"));
     }
 }

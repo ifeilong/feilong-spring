@@ -44,4 +44,11 @@ public class SpelUtilTest{
         LOGGER.info("" + SpelUtil.getValue(ex + ".bytes.length"));
         LOGGER.info("" + SpelUtil.getValue("new String(" + ex + ").toUpperCase()"));
     }
+
+    @Test
+    public void getValue1(){
+        System.setProperty("feilong.site", "hongkong");
+        LOGGER.info("" + SpelUtil.getValue("#systemProperties['feilong.site']"));
+        //LOGGER.info("" + SpelUtil.getValue("${feilong.site}=='china'?'CHINA':(${feilong.site}=='hongkong'?'HONGKONG':'TAIWANG')"));
+    }
 }
