@@ -47,6 +47,7 @@ public class UseTimeLogableAspect extends AbstractAspect{
      */
     @Pointcut("this(com.feilong.spring.aop.log.UseTimeLogable)")
     private void pointcut(){
+        //only pointcut
     }
 
     /**

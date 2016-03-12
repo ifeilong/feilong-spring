@@ -54,6 +54,7 @@ public class LogAspect extends AbstractAspect{
      */
     @Pointcut("@annotation(com.feilong.spring.aop.log.Log)")
     private void pointcut(){
+        //only pointcut
     }
 
     // com.feilong.spring.aspects.UserManager
