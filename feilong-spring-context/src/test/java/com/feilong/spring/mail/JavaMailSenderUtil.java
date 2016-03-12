@@ -179,7 +179,7 @@ public class JavaMailSenderUtil{
                     javaMailSender.send(message);
                 }catch (MailException e){
                     LOGGER.error("Error occurs while sending mail", e);
-                }finally{}
+                }
             }
         });
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        ">
+
+	<!-- 国际化的配置文件 -->
+	<!-- 根据反射机制从BeanDefinitionRegistry中找出名称为“messageSource”且类型为org.springframework.context.MessageSource的Bean，将这个Bean定义的信息资源加载为容器级的国际化信息资源 -->
+	<!-- 其Bean名称只能为messageSource -->
+
+	<!-- 内部使用 org.springframework.core.io.DefaultResourceLoader 来读取 , -->
+	<!-- 支持classpath: ,但是不支持 classpath*: -->
+	<!-- 不支持通配符 比如 i18n/* -->
+	<bean id="messageSource" class="com.feilong.spring.messagesource.PathMatchingReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<!-- <value>classpath:i18n/list</value>
+					<value>classpath:i18n/member</value> -->
+
+				<value>classpath*:i18n/**/*.properties</value>
+			</list>
+		</property>
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<property name="defaultEncoding" value="UTF-8" />
+
+		<!-- 刷新资源文件的周期，以秒为单位,默认值为-1表示永不刷新,在真实的应用中，刷新周期不能太短，否则频繁的刷新将带来性能上的负面影响 -->
+		<property name="cacheSeconds">
+			<value>60</value>
+		</property>
+	</bean>
+</beans>
