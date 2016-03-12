@@ -41,6 +41,6 @@ public class PathMatchingReloadableResourceBundleMessageSourceTest extends Abstr
      */
     @Test
     public void test(){
-        LOGGER.info("" + applicationContext.getMessage("member.randomCode", null, Locale.SIMPLIFIED_CHINESE));
+        LOGGER.info(applicationContext.getMessage("member.randomCode", null, Locale.SIMPLIFIED_CHINESE));
     }
 }
