@@ -31,6 +31,13 @@ public class MultipleGroupReadWriteStatusHolder{
     /** 为每一个线程维护变量的副本 . */
     private static final ThreadLocal<String> MULTIPLE_DATASOURCE_GROUP_NAME_HOLDER = new ThreadLocal<String>();
 
+    /** Don't let anyone instantiate this class. */
+    private MultipleGroupReadWriteStatusHolder(){
+        //AssertionError不是必须的. 但它可以避免不小心在类的内部调用构造器. 保证该类在任何情况下都不会被实例化.
+        //see 《Effective Java》 2nd
+        throw new AssertionError("No " + getClass().getName() + " instances for you!");
+    }
+
     /**
      * 设置当前线程的线程局部变量的值.
      *
@@ -63,4 +70,5 @@ public class MultipleGroupReadWriteStatusHolder{
     public static void clearMultipleDataSourceGroupName(){
         MULTIPLE_DATASOURCE_GROUP_NAME_HOLDER.remove();
     }
+
 }

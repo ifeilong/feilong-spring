@@ -29,6 +29,13 @@ public class MultipleGroupReadWriteUtil{
     /** 默认的组名 <code>{@value}</code>. */
     static final String DEFAULT_GROUP_NAME = "default";
 
+    /** Don't let anyone instantiate this class. */
+    private MultipleGroupReadWriteUtil(){
+        //AssertionError不是必须的. 但它可以避免不小心在类的内部调用构造器. 保证该类在任何情况下都不会被实例化.
+        //see 《Effective Java》 2nd
+        throw new AssertionError("No " + getClass().getName() + " instances for you!");
+    }
+
     /**
      * Gets the target data sources key.
      * 
@@ -40,9 +47,8 @@ public class MultipleGroupReadWriteUtil{
      * @since 1.1.1
      */
     public static String getTargetDataSourcesKey(String groupName,String readWriteSupportType){
-        if (Validator.isNullOrEmpty(groupName)){
-            groupName = DEFAULT_GROUP_NAME;
-        }
-        return groupName + "@" + readWriteSupportType;
+        String gName = Validator.isNullOrEmpty(groupName) ? DEFAULT_GROUP_NAME : groupName;
+        return gName + "@" + readWriteSupportType;
     }
+
 }

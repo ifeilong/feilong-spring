@@ -19,8 +19,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import net.sf.json.JSONException;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -41,6 +39,8 @@ import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
 import com.feilong.spring.aop.ProceedingJoinPointUtil;
 import com.feilong.spring.transaction.interceptor.TransactionAttributeUtil;
+
+import net.sf.json.JSONException;
 
 /**
  * 使用拦截器,确定使用那个组/类型数据库,以及那种(读还是写)的数据库.
@@ -106,13 +106,12 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         //事务
         TransactionAttribute transactionAttribute = null;
         if (null != transactionAttributeSouce){
-            transactionAttribute = transactionAttributeSouce.getTransactionAttribute(methodSignature.getMethod(), proceedingJoinPoint
-                            .getTarget().getClass());
+            transactionAttribute = transactionAttributeSouce
+                            .getTransactionAttribute(methodSignature.getMethod(), proceedingJoinPoint.getTarget().getClass());
         }
 
-        MultipleGroupDataSource multipleGroupDataSourceAnnotation = JoinPointUtil.findAnnotation(
-                        proceedingJoinPoint,
-                        MultipleGroupDataSource.class);
+        MultipleGroupDataSource multipleGroupDataSourceAnnotation = JoinPointUtil
+                        .findAnnotation(proceedingJoinPoint, MultipleGroupDataSource.class);
         //组名
         String groupName;
         //没有配置multipleGroupDataSourceAnnotation
@@ -123,7 +122,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         }else{
             groupName = multipleGroupDataSourceAnnotation.value();
         }
-        return this.proceed(proceedingJoinPoint, transactionAttribute, groupName);
+        return proceed(proceedingJoinPoint, transactionAttribute, groupName);
     }
 
     /**
@@ -140,7 +139,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      *             the throwable
      * @since 1.1.1
      */
-    private Object proceed(ProceedingJoinPoint proceedingJoinPoint,TransactionAttribute transactionAttribute,String groupName)
+    private static Object proceed(ProceedingJoinPoint proceedingJoinPoint,TransactionAttribute transactionAttribute,String groupName)
                     throws Throwable{
         //当前的holder
         String previousDataSourceNameHolder = MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName();
@@ -246,7 +245,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
         switch (propagationBehavior) {
 
-        //默认的事务传播行为，表示必须有逻辑事务，否则新建一个事务
+            //默认的事务传播行为，表示必须有逻辑事务，否则新建一个事务
             case TransactionDefinition.PROPAGATION_REQUIRED:
                 break;
 
