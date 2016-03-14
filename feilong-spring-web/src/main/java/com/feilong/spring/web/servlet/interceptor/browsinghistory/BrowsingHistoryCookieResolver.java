@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.servlet.interceptor.browsingHistory;
+package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -35,7 +35,7 @@ import com.feilong.core.tools.slf4j.Slf4jUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.CookieUtil;
 import com.feilong.servlet.http.entity.CookieEntity;
-import com.feilong.spring.web.servlet.interceptor.browsingHistory.command.BrowsingHistoryCommand;
+import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.tools.security.EncryptionException;
 import com.feilong.tools.security.symmetric.SymmetricEncryption;
 import com.feilong.tools.security.symmetric.SymmetricType;

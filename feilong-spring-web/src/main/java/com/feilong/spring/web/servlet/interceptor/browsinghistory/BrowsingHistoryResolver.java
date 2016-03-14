@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.servlet.interceptor.browsingHistory;
+package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.feilong.spring.web.servlet.interceptor.browsingHistory.command.BrowsingHistoryCommand;
+import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 
 /**
  * The Interface BrowsingHistory.
@@ -55,7 +55,7 @@ import com.feilong.spring.web.servlet.interceptor.browsingHistory.command.Browsi
  *
  * @author feilong
  * @version 1.2.2 2015年7月20日 下午6:44:27
- * @see com.feilong.spring.web.servlet.interceptor.browsingHistory.BrowsingHistoryInterceptor
+ * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryInterceptor
  * @since 1.2.2
  */
 public interface BrowsingHistoryResolver{

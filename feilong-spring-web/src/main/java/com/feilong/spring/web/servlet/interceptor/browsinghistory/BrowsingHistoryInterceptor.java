@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.servlet.interceptor.browsingHistory;
+package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +22,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
-import com.feilong.spring.web.servlet.interceptor.browsingHistory.command.BrowsingHistoryCommand;
+import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 
 /**
  * 商品浏览历史记录.
