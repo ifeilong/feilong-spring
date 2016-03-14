@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.servlet.interceptor.clientCache;
+package com.feilong.spring.web.servlet.interceptor.clientcache;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
