@@ -104,7 +104,8 @@ import com.feilong.core.util.CollectionsUtil;
 public class PathMatchingReloadableResourceBundleMessageSource extends ReloadableResourceBundleMessageSource{
 
     /** The Constant LOGGER. */
-    private static final Logger     LOGGER                  = LoggerFactory.getLogger(PathMatchingReloadableResourceBundleMessageSource.class);
+    private static final Logger     LOGGER                  = LoggerFactory
+                    .getLogger(PathMatchingReloadableResourceBundleMessageSource.class);
 
     /** The resource pattern resolver. */
     private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
@@ -121,14 +122,7 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
         List<String> basenameList = new ArrayList<String>();
         for (String basename : basenames){
             if (basename.contains("*")){//如果带有通配符
-                try{
-                    Resource[] resources = resourcePatternResolver.getResources(basename);
-                    for (Resource resource : resources){
-                        basenameList.add(resolverBaseName(resource));
-                    }
-                }catch (IOException e){
-                    LOGGER.error("", e);
-                }
+                basenameList.addAll(resolverWildcardConfig(basename));
             }else{
                 basenameList.add(basename);
             }
@@ -140,6 +134,29 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
 
         LOGGER.info("finalBaseNames:{}", JsonUtil.format(finalBaseNames));
         super.setBasenames(finalBaseNames);
+    }
+
+    /**
+     * Resolver wildcard config.
+     *
+     * @param basename
+     *            the basename
+     * @return the list< string>
+     * @since 1.5.0
+     */
+    private List<String> resolverWildcardConfig(String basename){
+        List<String> list = new ArrayList<String>();
+
+        try{
+            Resource[] resources = resourcePatternResolver.getResources(basename);
+            for (Resource resource : resources){
+                list.add(resolverBaseName(resource));
+            }
+        }catch (IOException e){
+            LOGGER.error("", e);
+        }
+
+        return list;
     }
 
     /**
@@ -159,10 +176,9 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
 
         boolean isJar = ResourceUtils.isJarURL(url);
 
-        String baseName = ResourceUtils.CLASSPATH_URL_PREFIX
-                        + file.replaceFirst(
-                                        isJar ? "^.*" + ResourceUtils.JAR_URL_SEPARATOR : "^(.*/test-classes|.*/classes|.*/resources)/",
-                                        "").replaceAll("(_\\w+){0,3}\\.(properties|xml)", "");
+        String baseName = ResourceUtils.CLASSPATH_URL_PREFIX + file
+                        .replaceFirst(isJar ? "^.*" + ResourceUtils.JAR_URL_SEPARATOR : "^(.*/test-classes|.*/classes|.*/resources)/", "")
+                        .replaceAll("(_\\w+){0,3}\\.(properties|xml)", "");
 
         LOGGER.debug("" + resource.getURL() + "(====>)" + baseName);
         return baseName;
