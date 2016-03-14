@@ -17,25 +17,20 @@ package com.feilong.spring.web.servlet.mvc;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import com.feilong.core.date.DatePattern;
 import com.feilong.core.util.Validator;
 import com.feilong.servlet.http.entity.HttpHeaders;
+import com.feilong.spring.web.servlet.LocaleResolverUtil;
 
 /**
  * 通用的 父类 AbstractController.
@@ -146,7 +141,7 @@ public abstract class AbstractController{
      */
     protected String getMessage(String code,Object...args){
         if (Validator.isNotNullOrEmpty(code)){
-            return context.getMessage(code, args, getLocale());
+            return context.getMessage(code, args, LocaleResolverUtil.getLocale());
         }
         return null;
     }
@@ -159,19 +154,7 @@ public abstract class AbstractController{
      * @return the message
      */
     protected String getMessage(MessageSourceResolvable messageSourceResolvable){
-        // LocaleContextHolder.getLocale()
-        return context.getMessage(messageSourceResolvable, getLocale());
+        return context.getMessage(messageSourceResolvable, LocaleResolverUtil.getLocale());
     }
 
-    /**
-     * 获取当前国际化内容语言.
-     * 
-     * @return the request language
-     */
-    protected Locale getLocale(){
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
-        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-        return localeResolver.resolveLocale(request);
-    }
 }

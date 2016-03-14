@@ -46,7 +46,7 @@ public abstract class AbstractHandlerInterceptorAdapter extends HandlerIntercept
     protected void postConstruct(){
         if (LOGGER.isInfoEnabled()){
             Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(this);
-            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.format(map));
+            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.formatSimpleMap(map));
         }
     }
 

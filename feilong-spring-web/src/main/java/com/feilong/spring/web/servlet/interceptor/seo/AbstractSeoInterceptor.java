@@ -23,9 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.lang.ClassUtil;
@@ -33,52 +31,43 @@ import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.util.Validator;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
-import com.feilong.web.command.SubViewCommand;
-import com.feilong.web.command.ViewCommand;
 
 /**
- * 专门处理每个页面的seo信息,在 {@link HandlerInterceptorAdapter#preHandle(HttpServletRequest, HttpServletResponse, Object)}流程中,查找 request作用域中的数据.
+ * Seo 的核心实现.
  * 
- * <h3>使用指南:</h3>
- * 
+ * <h3>实现原理:</h3>
  * <blockquote>
  * <ol>
- * <li>Model1:什么都不设置,那么使用默认配置的 {@link #defaultSeoViewCommand},如果这些参数也没有设置,那么页面相关地方会输出空</li>
- * <li>Model2:可以在controller {@link RequestMapping} 方法体里面,使用
+ * <li>{@link #findSeoViewCommandFromRequestAndModelAndViewAttributeMap(HttpServletRequest, ModelAndView)} 从request 以及 model中提取
  * 
- * <pre>
- * SeoViewCommand defaultSeoViewCommand = new DefaultSeoViewCommand();
- * defaultSeoViewCommand.setSeoDescription(xxx);
- * defaultSeoViewCommand.setSeoKeywords(xxx);
- * defaultSeoViewCommand.setSeoTitle(xxx);
- * </pre>
- * 
- * 自定义设置一个SeoViewCommand对象, 然后,将此对象 设置到 request/model中</li>
- * 
- * <li>Model3:如果使用了 {@link ViewCommand}作为整体数据返回,那么只需要让 您自己的{@link ViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
- * 
- * <li>Model4:如果使用了 {@link ViewCommand}作为整体数据返回,并且也使用了 {@link SubViewCommand},并且想将参数设置到该{@link SubViewCommand}内,你可以让 您自己的
- * {@link SubViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
+ * <p>
+ * 步骤:
+ * <ol>
+ * <li>如果发现属性名字 是 {@link #seoViewCommandRequestAttributeName},那么将 <code>attributeValue</code>强转 {@link SeoViewCommand},并返回</li>
+ * <li>如果发现属性值 是 {@link SeoViewCommand}类型,那么转成 {@link SeoViewCommand},并返回</li>
+ * <li>支持 通过实现 {@link #buildSeoViewCommandFromRequestAttributeValue(String, Object)}扩展,自己来查找/构建{@link SeoViewCommand}</li>
+ * </ol>
+ * </li>
+ * <li>{@link #detectSeoViewCommand(SeoViewCommand, HttpServletRequest)} 检测上面得到的 {@link SeoViewCommand},如果发现上面结果是null,则返回默认的
+ * {@link #buildDefaultSeoViewCommand(HttpServletRequest)},如果上面返回的对象,有属性参数是null或者empty,则自动填充默认的数据</li>
+ * <li>将整理之后的{@link SeoViewCommand} 放入 request作用域</li>
  * </ol>
  * </blockquote>
  *
  * @author feilong
- * @version 1.2.2 2015年7月14日 下午8:30:14
- * @since 1.2.2
+ * @version 1.5.0 2016年3月14日 下午4:30:53
+ * @since 1.5.0
  */
-public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
+public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorAdapter{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER                             = LoggerFactory.getLogger(SeoInterceptor.class);
+    private static final Logger LOGGER                             = LoggerFactory.getLogger(AbstractSeoInterceptor.class);
 
     /** request作用域,关于 SEOVIEWCOMMAND 属性的里面的值. */
     private static final String REQUEST_ATTRIBUTE_SEOVIEWCOMMAND   = "seoViewCommand";
 
     /** 您可以修改seoViewCommand在 作用域里面的名称,默认是 {@link #REQUEST_ATTRIBUTE_SEOVIEWCOMMAND}. */
     private String              seoViewCommandRequestAttributeName = REQUEST_ATTRIBUTE_SEOVIEWCOMMAND;
-
-    /** The default seo view command. */
-    private SeoViewCommand      defaultSeoViewCommand;
 
     /*
      * (non-Javadoc)
@@ -95,7 +84,7 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
         SeoViewCommand seoViewCommand = findSeoViewCommandFromRequestAndModelAndViewAttributeMap(request, modelAndView);
 
         //解析,如果有些参数没有值,将采用默认的 
-        seoViewCommand = detectSeoViewCommand(seoViewCommand);
+        seoViewCommand = detectSeoViewCommand(seoViewCommand, request);
 
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(
@@ -111,40 +100,6 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
     }
 
     /**
-     * 检测以下信息.
-     * <ul>
-     * <li>如果 null==seoViewCommand,return <code>defaultSeoViewCommand</code></li>
-     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoDescription()),将设置<code>defaultSeoViewCommand</code>的Description</li>
-     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoKeywords()),将设置 <code>defaultSeoViewCommand</code>的SeoKeywords</li>
-     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoTitle()),将设置 <code>defaultSeoViewCommand</code>的SeoTitle</li>
-     * </ul>
-     *
-     * @param seoViewCommand
-     *            the seo view command
-     * @return the seo view command
-     * @since 1.4.0
-     */
-    private SeoViewCommand detectSeoViewCommand(SeoViewCommand seoViewCommand){
-        if (null == seoViewCommand){
-            LOGGER.debug("can not find SeoViewCommand object in Request And ModelAndView attribute,use defaultSeoViewCommand.");
-            return defaultSeoViewCommand;
-        }
-        //SeoDescription
-        if (Validator.isNullOrEmpty(seoViewCommand.getSeoDescription())){
-            seoViewCommand.setSeoDescription(defaultSeoViewCommand.getSeoDescription());
-        }
-        //SeoKeywords
-        if (Validator.isNullOrEmpty(seoViewCommand.getSeoKeywords())){
-            seoViewCommand.setSeoKeywords(defaultSeoViewCommand.getSeoKeywords());
-        }
-        //SeoTitle
-        if (Validator.isNullOrEmpty(seoViewCommand.getSeoTitle())){
-            seoViewCommand.setSeoTitle(defaultSeoViewCommand.getSeoTitle());
-        }
-        return seoViewCommand;
-    }
-
-    /**
      * Find seo view command from request and model and view.
      *
      * @param request
@@ -152,7 +107,6 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
      * @param modelAndView
      *            the model and view
      * @return the seo view command
-     * @since 1.4.0
      */
     private SeoViewCommand findSeoViewCommandFromRequestAndModelAndViewAttributeMap(HttpServletRequest request,ModelAndView modelAndView){
         Map<String, Object> requestAndModelAttributeMap = ModelAndViewUtil.getRequestAndModelAttributeMap(request, modelAndView);
@@ -161,7 +115,7 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
             String attributeName = entry.getKey();
             Object attributeValue = entry.getValue();
 
-            //*************************如果有 seoViewCommandRequestAttributeName变量,那么log 并且直接跳出*****************************************
+            //*********如果有 seoViewCommandRequestAttributeName变量,那么log 并且直接跳出**********************
             if (attributeName.equals(seoViewCommandRequestAttributeName)){
                 if (LOGGER.isDebugEnabled()){
                     LOGGER.debug(
@@ -179,7 +133,7 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
                 return (SeoViewCommand) attributeValue;
             }
 
-            SeoViewCommand seoViewCommand = constructSeoViewCommand(attributeName, attributeValue);
+            SeoViewCommand seoViewCommand = buildSeoViewCommandFromRequestAttributeValue(attributeName, attributeValue);
             if (null != seoViewCommand){
                 return seoViewCommand;
             }
@@ -188,16 +142,62 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
     }
 
     /**
-     * Consttruct seo view command.
+     * 检测以下信息.
+     * <ul>
+     * <li>如果 null==seoViewCommand,return <code>defaultSeoViewCommand</code></li>
+     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoDescription()),将设置<code>defaultSeoViewCommand</code>的Description</li>
+     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoKeywords()),将设置 <code>defaultSeoViewCommand</code>的SeoKeywords</li>
+     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoTitle()),将设置 <code>defaultSeoViewCommand</code>的SeoTitle</li>
+     * </ul>
+     *
+     * @param seoViewCommand
+     *            the seo view command
+     * @param request
+     *            the request
+     * @return the seo view command
+     */
+    protected SeoViewCommand detectSeoViewCommand(SeoViewCommand seoViewCommand,HttpServletRequest request){
+        SeoViewCommand defaultSeoViewCommand = buildDefaultSeoViewCommand(request);
+
+        if (null == seoViewCommand){
+            LOGGER.debug("can not find SeoViewCommand object in Request And ModelAndView attribute,use defaultSeoViewCommand.");
+            return defaultSeoViewCommand;
+        }
+
+        //SeoDescription
+        if (Validator.isNullOrEmpty(seoViewCommand.getSeoDescription())){
+            seoViewCommand.setSeoDescription(defaultSeoViewCommand.getSeoDescription());
+        }
+        //SeoKeywords
+        if (Validator.isNullOrEmpty(seoViewCommand.getSeoKeywords())){
+            seoViewCommand.setSeoKeywords(defaultSeoViewCommand.getSeoKeywords());
+        }
+        //SeoTitle
+        if (Validator.isNullOrEmpty(seoViewCommand.getSeoTitle())){
+            seoViewCommand.setSeoTitle(defaultSeoViewCommand.getSeoTitle());
+        }
+        return seoViewCommand;
+    }
+
+    /**
+     * 构造默认的DefaultSeoViewCommand.
+     *
+     * @param request
+     *            the request
+     * @return the seo view command
+     */
+    protected abstract SeoViewCommand buildDefaultSeoViewCommand(HttpServletRequest request);
+
+    /**
+     * 提供从 <code>requestAttributeValue</code>中提取/构造 {@link SeoViewCommand}的扩展点.
      *
      * @param requestAttributeName
-     *            the request attribute name
+     *            request 作用域 属性名称
      * @param requestAttributeValue
-     *            the request attribute value
+     *            request 作用域 属性值
      * @return the seo view command
-     * @since 1.2.2
      */
-    protected SeoViewCommand constructSeoViewCommand(
+    protected SeoViewCommand buildSeoViewCommandFromRequestAttributeValue(
                     @SuppressWarnings("unused") String requestAttributeName,
                     @SuppressWarnings("unused") Object requestAttributeValue){
         return null;
@@ -213,13 +213,4 @@ public class SeoInterceptor extends AbstractHandlerInterceptorAdapter{
         this.seoViewCommandRequestAttributeName = seoViewCommandRequestAttributeName;
     }
 
-    /**
-     * 设置 default seo view command.
-     *
-     * @param defaultSeoViewCommand
-     *            the defaultSeoViewCommand to set
-     */
-    public void setDefaultSeoViewCommand(SeoViewCommand defaultSeoViewCommand){
-        this.defaultSeoViewCommand = defaultSeoViewCommand;
-    }
 }
