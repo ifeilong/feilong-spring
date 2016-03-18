@@ -32,17 +32,26 @@ import org.springframework.web.util.WebUtils;
 import com.feilong.core.bean.PropertyUtil;
 import com.feilong.core.lang.reflect.FieldUtil;
 import com.feilong.core.tools.jsonlib.JsonUtil;
+import com.feilong.core.util.Validator;
 import com.feilong.spring.web.bind.annotation.LoginMember;
 
 /**
- * 支持spring mvc requestMapping 方法支持 {@link LoginMember} 注解 特殊参数.
+ * 支持spring mvc requestMapping 方法支持 {@link LoginMember} 注解特殊参数.
  * 
- * <ul>
+ * <h3>代码流程:</h3>
+ * <blockquote>
+ * <ol>
+ * <li>如果session中的 <code>sessionKey</code>是 <code>null</code>,那么直接返回<code>null</code>;</li>
  * <li>如果标识的是session对象本身 {@link #sessionMemberClass},那么直接获取返回;</li>
- * <li>如果标识的是session对象中的某个字段 {@link #sessionMemberIdName},那么获取该字段返回.</li>
- * </ul>
+ * <li>如果标识的是session对象中的某个字段 {@link #sessionMemberIdName},那么提取该字段返回;</li>
+ * <li>如果没有配置 {@link #sessionMemberIdName},那么返回null.</li>
+ * </ol>
+ * </blockquote>
  * 
- * <h3>配置示例:</h3> <blockquote>
+ * 
+ * <h3>配置示例:</h3>
+ * 
+ * <blockquote>
  * 
  * <pre>
  * {@code
@@ -64,9 +73,9 @@ import com.feilong.spring.web.bind.annotation.LoginMember;
  * </blockquote>
  *
  * @author feilong
- * @version 5.0.0 2016年2月26日 下午6:49:44
+ * @version 1.5.0 2016年2月26日 下午6:49:44
  * @see org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#getDefaultArgumentResolvers()
- * @since 5.0.0
+ * @since 1.5.0
  */
 public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver{
 
@@ -124,15 +133,23 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
 
         Object sessionMember = WebUtils.getRequiredSessionAttribute(request, sessionKey);
 
+        //如果session中的 <code>sessionKey</code>是 <code>null</code>,那么直接返回<code>null</code>
         if (null == sessionMember){
             return null;
         }
 
+        //如果标识的是session对象本身 {@link #sessionMemberClass},那么直接获取返回;
         Class<?> klass = parameter.getParameterType();
         if (klass.isAssignableFrom(sessionMemberClass)){
             return sessionMember;
         }
 
+        //如果没有配置 {@link #sessionMemberIdName},那么返回null
+        if (Validator.isNullOrEmpty(sessionMemberIdName)){
+            return null;
+        }
+
+        //如果标识的是session对象中的某个字段 {@link #sessionMemberIdName},那么提取该字段返回;
         return PropertyUtil.getProperty(sessionMember, sessionMemberIdName);
     }
 
