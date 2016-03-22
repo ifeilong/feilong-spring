@@ -23,14 +23,43 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.servlet.http.ResponseUtil;
+import com.feilong.servlet.http.entity.HttpHeaders;
 import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 
 /**
- * ClientCacheInterceptor.
+ * 用来拦截所有 标识有 {@link ClientCache}的 请求方法.
+ * 
+ * <h3>作用及原理:</h3>
+ * <blockquote>
+ * 
+ * <ol>
+ * <li>如果没有标识{@link ClientCache}，那么自动通过拦截器，不进行任何处理</li>
+ * <li>如果标识的{@link ClientCache}，{@link ClientCache#value()} <=0,那么标识不设置缓存，参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}</li>
+ * <li>否则，会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头，value值为 {@code "max-age=" + value}
+ * </li>
+ * </ol>
+ * </blockquote>
+ * 
+ * <h3>使用方式:</h3>
+ * 
+ * <blockquote>
+ * Example 1:标识请求不需要 浏览器端缓存
+ * <p>
+ * <code>@ClientCache(0)</code>
+ * </p>
+ * 
+ * Example 2:标识请求需要5分钟 浏览器端缓存
+ * <p>
+ * <code>@ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)</code>
+ * </p>
+ * </blockquote>
  *
  * @author feilong
  * @version 1.2.2 2015年7月17日 上午12:45:06
+ * @see ResponseUtil#setNoCacheHeader(HttpServletResponse)
+ * @see javax.servlet.http.HttpServletResponse#setHeader(String, String)
  * @since 1.2.2
  */
 public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
@@ -50,24 +79,31 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
         if (handler instanceof HandlerMethod){
             HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-            //TODO 目前仅支持方法体上面,将来支持类上面
             ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
 
+            //如果没有标识{@link ClientCache}，那么自动通过拦截器，不进行任何处理
             if (clientCache != null){
-                long value = clientCache.value();
+                int value = clientCache.value();
 
+                //如果标识的{@link ClientCache}，{@link ClientCache#value()} <=0,那么标识不设置缓存，参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}
                 if (value <= 0){
-                    response.addHeader("Pragma", "no-cache");
-                    response.setHeader("Cache-Control", "no-cache");
-                    response.setDateHeader("Expires", 0);
-                    //TODO log
-                }else{
-                    String cacheControlValue = "max-age=" + value;
-                    response.setHeader("Cache-Control", cacheControlValue);
+                    ResponseUtil.setNoCacheHeader(response);
+
                     LOGGER.debug(
-                                    "[{}.{}()],set response setHeader:[Cache-Control],value is :[{}]",
+                                    "[{}.{}()],setNoCacheHeader",
+                                    HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                                    HandlerMethodUtil.getHandlerMethodName(handlerMethod));
+                }
+                //否则，会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头，value值为 {@code "max-age=" + value}
+                else{
+                    String cacheControlValue = "max-age=" + value;
+                    response.setHeader(HttpHeaders.CACHE_CONTROL, cacheControlValue);
+
+                    LOGGER.debug(
+                                    "[{}.{}()],set response setHeader:[{}],value is :[{}]",
                                     HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                                     HandlerMethodUtil.getHandlerMethodName(handlerMethod),
+                                    HttpHeaders.CACHE_CONTROL,
                                     cacheControlValue);
                 }
             }

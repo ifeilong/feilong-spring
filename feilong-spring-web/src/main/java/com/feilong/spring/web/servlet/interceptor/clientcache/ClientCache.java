@@ -15,10 +15,13 @@
  */
 package com.feilong.spring.web.servlet.interceptor.clientcache;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.feilong.core.date.TimeInterval;
 
@@ -28,13 +31,27 @@ import com.feilong.core.date.TimeInterval;
  * <p>
  * {@link #value()} 参数优先级最高
  * </p>
+ * 
+ * <h3>关于springmvc cache:</h3>
+ * 
+ * <blockquote>
+ * <p>
+ * springmvc cache 参见 {@link org.springframework.web.servlet.support.WebContentGenerator},此外可以参考 {@link ShallowEtagHeaderFilter}
+ * </p>
+ * </blockquote>
  *
  * @author feilong
  * @version 1.0.9 2015年3月30日 下午4:25:10
  * @since 1.0.9
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+//表示产生文档,比如通过javadoc产生文档, 将此注解包含在 javadoc 中, 这个Annotation可以被写入javadoc
+//在默认情况下，注释 不包括在 Javadoc 中
+@Documented
+//在jvm加载class时候有效, VM将在运行期也保留注释,因此可以通过反射机制读取注解的信息
 @Retention(RetentionPolicy.RUNTIME)
+
+//仅用于 Method 
+@Target({ ElementType.METHOD })
 public @interface ClientCache{
 
     /**
@@ -76,8 +93,8 @@ public @interface ClientCache{
      * @since HTTP/1.0
      * @deprecated
      */
-    @Deprecated
-    String pragma() default "no-cache";
+    //    @Deprecated
+    //    String pragma() default "no-cache";
 
     /**
      * Expires（过期时间） 属性是HTTP控制缓存的基本手段,Expires表示的是一个绝对的时刻.<br>
@@ -114,8 +131,8 @@ public @interface ClientCache{
      * 
      * @deprecated
      */
-    @Deprecated
-    int expires() default -1;
+    //    @Deprecated
+    //    int expires() default -1;
 
     /**
      * HTTP 1.1介绍了另外一组头信息属性：Cache-Control响应头信息，让网站的发布者可以更全面的控制他们的内容，并定位过期时间的限制。
@@ -181,6 +198,6 @@ public @interface ClientCache{
      * @since HTTP/1.1
      * @deprecated
      */
-    @Deprecated
-    String cacheControl() default "no-cache";
+    //    @Deprecated
+    //    String cacheControl() default "no-cache";
 }
