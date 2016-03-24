@@ -59,6 +59,6 @@ public class URLEscapeEditor extends PropertyEditorSupport{
         String newText = sb.toString();
 
         LOGGER.debug("the old text:{},new text:{}", text, newText);
-        setValue(newText);
+        super.setValue(newText);
     }
 }

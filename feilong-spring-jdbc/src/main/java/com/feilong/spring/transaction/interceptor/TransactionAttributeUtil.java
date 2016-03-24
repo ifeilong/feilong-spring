@@ -116,7 +116,7 @@ public class TransactionAttributeUtil{
                 propagationBehaviorString = "required";
                 break;
 
-            //创建新的逻辑事务,表示每次都创建新的逻辑事务（物理事务也是不同的）,因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚。
+            //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚。
             case TransactionDefinition.PROPAGATION_REQUIRES_NEW:
                 propagationBehaviorString = "requires_new";
                 break;
@@ -131,7 +131,7 @@ public class TransactionAttributeUtil{
                 propagationBehaviorString = "not_supported";
                 break;
 
-            //如果当前有事务，使用当前事务执行，如果当前没有事务，则抛出异常（IllegalTransactionStateException）
+            //如果当前有事务，使用当前事务执行，如果当前没有事务，则抛出异常(IllegalTransactionStateException)
             case TransactionDefinition.PROPAGATION_MANDATORY:
                 propagationBehaviorString = "mandatory";
                 break;

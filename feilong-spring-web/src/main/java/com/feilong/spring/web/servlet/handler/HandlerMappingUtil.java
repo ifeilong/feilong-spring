@@ -47,7 +47,7 @@ import com.feilong.spring.web.util.WebSpringUtil;
  * <p>
  * 实际上，在稍后介绍 {@link org.springframework.web.servlet.HandlerAdapter HandlerAdapter}的时候，你就会了解到，我们也可以使用其他类型的次级控制器，包括Spring MVC提供的除了
  * {@link org.springframework.web.servlet.mvc.Controller Controller} 之外的次级控制器类型，或者第三方Web开发框架中的Page
- * Controller组件（如Struts的Action），而所有这些次级控制器类型，在Spring MVC中都称作Handler，
+ * Controller组件(如Struts的Action)，而所有这些次级控制器类型，在Spring MVC中都称作Handler，
  * </p>
  * <p>
  * 我想这就是{@link org.springframework.web.servlet.HandlerMapping HandlerMapping}这一名称的由来了 。<br>

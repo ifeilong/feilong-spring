@@ -80,7 +80,7 @@ public @interface ClientCache{
      * 
      * 很多人认为在HTTP头信息中设置了Pragma: no-cache后会让内容无法被缓存。 <br>
      * 但事实并非如此：HTTP的规范中，响应型头信息没有任何关于Pragma属性的说明， <br>
-     * 原文如下（来自 http1.1 规范）： <br>
+     * 原文如下(来自 http1.1 规范)： <br>
      * Note: because the meaning of “Pragma: no-cache as a response header field is not actually specified, it does not provide a reliable
      * replacement for “Cache-Control: no-cache” in a response <br>
      * ，虽然少数集中缓存服务器会遵循这个头信息，但大部分不会。<br>
@@ -97,17 +97,17 @@ public @interface ClientCache{
     //    String pragma() default "no-cache";
 
     /**
-     * Expires（过期时间） 属性是HTTP控制缓存的基本手段,Expires表示的是一个绝对的时刻.<br>
+     * Expires(过期时间) 属性是HTTP控制缓存的基本手段,Expires表示的是一个绝对的时刻.<br>
      * 这个属性告诉缓存器：相关副本在多长时间内是新鲜的。<br>
      * 过了这个时间，缓存器就会向源服务器发送请求，检查文档是否被修改。<br>
-     * 几乎所有的缓存服务器都支持Expires（过期时间）属性；
+     * 几乎所有的缓存服务器都支持Expires(过期时间)属性；
      * 
      * <p>
      * 过期时间头信息属性值只能是HTTP格式的日期时间，其他的都会被解析成当前时间“之前”，副本会过期
      * </p>
      * 
      * <p>
-     * 记住：HTTP的日期时间必须是格林威治时间（GMT），而不是本地时间。<br>
+     * 记住：HTTP的日期时间必须是格林威治时间(GMT)，而不是本地时间。<br>
      * 举例： Expires: Fri, 30 Oct 1998 14:19:41 GMT
      * </p>
      * 
@@ -120,7 +120,7 @@ public @interface ClientCache{
      * 
      * <p style="color:red">
      * 对于 Expires 响应头我们需要注意一点，当响应头中已经设置了 Cache-Contrl:max-age 以后， max-age 将覆盖掉 expires 的效果<br>
-     * （参见 http1.1 规范）原文如下：<br>
+     * (参见 http1.1 规范)原文如下：<br>
      * Note: if a response includes a Cache-Control field with the max-age directive (see section 14.9.3 ), that directive overrides the
      * Expires field.<br>
      * 对于 Expires 特别适合对于网站静态资源的缓存，比如 js,image,logo 等，这些资源不会经常发生变化，另外一个也适合于一些周期性更新的内容。
@@ -156,7 +156,7 @@ public @interface ClientCache{
      * </tr>
      * <tr valign="top" style="background-color:#eeeeff">
      * <td>s-maxage=[秒]</td>
-     * <td>类似于max-age属性，除了他应用于共享（如：代理服务器）缓存</td>
+     * <td>类似于max-age属性，除了他应用于共享(如：代理服务器)缓存</td>
      * </tr>
      * <tr valign="top">
      * <td>public</td>
@@ -165,7 +165,7 @@ public @interface ClientCache{
      * <tr valign="top" style="background-color:#eeeeff">
      * <td>no-cache</td>
      * <td>强制每次请求直接发送给源服务器，而不经过本地缓存版本的校验。<br>
-     * 这对于需要确认认证应用很有用（可以和public结合使用），或者严格要求使用最新数据的应用（不惜牺牲使用缓存的所有好处）；</td>
+     * 这对于需要确认认证应用很有用(可以和public结合使用)，或者严格要求使用最新数据的应用(不惜牺牲使用缓存的所有好处)；</td>
      * </tr>
      * <tr valign="top">
      * <td>no-store</td>
@@ -188,7 +188,7 @@ public @interface ClientCache{
      * 
      * <p style="color:red">
      * 对于 Expires 响应头我们需要注意一点，当响应头中已经设置了 Cache-Contrl:max-age 以后， max-age 将覆盖掉 expires 的效果<br>
-     * （参见 http1.1 规范）原文如下：<br>
+     * (参见 http1.1 规范)原文如下：<br>
      * Note: if a response includes a Cache-Control field with the max-age directive (see section 14.9.3 ), that directive overrides the
      * Expires field.<br>
      * 对于 Expires 特别适合对于网站静态资源的缓存，比如 js,image,logo 等，这些资源不会经常发生变化，另外一个也适合于一些周期性更新的内容。

@@ -66,6 +66,6 @@ public class URLDecoderEditor extends PropertyEditorSupport{
     public void setAsText(String text){
         String newText = URIUtil.decode(text, charsetType);
         LOGGER.debug("the old text:{},new text:{}", text, newText);
-        setValue(newText);
+        super.setValue(newText);
     }
 }
