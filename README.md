@@ -53,27 +53,27 @@ Reduce development, Release ideas
 			<dependency>
 				<groupId>com.feilong.platform.spring</groupId>
 				<artifactId>feilong-spring-core</artifactId>
-				<version>1.4.1</version>
+				<version>1.5.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.feilong.platform.spring</groupId>
 				<artifactId>feilong-spring-aop</artifactId>
-				<version>1.4.1</version>
+				<version>1.5.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.feilong.platform.spring</groupId>
 				<artifactId>feilong-spring-context</artifactId>
-				<version>1.4.1</version>
+				<version>1.5.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.feilong.platform.spring</groupId>
 				<artifactId>feilong-spring-jdbc</artifactId>
-				<version>1.4.1</version>
+				<version>1.5.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.feilong.platform.spring</groupId>
 				<artifactId>feilong-spring-web</artifactId>
-				<version>1.4.1</version>
+				<version>1.5.0</version>
 			</dependency>
 			....
 		</dependencies>
