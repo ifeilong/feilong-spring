@@ -136,17 +136,17 @@ public class DomainPlaceholderSupportListener extends com.feilong.web.domain.Dom
         //org.springframework.web.context.support.ServletContextResource
         Resource resource = webApplicationContext.getResource(domainConfigLocation);
 
-        if (resource.exists()){
-            try{
-                return PropertiesLoaderUtils.loadProperties(resource);
-            }catch (IOException e){
-                String messagePattern = "load domainConfigLocation:[{}] exception";
-                LOGGER.error(Slf4jUtil.formatMessage(messagePattern, domainConfigLocation), e);
-                throw new UncheckedIOException(e);
-            }
-        }else{
+        if (!resource.exists()){
             String messagePattern = "domainConfigLocation:[{}] not exists";
             throw new IllegalArgumentException(Slf4jUtil.formatMessage(messagePattern, domainConfigLocation));
+        }
+
+        try{
+            return PropertiesLoaderUtils.loadProperties(resource);
+        }catch (IOException e){
+            String messagePattern = "load domainConfigLocation:[{}] exception";
+            LOGGER.error(Slf4jUtil.formatMessage(messagePattern, domainConfigLocation), e);
+            throw new UncheckedIOException(e);
         }
     }
 }
