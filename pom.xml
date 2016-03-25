@@ -12,6 +12,8 @@
 	<description>feilong-spring-parent</description>
 	<name>feilong-spring-parent</name>
 
+	<url>https://github.com/venusdrogon/feilong-spring</url>
+
 	<packaging>pom</packaging>
 
 	<modules>
@@ -20,6 +22,7 @@
 		<module>feilong-spring-jdbc</module>
 		<module>feilong-spring-web</module>
 		<module>feilong-spring-context</module>
+		<!-- <module>feilong-spring-mobile</module> -->
 	</modules>
 
 	<dependencies>
