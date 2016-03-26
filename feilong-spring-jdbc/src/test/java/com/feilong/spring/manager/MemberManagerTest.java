@@ -63,7 +63,7 @@ public class MemberManagerTest //extends AbstractJUnit4SpringContextTests
      *             the SQL exception
      */
     @Test
-    public final void testGetUserExcludeJsonException() throws SQLException{
+    public void testGetUserExcludeJsonException() throws SQLException{
         Connection object = DataSourceUtils.doGetConnection(dataSource);
         memberManager.getUserExcludeJsonException(object);
     }
@@ -72,7 +72,7 @@ public class MemberManagerTest //extends AbstractJUnit4SpringContextTests
      * Test method for {@link com.feilong.spring.manager.java.MemberManager#getUser(java.lang.String)}.
      */
     @Test
-    public final void testGetUser(){
+    public void testGetUser(){
         memberManager.getUser("feilong");
     }
 
@@ -80,7 +80,7 @@ public class MemberManagerTest //extends AbstractJUnit4SpringContextTests
      * Test get user1.
      */
     @Test
-    public final void testGetUser1(){
+    public void testGetUser1(){
         memberManager.getUser("feilong");
         salesOrderManager.getUser("feilong");
     }
@@ -89,7 +89,7 @@ public class MemberManagerTest //extends AbstractJUnit4SpringContextTests
      * Test add user.
      */
     @Test
-    public final void testAddUser(){
+    public void testAddUser(){
         memberManager.addUser("feilong");
     }
 
@@ -97,7 +97,7 @@ public class MemberManagerTest //extends AbstractJUnit4SpringContextTests
      * Test add user1.
      */
     @Test
-    public final void testAddUser1(){
+    public void testAddUser1(){
         memberManager.addUser("feilong");
         salesOrderManager.addUser("feilong");
     }
@@ -106,7 +106,7 @@ public class MemberManagerTest //extends AbstractJUnit4SpringContextTests
      * Test get user read only.
      */
     @Test
-    public final void testGetUserReadOnly(){
+    public void testGetUserReadOnly(){
         memberManager.getUserReadOnly("feilong");
     }
 }

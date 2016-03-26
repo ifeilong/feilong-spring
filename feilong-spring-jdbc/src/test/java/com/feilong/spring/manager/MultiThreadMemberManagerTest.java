@@ -58,7 +58,7 @@ public class MultiThreadMemberManagerTest //extends AbstractJUnit4SpringContextT
      * @throws InterruptedException
      */
     @Test
-    public final void testAddUser2() throws InterruptedException{
+    public void testAddUser2() throws InterruptedException{
         for (int i = 0; i < 1; ++i){
             Thread thread = new Thread(new TestRunnable());
             thread.start();
