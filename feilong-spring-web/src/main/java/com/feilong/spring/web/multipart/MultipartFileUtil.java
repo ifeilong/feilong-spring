@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.feilong.core.io.FileUtil;
+import com.feilong.io.FileUtil;
 
 /**
  * The Class MultipartFileUtil.
