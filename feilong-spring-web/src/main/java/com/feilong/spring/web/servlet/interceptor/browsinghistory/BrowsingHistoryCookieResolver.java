@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 feilong (venusdrogon@163.com)
+ * Copyright (C) 2008 feilong
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,22 +119,28 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
      * com.feilong.spring.web.servlet.interceptor.browsingHistory.command.BrowsingHistoryCommand)
      */
     @Override
-    public void resolveBrowsingHistory(HttpServletRequest request,HttpServletResponse response,BrowsingHistoryCommand browsingHistoryCommand){
-        if (Validator.isNotNullOrEmpty(browsingHistoryCommand)){
-            try{
-                String cookieValue = constructItemBrowsingHistoryCookieValue(request, response, browsingHistoryCommand);
+    public void resolveBrowsingHistory(
+                    HttpServletRequest request,
+                    HttpServletResponse response,
+                    BrowsingHistoryCommand browsingHistoryCommand){
 
-                if (Validator.isNotNullOrEmpty(cookieValue)){
-                    CookieEntity cookieEntity = new CookieEntity(cookieName, cookieValue, cookieMaxAge);
-                    cookieEntity.setHttpOnly(true);
-                    CookieUtil.addCookie(cookieEntity, response);
-                }
-            }catch (Exception e){
-                LOGGER.error("constructItemBrowsingHistory Exception,but we need code go-on!", e);
-            }
-        }else{
+        if (Validator.isNullOrEmpty(browsingHistoryCommand)){
             LOGGER.warn("browsingHistoryCommand is null or empty");
+            return;
         }
+
+        try{
+            String cookieValue = constructItemBrowsingHistoryCookieValue(request, response, browsingHistoryCommand);
+
+            if (Validator.isNotNullOrEmpty(cookieValue)){
+                CookieEntity cookieEntity = new CookieEntity(cookieName, cookieValue, cookieMaxAge);
+                cookieEntity.setHttpOnly(true);
+                CookieUtil.addCookie(cookieEntity, response);
+            }
+        }catch (Exception e){
+            LOGGER.error("constructItemBrowsingHistory Exception,but we need code go-on!", e);
+        }
+
     }
 
     /**
@@ -157,7 +163,35 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
             return null;
         }
 
-        Serializable id = browsingHistoryCommand.getId();
+        LinkedList<String> itemBrowsingHistoryList = getItemBrowsingHistoryList(request, response, browsingHistoryCommand);
+
+        //cookie value 是  itemid join--->aes hex 加密格式字符串
+        ToStringConfig toStringConfig = new ToStringConfig(DEFAULT_CONNECTOR);
+        String original = ConvertUtil.toString(toStringConfig, itemBrowsingHistoryList);
+
+        //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
+        String encryptHex = symmetricEncryption.encryptHex(original, cookieCharsetName);
+
+        LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, encryptHex);
+        return encryptHex;
+    }
+
+    /**
+     * 获得 item browsing history list.
+     *
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     * @param browsingHistoryCommand
+     *            the browsing history command
+     * @return the item browsing history list
+     * @since 1.5.2
+     */
+    private LinkedList<String> getItemBrowsingHistoryList(
+                    HttpServletRequest request,
+                    HttpServletResponse response,
+                    BrowsingHistoryCommand browsingHistoryCommand){
 
         LinkedList<String> linkedList = null;
         try{
@@ -167,51 +201,46 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
             CookieUtil.deleteCookie(cookieName, response);
         }
 
+        Serializable id = browsingHistoryCommand.getId();
         //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
         String idStr = id.toString();
         if (Validator.isNullOrEmpty(linkedList)){
             linkedList = new LinkedList<String>();
             //如果没有 添加一个
             linkedList.add(idStr);
-        }else{
-            @SuppressWarnings("null")
-            String first = linkedList.getFirst();
-            //如果 list 里面的数据 第一个是当前item  那么一般表示刷新页面 或者重新打开新窗口
-            //这种case 没有必要操作 cookie
-            if (first.equals(idStr)){
-                LOGGER.info("in cookie,first pk is:[{}],current pk:[{}], nothing to do", first, id);
-                return null;
-            }
 
-            //如果有当前商品,那么删除掉 并将 当前的item id 塞第一个
-            if (linkedList.contains(idStr)){
-                LOGGER.info("in cookie,linkedList:[{}],contains:[{}],remove it~", linkedList, idStr);
-                linkedList.remove(idStr);
-            }
-            linkedList.addFirst(idStr);
-
-            //如果超长了 ,截取
-            int size = linkedList.size();
-            if (size > maxCount){
-                LOGGER.debug("linkedList size:[{}] > maxCount[{}],linkedList:[{}],will sub subList", size, maxCount, linkedList);
-
-                // so non-structural changes in the returned list
-                List<String> subList = linkedList.subList(0, maxCount);
-                //linkedList = (LinkedList<Serializable>) subList;  //java.util.SubList cannot be cast to java.util.LinkedList
-                linkedList = new LinkedList<String>(subList);
-            }
+            return linkedList;
         }
 
-        //****************************************************************************
-        //cookie value 是  itemid join--->aes hex 加密格式字符串
-        ToStringConfig toStringConfig = new ToStringConfig(DEFAULT_CONNECTOR);
-        String original = ConvertUtil.toString(toStringConfig, linkedList);
+        //*****************************************************************************
 
-        //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
-        String encryptHex = symmetricEncryption.encryptHex(original, cookieCharsetName);
+        @SuppressWarnings("null")
+        String first = linkedList.getFirst();
+        //如果 list 里面的数据 第一个是当前item  那么一般表示刷新页面 或者重新打开新窗口
+        //这种case 没有必要操作 cookie
+        if (first.equals(idStr)){
+            LOGGER.info("in cookie,first pk is:[{}],current pk:[{}], nothing to do", first, id);
+            return null;
+        }
 
-        LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, encryptHex);
-        return encryptHex;
+        //如果有当前商品,那么删除掉 并将 当前的item id 塞第一个
+        if (linkedList.contains(idStr)){
+            LOGGER.info("in cookie,linkedList:[{}],contains:[{}],remove it~", linkedList, idStr);
+            linkedList.remove(idStr);
+        }
+        linkedList.addFirst(idStr);
+
+        //如果超长了 ,截取
+        int size = linkedList.size();
+        if (size > maxCount){
+            LOGGER.debug("linkedList size:[{}] > maxCount[{}],linkedList:[{}],will sub subList", size, maxCount, linkedList);
+
+            // so non-structural changes in the returned list
+            List<String> subList = linkedList.subList(0, maxCount);
+            //linkedList = (LinkedList<Serializable>) subList;  //java.util.SubList cannot be cast to java.util.LinkedList
+            linkedList = new LinkedList<String>(subList);
+        }
+        return linkedList;
     }
 
     /*
@@ -223,17 +252,14 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
     @Override
     public <T extends Serializable> LinkedList<T> getBrowsingHistory(HttpServletRequest request,Class<T> klass){
 
-        Cookie cookie = CookieUtil.getCookie(request, cookieName);
-
         LinkedList<T> linkedList = new LinkedList<T>();
-        if (Validator.isNullOrEmpty(cookie)){
+
+        Cookie cookie = CookieUtil.getCookie(request, cookieName);
+        if (Validator.isNullOrEmpty(cookie) || Validator.isNullOrEmpty(cookie.getValue())){
             return linkedList;
         }
 
         String value = cookie.getValue();
-        if (Validator.isNullOrEmpty(value)){
-            return linkedList;
-        }
 
         try{
             String decryptHex = symmetricEncryption.decryptHex(value, cookieCharsetName);
