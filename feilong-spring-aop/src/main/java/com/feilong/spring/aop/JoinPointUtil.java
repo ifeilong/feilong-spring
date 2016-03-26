@@ -18,12 +18,11 @@ package com.feilong.spring.aop;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
-
-import com.feilong.core.util.Validator;
 
 /**
  * The Class JoinPointUtil.
@@ -63,12 +62,8 @@ public class JoinPointUtil{
      * @return the annotation
      */
     public static <T extends Annotation> T findAnnotation(JoinPoint joinPoint,Class<T> annotationClass){
-        if (Validator.isNullOrEmpty(joinPoint)){
-            throw new NullPointerException("joinPoint can't be null/empty!");
-        }
-        if (Validator.isNullOrEmpty(annotationClass)){
-            throw new NullPointerException("annotationClass can't be null/empty!");
-        }
+        Validate.notNull(joinPoint, "joinPoint can't be null!");
+        Validate.notNull(annotationClass, "annotationClass can't be null!");
 
         //**************************************************************************
 
@@ -81,7 +76,6 @@ public class JoinPointUtil{
         }
 
         //**************************************************************************
-
         Method targetMethod = MethodUtils
                         .getAccessibleMethod(joinPoint.getTarget().getClass(), method.getName(), method.getParameterTypes());
         annotation = AnnotationUtils.findAnnotation(targetMethod, annotationClass);

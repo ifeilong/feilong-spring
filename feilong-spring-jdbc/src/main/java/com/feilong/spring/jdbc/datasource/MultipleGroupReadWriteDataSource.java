@@ -5,12 +5,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import com.feilong.core.tools.jsonlib.JsonUtil;
-import com.feilong.core.util.Validator;
 import com.feilong.coreextension.lang.ThreadUtil;
 
 /**
@@ -52,9 +52,8 @@ public class MultipleGroupReadWriteDataSource extends AbstractRoutingDataSource{
      */
     @Override
     public void afterPropertiesSet(){
-        if (Validator.isNullOrEmpty(readWriteDataSourceCommandMap)){
-            throw new NullPointerException("the writeDataSource is null or empty!");
-        }
+        Validate.notNull(readWriteDataSourceCommandMap, "readWriteDataSourceCommandMap can't be null!");
+
         Object defaultTargetDataSource = null;
         Map<Object, Object> targetDataSources = new HashMap<Object, Object>();
 
