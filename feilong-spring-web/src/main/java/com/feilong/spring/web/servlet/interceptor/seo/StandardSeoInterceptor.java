@@ -25,7 +25,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.feilong.core.util.Validator;
+import com.feilong.core.Validator;
 import com.feilong.spring.web.servlet.LocaleResolverUtil;
 
 /**

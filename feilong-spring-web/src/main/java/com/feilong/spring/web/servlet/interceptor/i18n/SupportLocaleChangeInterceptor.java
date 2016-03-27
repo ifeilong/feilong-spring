@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import com.feilong.core.util.Validator;
+import com.feilong.core.Validator;
 
 /**
  * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ，而参数中传入了 不存在的/不支持的 locale 调用

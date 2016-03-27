@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.entity.DIUser;
+import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class UserTest.

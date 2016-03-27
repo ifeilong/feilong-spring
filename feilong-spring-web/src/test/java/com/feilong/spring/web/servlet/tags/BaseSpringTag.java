@@ -26,7 +26,7 @@ import javax.servlet.jsp.JspWriter;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.tags.RequestContextAwareTag;
 
-import com.feilong.core.io.UncheckedIOException;
+import com.feilong.core.UncheckedIOException;
 import com.feilong.spring.web.util.WebSpringUtil;
 
 /**

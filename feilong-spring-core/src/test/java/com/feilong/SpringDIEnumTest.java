@@ -22,8 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.coreextension.entity.Site;
+import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class UserTest.

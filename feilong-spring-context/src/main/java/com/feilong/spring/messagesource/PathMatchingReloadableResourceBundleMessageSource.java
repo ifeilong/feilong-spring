@@ -30,8 +30,8 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.ResourceUtils;
 
 import com.feilong.core.bean.ConvertUtil;
-import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.core.util.CollectionsUtil;
+import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * 支持通配符配置的 {@link ReloadableResourceBundleMessageSource}.

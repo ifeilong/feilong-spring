@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
-import com.feilong.core.util.Validator;
+import com.feilong.core.Validator;
 
 /**
  * The Class MultipleGroupReadWriteUtil.

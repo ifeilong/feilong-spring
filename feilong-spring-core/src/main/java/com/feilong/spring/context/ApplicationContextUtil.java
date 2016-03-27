@@ -24,7 +24,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
-import com.feilong.core.util.Validator;
+import com.feilong.core.Validator;
 
 /**
  * The Class ApplicationContextUtil.

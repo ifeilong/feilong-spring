@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.core.tools.jsonlib.JsonUtil;
 import com.feilong.entity.DIUserArray;
+import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class SpringDIArrayTest.

@@ -25,7 +25,7 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.core.lang.reflect.FieldUtil;
-import com.feilong.core.tools.jsonlib.JsonUtil;
+import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class AbstractHandlerInterceptorAdapter.

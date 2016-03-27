@@ -23,8 +23,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.servlet.http.HttpHeaders;
 import com.feilong.servlet.http.ResponseUtil;
-import com.feilong.servlet.http.entity.HttpHeaders;
 import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 

@@ -27,9 +27,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.feilong.core.io.UncheckedIOException;
-import com.feilong.core.tools.slf4j.Slf4jUtil;
+import com.feilong.core.UncheckedIOException;
 import com.feilong.spring.web.util.WebSpringUtil;
+import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * 初始化配置 监听器. <br>

@@ -30,7 +30,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.ResourceUtils;
 
-import com.feilong.core.io.UncheckedIOException;
+import com.feilong.core.UncheckedIOException;
 
 /**
  * {@link org.springframework.core.io.Resource} 工具类.

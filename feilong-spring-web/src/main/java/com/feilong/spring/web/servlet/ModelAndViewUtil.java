@@ -41,9 +41,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
 
-import com.feilong.core.tools.jsonlib.JsonUtil;
-import com.feilong.core.util.Validator;
+import com.feilong.core.Validator;
 import com.feilong.servlet.http.RequestUtil;
+import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class ModelAndViewUtil.
