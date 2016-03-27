@@ -35,7 +35,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
-import com.feilong.core.lang.CharsetType;
+import com.feilong.core.CharsetType;
 
 /**
  * The Class MailUtil.

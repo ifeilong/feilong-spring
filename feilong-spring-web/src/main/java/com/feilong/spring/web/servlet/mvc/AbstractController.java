@@ -27,8 +27,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import com.feilong.core.DatePattern;
 import com.feilong.core.Validator;
-import com.feilong.core.date.DatePattern;
 import com.feilong.servlet.http.HttpHeaders;
 import com.feilong.spring.web.servlet.LocaleResolverUtil;
 

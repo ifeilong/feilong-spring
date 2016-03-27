@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
-import com.feilong.core.date.TimeInterval;
+import com.feilong.core.TimeInterval;
 
 /**
  * (为了提高速度一些浏览器会缓存浏览者浏览过的页面,通过下面的相关参数的定义,浏览器一般不会缓存页面,而且浏览器无法脱机浏览.<br>

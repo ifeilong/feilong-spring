@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.feilong.core.date.TimeInterval;
+import com.feilong.core.TimeInterval;
 import com.feilong.coreextension.lang.ThreadUtil;
 import com.feilong.spring.manager.java.MemberManager;
 import com.feilong.spring.manager.java.SalesOrderManager;
