@@ -4,7 +4,7 @@
 		<groupId>com.feilong.platform.spring</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.5.3-SNAPSHOT</version>
-		<relativePath>..</relativePath>
+		
 	</parent>
 
 	<artifactId>feilong-spring-core</artifactId>
