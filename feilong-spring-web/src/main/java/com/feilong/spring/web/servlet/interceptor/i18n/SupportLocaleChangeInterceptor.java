@@ -26,7 +26,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import com.feilong.core.Validator;
 
 /**
- * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ，而参数中传入了 不存在的/不支持的 locale 调用
+ * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ,而参数中传入了 不存在的/不支持的 locale 调用
  * {@link org.springframework.util.StringUtils#parseLocaleString(String)}会报错
  *
  * @author feilong
@@ -72,7 +72,7 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
             }
             //不属于 支持的locale
         }else{
-            //如果isNotNullOrEmpty  supportLocales ，那么 就是个普通的  LocaleChangeInterceptor
+            //如果isNotNullOrEmpty  supportLocales ,那么 就是个普通的  LocaleChangeInterceptor
             canHandle = true;
         }
         return canHandle;

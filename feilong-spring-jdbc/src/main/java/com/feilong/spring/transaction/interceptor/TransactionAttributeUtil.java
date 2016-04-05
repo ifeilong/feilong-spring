@@ -111,7 +111,7 @@ public class TransactionAttributeUtil{
         String propagationBehaviorString = "";
         switch (propagationBehavior) {
 
-            //默认的事务传播行为，表示必须有逻辑事务，否则新建一个事务
+            //默认的事务传播行为,表示必须有逻辑事务,否则新建一个事务
             case TransactionDefinition.PROPAGATION_REQUIRED:
                 propagationBehaviorString = "required";
                 break;
@@ -121,22 +121,22 @@ public class TransactionAttributeUtil{
                 propagationBehaviorString = "requires_new";
                 break;
 
-            //指如果当前存在逻辑事务，就加入到该逻辑事务， 如果当前没有逻辑事务，就以非事务方式执行。
+            //指如果当前存在逻辑事务,就加入到该逻辑事务, 如果当前没有逻辑事务,就以非事务方式执行。
             case TransactionDefinition.PROPAGATION_SUPPORTS:
                 propagationBehaviorString = "supports";
                 break;
 
-            //不支持事务，如果当前存在事务则暂停该事务,如果当前存在逻辑事务，就把当前事务暂停，以非事务方式执行
+            //不支持事务,如果当前存在事务则暂停该事务,如果当前存在逻辑事务,就把当前事务暂停,以非事务方式执行
             case TransactionDefinition.PROPAGATION_NOT_SUPPORTED:
                 propagationBehaviorString = "not_supported";
                 break;
 
-            //如果当前有事务，使用当前事务执行，如果当前没有事务，则抛出异常(IllegalTransactionStateException)
+            //如果当前有事务,使用当前事务执行,如果当前没有事务,则抛出异常(IllegalTransactionStateException)
             case TransactionDefinition.PROPAGATION_MANDATORY:
                 propagationBehaviorString = "mandatory";
                 break;
 
-            //不支持事务，  如果当前存在是事务则抛出IllegalTransactionStateException异常，
+            //不支持事务,  如果当前存在是事务则抛出IllegalTransactionStateException异常,
             case TransactionDefinition.PROPAGATION_NEVER:
                 propagationBehaviorString = "never";
                 break;

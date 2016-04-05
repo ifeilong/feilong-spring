@@ -35,9 +35,9 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdap
  * <blockquote>
  * 
  * <ol>
- * <li>如果没有标识{@link ClientCache}，那么自动通过拦截器，不进行任何处理</li>
- * <li>如果标识的{@link ClientCache}，{@link ClientCache#value()} <=0,那么标识不设置缓存，参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}</li>
- * <li>否则，会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头，value值为 {@code "max-age=" + value}
+ * <li>如果没有标识{@link ClientCache},那么自动通过拦截器,不进行任何处理</li>
+ * <li>如果标识的{@link ClientCache},{@link ClientCache#value()} <=0,那么标识不设置缓存,参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}</li>
+ * <li>否则,会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头,value值为 {@code "max-age=" + value}
  * </li>
  * </ol>
  * </blockquote>
@@ -81,11 +81,11 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
 
             ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
 
-            //如果没有标识{@link ClientCache}，那么自动通过拦截器，不进行任何处理
+            //如果没有标识{@link ClientCache},那么自动通过拦截器,不进行任何处理
             if (clientCache != null){
                 int value = clientCache.value();
 
-                //如果标识的{@link ClientCache}，{@link ClientCache#value()} <=0,那么标识不设置缓存，参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}
+                //如果标识的{@link ClientCache},{@link ClientCache#value()} <=0,那么标识不设置缓存,参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}
                 if (value <= 0){
                     ResponseUtil.setNoCacheHeader(response);
 
@@ -94,7 +94,7 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
                                     HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                                     HandlerMethodUtil.getHandlerMethodName(handlerMethod));
                 }
-                //否则，会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头，value值为 {@code "max-age=" + value}
+                //否则,会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头,value值为 {@code "max-age=" + value}
                 else{
                     String cacheControlValue = "max-age=" + value;
                     response.setHeader(HttpHeaders.CACHE_CONTROL, cacheControlValue);

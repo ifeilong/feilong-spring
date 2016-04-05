@@ -24,18 +24,18 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * {@link org.springframework.web.context.support.WebApplicationContextUtils} 工具类.<br>
- * 当 Web应用集成 Spring容器后，代表 Spring 容器的 {@link org.springframework.web.context.WebApplicationContext} 对象将以
+ * 当 Web应用集成 Spring容器后,代表 Spring 容器的 {@link org.springframework.web.context.WebApplicationContext} 对象将以
  * {@link org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE}为键存放在
  * {@link javax.servlet.ServletContext} 属性列表中 <br>
  * <p>
  * 当 ServletContext 属性列表中不存在 WebApplicationContext时:
  * <ol>
- * <li>{@link WebApplicationContextUtils#getWebApplicationContext(ServletContext)}方法不会抛出异常，它简单地返回 null, 如果后续代码直接访问返回的结果将引发一个
+ * <li>{@link WebApplicationContextUtils#getWebApplicationContext(ServletContext)}方法不会抛出异常,它简单地返回 null, 如果后续代码直接访问返回的结果将引发一个
  * NullPointerException 异常.</li>
  * <li>而{@link WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext)}方法要求 ServletContext属性列表中一定要包含一个有效的
- * WebApplicationContext对象，否则马上抛出一个 异常 {@link java.lang.IllegalStateException}.</li>
+ * WebApplicationContext对象,否则马上抛出一个 异常 {@link java.lang.IllegalStateException}.</li>
  * </ol>
- * 我们推荐使用后者，因为它能提前发现错误的时间，强制开发者搭建好必备的基础设施。
+ * 我们推荐使用后者,因为它能提前发现错误的时间,强制开发者搭建好必备的基础设施。
  * </p>
  * 
  * @author feilong

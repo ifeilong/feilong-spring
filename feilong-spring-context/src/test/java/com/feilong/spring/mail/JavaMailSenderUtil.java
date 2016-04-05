@@ -64,8 +64,8 @@ public class JavaMailSenderUtil{
     }
 
     /**
-     * 替换velocity模板的变量和值对，邮件主题，velocity模板文件的路径，接收方email地址，附件<br>
-     * 简单说明，如果您要群发，可以在接收方email地址中多传入几个email地址，附件可以一次发送多个.
+     * 替换velocity模板的变量和值对,邮件主题,velocity模板文件的路径,接收方email地址,附件<br>
+     * 简单说明,如果您要群发,可以在接收方email地址中多传入几个email地址,附件可以一次发送多个.
      * 
      * @param model
      *            the model
@@ -89,8 +89,8 @@ public class JavaMailSenderUtil{
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception{
-                // 这是一个生成Mime邮件简单工具，如果不使用GBK这个，中文会出现乱码
-                // 如果您使用的都是英文，那么可以使用MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                // 这是一个生成Mime邮件简单工具,如果不使用GBK这个,中文会出现乱码
+                // 如果您使用的都是英文,那么可以使用MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
                 String encoding = CharsetType.UTF8;
                 MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, encoding);
                 // 设置接收方的email地址
@@ -103,11 +103,11 @@ public class JavaMailSenderUtil{
                 String text = null;
                 text = "asdasdas";
                 // VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, vmfile, CharsetType.GBK, model);
-                // 从模板中加载要发送的内容，vmfile就是模板文件的名字
-                // 注意模板中有中文要加GBK，model中存放的是要替换模板中字段的值
+                // 从模板中加载要发送的内容,vmfile就是模板文件的名字
+                // 注意模板中有中文要加GBK,model中存放的是要替换模板中字段的值
                 mimeMessageHelper.setText(text, true);
                 // 将发送的内容赋值给MimeMessageHelper,后面的true表示内容解析成html
-                // 如果您不想解析文本内容，可以使用false或者不添加这项
+                // 如果您不想解析文本内容,可以使用false或者不添加这项
                 FileSystemResource file = null;
                 if (null != files){
                     for (String s : files){

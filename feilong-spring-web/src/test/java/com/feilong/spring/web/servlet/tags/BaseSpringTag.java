@@ -37,6 +37,7 @@ import com.feilong.spring.web.util.WebSpringUtil;
  * @version 1.2.0 2015年5月24日 上午4:20:05
  * @version 1.2.2 2015-7-18 15:13 mark deprecated
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag
+ * @see org.springframework.web.servlet.support.JspAwareRequestContext
  * @since 1.2.0
  * @deprecated 建议不直接使用 {@link RequestContextAwareTag},使用feilong 原生的 {@link "BaseTag"},如果要想在tag里面得到 spring相关的bean ,可以单独使用
  *             {@link WebSpringUtil#getBean(HttpServletRequest, Class)}等方法
@@ -77,7 +78,7 @@ public abstract class BaseSpringTag extends RequestContextAwareTag{
      */
     @Override
     public int doEndTag(){
-        return EVAL_PAGE;// 处理标签后，继续处理JSP后面的内容
+        return EVAL_PAGE;// 处理标签后,继续处理JSP后面的内容
     }
 
     /**

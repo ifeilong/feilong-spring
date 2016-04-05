@@ -111,33 +111,32 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
 
-        if (handler instanceof HandlerMethod){
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
+        StopWatch stopWatch = getStopWatch(request);
+        stopWatch.split();
+        long useTime = stopWatch.getSplitTime();
 
-            StopWatch stopWatch = getStopWatch(request);
-            stopWatch.split();
-            long useTime = stopWatch.getSplitTime();
+        boolean isMoreThanPerformanceThreshold = useTime > performanceThreshold;
 
-            boolean isMoreThanPerformanceThreshold = useTime > performanceThreshold;
+        try{
+            //如果超过阀值, 那么以error的形式记录
+            if (isMoreThanPerformanceThreshold){
+                LOGGER.error(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
 
-            try{
-                //如果超过阀值, 那么以error的形式记录
-                if (isMoreThanPerformanceThreshold){
-                    LOGGER.error(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
-
-                    //这里的request.getSession() 可能会报错 Cannot create a session after the response has been committed 
-                    //ServletContext servletContext = request.getSession().getServletContext();
-                }else{
-                    LOGGER.info(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
-                }
-            }catch (Exception e){//可能有异常,比如  往request/model里面设置了 不能被json处理的对象或者字段
-                LOGGER.error(Slf4jUtil.formatMessage(
-                                "postHandle [{}.{}()] occur exception,but we need goon!,just log it,request info:[{}]",
-                                HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
-                                HandlerMethodUtil.getHandlerMethodName(handlerMethod),
-                                JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch))), e);
+                //这里的request.getSession() 可能会报错 Cannot create a session after the response has been committed 
+                //ServletContext servletContext = request.getSession().getServletContext();
+            }else{
+                LOGGER.info(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
             }
+        }catch (Exception e){//可能有异常,比如  往request/model里面设置了 不能被json处理的对象或者字段
+            LOGGER.error(
+                            Slf4jUtil.formatMessage(
+                                            "postHandle [{}.{}()] occur exception,but we need goon!,just log it,request info:[{}]",
+                                            HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                                            HandlerMethodUtil.getHandlerMethodName(handlerMethod),
+                                            JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch))),
+                            e);
         }
     }
 
@@ -198,20 +197,18 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
      */
     @Override
     public void afterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
-        if (handler instanceof HandlerMethod){
 
-            StopWatch stopWatch = getStopWatch(request);
-            stopWatch.split();
-            long splitTime = stopWatch.getSplitTime();
+        StopWatch stopWatch = getStopWatch(request);
+        stopWatch.split();
+        long splitTime = stopWatch.getSplitTime();
 
-            if (LOGGER.isInfoEnabled()){
-                HandlerMethod handlerMethod = (HandlerMethod) handler;
-                LOGGER.info(
-                                "afterConcurrentHandlingStarted [{}.{}()], use time:[{}]",
-                                HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
-                                HandlerMethodUtil.getHandlerMethodName(handlerMethod),
-                                DateExtensionUtil.getIntervalForView(splitTime));
-            }
+        if (LOGGER.isInfoEnabled()){
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            LOGGER.info(
+                            "afterConcurrentHandlingStarted [{}.{}()], use time:[{}]",
+                            HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                            HandlerMethodUtil.getHandlerMethodName(handlerMethod),
+                            DateExtensionUtil.getIntervalForView(splitTime));
         }
     }
 
@@ -223,27 +220,26 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
      */
     @Override
     public void afterCompletion(HttpServletRequest request,HttpServletResponse response,Object handler,Exception ex) throws Exception{
-        if (handler instanceof HandlerMethod){
-            StopWatch stopWatch = getStopWatch(request);
+        StopWatch stopWatch = getStopWatch(request);
 
-            if (null == stopWatch || stopWatch.isStopped()){
-                LOGGER.error("stopWatch is null or stopWatch isStopped!!,request info is:{}", RequestUtil.getRequestInfoMapForLog(request));
-            }else{
-                stopWatch.split();
-                long splitTime = stopWatch.getSplitTime();
+        if (null == stopWatch || stopWatch.isStopped()){
+            LOGGER.error("stopWatch is null or stopWatch isStopped!!,request info is:{}", RequestUtil.getRequestInfoMapForLog(request));
+            return;
+        }
 
-                stopWatch.stop();
-                long time = stopWatch.getTime();
+        stopWatch.split();
+        long splitTime = stopWatch.getSplitTime();
 
-                if (LOGGER.isInfoEnabled()){
-                    LOGGER.info(
-                                    "afterCompletion [{}.{}()], use time:[{}],total time:[{}]",
-                                    HandlerMethodUtil.getDeclaringClassSimpleName((HandlerMethod) handler),
-                                    HandlerMethodUtil.getHandlerMethodName((HandlerMethod) handler),
-                                    DateExtensionUtil.getIntervalForView(splitTime),
-                                    DateExtensionUtil.getIntervalForView(time));
-                }
-            }
+        stopWatch.stop();
+        long time = stopWatch.getTime();
+
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(
+                            "afterCompletion [{}.{}()], use time:[{}],total time:[{}]",
+                            HandlerMethodUtil.getDeclaringClassSimpleName((HandlerMethod) handler),
+                            HandlerMethodUtil.getHandlerMethodName((HandlerMethod) handler),
+                            DateExtensionUtil.getIntervalForView(splitTime),
+                            DateExtensionUtil.getIntervalForView(time));
         }
     }
 
@@ -255,7 +251,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
      * @return the stop watch
      * @since 1.4.0
      */
-    private StopWatch getStopWatch(HttpServletRequest request){
+    private static StopWatch getStopWatch(HttpServletRequest request){
         return (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
     }
 
@@ -302,5 +298,4 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     public void setRequestLogSwitch(RequestLogSwitch requestLogSwitch){
         this.requestLogSwitch = requestLogSwitch;
     }
-
 }

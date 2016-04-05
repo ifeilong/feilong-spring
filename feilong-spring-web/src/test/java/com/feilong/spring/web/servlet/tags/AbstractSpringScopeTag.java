@@ -56,7 +56,7 @@ public abstract class AbstractSpringScopeTag extends BaseSpringTag{
     public int doStartTagInternal(){
         // 重写该方法
         doExecute();
-        return SKIP_BODY; // 表示不用处理标签体，直接调用doEndTag()方法
+        return SKIP_BODY; // 表示不用处理标签体,直接调用doEndTag()方法
     }
 
     /**

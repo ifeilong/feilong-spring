@@ -76,7 +76,7 @@ public class LogAspect extends AbstractAspect{
 
         // 通过反射执行目标对象的连接点处的方法
         Object result = proceedingJoinPoint.proceed();
-        // 在来得到方法名吧，就是通知所要织入目标对象中的方法名称
+        // 在来得到方法名吧,就是通知所要织入目标对象中的方法名称
 
         Date end = new Date();
 

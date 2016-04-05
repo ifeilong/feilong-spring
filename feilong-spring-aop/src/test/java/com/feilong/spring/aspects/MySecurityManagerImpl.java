@@ -28,7 +28,7 @@ import org.aspectj.lang.JoinPoint;
 public class MySecurityManagerImpl implements MySecurityManager{
 
     /**
-     * 定义切入点,切入该方法只是一个标识(而且只作为标识并不是常态下的方法， 并不供人调用所以该方法返回值为void,最好设置为private),该方法只是一个标识，就象配置文件的id<br>
+     * 定义切入点,切入该方法只是一个标识(而且只作为标识并不是常态下的方法, 并不供人调用所以该方法返回值为void,最好设置为private),该方法只是一个标识,就象配置文件的id<br>
      * 切入点的内容是一个表达式,根据这个表达式就可以用来判断切入哪些对象的哪些方法<br>
      * <br>
      * 下面对表达式简单说一下: execution(* add*(..))
@@ -44,19 +44,19 @@ public class MySecurityManagerImpl implements MySecurityManager{
      */
     // @SuppressWarnings("unused")
     // @Pointcut("execution(* add*(..))")
-    // 定义切入点,切入该方法只是一个标识(而且只作为标识并不是常态下的方法， 并不供人调用所以没有返回值最好设置为private)
+    // 定义切入点,切入该方法只是一个标识(而且只作为标识并不是常态下的方法, 并不供人调用所以没有返回值最好设置为private)
     // private void addAllMethod(){}
     /**
-     * 定义Advice，标识在哪些切入点<br>
+     * 定义Advice,标识在哪些切入点<br>
      * (切入点有ADD这是我们上面通过pointcut定义的。当然你也可以定义别的) 的何处<br>
      * (何处就是指是切入点的前面呢？后面？还是其他情况)织入通知 <br>
      * 当然除了before还有其他类型的通知。<br>
-     * 前置通知，在addAllMethod切入点所代表的方法前调用checkSecurity方法
+     * 前置通知,在addAllMethod切入点所代表的方法前调用checkSecurity方法
      */
     // @Before("addAllMethod()")
     @Override
     public void security(JoinPoint joinPoint){
-        // 在来得到方法名吧，就是通知所要织入目标对象中的方法名称
+        // 在来得到方法名吧,就是通知所要织入目标对象中的方法名称
         //		String method = joinPoint.getSignature().getName();
         //		LOGGER.info("methodName:{}", method);
         //		Object[] args = joinPoint.getArgs();

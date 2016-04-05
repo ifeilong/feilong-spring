@@ -35,7 +35,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * 初始化配置 监听器. <br>
  * 
  * <p>
- * 注意: 此 {@link DomainPlaceholderSupportListener}由于需要使用到 {@link WebApplicationContext} ，需要配置在
+ * 注意: 此 {@link DomainPlaceholderSupportListener}由于需要使用到 {@link WebApplicationContext} ,需要配置在
  * 
  * <pre>
  * {@code
@@ -68,11 +68,11 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * <li>配置的路径支持占位符 {@code Placeholder},比如 <code>config/${spring.profiles.active}/domain.properties</code>,使用
  * {@link org.springframework.core.env.PropertyResolver#resolvePlaceholders(String)} 来解析</li>
  * <li>支持XML形式的properties<br>
- * 使用的是 {@link org.springframework.core.io.support.PropertiesLoaderUtils#loadProperties(Resource)} 来加载资源,关于XML形式的properties，请参考
+ * 使用的是 {@link org.springframework.core.io.support.PropertiesLoaderUtils#loadProperties(Resource)} 来加载资源,关于XML形式的properties,请参考
  * {@link java.util.Properties}</li>
  * </ul>
  * </li>
- * <li>如果没有读取到文件，那么默认读取 domain.properties 默认地址</li>
+ * <li>如果没有读取到文件,那么默认读取 domain.properties 默认地址</li>
  * </ol>
  * </p>
  * </blockquote>
@@ -89,7 +89,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * domain.resource={"variableName":"domainResource","value":"http://127.0.0.1:6666"}
  * </pre>
  * 
- * 值，如果是 json格式，会自动转换，variableName参数会自动设置到 servletContext作用域中，值是value参数<br>
+ * 值,如果是 json格式,会自动转换,variableName参数会自动设置到 servletContext作用域中,值是value参数<br>
  * 
  * </blockquote>
  *
