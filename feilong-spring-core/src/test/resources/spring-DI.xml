@@ -17,6 +17,9 @@
 
 	<!-- <bean id="userTest" class="com.feilong.SpringDITest" /> --><!--singleton="true" dependency-check="default" -->
 
+	<util:properties id="p_testProperties" location="classpath:test.properties" />
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean" />
+	
 	<bean name="useraaa,feitian@" class="com.feilong.entity.DIUser" abstract="false" lazy-init="default" autowire="byType" init-method="init" destroy-method="destroy">
 
 		<description>我的user</description>
@@ -26,15 +29,17 @@
 			<value type="">关羽</value>
 		</property>
 
-		<property name="list">
-			<description>五虎上将</description>
-			<list>
+		<!-- #{p_testProperties['skills'].split(',')} -->
+		<property name="list" value="#{p_testProperties['skills']}">
+			<!-- <description>五虎上将</description>
+
+				<list>
 				<value>张飞</value>
 				<value>关羽</value>
 				<value>赵云</value>
 				<value>马超</value>
 				<value>黄忠</value>
-			</list>
+				</list> -->
 		</property>
 
 
