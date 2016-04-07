@@ -16,12 +16,16 @@
 package com.feilong.spring.web.util;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.FrameworkServlet;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
  * {@link WebApplicationContextUtils} 工具类.
@@ -30,6 +34,24 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * 当 Web应用集成 Spring容器后,代表 Spring 容器的 {@link WebApplicationContext} 对象将以{@link WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE}
  * 为键存放在 {@link ServletContext} 属性列表中,具体参见 {@link org.springframework.web.context.ContextLoader#initWebApplicationContext(ServletContext)}
  * </p>
+ * 
+ * <h3>{@link WebApplicationContextUtils#getWebApplicationContext(ServletContext)}VS
+ * {@link RequestContextUtils#getWebApplicationContext(javax.servlet.ServletRequest)}:</h3>
+ * <blockquote>
+ * 
+ * <p style="color:red">
+ * 注意: {@link WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE} 存放的是spring ApplicationContext而非 springmvc ApplicationContext
+ * </p>
+ * <p>
+ * {@link RequestContextUtils#getWebApplicationContext(javax.servlet.ServletRequest)}可以取到 springmvc ApplicationContext,他的原理是,每次
+ * 
+ * {@link DispatcherServlet#doService(HttpServletRequest, HttpServletResponse)} 都会往request里面设置 key为
+ * {@link DispatcherServlet#WEB_APPLICATION_CONTEXT_ATTRIBUTE} 的属性,而此时的值 WebApplicationContext是通过
+ * {@link FrameworkServlet#initWebApplicationContext()} 初始化的; 具体参见 {@link FrameworkServlet#createWebApplicationContext(ApplicationContext)}
+ * ,可以明显看出spring ApplicationContext是 springmvc ApplicationContext 的parent
+ * </p>
+ * </blockquote>
+ * 
  * 
  * <h3>{@link WebApplicationContextUtils#getWebApplicationContext(ServletContext) getWebApplicationContext}VS
  * {@link WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext) getRequiredWebApplicationContext}:</h3>
@@ -79,22 +101,35 @@ public final class WebSpringUtil{
     /**
      * 普通类获得spring 注入的类方法.
      * 
+     * <p>
+     * 此方法底层调用的是 {@link RequestContextUtils#getWebApplicationContext(ServletRequest,
+     * ServletContext)} ,会从spingmvc 以及spring ApplicationContext 查找bean
+     * </p>
+     * 
      * @param <T>
      *            the generic type
      * @param request
      *            request
      * @param beanName
      *            xml文件中配置的bean beanName
-     * @return 注入的bean
+     * @return 先在servlet-specific WebApplicationContext 里面找 bean;如果没有,会在 global context里面找<br>
+     *         如果在servlet-specific 或者 global context 都找不到 会抛出 IllegalStateException
+     * @see #getWebApplicationContext(HttpServletRequest)
+     * @see RequestContextUtils#getWebApplicationContext(ServletRequest, ServletContext)
      */
     @SuppressWarnings("unchecked")
     public static <T> T getBean(HttpServletRequest request,String beanName){
-        HttpSession session = request.getSession();
-        return (T) getBean(session, beanName);
+        WebApplicationContext webApplicationContext = getWebApplicationContext(request);
+        return (T) getBean(webApplicationContext, beanName);
     }
 
     /**
      * Gets the bean.
+     * 
+     * <p>
+     * 此方法底层调用的是 {@link RequestContextUtils#getWebApplicationContext(ServletRequest,
+     * ServletContext)} ,会从spingmvc 以及spring ApplicationContext 查找bean
+     * </p>
      * 
      * @param <T>
      *            the generic type
@@ -102,44 +137,14 @@ public final class WebSpringUtil{
      *            the request
      * @param requiredType
      *            the required type
-     * @return the bean
+     * @return 先在servlet-specific WebApplicationContext 里面找 bean;如果没有,会在 global context里面找<br>
+     *         如果在servlet-specific 或者 global context 都找不到 会抛出 IllegalStateException
+     * @see #getWebApplicationContext(HttpServletRequest)
+     * @see RequestContextUtils#getWebApplicationContext(ServletRequest, ServletContext)
      */
     public static <T> T getBean(HttpServletRequest request,Class<T> requiredType){
-        HttpSession session = request.getSession();
-        return getBean(session, requiredType);
-    }
-
-    /**
-     * 普通类获得spring 注入的类方法<br>
-     * 注意:<b>(如果找不到bean,返回null)</b>.
-     * 
-     * @param <T>
-     *            the generic type
-     * @param session
-     *            session
-     * @param beanName
-     *            xml文件中配置的bean beanName
-     * @return 注入的bean
-     */
-    public static <T> T getBean(HttpSession session,String beanName){
-        ServletContext servletContext = session.getServletContext();
-        return getBean(servletContext, beanName);
-    }
-
-    /**
-     * Gets the bean.
-     * 
-     * @param <T>
-     *            the generic type
-     * @param session
-     *            the session
-     * @param requiredType
-     *            the required type
-     * @return the bean
-     */
-    public static <T> T getBean(HttpSession session,Class<T> requiredType){
-        ServletContext servletContext = session.getServletContext();
-        return getBean(servletContext, requiredType);
+        WebApplicationContext webApplicationContext = getWebApplicationContext(request);
+        return getBean(webApplicationContext, requiredType);
     }
 
     //********************************************************************************************
@@ -179,72 +184,6 @@ public final class WebSpringUtil{
     }
 
     //********************************************************************************************
-
-    /**
-     * 普通类获得spring 注入的类方法<br>
-     * 注意:<b>(如果找不到bean会抛出异常)</b>.
-     * 
-     * @param <T>
-     *            the generic type
-     * @param request
-     *            request
-     * @param beanName
-     *            xml文件中配置的bean beanName
-     * @return 注入的bean
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T getRequiredBean(HttpServletRequest request,String beanName){
-        HttpSession session = request.getSession();
-        return (T) getRequiredBean(session, beanName);
-    }
-
-    /**
-     * Gets the required bean.
-     * 
-     * @param <T>
-     *            the generic type
-     * @param request
-     *            the request
-     * @param requiredType
-     *            the required type
-     * @return the required bean
-     */
-    public static <T> T getRequiredBean(HttpServletRequest request,Class<T> requiredType){
-        HttpSession session = request.getSession();
-        return getRequiredBean(session, requiredType);
-    }
-
-    /**
-     * Gets the required bean.
-     * 
-     * @param <T>
-     *            the generic type
-     * @param session
-     *            the session
-     * @param beanName
-     *            the bean name
-     * @return the required bean
-     */
-    public static <T> T getRequiredBean(HttpSession session,String beanName){
-        ServletContext servletContext = session.getServletContext();
-        return getRequiredBean(servletContext, beanName);
-    }
-
-    /**
-     * Gets the required bean.
-     * 
-     * @param <T>
-     *            the generic type
-     * @param session
-     *            the session
-     * @param requiredType
-     *            the required type
-     * @return the required bean
-     */
-    public static <T> T getRequiredBean(HttpSession session,Class<T> requiredType){
-        ServletContext servletContext = session.getServletContext();
-        return getRequiredBean(servletContext, requiredType);
-    }
 
     /**
      * Gets the required bean.
@@ -293,7 +232,7 @@ public final class WebSpringUtil{
      * @return the bean
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getBean(ApplicationContext applicationContext,String beanName){
+    private static <T> T getBean(ApplicationContext applicationContext,String beanName){
         return (T) applicationContext.getBean(beanName);
     }
 
@@ -308,7 +247,7 @@ public final class WebSpringUtil{
      *            the required type
      * @return the bean
      */
-    public static <T> T getBean(ApplicationContext applicationContext,Class<T> requiredType){
+    private static <T> T getBean(ApplicationContext applicationContext,Class<T> requiredType){
         return applicationContext.getBean(requiredType);
     }
 
@@ -340,5 +279,23 @@ public final class WebSpringUtil{
      */
     public static WebApplicationContext getRequiredWebApplicationContext(ServletContext servletContext){
         return WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
+    }
+
+    /**
+     * 获得 web application context.
+     * 
+     * <p>
+     * 此方法可以得到springmvc 的bean
+     * </p>
+     *
+     * @param request
+     *            the request
+     * @return 如果有 servlet-specific WebApplicationContext那么返回;否则找 global context; 两个都没有 会抛出 IllegalStateException
+     * @since 1.5.3
+     * @see org.springframework.web.servlet.support.RequestContextUtils#getWebApplicationContext(ServletRequest)
+     */
+    public static WebApplicationContext getWebApplicationContext(HttpServletRequest request){
+        //内部调用了  WebApplicationContextUtils.getRequiredWebApplicationContext(ServletContext)
+        return RequestContextUtils.getWebApplicationContext(request, request.getServletContext());
     }
 }

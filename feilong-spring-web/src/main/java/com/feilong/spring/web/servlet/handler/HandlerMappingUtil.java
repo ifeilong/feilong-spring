@@ -31,7 +31,6 @@ import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.feilong.spring.web.util.WebSpringUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
@@ -129,9 +128,7 @@ public class HandlerMappingUtil{
      * @return the request mapping handler mapping info map for log
      */
     public static final Map<String, Object> getRequestMappingHandlerMappingInfoMapForLog(WebApplicationContext webApplicationContext){
-        RequestMappingHandlerMapping requestMappingHandlerMapping = WebSpringUtil.getBean(
-                        webApplicationContext,
-                        RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping requestMappingHandlerMapping = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
 
         Map<String, Object> object = new LinkedHashMap<String, Object>();
 
