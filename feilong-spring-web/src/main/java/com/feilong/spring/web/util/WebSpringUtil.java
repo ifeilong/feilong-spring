@@ -19,14 +19,21 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
- * {@link org.springframework.web.context.support.WebApplicationContextUtils} 工具类.<br>
- * 当 Web应用集成 Spring容器后,代表 Spring 容器的 {@link org.springframework.web.context.WebApplicationContext} 对象将以
- * {@link org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE}为键存放在
- * {@link javax.servlet.ServletContext} 属性列表中 <br>
+ * {@link WebApplicationContextUtils} 工具类.
+ * 
+ * <p>
+ * 当 Web应用集成 Spring容器后,代表 Spring 容器的 {@link WebApplicationContext} 对象将以{@link WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE}
+ * 为键存放在 {@link ServletContext} 属性列表中,具体参见 {@link org.springframework.web.context.ContextLoader#initWebApplicationContext(ServletContext)}
+ * </p>
+ * 
+ * <h3>{@link WebApplicationContextUtils#getWebApplicationContext(ServletContext) getWebApplicationContext}VS
+ * {@link WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext) getRequiredWebApplicationContext}:</h3>
+ * <blockquote>
  * <p>
  * 当 ServletContext 属性列表中不存在 WebApplicationContext时:
  * <ol>
@@ -37,6 +44,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * </ol>
  * 我们推荐使用后者,因为它能提前发现错误的时间,强制开发者搭建好必备的基础设施。
  * </p>
+ * </blockquote>
  * 
  * @author feilong
  * @version 1.0 2011-3-31 下午06:08:20
@@ -67,10 +75,9 @@ public final class WebSpringUtil{
     //      return webApplicationContext.getMessage(messageSourceResolvable, request.getLocale());
     //  }
 
+    //********************************************************************************
     /**
-     * 普通类获得spring 注入的类方法<br>
-     * 注意:<b>(如果找不到bean会抛出异常)</b><br>
-     * 推荐使用{@link #getRequiredBean(HttpServletRequest, String)}.
+     * 普通类获得spring 注入的类方法.
      * 
      * @param <T>
      *            the generic type
@@ -87,8 +94,7 @@ public final class WebSpringUtil{
     }
 
     /**
-     * Gets the bean<br>
-     * 推荐使用{@link #getRequiredBean(HttpServletRequest, Class)}.
+     * Gets the bean.
      * 
      * @param <T>
      *            the generic type
@@ -136,6 +142,7 @@ public final class WebSpringUtil{
         return getBean(servletContext, requiredType);
     }
 
+    //********************************************************************************************
     /**
      * 普通类获得spring 注入的类方法<br>
      * 注意:<b>(如果找不到bean,返回null)</b>.
@@ -156,36 +163,6 @@ public final class WebSpringUtil{
     }
 
     /**
-     * 获得 web application context.
-     *
-     * @param servletContext
-     *            the servlet context
-     * @return the web application context
-     * @since 1.1.1
-     * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
-     * @see org.springframework.web.context.support.WebApplicationContextUtils#getWebApplicationContext(ServletContext)
-     */
-    public static WebApplicationContext getWebApplicationContext(ServletContext servletContext){
-        // getWebApplicationContext 如果是空,返回null
-        return WebApplicationContextUtils.getWebApplicationContext(servletContext);
-    }
-
-    /**
-     * 获得 web application context.
-     *
-     * @param servletContext
-     *            the servlet context
-     * @return the web application context
-     * @since 1.2.0
-     * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
-     * @see org.springframework.web.context.support.WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext)
-     */
-    public static WebApplicationContext getRequiredWebApplicationContext(ServletContext servletContext){
-        // getWebApplicationContext 如果是空,返回null
-        return WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
-    }
-
-    /**
      * Gets the bean.
      * 
      * @param <T>
@@ -200,6 +177,8 @@ public final class WebSpringUtil{
         WebApplicationContext webApplicationContext = getWebApplicationContext(servletContext);
         return getBean(webApplicationContext, requiredType);
     }
+
+    //********************************************************************************************
 
     /**
      * 普通类获得spring 注入的类方法<br>
@@ -216,7 +195,7 @@ public final class WebSpringUtil{
     @SuppressWarnings("unchecked")
     public static <T> T getRequiredBean(HttpServletRequest request,String beanName){
         HttpSession session = request.getSession();
-        return (T) getBean(session, beanName);
+        return (T) getRequiredBean(session, beanName);
     }
 
     /**
@@ -232,7 +211,7 @@ public final class WebSpringUtil{
      */
     public static <T> T getRequiredBean(HttpServletRequest request,Class<T> requiredType){
         HttpSession session = request.getSession();
-        return getBean(session, requiredType);
+        return getRequiredBean(session, requiredType);
     }
 
     /**
@@ -246,10 +225,9 @@ public final class WebSpringUtil{
      *            the bean name
      * @return the required bean
      */
-    @SuppressWarnings("unchecked")
     public static <T> T getRequiredBean(HttpSession session,String beanName){
         ServletContext servletContext = session.getServletContext();
-        return (T) getBean(servletContext, beanName);
+        return getRequiredBean(servletContext, beanName);
     }
 
     /**
@@ -265,7 +243,7 @@ public final class WebSpringUtil{
      */
     public static <T> T getRequiredBean(HttpSession session,Class<T> requiredType){
         ServletContext servletContext = session.getServletContext();
-        return getBean(servletContext, requiredType);
+        return getRequiredBean(servletContext, requiredType);
     }
 
     /**
@@ -302,34 +280,65 @@ public final class WebSpringUtil{
         return getBean(webApplicationContext, requiredType);
     }
 
+    //*******************************************************************************************
     /**
      * Gets the bean.
-     * 
+     *
      * @param <T>
      *            the generic type
-     * @param webApplicationContext
-     *            the web application context
+     * @param applicationContext
+     *            the application context
      * @param beanName
      *            the bean name
      * @return the bean
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getBean(WebApplicationContext webApplicationContext,String beanName){
-        return (T) webApplicationContext.getBean(beanName);
+    public static <T> T getBean(ApplicationContext applicationContext,String beanName){
+        return (T) applicationContext.getBean(beanName);
     }
 
     /**
      * Gets the bean.
-     * 
+     *
      * @param <T>
      *            the generic type
-     * @param webApplicationContext
-     *            the web application context
+     * @param applicationContext
+     *            the application context
      * @param requiredType
      *            the required type
      * @return the bean
      */
-    public static <T> T getBean(WebApplicationContext webApplicationContext,Class<T> requiredType){
-        return webApplicationContext.getBean(requiredType);
+    public static <T> T getBean(ApplicationContext applicationContext,Class<T> requiredType){
+        return applicationContext.getBean(requiredType);
+    }
+
+    //*******************************************************************************************
+
+    /**
+     * 获得 web application context.
+     *
+     * @param servletContext
+     *            the servlet context
+     * @return the web application context
+     * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
+     * @see org.springframework.web.context.support.WebApplicationContextUtils#getWebApplicationContext(ServletContext)
+     * @since 1.1.1
+     */
+    public static WebApplicationContext getWebApplicationContext(ServletContext servletContext){
+        return WebApplicationContextUtils.getWebApplicationContext(servletContext);
+    }
+
+    /**
+     * 获得 web application context.
+     *
+     * @param servletContext
+     *            the servlet context
+     * @return the web application context
+     * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
+     * @see org.springframework.web.context.support.WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext)
+     * @since 1.2.0
+     */
+    public static WebApplicationContext getRequiredWebApplicationContext(ServletContext servletContext){
+        return WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
     }
 }
