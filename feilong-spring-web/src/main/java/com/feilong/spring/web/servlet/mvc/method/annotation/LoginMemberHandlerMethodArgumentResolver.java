@@ -132,7 +132,7 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
 
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
 
-        Object sessionMember = WebUtils.getRequiredSessionAttribute(request, sessionKey);
+        Object sessionMember = WebUtils.getSessionAttribute(request, sessionKey);
 
         //如果session中的 <code>sessionKey</code>是 <code>null</code>,那么直接返回<code>null</code>
         if (null == sessionMember){
