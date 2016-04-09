@@ -69,7 +69,7 @@ public class MultiUriTemplateUtil{
      */
     public static String expandBestMatchingPatternMulti(HttpServletRequest request,String variableName,String value,String valueSeparator){
         String requestPath = RequestUtil.getOriginatingServletPath(request);
-        String matchingPatternPath = UriTemplateUtil.getBestMatchingPattern(request);// 这种方法可能不太好 可能被覆盖
+        String matchingPatternPath = UriTemplateUtil.getBestMatchingPattern(request);//TODO 这种方法可能不太好 可能被覆盖
         String expandUrl = expandWithMultiVariable(requestPath, matchingPatternPath, variableName, value, valueSeparator);
         String queryString = request.getQueryString();
         Map<String, Object> map = UrlPathHelperUtil.getUrlPathHelperMapForLog(request);
@@ -211,7 +211,8 @@ public class MultiUriTemplateUtil{
      *            指定值,将会被从这个变量多值中移除
      * @param valueSeparator
      *            多值,分隔符,尽量不要使用 | * .做分隔符,使用的是正则表达式分隔的
-     * @return <ul>
+     * @return
+     *         <ul>
      *         <li>如果模板variableName,对应的值是NullOrEmpty,则原样返回requestPath</li>
      *         <li>如果模板variableName,对应的值,经过valueSeparator分隔成数组中不包含value,则原样返回requestPath</li>
      *         <li>移掉数组中的值重新拼接成url</li>

@@ -15,9 +15,9 @@
  */
 package com.feilong.spring.manager.java;
 
-import loxia.dao.ReadWriteSupport;
-
 import com.feilong.test.User;
+
+import loxia.dao.ReadWriteSupport;
 
 /**
  * The Interface SalesOrderManager.

@@ -70,7 +70,7 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
             if (supportLocales.contains(newLocale)){
                 canHandle = true;
             }
-            //不属于 支持的locale
+            //不属于支持的locale
         }else{
             //如果isNotNullOrEmpty  supportLocales ,那么 就是个普通的  LocaleChangeInterceptor
             canHandle = true;

@@ -29,7 +29,9 @@ public class HelloWorldService implements IHelloWorldService{
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldService.class);
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see cn.javass.spring.chapter6.service.IHelloWorldService#sayHello()
      */
     @Override

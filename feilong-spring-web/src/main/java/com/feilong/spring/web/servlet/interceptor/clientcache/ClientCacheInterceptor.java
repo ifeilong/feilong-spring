@@ -76,37 +76,34 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
     @Override
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
-        if (handler instanceof HandlerMethod){
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
+        if (clientCache == null){
+            return;
+        }
 
-            ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
+        //如果没有标识{@link ClientCache},那么自动通过拦截器,不进行任何处理
+        int value = clientCache.value();
 
-            //如果没有标识{@link ClientCache},那么自动通过拦截器,不进行任何处理
-            if (clientCache != null){
-                int value = clientCache.value();
+        //如果标识的{@link ClientCache},{@link ClientCache#value()} <=0,那么标识不设置缓存,参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}
+        if (value <= 0){
+            ResponseUtil.setNoCacheHeader(response);
+            LOGGER.debug(
+                            "[{}.{}()],setNoCacheHeader",
+                            HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                            HandlerMethodUtil.getHandlerMethodName(handlerMethod));
+        }
+        //否则,会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头,value值为 {@code "max-age=" + value}
+        else{
+            String cacheControlValue = "max-age=" + value;
+            response.setHeader(HttpHeaders.CACHE_CONTROL, cacheControlValue);
 
-                //如果标识的{@link ClientCache},{@link ClientCache#value()} <=0,那么标识不设置缓存,参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}
-                if (value <= 0){
-                    ResponseUtil.setNoCacheHeader(response);
-
-                    LOGGER.debug(
-                                    "[{}.{}()],setNoCacheHeader",
-                                    HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
-                                    HandlerMethodUtil.getHandlerMethodName(handlerMethod));
-                }
-                //否则,会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头,value值为 {@code "max-age=" + value}
-                else{
-                    String cacheControlValue = "max-age=" + value;
-                    response.setHeader(HttpHeaders.CACHE_CONTROL, cacheControlValue);
-
-                    LOGGER.debug(
-                                    "[{}.{}()],set response setHeader:[{}],value is :[{}]",
-                                    HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
-                                    HandlerMethodUtil.getHandlerMethodName(handlerMethod),
-                                    HttpHeaders.CACHE_CONTROL,
-                                    cacheControlValue);
-                }
-            }
+            LOGGER.debug(
+                            "[{}.{}()],set response setHeader:[{}],value is :[{}]",
+                            HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                            HandlerMethodUtil.getHandlerMethodName(handlerMethod),
+                            HttpHeaders.CACHE_CONTROL,
+                            cacheControlValue);
         }
     }
 }

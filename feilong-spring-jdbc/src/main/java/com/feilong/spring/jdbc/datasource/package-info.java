@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 /**
- *和数据源相关
- * @author feilong 
- * @version 1.0.10 2015年3月31日 下午2:39:54 
+ * 和数据源相关
+ * 
+ * @author feilong
+ * @version 1.0.10 2015年3月31日 下午2:39:54
  * @since 1.0.10
  */
 package com.feilong.spring.jdbc.datasource;

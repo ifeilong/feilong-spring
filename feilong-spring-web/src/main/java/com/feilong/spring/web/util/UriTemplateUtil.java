@@ -124,6 +124,8 @@ public class UriTemplateUtil{
      *            the request
      * @return the best matching pattern
      * @see org.springframework.web.servlet.HandlerMapping#BEST_MATCHING_PATTERN_ATTRIBUTE
+     * @see org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping#handleMatch(RequestMappingInfo, String,
+     *      HttpServletRequest)
      */
     public static String getBestMatchingPattern(HttpServletRequest request){
         return (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);

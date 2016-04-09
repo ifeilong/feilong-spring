@@ -36,7 +36,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 public class UriTemplateUtilTest{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER             = LoggerFactory.getLogger(UriTemplateUtilTest.class);
+    private static final Logger LOGGER          = LoggerFactory.getLogger(UriTemplateUtilTest.class);
 
     /** The uri template path. */
     String                      uriTemplatePath = "/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";

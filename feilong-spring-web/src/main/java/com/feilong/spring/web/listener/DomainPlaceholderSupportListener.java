@@ -32,7 +32,7 @@ import com.feilong.spring.web.util.WebSpringUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
- * 初始化配置 监听器. <br>
+ * 初始化配置监听器.
  * 
  * <p>
  * 注意: 此 {@link DomainPlaceholderSupportListener}由于需要使用到 {@link WebApplicationContext} ,需要配置在

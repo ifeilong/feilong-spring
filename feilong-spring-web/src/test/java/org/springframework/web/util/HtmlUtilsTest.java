@@ -32,7 +32,7 @@ public class HtmlUtilsTest{
     private static final Logger LOGGER = LoggerFactory.getLogger(HtmlUtilsTest.class);
 
     /** The a. */
-    String                      a   = "m&eacute;n&nbsp;";
+    String                      a      = "m&eacute;n&nbsp;";
 
     /**
      * Test html utils.
