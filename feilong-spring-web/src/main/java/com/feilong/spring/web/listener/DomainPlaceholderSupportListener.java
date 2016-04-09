@@ -20,6 +20,7 @@ import java.util.Properties;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
@@ -136,11 +137,7 @@ public class DomainPlaceholderSupportListener extends com.feilong.web.domain.Dom
         //org.springframework.web.context.support.ServletContextResource
         Resource resource = webApplicationContext.getResource(domainConfigLocation);
 
-        if (!resource.exists()){
-            String messagePattern = "domainConfigLocation:[{}] not exists";
-            throw new IllegalArgumentException(Slf4jUtil.formatMessage(messagePattern, domainConfigLocation));
-        }
-
+        Validate.isTrue(resource.exists(), "domainConfigLocation:[%s] not exists", domainConfigLocation);
         try{
             return PropertiesLoaderUtils.loadProperties(resource);
         }catch (IOException e){
