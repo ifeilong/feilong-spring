@@ -18,11 +18,14 @@ package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.method.HandlerMethod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.servlet.http.RequestUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
+import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * 商品浏览历史记录.
@@ -60,6 +63,9 @@ import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.Browsi
  */
 public abstract class BrowsingHistoryInterceptor extends AbstractHandlerInterceptorAdapter{
 
+    /** The Constant log. */
+    private static final Logger     LOGGER = LoggerFactory.getLogger(BrowsingHistoryInterceptor.class);
+
     /** The browsing history resolver. */
     private BrowsingHistoryResolver browsingHistoryResolver;
 
@@ -73,11 +79,34 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerIntercep
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
 
-        if (handler instanceof HandlerMethod){
+        //是否支持解析, 有可能在xml里面配置的一些不相关的路径 透过到了这个拦截器
+        //比如 配置的 mapping path 是 item/* 但是有一些url地址是 item/wishlist 诸如此类的也到了该拦截器
+        boolean isSupport = isSupport(request, handler, modelAndView);
+        if (isSupport){
             BrowsingHistoryCommand browsingHistoryCommand = constructBrowsingHistoryCommand(request, response, handler, modelAndView);
             browsingHistoryResolver.resolveBrowsingHistory(request, response, browsingHistoryCommand);
+        }else{
+            if (LOGGER.isInfoEnabled()){
+                LOGGER.info(
+                                "current request:[{}] not support this BrowsingHistoryInterceptor,maybe you can config path in spring config 'mvc:exclude-mapping' node!",
+                                JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
+            }
         }
     }
+
+    /**
+     * 当前请求,是否支持解析.
+     *
+     * @param request
+     *            the request
+     * @param handler
+     *            the handler
+     * @param modelAndView
+     *            the model and view
+     * @return true, if checks if is support
+     * @since 1.5.3
+     */
+    protected abstract boolean isSupport(HttpServletRequest request,Object handler,ModelAndView modelAndView);
 
     /**
      * Construct browsing history command.

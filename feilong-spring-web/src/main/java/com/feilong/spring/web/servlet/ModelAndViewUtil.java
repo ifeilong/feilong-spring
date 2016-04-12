@@ -82,7 +82,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * @version 1.4.0 2015年8月6日 下午10:26:30
  * @since 1.4.0
  */
-public class ModelAndViewUtil{
+public final class ModelAndViewUtil{
 
     /** The Constant log. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ModelAndViewUtil.class);
