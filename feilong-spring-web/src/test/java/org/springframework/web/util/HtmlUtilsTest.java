@@ -40,13 +40,13 @@ public class HtmlUtilsTest{
     @Test
     public void testHtmlUtils(){
         String specialStr = "<div id=\"testDiv\">test1;test2</div>";
-        String str1 = HtmlUtils.htmlEscape(specialStr); // ①将 HTML 特殊字符转义为 HTML 通用转义序列；
+        String str1 = HtmlUtils.htmlEscape(specialStr); // ①将 HTML 特殊字符转义为 HTML 通用转义序列;
         LOGGER.info(str1);
 
-        String str2 = HtmlUtils.htmlEscapeDecimal(specialStr);// 将 HTML 特殊字符转义为带 # 的十进制数据转义序列；
+        String str2 = HtmlUtils.htmlEscapeDecimal(specialStr);// 将 HTML 特殊字符转义为带 # 的十进制数据转义序列;
         LOGGER.info(str2);
 
-        String str3 = HtmlUtils.htmlEscapeHex(specialStr);// 将 HTML 特殊字符转义为带 # 的十六进制数据转义序列；
+        String str3 = HtmlUtils.htmlEscapeHex(specialStr);// 将 HTML 特殊字符转义为带 # 的十六进制数据转义序列;
         LOGGER.info(str3);
 
         // ④下面对转义后字符串进行反向操作

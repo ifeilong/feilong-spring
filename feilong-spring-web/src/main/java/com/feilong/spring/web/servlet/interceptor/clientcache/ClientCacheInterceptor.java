@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,6 +32,14 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdap
 /**
  * 用来拦截所有 标识有 {@link ClientCache}的 请求方法.
  * 
+ * <h3>什么是客户端缓存?</h3>
+ * 
+ * <blockquote>
+ * <p>
+ * The mozilla cache holds all documents downloaded by the user. At first this may seem odd; however, this is done to make visited documents
+ * available for back/forward, saving, viewing-as-source, etc. 不需要再向服务器端发送请求. 并且可以用于离线浏览
+ * </p>
+ * </blockquote>
  * 
  * <h3>浏览器缓存的整个机制流程:</h3>
  * 
@@ -65,19 +74,20 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdap
  * </p>
  * </blockquote>
  * 
- * <h3>什么是客户端缓存?</h3>
+ * <h3>关于springmvc cache:</h3>
  * 
  * <blockquote>
  * <p>
- * The mozilla cache holds all documents downloaded by the user. At first this may seem odd; however, this is done to make visited documents
- * available for back/forward, saving, viewing-as-source, etc. 不需要再向服务器端发送请求. 并且可以用于离线浏览
+ * springmvc cache 参见 {@link org.springframework.web.servlet.support.WebContentGenerator},此外可以参考 {@link ShallowEtagHeaderFilter}
  * </p>
  * </blockquote>
  * 
  * @author feilong
  * @version 1.2.2 2015年7月17日 上午12:45:06
  * @see ResponseUtil#setNoCacheHeader(HttpServletResponse)
- * @see javax.servlet.http.HttpServletResponse#setHeader(String, String)
+ * @see ResponseUtil#setCacheHeader(HttpServletResponse, int)
+ * @see org.springframework.web.servlet.support.WebContentGenerator
+ * @see ShallowEtagHeaderFilter
  * @see <a href="http://www-archive.mozilla.org/projects/netlib/http/http-caching-faq.html">http-caching-faq</a>
  * @since 1.2.2
  */
@@ -96,12 +106,12 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
         HandlerMethod handlerMethod = (HandlerMethod) handler;
+        //如果没有标识{@link ClientCache},那么自动通过拦截器,不进行任何处理
         ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
         if (clientCache == null){
             return;
         }
 
-        //如果没有标识{@link ClientCache},那么自动通过拦截器,不进行任何处理
         int value = clientCache.value();
 
         //如果标识的{@link ClientCache},{@link ClientCache#value()} <=0,那么标识不设置缓存,参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}
