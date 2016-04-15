@@ -64,7 +64,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * <li>而{@link WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext)}方法要求 ServletContext属性列表中一定要包含一个有效的
  * WebApplicationContext对象,否则马上抛出一个 异常 {@link java.lang.IllegalStateException}.</li>
  * </ol>
- * 我们推荐使用后者,因为它能提前发现错误的时间,强制开发者搭建好必备的基础设施。
+ * 我们推荐使用后者,因为它能提前发现错误的时间,强制开发者搭建好必备的基础设施.
  * </p>
  * </blockquote>
  * 

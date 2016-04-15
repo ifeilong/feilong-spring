@@ -249,12 +249,12 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
             case TransactionDefinition.PROPAGATION_REQUIRED:
                 break;
 
-            //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚。
+            //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚.
             case TransactionDefinition.PROPAGATION_REQUIRES_NEW:
                 mustWrite = true;
                 break;
 
-            //指如果当前存在逻辑事务,就加入到该逻辑事务, 如果当前没有逻辑事务,就以非事务方式执行。
+            //指如果当前存在逻辑事务,就加入到该逻辑事务, 如果当前没有逻辑事务,就以非事务方式执行.
             case TransactionDefinition.PROPAGATION_SUPPORTS:
                 break;
 

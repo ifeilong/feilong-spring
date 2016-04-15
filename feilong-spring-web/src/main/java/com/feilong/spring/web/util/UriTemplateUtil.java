@@ -118,7 +118,7 @@ public class UriTemplateUtil{
     }
 
     /**
-     * 获得最佳的HandlerMapping映射内的匹配模式。.
+     * 获得最佳的HandlerMapping映射内的匹配模式..
      * 
      * @param request
      *            the request

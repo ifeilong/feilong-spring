@@ -33,11 +33,11 @@ public class MySecurityManagerImpl implements MySecurityManager{
      * <br>
      * 下面对表达式简单说一下: execution(* add*(..))
      * <ul>
-     * <li>第一个*说匹配是方法的任意返回值类型 待会可以试验一下。</li>
+     * <li>第一个*说匹配是方法的任意返回值类型 待会可以试验一下.</li>
      * <li>add*就是表示以add开头的方法名都可以匹配想到正则表达式了吗？</li>
-     * <li>(..)这两个就是表示方法里所传递的参数类型也是任意匹配。</li>
+     * <li>(..)这两个就是表示方法里所传递的参数类型也是任意匹配.</li>
      * </ul>
-     * 具体的请参考spring的开发手册, 这一点Spring讲的比较清楚。
+     * 具体的请参考spring的开发手册, 这一点Spring讲的比较清楚.
      * 
      * @param joinPoint
      *            the join point
@@ -48,9 +48,9 @@ public class MySecurityManagerImpl implements MySecurityManager{
     // private void addAllMethod(){}
     /**
      * 定义Advice,标识在哪些切入点<br>
-     * (切入点有ADD这是我们上面通过pointcut定义的。当然你也可以定义别的) 的何处<br>
+     * (切入点有ADD这是我们上面通过pointcut定义的.当然你也可以定义别的) 的何处<br>
      * (何处就是指是切入点的前面呢？后面？还是其他情况)织入通知 <br>
-     * 当然除了before还有其他类型的通知。<br>
+     * 当然除了before还有其他类型的通知.<br>
      * 前置通知,在addAllMethod切入点所代表的方法前调用checkSecurity方法
      */
     // @Before("addAllMethod()")

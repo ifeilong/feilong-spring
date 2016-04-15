@@ -31,6 +31,15 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdap
 /**
  * 用来拦截所有 标识有 {@link ClientCache}的 请求方法.
  * 
+ * 
+ * <h3>浏览器缓存的整个机制流程:</h3>
+ * 
+ * <blockquote>
+ * <p>
+ * <img src="http://venusdrogon.github.io/feilong-platform/mysource/client-cache.png"/>
+ * </p>
+ * </blockquote>
+ * 
  * <h3>作用及原理:</h3>
  * <blockquote>
  * 
@@ -55,11 +64,21 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdap
  * <code>@ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)</code>
  * </p>
  * </blockquote>
- *
+ * 
+ * <h3>什么是客户端缓存?</h3>
+ * 
+ * <blockquote>
+ * <p>
+ * The mozilla cache holds all documents downloaded by the user. At first this may seem odd; however, this is done to make visited documents
+ * available for back/forward, saving, viewing-as-source, etc. 不需要再向服务器端发送请求. 并且可以用于离线浏览
+ * </p>
+ * </blockquote>
+ * 
  * @author feilong
  * @version 1.2.2 2015年7月17日 上午12:45:06
  * @see ResponseUtil#setNoCacheHeader(HttpServletResponse)
  * @see javax.servlet.http.HttpServletResponse#setHeader(String, String)
+ * @see <a href="http://www-archive.mozilla.org/projects/netlib/http/http-caching-faq.html">http-caching-faq</a>
  * @since 1.2.2
  */
 public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
@@ -95,15 +114,14 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
         }
         //否则,会调用 {@link HttpServletResponse#setHeader(String, String)},添加 {@link HttpHeaders#CACHE_CONTROL}头,value值为 {@code "max-age=" + value}
         else{
-            String cacheControlValue = "max-age=" + value;
-            response.setHeader(HttpHeaders.CACHE_CONTROL, cacheControlValue);
+            ResponseUtil.setCacheHeader(response, value);
 
             LOGGER.debug(
                             "[{}.{}()],set response setHeader:[{}],value is :[{}]",
                             HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                             HandlerMethodUtil.getHandlerMethodName(handlerMethod),
                             HttpHeaders.CACHE_CONTROL,
-                            cacheControlValue);
+                            value);
         }
     }
 }
