@@ -21,6 +21,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.feilong.core.Validator;
@@ -35,8 +37,11 @@ import com.feilong.core.Validator;
  */
 public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
 
+    /** The Constant log. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SupportLocaleChangeInterceptor.class);
+
     /** The support locales. */
-    private List<String> supportLocales;
+    private List<String>        supportLocales;
 
     /*
      * (non-Javadoc)
@@ -63,19 +68,17 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
      * @since 1.0.9
      */
     private boolean isSupport(HttpServletRequest request){
-        boolean canHandle = false;
-
-        if (Validator.isNotNullOrEmpty(supportLocales)){
-            String newLocale = request.getParameter(getParamName());
-            if (supportLocales.contains(newLocale)){
-                canHandle = true;
-            }
-            //不属于支持的locale
-        }else{
-            //如果isNotNullOrEmpty  supportLocales ,那么 就是个普通的  LocaleChangeInterceptor
-            canHandle = true;
+        if (Validator.isNullOrEmpty(supportLocales)){
+            LOGGER.warn("SupportLocaleChangeInterceptor's supportLocales is isNullOrEmpty,you can direct use LocaleChangeInterceptor");
+            return true; //如果isNotNullOrEmpty supportLocales,那么 就是个普通的  LocaleChangeInterceptor
         }
-        return canHandle;
+
+        String newLocaleValue = request.getParameter(getParamName());
+        boolean contains = supportLocales.contains(newLocaleValue);
+        if (!contains){
+            LOGGER.warn("SupportLocaleChangeInterceptor's supportLocales:[{}] not contains [{}]", supportLocales, newLocaleValue);
+        }
+        return contains; //是否属于支持的locale
     }
 
     /**
