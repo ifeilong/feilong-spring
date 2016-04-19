@@ -120,6 +120,18 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
     /*
      * (non-Javadoc)
      * 
+     * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#clear(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    public void clear(HttpServletRequest request,HttpServletResponse response){
+        //去掉所有
+        CookieUtil.deleteCookie(cookieName, response);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.feilong.spring.web.servlet.interceptor.browsingHistory.BrowsingHistoryResolver#resolveBrowsingHistory(javax.servlet.http.
      * HttpServletRequest, javax.servlet.http.HttpServletResponse,
      * com.feilong.spring.web.servlet.interceptor.browsingHistory.command.BrowsingHistoryCommand)
@@ -332,4 +344,5 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
     public void setSymmetricEncryption(SymmetricEncryption symmetricEncryption){
         this.symmetricEncryption = symmetricEncryption;
     }
+
 }

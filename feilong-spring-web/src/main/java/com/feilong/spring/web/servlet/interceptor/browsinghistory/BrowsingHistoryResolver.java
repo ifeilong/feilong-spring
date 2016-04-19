@@ -86,4 +86,14 @@ public interface BrowsingHistoryResolver{
     //TODO 设置成  BrowsingHistoryCommand
     <T extends Serializable> LinkedList<T> getBrowsingHistory(HttpServletRequest request,Class<T> klass);
 
+    /**
+     * 清空浏览的历史记录.
+     *
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     * @since 1.5.4
+     */
+    void clear(HttpServletRequest request,HttpServletResponse response);
 }
