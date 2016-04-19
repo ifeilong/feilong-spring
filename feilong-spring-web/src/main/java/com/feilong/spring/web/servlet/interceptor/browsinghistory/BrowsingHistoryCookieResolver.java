@@ -51,32 +51,38 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * <th align="left">字段</th>
  * <th align="left">说明</th>
  * <th align="left">必须</th>
+ * <th align="left">默认</th>
  * </tr>
  * <tr valign="top">
  * <td>symmetricEncryption</td>
  * <td>加密算法</td>
  * <td>
  * <span style="color:red">true</span>,推荐使用 {@link SymmetricType#AES}</td>
+ * <td>无</td>
  * </tr>
  * <tr valign="top" style="background-color:#eeeeff">
  * <td>cookieName</td>
  * <td>cookie名称</td>
- * <td>false,默认 f_b_h</td>
+ * <td>false</td>
+ * <td>f_b_h</td>
  * </tr>
  * <tr valign="top">
  * <td>cookieMaxAge</td>
  * <td>cookie最大存活时间,单位秒</td>
- * <td>false,默认 3个月</td>
+ * <td>false</td>
+ * <td>3个月</td>
  * </tr>
  * <tr valign="top" style="background-color:#eeeeff">
  * <td>cookieCharsetName</td>
  * <td>cookie编码</td>
- * <td>false,默认 UTF-8</td>
+ * <td>false</td>
+ * <td>UTF-8</td>
  * </tr>
  * <tr valign="top">
  * <td>maxCount</td>
  * <td>最大记录数量,超过的记录将被去掉</td>
- * <td>false,默认 5</td>
+ * <td>false</td>
+ * <td>5</td>
  * </tr>
  * </table>
  * </blockquote>
