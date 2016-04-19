@@ -125,7 +125,6 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
      */
     @Override
     public void clear(HttpServletRequest request,HttpServletResponse response){
-        //去掉所有
         CookieUtil.deleteCookie(cookieName, response);
     }
 
