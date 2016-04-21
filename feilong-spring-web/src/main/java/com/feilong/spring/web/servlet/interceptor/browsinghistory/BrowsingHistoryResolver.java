@@ -61,7 +61,7 @@ import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.Browsi
 public interface BrowsingHistoryResolver{
 
     /**
-     * 处理历史记录.
+     * 添加历史浏览记录.
      *
      * @param request
      *            the request
@@ -73,7 +73,7 @@ public interface BrowsingHistoryResolver{
     void resolveBrowsingHistory(HttpServletRequest request,HttpServletResponse response,BrowsingHistoryCommand browsingHistoryCommand);
 
     /**
-     * 获得 browsing history.
+     * 获得所有存储的历史浏览记录.
      *
      * @param <T>
      *            the generic type
@@ -85,6 +85,28 @@ public interface BrowsingHistoryResolver{
      */
     //TODO 设置成  BrowsingHistoryCommand
     <T extends Serializable> LinkedList<T> getBrowsingHistory(HttpServletRequest request,Class<T> klass);
+
+    /**
+     * 获得历史浏览的历史记录,剔除掉指定的id.
+     * 
+     * <p>
+     * 该方法适用于PDP页面, 从历史浏览记录中,把自己去掉显示
+     * </p>
+     *
+     * @param <T>
+     *            the generic type
+     * @param request
+     *            the request
+     * @param excludeId
+     *            指定去掉的id
+     * @param klass
+     *            the klass
+     * @return 如果没有历史浏览记录,返回 null;<br>
+     *         如果历史记录中有 {@code excludeId},那么返回剔除之后的数据;<br>
+     *         如果历史记录中没有 {@code excludeId},那么返回原样的历史浏览数据;
+     * @since 1.5.4
+     */
+    <T extends Serializable> LinkedList<T> getBrowsingHistoryExcludeId(HttpServletRequest request,Serializable excludeId,Class<T> klass);
 
     /**
      * 清空浏览的历史记录.

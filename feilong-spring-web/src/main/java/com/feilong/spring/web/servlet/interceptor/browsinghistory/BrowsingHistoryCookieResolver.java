@@ -17,7 +17,6 @@ package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
 import java.io.Serializable;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -91,7 +90,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * @version 1.2.2 2015年7月20日 下午6:44:27
  * @since 1.2.2
  */
-public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
+public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolver{
 
     /** The Constant log. */
     private static final Logger LOGGER             = LoggerFactory.getLogger(BrowsingHistoryCookieResolver.class);
@@ -111,22 +110,8 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
     /** cookie编码. */
     private String              cookieCharsetName  = CharsetType.UTF8;
 
-    /** 最大记录数量,超过的记录将被去掉. */
-    private Integer             maxCount           = 5;
-
     /** 加密算法. */
     private SymmetricEncryption symmetricEncryption;
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#clear(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)
-     */
-    @Override
-    public void clear(HttpServletRequest request,HttpServletResponse response){
-        CookieUtil.deleteCookie(cookieName, response);
-    }
 
     /*
      * (non-Javadoc)
@@ -147,7 +132,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
         }
 
         try{
-            String cookieValue = constructItemBrowsingHistoryCookieValue(request, response, browsingHistoryCommand);
+            String cookieValue = constructBrowsingHistoryCookieValue(request, response, browsingHistoryCommand);
 
             if (Validator.isNotNullOrEmpty(cookieValue)){
                 CookieEntity cookieEntity = new CookieEntity(cookieName, cookieValue, cookieMaxAge);
@@ -161,7 +146,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
     }
 
     /**
-     * Construct item browsing history cookie value.
+     * Construct browsing history cookie value.
      *
      * @param request
      *            the request
@@ -171,7 +156,7 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
      *            the browsing history command
      * @return if nothing to do ,then return null, such as in the cookie, first item is current item
      */
-    private String constructItemBrowsingHistoryCookieValue(
+    private String constructBrowsingHistoryCookieValue(
                     HttpServletRequest request,
                     HttpServletResponse response,
                     BrowsingHistoryCommand browsingHistoryCommand){
@@ -180,84 +165,17 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
             return null;
         }
 
-        LinkedList<String> itemBrowsingHistoryList = getItemBrowsingHistoryList(request, response, browsingHistoryCommand);
+        LinkedList<String> browsingHistoryList = constructBrowsingHistoryList(request, response, browsingHistoryCommand);
 
         //cookie value 是  itemid join--->aes hex 加密格式字符串
         ToStringConfig toStringConfig = new ToStringConfig(DEFAULT_CONNECTOR);
-        String original = ConvertUtil.toString(toStringConfig, itemBrowsingHistoryList);
+        String original = ConvertUtil.toString(toStringConfig, browsingHistoryList);
 
         //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
         String encryptHex = symmetricEncryption.encryptHex(original, cookieCharsetName);
 
         LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, encryptHex);
         return encryptHex;
-    }
-
-    /**
-     * 获得 item browsing history list.
-     *
-     * @param request
-     *            the request
-     * @param response
-     *            the response
-     * @param browsingHistoryCommand
-     *            the browsing history command
-     * @return the item browsing history list
-     * @since 1.5.2
-     */
-    private LinkedList<String> getItemBrowsingHistoryList(
-                    HttpServletRequest request,
-                    HttpServletResponse response,
-                    BrowsingHistoryCommand browsingHistoryCommand){
-
-        LinkedList<String> linkedList = null;
-        try{
-            linkedList = getBrowsingHistory(request, String.class);
-        }catch (Exception e){
-            //如果出错了,那么就将cookie删掉
-            CookieUtil.deleteCookie(cookieName, response);
-        }
-
-        Serializable id = browsingHistoryCommand.getId();
-        //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
-        String idStr = id.toString();
-        if (Validator.isNullOrEmpty(linkedList)){
-            linkedList = new LinkedList<String>();
-            //如果没有 添加一个
-            linkedList.add(idStr);
-
-            return linkedList;
-        }
-
-        //*****************************************************************************
-
-        @SuppressWarnings("null")
-        String first = linkedList.getFirst();
-        //如果 list 里面的数据 第一个是当前item  那么一般表示刷新页面 或者重新打开新窗口
-        //这种case 没有必要操作 cookie
-        if (first.equals(idStr)){
-            LOGGER.info("in cookie,first pk is:[{}],current pk:[{}], nothing to do", first, id);
-            return null;
-        }
-
-        //如果有当前商品,那么删除掉 并将 当前的item id 塞第一个
-        if (linkedList.contains(idStr)){
-            LOGGER.info("in cookie,linkedList:[{}],contains:[{}],remove it~", linkedList, idStr);
-            linkedList.remove(idStr);
-        }
-        linkedList.addFirst(idStr);
-
-        //如果超长了 ,截取
-        int size = linkedList.size();
-        if (size > maxCount){
-            LOGGER.debug("linkedList size:[{}] > maxCount[{}],linkedList:[{}],will sub subList", size, maxCount, linkedList);
-
-            // so non-structural changes in the returned list
-            List<String> subList = linkedList.subList(0, maxCount);
-            //linkedList = (LinkedList<Serializable>) subList;  //java.util.SubList cannot be cast to java.util.LinkedList
-            linkedList = new LinkedList<String>(subList);
-        }
-        return linkedList;
     }
 
     /*
@@ -294,6 +212,17 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
         return linkedList;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#clear(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    public void clear(HttpServletRequest request,HttpServletResponse response){
+        CookieUtil.deleteCookie(cookieName, response);
+    }
+
     /**
      * 设置 the cookie name.
      *
@@ -325,16 +254,6 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
     }
 
     /**
-     * 设置 最大记录数量,超过的记录将被去掉.
-     *
-     * @param maxCount
-     *            the maxCount to set
-     */
-    public void setMaxCount(Integer maxCount){
-        this.maxCount = maxCount;
-    }
-
-    /**
      * 设置 加密算法.
      *
      * @param symmetricEncryption
@@ -343,5 +262,4 @@ public class BrowsingHistoryCookieResolver implements BrowsingHistoryResolver{
     public void setSymmetricEncryption(SymmetricEncryption symmetricEncryption){
         this.symmetricEncryption = symmetricEncryption;
     }
-
 }
