@@ -24,25 +24,46 @@ import java.lang.annotation.Target;
 import com.feilong.core.TimeInterval;
 
 /**
- * (为了提高速度一些浏览器会缓存浏览者浏览过的页面,通过下面的相关参数的定义,浏览器一般不会缓存页面,而且浏览器无法脱机浏览.
+ * 设置浏览器客户端缓存.
  * 
  * <p>
- * 借鉴了 胡总的 {@link "NoClientCache"}
+ * 此注解,用于 {@link ClientCacheInterceptor},如果方法没有使用 <code>@ClientCache</code>,那么拦截器什么都不做
  * </p>
  * 
+ * <h3>示例:</h3>
+ * <blockquote>
+ * 
+ * <p>
+ * 1.如果我的页面,需要设置5分钟浏览器缓存,你可以这么设置:
+ * </p>
+ * 
+ * <code>@ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)</code>
+ * 
+ * <p>
+ * 2.如果我的页面,<b>不能有</b>浏览器缓存,你可以这么设置:
+ * </p>
+ * 
+ * <code>@ClientCache(0)</code>
+ * </blockquote>
+ * 
+ * <h3>不使用<code>@ClientCache</code>和<code>@ClientCache(0)</code>的区别:</h3>
+ * 
+ * <blockquote>
+ * <p>
+ * 不使用<code>@ClientCache</code>,由于拦截器不做任何处理,有些浏览器(如chrome)对get请求会自动cache,比如购物车页面,当你删除了一个商品(ajax),此时查看其他页面,再按后退按钮返回的时候,会发现原来的商品还在;<br>
+ * 而当你设置了 <code>@ClientCache(0)</code>,那么会强制浏览器不设置cache,重新向服务器发送请求
+ * </p>
+ * </blockquote>
+ *
  * @author feilong
  * @version 1.0.9 2015年3月30日 下午4:25:10
+ * @see ClientCacheInterceptor
  * @since 1.0.9
- * 
  */
-//表示产生文档,比如通过javadoc产生文档, 将此注解包含在 javadoc 中, 这个Annotation可以被写入javadoc
-//在默认情况下,注释 不包括在 Javadoc 中
-@Documented
-//在jvm加载class时候有效, VM将在运行期也保留注释,因此可以通过反射机制读取注解的信息
-@Retention(RetentionPolicy.RUNTIME)
-
-//仅用于 Method 
-@Target({ ElementType.METHOD })
+//表示产生文档,比如通过javadoc产生文档, 将此注解包含在 javadoc中,这个Annotation可以被写入javadoc
+@Documented //在默认情况下,注释不包括在 Javadoc 中
+@Retention(RetentionPolicy.RUNTIME) //在jvm加载class时候有效,VM将在运行期也保留注释,因此可以通过反射机制读取注解的信息
+@Target({ ElementType.METHOD }) //仅用于 Method 
 public @interface ClientCache{
 
     /**
@@ -55,11 +76,11 @@ public @interface ClientCache{
      * 只需要设置 <code>@ClientCache(TimeInterval.SECONDS_PER_HOUR)</code>
      * </p>
      * <p>
-     * if value <=0 表示不缓存<br>
+     * if value <=0表示不缓存<br>
      * 默认:0 不缓存
      * </p>
      * 
-     * 设置为int类型,int 最大值是{@link Integer#MAX_VALUE} 为 68.096259734906,参见 {@link TimeInterval} ,绝对够用了
+     * 设置为int类型,int最大值是{@link Integer#MAX_VALUE}为 68.096259734906,参见 {@link TimeInterval},绝对够用了
      *
      * @return the int
      * @since 1.0.9
