@@ -15,22 +15,24 @@
  */
 package com.feilong.spring.web.servlet.handler;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
+import org.springframework.web.servlet.mvc.condition.RequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.feilong.core.util.CollectionsUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
@@ -130,44 +132,54 @@ public class HandlerMappingUtil{
     public static final Map<String, Object> getRequestMappingHandlerMappingInfoMapForLog(WebApplicationContext webApplicationContext){
         RequestMappingHandlerMapping requestMappingHandlerMapping = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
 
-        Map<String, Object> object = new LinkedHashMap<String, Object>();
+        Map<String, Object> mappingInfoMap = new LinkedHashMap<String, Object>();
 
-        object.put("useRegisteredSuffixPatternMatch()", requestMappingHandlerMapping.useRegisteredSuffixPatternMatch());
-        object.put("useSuffixPatternMatch()", requestMappingHandlerMapping.useSuffixPatternMatch());
-        object.put("useTrailingSlashMatch()", requestMappingHandlerMapping.useTrailingSlashMatch());
-        object.put("getDefaultHandler()", requestMappingHandlerMapping.getDefaultHandler());
-        object.put("getFileExtensions()", requestMappingHandlerMapping.getFileExtensions());
-        object.put("getOrder()", requestMappingHandlerMapping.getOrder());
-        object.put("getPathMatcher()", requestMappingHandlerMapping.getPathMatcher());
-        object.put("getUrlPathHelper()", requestMappingHandlerMapping.getUrlPathHelper());
+        mappingInfoMap.put("useRegisteredSuffixPatternMatch()", requestMappingHandlerMapping.useRegisteredSuffixPatternMatch());
+        mappingInfoMap.put("useSuffixPatternMatch()", requestMappingHandlerMapping.useSuffixPatternMatch());
+        mappingInfoMap.put("useTrailingSlashMatch()", requestMappingHandlerMapping.useTrailingSlashMatch());
+        mappingInfoMap.put("getDefaultHandler()", requestMappingHandlerMapping.getDefaultHandler());
+        mappingInfoMap.put("getFileExtensions()", requestMappingHandlerMapping.getFileExtensions());
+        mappingInfoMap.put("getOrder()", requestMappingHandlerMapping.getOrder());
+        mappingInfoMap.put("getPathMatcher()", requestMappingHandlerMapping.getPathMatcher());
+        mappingInfoMap.put("getUrlPathHelper()", requestMappingHandlerMapping.getUrlPathHelper());
 
+        //***************************************************************************************************
+        Map<String, RequestMappingInfo> methodAndRequestMappingInfoMapMap = buildMethodAndRequestMappingInfoMap(
+                        requestMappingHandlerMapping);
+        mappingInfoMap.put("methodAndRequestMappingInfoMapMap", methodAndRequestMappingInfoMapMap);
+        return mappingInfoMap;
+    }
+
+    /**
+     * key 是handle 方法,value 是 RequestMappingInfo 信息.
+     *
+     * @param requestMappingHandlerMapping
+     *            the request mapping handler mapping
+     * @return the map< string, request mapping info>
+     * @see org.springframework.web.servlet.mvc.method.RequestMappingInfo
+     * @see org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#createRequestMappingInfo(RequestMapping,
+     *      RequestCondition)
+     * @since 1.5.4
+     */
+    private static Map<String, RequestMappingInfo> buildMethodAndRequestMappingInfoMap(
+                    RequestMappingHandlerMapping requestMappingHandlerMapping){
+        Map<String, RequestMappingInfo> methodAndRequestMappingInfoMap = new LinkedHashMap<String, RequestMappingInfo>();
+
+        //**************************************************************************************************************
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
-
-        Map<RequestMappingInfo, String> map = new LinkedHashMap<RequestMappingInfo, String>();
-
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()){
             RequestMappingInfo requestMappingInfo = entry.getKey();
             HandlerMethod handlerMethod = entry.getValue();
 
-            map.put(requestMappingInfo, handlerMethod.toString());
-
-            PatternsRequestCondition patternsCondition = requestMappingInfo.getPatternsCondition();
-            Set<String> patterns = patternsCondition.getPatterns();
-
-            if (LOGGER.isDebugEnabled()){
-                LOGGER.debug(JsonUtil.format(patterns));
-            }
-
-            if (LOGGER.isDebugEnabled()){
-                LOGGER.debug(
-                                "RequestMappingInfo:[{}],HandlerMethod:[{}],[{}],requestMappingInfo:{}",
-                                JsonUtil.format(requestMappingInfo),
-                                handlerMethod,
-                                handlerMethod.getClass(),
-                                requestMappingInfo);
-            }
+            methodAndRequestMappingInfoMap.put(handlerMethod.toString(), requestMappingInfo);
         }
-        object.put("handlerMethods", map);
-        return object;
+
+        if (LOGGER.isInfoEnabled()){
+            Collection<RequestMappingInfo> requestMappingInfoCollection = methodAndRequestMappingInfoMap.values();
+            String format = JsonUtil
+                            .format(CollectionsUtil.getPropertyValueList(requestMappingInfoCollection, "patternsCondition.patterns"));
+            LOGGER.info("all requestMapping value:{}", format);
+        }
+        return methodAndRequestMappingInfoMap;
     }
 }
