@@ -96,7 +96,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
             LOGGER.debug(
                             "RequestInfoMapForLog:{},request attribute:{},start StopWatch",
                             JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
-                            JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request), allowFormatClassTypes));
+                            getRequestAttributeMap(request));
         }
         return super.preHandle(request, response, handler);
     }
@@ -163,7 +163,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                         HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                         HandlerMethodUtil.getHandlerMethodName(handlerMethod),
                         JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
-                        JsonUtil.formatSimpleMap(RequestUtil.getAttributeMap(request)),
+                        getRequestAttributeMap(request),
                         getModelAndViewLogInfo(modelAndView),
                         DateExtensionUtil.getIntervalForView(useTime),
                         logicOperator,
@@ -254,6 +254,34 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     private static StopWatch getStopWatch(HttpServletRequest request){
         return (StopWatch) request.getAttribute(STOPWATCH_ATTRIBUTE);
     }
+
+    /**
+     * 获得 request attribute map.
+     *
+     * @param request
+     *            the request
+     * @return the request attribute map
+     * @since 1.5.4
+     */
+    private String getRequestAttributeMap(HttpServletRequest request){
+        Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
+
+        //剔除掉 不常用的属性 不需要care 避免输出过多的日志
+
+        //see org.springframework.web.context.request.RequestContextListener.REQUEST_ATTRIBUTES_ATTRIBUTE
+        attributeMap.remove("org.springframework.web.context.request.RequestContextListener.REQUEST_ATTRIBUTES");
+        attributeMap.remove(org.springframework.web.context.request.async.WebAsyncUtils.WEB_ASYNC_MANAGER_ATTRIBUTE);
+
+        attributeMap.remove(org.springframework.web.servlet.DispatcherServlet.THEME_RESOLVER_ATTRIBUTE);
+        attributeMap.remove(org.springframework.web.servlet.DispatcherServlet.THEME_SOURCE_ATTRIBUTE);
+
+        //        attributeMap.remove(org.springframework.web.servlet.DispatcherServlet.THEME_RESOLVER_ATTRIBUTE);
+        //        attributeMap.remove(org.springframework.web.servlet.DispatcherServlet.THEME_SOURCE_ATTRIBUTE);
+
+        return JsonUtil.formatSimpleMap(attributeMap, allowFormatClassTypes);
+    }
+
+    //************************************************************************************************
 
     /*
      * (non-Javadoc)
