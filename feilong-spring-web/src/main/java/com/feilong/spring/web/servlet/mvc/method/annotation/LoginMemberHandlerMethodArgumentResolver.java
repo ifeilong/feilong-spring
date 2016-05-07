@@ -53,7 +53,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * 
  * <blockquote>
  * 
- * <pre>
+ * <pre class="code">
  * {@code
  *             <bean class="com.feilong.spring.web.servlet.mvc.method.annotation.LoginMemberHandlerMethodArgumentResolver">
  *                 <!-- 在session中保存的标识用户session对象的key -->

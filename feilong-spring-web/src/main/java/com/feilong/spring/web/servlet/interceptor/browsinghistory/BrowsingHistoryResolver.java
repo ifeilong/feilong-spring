@@ -36,7 +36,7 @@ import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.Browsi
  * 现在, 你只需要这么做
  * </p>
  * 
- * <pre>
+ * <pre class="code">
  * &#64;Controller
  * public class StdRecommendationEngineController {
  * 

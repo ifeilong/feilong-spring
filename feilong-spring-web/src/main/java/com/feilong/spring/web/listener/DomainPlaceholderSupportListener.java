@@ -38,7 +38,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * <p>
  * 注意: 此 {@link DomainPlaceholderSupportListener}由于需要使用到 {@link WebApplicationContext} ,需要配置在
  * 
- * <pre>
+ * <pre class="code">
  * {@code
  * <listener>
  *      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
@@ -56,7 +56,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * <ol>
  * <li>读取 web.xml中配置的 <code>domainConfigLocation</code> context-param参数,比如:
  * 
- * <pre>
+ * <pre class="code">
  * {@code
  *     <context-param>
  *         <param-name>domainConfigLocation</param-name>
@@ -83,7 +83,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * 
  * <blockquote>
  * 
- * <pre>
+ * <pre class="code">
  * domain.css={"variableName":"domainCSS","value":"http://rs.feilong.com:8888"}
  * domain.js={"variableName":"domainJS","value":"http://rs.feilong.com:8888"}
  * domain.image={"variableName":"domainImage","value":"http://rs.feilong.com:8888"}

@@ -30,20 +30,69 @@ import com.feilong.core.TimeInterval;
  * 此注解,用于 {@link ClientCacheInterceptor},如果方法没有使用 <code>@ClientCache</code>,那么拦截器什么都不做
  * </p>
  * 
- * <h3>示例:</h3>
+ * <h3>step1:springmvc XML配置</h3>
+ * <blockquote>
+ * 
+ * <pre class="code">
+{@code
+    <mvc:interceptors>
+
+        <mvc:interceptor>
+
+            <!-- 默认所有 -->
+            <!-- json请求不排除, 反正这个cache 可以通过程序控制 -->
+            <mvc:mapping path="/**" />
+            <bean class="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheInterceptor">
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+}
+ * </pre>
+ * 
+ * </blockquote>
+ * 
+ * <h3>step2: {@link org.springframework.web.bind.annotation.RequestMapping} 方法上使用</h3>
  * <blockquote>
  * 
  * <p>
  * 1.如果我的页面,需要设置5分钟浏览器缓存,你可以这么设置:
  * </p>
  * 
- * <code>@ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)</code>
+ * <blockquote>
+ * 
+ * <pre class="code">
+ * 
+ * &#064;Controller
+ * public class StdPDPController extends AbstractStandardController{
+ * 
+ *  &#064;ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)
+ *  &#064;RequestMapping(value = "/pdp/{code}",method = RequestMethod.GET)
+ *  public ModelAndView doPDPHandler(HttpServletRequest request,HttpServletResponse response){
+ *      .........
+ *  }
+ * </pre>
+ * 
+ * </blockquote>
  * 
  * <p>
  * 2.如果我的页面,<b>不能有</b>浏览器缓存,你可以这么设置:
  * </p>
  * 
- * <code>@ClientCache(0)</code>
+ * <blockquote>
+ * 
+ * <pre class="code">
+ * 
+ * &#064;Controller
+ * public class StdMemberCouponController extends BaseController{
+ * 
+ * &#064;ClientCache(0)
+ * &#064;RequestMapping(value = "/myaccount/couponList.htm",method = RequestMethod.GET)
+ * public String myCouponList(HttpServletRequest request,Model model){
+ * ....
+ * }
+ * </pre>
+ * 
+ * </blockquote>
  * </blockquote>
  * 
  * <h3>不使用<code>@ClientCache</code>和<code>@ClientCache(0)</code>的区别:</h3>

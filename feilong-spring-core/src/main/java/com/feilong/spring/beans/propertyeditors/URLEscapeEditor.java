@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * 使用 URIUtil.decode(text, charsetType) 解码<br>
  * 使用方法:
  * 
- * <pre>
+ * <pre class="code">
  * 
  * 
  * 

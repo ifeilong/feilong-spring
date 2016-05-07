@@ -24,7 +24,7 @@ import com.feilong.spring.web.util.WebSpringUtil;
 /**
  * 需要和spring控制的业务层交互,且仅仅设置作用域,请使用这个基类.
  * 
- * <pre>
+ * <pre class="code">
  * 只需要重写doExecute()方法即可
  * </pre>
  * 

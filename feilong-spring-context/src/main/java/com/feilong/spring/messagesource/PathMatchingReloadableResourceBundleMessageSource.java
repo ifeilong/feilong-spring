@@ -40,7 +40,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * 
  * <blockquote>
  * 
- * <pre>
+ * <pre class="code">
  * {@code
  *     <bean id="messageSource" class="com.feilong.spring.messagesource.PathMatchingReloadableResourceBundleMessageSource">
  *         <property name="basenames">
@@ -61,7 +61,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * <p>
  * 也支持 不带通配符形式的配置 ,如
  * 
- * <pre>
+ * <pre class="code">
  * {@code
  * <value>classpath:i18n/list</value>
  * }

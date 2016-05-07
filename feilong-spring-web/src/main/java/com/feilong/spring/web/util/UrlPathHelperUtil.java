@@ -40,7 +40,7 @@ public class UrlPathHelperUtil{
     /**
      * 显示 属性 一般 debug 使用 看看
      * 
-     * <pre>
+     * <pre class="code">
      * 示例 _search-filter-search.jsp为 被 jspinclude 的 页面
      * 
      * http//www.feilong.com8888/converse/s/c-m-c-s-k-s-o.htm?keyword=%E9%9E%8B
@@ -54,7 +54,7 @@ public class UrlPathHelperUtil{
      * urlPathHelper.getServletPath(request)/product/_search-filter-search.jsp
      * </pre>
      * 
-     * <pre>
+     * <pre class="code">
      * http//www.feilong.com8888/s/c-m-c-s-k-s-o.htm?keyword=%E9%9E%8B
      * urlPathHelper.getContextPath(request)
      * urlPathHelper.getOriginatingContextPath(request)

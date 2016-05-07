@@ -163,7 +163,7 @@ public class UriTemplateUtil{
     /**
      * 扩充模板值.
      * 
-     * <pre>
+     * <pre class="code">
      * String requestPath = &quot;/s/c-m-c-s-k-s-o.htm&quot; 
      * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;
      * String variableName="color";
@@ -214,7 +214,7 @@ public class UriTemplateUtil{
     /**
      * 扩充模板值.
      * 
-     * <pre>
+     * <pre class="code">
      * String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
      * String variableName = "color";
      * String value = "100";
@@ -241,7 +241,7 @@ public class UriTemplateUtil{
     /**
      * 清除 基于 variableNames 变量名称的值.
      * 
-     * <pre>
+     * <pre class="code">
      * 
      * String requestPath = &quot;/s/c500-m60-cred-s-k-s100-o6.htm&quot;;
      * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;;
@@ -275,7 +275,7 @@ public class UriTemplateUtil{
     /**
      * 仅仅保留这些参数的值,和 clearVariablesValue相反.
      * 
-     * <pre>
+     * <pre class="code">
      * 
      * String requestPath = &quot;/s/c500-m60-cred-s-k-s100-o6.htm&quot;;
      * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;;
@@ -311,7 +311,7 @@ public class UriTemplateUtil{
     /**
      * 扩充模板值.
      * 
-     * <pre>
+     * <pre class="code">
      *  String uriTemplatePath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
      *  Map<String, String> map = new HashMap<String, String>();
      *  map.put("color", "100");

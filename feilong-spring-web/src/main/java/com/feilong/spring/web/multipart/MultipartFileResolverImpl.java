@@ -30,7 +30,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 /**
  * 需要在spring相关xml里面配置
  *
- * <pre>
+ * <pre class="code">
 {@code
     <bean id="multipartFileResolver" class="com.feilong.spring.web.multipart.MultipartFileResolverImpl" />
 }

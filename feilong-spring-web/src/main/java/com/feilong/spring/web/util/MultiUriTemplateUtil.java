@@ -85,7 +85,7 @@ public class MultiUriTemplateUtil{
     /**
      * 多值,扩充模板值.
      * 
-     * <pre>
+     * <pre class="code">
      * String requestPath = "/s/c-m-c-s-k-s100-o.htm";
      * String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
      * String variableName = "style";
@@ -128,7 +128,7 @@ public class MultiUriTemplateUtil{
     /**
      * 多值,扩充模板值.
      * 
-     * <pre>
+     * <pre class="code">
      * 
      * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;;
      * Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
@@ -189,7 +189,7 @@ public class MultiUriTemplateUtil{
     /**
      * 将一个值从一个变量多值中以除掉.
      * 
-     * <pre>
+     * <pre class="code">
      * String requestPath = &quot;/s/c-m-c-s-k-s<span style="color:red">500,100,200,9000</span>-o.htm&quot;;
      * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;;
      * String variableName = &quot;style&quot;;

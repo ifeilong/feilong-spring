@@ -55,7 +55,7 @@ import net.sf.json.JSONException;
  * <li></li>
  * <li>
  * 
- * <pre>
+ * <pre class="code">
  * 可能方法 套方法  AManager.a(){ 调用 BManager.b();}  ,
  * A是 adatabase
  * B是 bdatabase

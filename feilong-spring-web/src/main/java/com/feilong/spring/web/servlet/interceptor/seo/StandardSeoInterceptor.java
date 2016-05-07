@@ -39,7 +39,7 @@ import com.feilong.spring.web.servlet.LocaleResolverUtil;
  * 提供了两种类型的配置方式, 第一种,配置默认的 {@link #defaultSeoViewCommand}对象,比如:
  * </p>
  * 
- * <pre>
+ * <pre class="code">
  * {@code 
  * 
     <util:properties id="p_seo" location="classpath:config/seo.properties"></util:properties>
@@ -73,7 +73,7 @@ import com.feilong.spring.web.servlet.LocaleResolverUtil;
  * 第二种,配置 {@link #keyNameSeoTitle},{@link #keyNameSeoKeywords},{@link #keyNameSeoDescription},比如:
  * </p>
  * 
- * <pre>
+ * <pre class="code">
  * {@code 
  *  <mvc:interceptors>
 
@@ -109,7 +109,7 @@ import com.feilong.spring.web.servlet.LocaleResolverUtil;
  * <li>Model1:什么都不设置,那么使用默认配置的 {@link #defaultSeoViewCommand},如果这些参数也没有设置,那么页面相关地方会输出空</li>
  * <li>Model2:可以在controller {@link RequestMapping} 方法体里面,使用
  * 
- * <pre>
+ * <pre class="code">
  * SeoViewCommand defaultSeoViewCommand = new DefaultSeoViewCommand();
  * defaultSeoViewCommand.setSeoDescription(xxx);
  * defaultSeoViewCommand.setSeoKeywords(xxx);
