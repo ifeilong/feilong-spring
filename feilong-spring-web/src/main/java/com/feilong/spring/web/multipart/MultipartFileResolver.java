@@ -28,13 +28,33 @@ public interface MultipartFileResolver{
 
     /**
      * 将<code>MultipartFile</code>上传到指定目录<code>directoryName</code>下面重命名指定的文件名称<code>fileName</code>.
+     * 
+     * <p>
+     * 如果{@link MultipartFile#isEmpty()},那么log warn并跳过
+     * </p>
      *
      * @param multipartFile
      *            the multipart file
      * @param directoryName
-     *            the directory name
+     *            指定目录
      * @param fileName
      *            the file name
      */
     void upload(MultipartFile multipartFile,String directoryName,String fileName);
+
+    /**
+     * 将一组<code>multipartFiles</code>上传到指定目录<code>directoryName</code>下面,依次重命名指定的文件名称<code>fileNames</code>.
+     * 
+     * <p>
+     * 如果{@link MultipartFile#isEmpty()},那么log warn并跳过
+     * </p>
+     * 
+     * @param multipartFiles
+     *            the multipart files
+     * @param directoryName
+     *            指定目录
+     * @param fileNames
+     *            the file names
+     */
+    void upload(MultipartFile[] multipartFiles,String directoryName,String[] fileNames);
 }

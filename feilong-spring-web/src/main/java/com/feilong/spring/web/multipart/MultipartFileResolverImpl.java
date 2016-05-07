@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,6 +53,8 @@ public class MultipartFileResolverImpl implements MultipartFileResolver{
      */
     @Override
     public void upload(MultipartFile multipartFile,String directoryName,String fileName){
+        Validate.notNull(multipartFile, "multipartFile can't be null!");
+
         if (multipartFile.isEmpty()){
             LOGGER.warn("multipartFile is empty,but you want to save to directoryName:[{}],fileName:[{}]", directoryName, fileName);
             return;
@@ -66,6 +69,25 @@ public class MultipartFileResolverImpl implements MultipartFileResolver{
         }catch (IOException e){
             LOGGER.error("", e);
             throw new UncheckedIOException(e);
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.feilong.spring.web.multipart.MultipartFileResolver#upload(org.springframework.web.multipart.MultipartFile[],
+     * java.lang.String, java.lang.String[])
+     */
+    @Override
+    public void upload(MultipartFile[] multipartFiles,String directoryName,String[] fileNames){
+        Validate.notNull(multipartFiles, "multipartFiles can't be null!");
+
+        for (int i = 0; i < multipartFiles.length; ++i){
+            MultipartFile multipartFile = multipartFiles[i];
+            String fileName = fileNames[i];
+            Validate.notEmpty(fileName, "fileName can't be null/empty!");
+
+            upload(multipartFile, directoryName, fileName);
         }
     }
 }
