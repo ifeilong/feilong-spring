@@ -52,6 +52,11 @@ public class MultipartFileResolverImpl implements MultipartFileResolver{
      */
     @Override
     public void upload(MultipartFile multipartFile,String directoryName,String fileName){
+        if (multipartFile.isEmpty()){
+            LOGGER.warn("multipartFile is empty,but you want to save to directoryName:[{}],fileName:[{}]", directoryName, fileName);
+            return;
+        }
+
         Map<String, Object> map = MultipartFileUtil.getMultipartFileInfoMapForLogMap(multipartFile);
         LOGGER.debug(JsonUtil.format(map));
 
