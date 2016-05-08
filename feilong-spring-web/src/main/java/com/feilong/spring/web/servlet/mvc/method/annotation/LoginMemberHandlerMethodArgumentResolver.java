@@ -139,18 +139,18 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
             return null;
         }
 
-        //如果标识的是session对象本身 {@link #sessionMemberClass},那么直接获取返回;
+        //如果标识的是session对象本身#sessionMemberClass,那么直接获取返回;
         Class<?> klass = parameter.getParameterType();
         if (klass.isAssignableFrom(sessionMemberClass)){
             return sessionMember;
         }
 
-        //如果没有配置 {@link #sessionMemberIdName},那么返回null
+        //如果没有配置#sessionMemberIdName,那么返回null
         if (Validator.isNullOrEmpty(sessionMemberIdName)){
             return null;
         }
 
-        //如果标识的是session对象中的某个字段 {@link #sessionMemberIdName},那么提取该字段返回;
+        //如果标识的是session对象中的某个字段#sessionMemberIdName,那么提取该字段返回;
         return PropertyUtil.getProperty(sessionMember, sessionMemberIdName);
     }
 
