@@ -84,6 +84,9 @@ public class MultipartFileResolverImpl implements MultipartFileResolver{
 
         for (int i = 0; i < multipartFiles.length; ++i){
             MultipartFile multipartFile = multipartFiles[i];
+            if (multipartFile.isEmpty()){
+                continue;
+            }
             String fileName = fileNames[i];
             Validate.notEmpty(fileName, "fileName can't be null/empty!");
 
