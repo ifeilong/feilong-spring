@@ -160,7 +160,7 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
         boolean isMessageConfig = Validator.isNotNullOrEmpty(keyNameSeoTitle) && Validator.isNotNullOrEmpty(keyNameSeoKeywords)
                         && Validator.isNotNullOrEmpty(keyNameSeoDescription);
         if (isMessageConfig){
-            return buildSeoViewCommandFromMessage(request);
+            return buildSeoViewCommandFromMessage();
         }
 
         return defaultSeoViewCommand;
@@ -169,11 +169,9 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
     /**
      * Builds the seo view command from message.
      *
-     * @param request
-     *            the request
      * @return the seo view command
      */
-    private SeoViewCommand buildSeoViewCommandFromMessage(@SuppressWarnings("unused") HttpServletRequest request){
+    private SeoViewCommand buildSeoViewCommandFromMessage(){
 
         Locale locale = LocaleResolverUtil.getLocale();
 

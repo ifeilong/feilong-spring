@@ -89,6 +89,8 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
         try{
             linkedList = getBrowsingHistory(request, String.class);
         }catch (Exception e){
+            LOGGER.error("getBrowsingHistory Exception,just log it,and clear cookie", e);
+
             //如果出错了,那么就将cookie删掉
             clear(request, response);
         }
