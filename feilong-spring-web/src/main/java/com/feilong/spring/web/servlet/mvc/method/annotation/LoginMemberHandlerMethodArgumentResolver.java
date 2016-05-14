@@ -110,10 +110,7 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
      */
     @Override
     public boolean supportsParameter(MethodParameter parameter){
-        if (parameter.hasParameterAnnotation(LoginMember.class)){
-            return true;
-        }
-        return false;
+        return parameter.hasParameterAnnotation(LoginMember.class);
     }
 
     /*
