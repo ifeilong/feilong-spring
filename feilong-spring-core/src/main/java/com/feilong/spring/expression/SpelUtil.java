@@ -46,8 +46,6 @@ public class SpelUtil{
      */
     public static Object getValue(String expressionString){
         Expression expression = expressionParser.parseExpression(expressionString);
-        //      String message = expression.getValue(String.class);
-        //      LOGGER.info(message);
         return expression.getValue();
     }
 }
