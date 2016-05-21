@@ -24,7 +24,9 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.core.CharsetType;
 import com.feilong.servlet.http.HttpHeaders;
+import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.ResponseUtil;
 import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
@@ -105,6 +107,14 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
     @Override
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
+        if (!(handler instanceof HandlerMethod)){
+            LOGGER.warn(
+                            "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
+                            RequestUtil.getRequestFullURL(request, CharsetType.UTF8),
+                            handler.getClass().getName());
+            return;
+        }
+
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         //如果没有标识{@link ClientCache},那么自动通过拦截器,不进行任何处理
         ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);

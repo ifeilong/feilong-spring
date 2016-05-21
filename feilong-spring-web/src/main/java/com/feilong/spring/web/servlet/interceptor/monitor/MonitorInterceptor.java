@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.core.CharsetType;
 import com.feilong.core.TimeInterval;
 import com.feilong.core.Validator;
 import com.feilong.core.date.DateExtensionUtil;
@@ -87,6 +88,14 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
      */
     @Override
     public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
+        if (!(handler instanceof HandlerMethod)){
+            LOGGER.warn(
+                            "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
+                            RequestUtil.getRequestFullURL(request, CharsetType.UTF8),
+                            handler.getClass().getName());
+            return true;
+        }
+
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
@@ -110,6 +119,14 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     @Override
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
+
+        if (!(handler instanceof HandlerMethod)){
+            LOGGER.warn(
+                            "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
+                            RequestUtil.getRequestFullURL(request, CharsetType.UTF8),
+                            handler.getClass().getName());
+            return;
+        }
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
 
