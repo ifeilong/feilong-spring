@@ -32,6 +32,8 @@ public class DIUser extends BaseDIUser{
     /** The user name. */
     private String              userName;
 
+    private Integer             age;
+
     /** The array. */
     private String[]            array;
 
@@ -203,5 +205,20 @@ public class DIUser extends BaseDIUser{
      */
     public DIUserArray getDiUserArray(){
         return diUserArray;
+    }
+
+    /**
+     * @return the age
+     */
+    public Integer getAge(){
+        return age;
+    }
+
+    /**
+     * @param age
+     *            the age to set
+     */
+    public void setAge(Integer age){
+        this.age = age;
     }
 }
