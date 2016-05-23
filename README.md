@@ -93,7 +93,7 @@ Reduce development, Release ideas
 	</project>
 ```
 
-# feilong-platform module:
+# feilong-spring module:
 
 Name | Description | JDK编译版本
 ------------ | ---------|------------
