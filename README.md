@@ -1,4 +1,4 @@
-feilong-platform feilong-core
+feilong-platform feilong-spring
 ================
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
@@ -26,7 +26,7 @@ Reduce development, Release ideas
           `-"--'---'
 
 
-#Welcome to feilong-platform feilong-core
+#Welcome to feilong-platform feilong-spring
 
 `对spring相关类的快速封装,以便快速使用`
 
@@ -87,13 +87,13 @@ Reduce development, Release ideas
 
 # feilong-platform module:
 
-Category |Name | Description | JDK编译版本
-----|------------ | ---------|------------
-commons |`feilong-spring-aop` | 常用aop的封装 | 1.7
-commons |`feilong-spring-context` | 常用context的封装  | 1.7
-commons |`feilong-spring-core` |  常用core的封装  | 1.7
-commons |`feilong-spring-jdbc` |  常用jdbc的封装  | 1.7
-commons |`feilong-spring-web` |  常用web的封装  | 1.7
+Name | Description | JDK编译版本
+------------ | ---------|------------
+`feilong-spring-aop` | 常用aop的封装 | 1.7
+`feilong-spring-context` | 常用context的封装  | 1.7
+`feilong-spring-core` |  常用core的封装  | 1.7
+`feilong-spring-jdbc` |  常用jdbc的封装  | 1.7
+`feilong-spring-web` |  常用web的封装  | 1.7
 
 # About
 
