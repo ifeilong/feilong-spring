@@ -15,18 +15,19 @@
  */
 package com.feilong.spring.web.servlet.interceptor.browsinghistory.command;
 
-import java.io.Serializable;
-
 /**
- * 目前只支持 主键, 以后视情况而定吧 看看要不要把价格等信息放这里.
+ * 目前只支持主键,以后视情况而定吧看看要不要把价格等信息放这里.
+ *
+ * @author feilong
+ * @since 1.5.5
  */
-public class DefaultBrowsingHistoryCommand implements BrowsingHistoryCommand,Serializable{
+public class DefaultBrowsingHistoryCommand implements BrowsingHistoryCommand{
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2860276539206053398L;
 
     /** The id. */
-    private Serializable      id;
+    private Long              id;
 
     /**
      * 获得 the id.
@@ -34,7 +35,7 @@ public class DefaultBrowsingHistoryCommand implements BrowsingHistoryCommand,Ser
      * @return the id
      */
     @Override
-    public Serializable getId(){
+    public Long getId(){
         return id;
     }
 
@@ -45,7 +46,8 @@ public class DefaultBrowsingHistoryCommand implements BrowsingHistoryCommand,Ser
      *            the id to set
      */
     @Override
-    public void setId(Serializable id){
+    public void setId(Long id){
         this.id = id;
     }
+
 }

@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feilong.servlet.http.RequestUtil;
+import com.feilong.servlet.http.entity.RequestLogSwitch;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.tools.jsonlib.JsonUtil;
@@ -78,13 +79,19 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerIntercep
     @Override
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
                     throws Exception{
-
-        //是否支持解析, 有可能在xml里面配置的一些不相关的路径 透过到了这个拦截器
+        //是否支持解析,有可能在xml里面配置的一些不相关的路径透过到了这个拦截器
         //比如 配置的 mapping path 是 item/* 但是有一些url地址是 item/wishlist 诸如此类的也到了该拦截器
         boolean isSupport = isSupport(request, handler, modelAndView);
         if (isSupport){
             BrowsingHistoryCommand browsingHistoryCommand = constructBrowsingHistoryCommand(request, response, handler, modelAndView);
-            browsingHistoryResolver.resolveBrowsingHistory(request, response, browsingHistoryCommand);
+
+            if (null != browsingHistoryCommand){
+                browsingHistoryResolver.add(browsingHistoryCommand, request, response);
+            }else{
+                LOGGER.debug(
+                                "browsingHistoryCommand is null,don't add browsingHistory,request info:{}",
+                                JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, RequestLogSwitch.NORMAL)));
+            }
         }else{
             if (LOGGER.isInfoEnabled()){
                 LOGGER.info(
@@ -124,8 +131,6 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerIntercep
      *            the model and view
      * @return the browsing history command
      */
-    //TODO 暂没有默认实现
-    //protected 支持子类重写
     protected abstract BrowsingHistoryCommand constructBrowsingHistoryCommand(
                     HttpServletRequest request,
                     HttpServletResponse response,
@@ -141,4 +146,5 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerIntercep
     public void setBrowsingHistoryResolver(BrowsingHistoryResolver browsingHistoryResolver){
         this.browsingHistoryResolver = browsingHistoryResolver;
     }
+
 }

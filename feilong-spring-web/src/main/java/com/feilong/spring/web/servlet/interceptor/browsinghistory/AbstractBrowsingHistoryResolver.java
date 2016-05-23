@@ -15,8 +15,8 @@
  */
 package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
-import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.core.Validator;
+import com.feilong.core.util.CollectionsUtil;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
+import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class AbstractBrowsingHistoryResolver.
@@ -41,104 +43,139 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
     private static final Logger LOGGER   = LoggerFactory.getLogger(AbstractBrowsingHistoryResolver.class);
 
     /** 最大记录数量,超过的记录将被去掉. */
-    protected Integer           maxCount = 5;
+    protected Integer           maxCount = 10;
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#getBrowsingHistoryIdListExcludeId(javax.servlet.
+     * http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Long)
+     */
+    @Override
+    public List<Long> getBrowsingHistoryIdListExcludeId(Long excludeId,HttpServletRequest request,HttpServletResponse response){
+        List<Long> browsingHistoryItemIds = getBrowsingHistoryIdList(request, response);
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("browsingHistoryItemIds:[{}],excludeId:[{}]", JsonUtil.format(browsingHistoryItemIds), excludeId);
+        }
+
+        if (Validator.isNullOrEmpty(browsingHistoryItemIds)){
+            return Collections.emptyList();
+        }
+        browsingHistoryItemIds.remove(excludeId);
+        return browsingHistoryItemIds;
+    }
 
     /*
      * (non-Javadoc)
      * 
      * @see
      * com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#getBrowsingHistoryExcludeId(javax.servlet.http.
-     * HttpServletRequest, java.io.Serializable, java.lang.Class)
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Long)
      */
     @Override
-    public <T extends Serializable> LinkedList<T> getBrowsingHistoryExcludeId(
-                    HttpServletRequest request,
-                    Serializable excludeId,
-                    Class<T> klass){
-        LinkedList<T> browsingHistoryItemIds = getBrowsingHistory(request, klass);
+    public List<BrowsingHistoryCommand> getBrowsingHistoryExcludeId(Long excludeId,HttpServletRequest request,HttpServletResponse response){
+        List<BrowsingHistoryCommand> browsingHistory = getBrowsingHistory(request, response);
+        return CollectionsUtil.removeAll(browsingHistory, "id", excludeId);
+    }
 
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("browsingHistoryItemIds:[{}],excludeId:[{}]", browsingHistoryItemIds, excludeId);
-        }
-
-        if (Validator.isNullOrEmpty(browsingHistoryItemIds)){
-            return null;
-        }
-        //去掉当前的
-        browsingHistoryItemIds.remove(excludeId);
-        return browsingHistoryItemIds;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#getBrowsingHistoryIdList(javax.servlet.http.
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    public List<Long> getBrowsingHistoryIdList(HttpServletRequest request,HttpServletResponse response){
+        List<BrowsingHistoryCommand> browsingHistory = getBrowsingHistory(request, response);
+        return CollectionsUtil.getPropertyValueList(browsingHistory, "id");
     }
 
     /**
-     * 构造历史浏览记录.
+     * 构造需要被存储的历史记录.
+     * 
+     * <p>
+     * 如果null或者 empty 表示 不需要保存
+     * </p>
      *
-     * @param request
-     *            the request
-     * @param response
-     *            the response
+     * @param list
+     *            the list
+     * @param browsingHistoryCommand
+     *            the o
+     * @return the list< browsing history command>
+     * @since 1.5.5
+     */
+    protected List<BrowsingHistoryCommand> buildBrowsingHistoryList(
+                    List<BrowsingHistoryCommand> list,
+                    BrowsingHistoryCommand browsingHistoryCommand){
+        //**********如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie里加入********************
+        if (Validator.isNullOrEmpty(list)){
+            LOGGER.debug("list is null or empty,will construct a new list and put element into", list);
+            return buildNewBrowsingHistoryList(browsingHistoryCommand);
+        }
+
+        //********************************************************
+        Long id = browsingHistoryCommand.getId();
+
+        int index = CollectionsUtil.indexOf(list, "id", id);
+        if (-1 != index){//list中存在相同id的对象
+            boolean isFirst = 0 == index;
+            if (isFirst){//如果 list里面的数据第一个是当前item 那么一般表示刷新页面 或者重新打开新窗口
+                LOGGER.debug("in cookie,first pk same as current pk:[{}],nothing to do", id);
+                return null;//这种case没有必要操作 cookie
+            }
+
+            if (LOGGER.isDebugEnabled()){
+                LOGGER.debug(
+                                "in cookie,list:[{}],contains:[{}],remove it~~",
+                                JsonUtil.format(list, 0, 0),
+                                JsonUtil.format(browsingHistoryCommand, 0, 0));
+            }
+            list.remove(index);//如果有当前商品,那么删除掉
+        }
+
+        //****将当前的item id塞第一个*************************************
+        list.add(0, browsingHistoryCommand);
+        LOGGER.debug("insert browsingHistoryCommand to list first position");
+
+        return judgeSize(list);
+    }
+
+    /**
+     * New list.
+     *
      * @param browsingHistoryCommand
      *            the browsing history command
-     * @return the linked list< string>
+     * @return the list< browsing history command>
+     * @since 1.5.5
      */
-    protected LinkedList<String> constructBrowsingHistoryList(
-                    HttpServletRequest request,
-                    HttpServletResponse response,
-                    BrowsingHistoryCommand browsingHistoryCommand){
-
-        LinkedList<String> linkedList = null;
-        try{
-            linkedList = getBrowsingHistory(request, String.class);
-        }catch (Exception e){
-            LOGGER.error("getBrowsingHistory Exception,just log it,and clear cookie", e);
-
-            //如果出错了,那么就将cookie删掉
-            clear(request, response);
-        }
-
-        //*****************************************************************************
-
-        Serializable id = browsingHistoryCommand.getId();
-        //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
-        String idStr = id.toString();
-        if (Validator.isNullOrEmpty(linkedList)){
-            linkedList = new LinkedList<String>();
-            //如果没有 添加一个
-            linkedList.add(idStr);
-
-            return linkedList;
-        }
-
-        //*****************************************************************************
-        @SuppressWarnings("null")
-        String first = linkedList.getFirst();
-        //如果 list 里面的数据 第一个是当前item 那么一般表示刷新页面 或者重新打开新窗口
-        //这种case 没有必要操作 cookie
-        if (first.equals(idStr)){
-            LOGGER.info("in cookie,first pk is:[{}],current pk:[{}], nothing to do", first, id);
-            return null;
-        }
-
-        //*************************************************************************************************
-        //如果有当前商品,那么删除掉并将当前的item id塞第一个
-        if (linkedList.contains(idStr)){
-            LOGGER.info("in cookie,linkedList:[{}],contains:[{}],remove it~", linkedList, idStr);
-            linkedList.remove(idStr);
-        }
-        linkedList.addFirst(idStr);
-
-        //*************************************************************************************************
-        //如果超长了 ,截取
-        int size = linkedList.size();
-        if (size > maxCount){
-            LOGGER.debug("linkedList size:[{}] > maxCount[{}],linkedList:[{}],will sub subList", size, maxCount, linkedList);
-
-            // so non-structural changes in the returned list
-            List<String> subList = linkedList.subList(0, maxCount);
-            //linkedList = (LinkedList<Serializable>) subList;  //java.util.SubList cannot be cast to java.util.LinkedList
-            linkedList = new LinkedList<String>(subList);
-        }
-        return linkedList;
+    private static List<BrowsingHistoryCommand> buildNewBrowsingHistoryList(BrowsingHistoryCommand browsingHistoryCommand){
+        List<BrowsingHistoryCommand> list = new ArrayList<>();
+        list.add(browsingHistoryCommand);
+        return list;
     }
+
+    /**
+     * 判断长度,如果超长,那么截取返回.
+     *
+     * @param list
+     *            the list
+     * @return the list< o>
+     * @since 1.5.5
+     */
+    private List<BrowsingHistoryCommand> judgeSize(List<BrowsingHistoryCommand> list){
+        int size = list.size();
+        if (size <= maxCount){
+            LOGGER.debug("list size:{},<=maxCount:[{}],direct return list", size, maxCount);
+            return list;
+        }
+
+        //如果超长了 ,截取
+        LOGGER.debug("linkedList size:[{}] > maxCount[{}],list:[{}],will sub subList", size, maxCount, list);
+        return new ArrayList<>(list.subList(0, maxCount)); //linkedList=(LinkedList<Serializable>) subList;//java.util.SubList cannot be cast to java.util.LinkedList
+    }
+
+    //***************************************************************************************
 
     /**
      * 设置 最大记录数量,超过的记录将被去掉.
@@ -149,4 +186,5 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
     public void setMaxCount(Integer maxCount){
         this.maxCount = maxCount;
     }
+
 }

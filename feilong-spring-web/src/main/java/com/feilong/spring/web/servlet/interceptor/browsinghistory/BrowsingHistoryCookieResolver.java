@@ -15,26 +15,23 @@
  */
 package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
-import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.core.CharsetType;
-import com.feilong.core.TimeInterval;
 import com.feilong.core.Validator;
-import com.feilong.core.bean.ConvertUtil;
-import com.feilong.core.bean.ToStringConfig;
-import com.feilong.core.lang.StringUtil;
-import com.feilong.servlet.http.CookieUtil;
-import com.feilong.servlet.http.entity.CookieEntity;
+import com.feilong.core.util.CollectionsUtil;
+import com.feilong.framework.accessor.cookie.CookieAccessor;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
-import com.feilong.tools.security.EncryptionException;
+import com.feilong.tools.jsonlib.JsonUtil;
 import com.feilong.tools.security.symmetric.SymmetricEncryption;
 import com.feilong.tools.security.symmetric.SymmetricType;
 import com.feilong.tools.slf4j.Slf4jUtil;
@@ -60,28 +57,22 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * <td>无</td>
  * </tr>
  * <tr valign="top" style="background-color:#eeeeff">
- * <td>cookieName</td>
- * <td>cookie名称</td>
- * <td>false</td>
- * <td>f_b_h</td>
+ * <td>symmetricEncryptionCharsetName</td>
+ * <td>加密时候的编码</td>
+ * <td>true</td>
+ * <td>{@link CharsetType#UTF8}</td>
  * </tr>
  * <tr valign="top">
- * <td>cookieMaxAge</td>
- * <td>cookie最大存活时间,单位秒</td>
- * <td>false</td>
- * <td>3个月</td>
+ * <td>cookieAccessor</td>
+ * <td>cookie寄存器</td>
+ * <td>true</td>
+ * <td>无</td>
  * </tr>
  * <tr valign="top" style="background-color:#eeeeff">
- * <td>cookieCharsetName</td>
- * <td>cookie编码</td>
- * <td>false</td>
- * <td>UTF-8</td>
- * </tr>
- * <tr valign="top">
  * <td>maxCount</td>
  * <td>最大记录数量,超过的记录将被去掉</td>
- * <td>false</td>
- * <td>5</td>
+ * <td>true</td>
+ * <td>10</td>
  * </tr>
  * </table>
  * </blockquote>
@@ -93,123 +84,119 @@ import com.feilong.tools.slf4j.Slf4jUtil;
 public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolver{
 
     /** The Constant log. */
-    private static final Logger LOGGER             = LoggerFactory.getLogger(BrowsingHistoryCookieResolver.class);
+    private static final Logger                           LOGGER                         = LoggerFactory
+                    .getLogger(BrowsingHistoryCookieResolver.class);
 
-    /** The Constant DEFAULT_CONNECTOR. */
-    private static final String DEFAULT_CONNECTOR  = "_";
-
-    /** 默认的cookie名称. */
-    private static final String DEFAULT_COOKIENAME = "f_b_h";
-
-    /** The cookie name. */
-    private String              cookieName         = DEFAULT_COOKIENAME;
-
-    /** 单位秒 默认 3个月. */
-    private int                 cookieMaxAge       = TimeInterval.SECONDS_PER_MONTH * 3;
-
-    /** cookie编码. */
-    private String              cookieCharsetName  = CharsetType.UTF8;
+    /** cookie寄存器. */
+    private CookieAccessor                                cookieAccessor;
 
     /** 加密算法. */
-    private SymmetricEncryption symmetricEncryption;
+    private SymmetricEncryption                           symmetricEncryption;
+
+    /** 对称加密的编码. */
+    private String                                        symmetricEncryptionCharsetName = CharsetType.UTF8;
+
+    //*********************************************************************************************
+    /** The bean class. */
+    private final Class<? extends BrowsingHistoryCommand> beanClass;
+
+    /**
+     * The Constructor.
+     *
+     * @param beanClass
+     *            the bean class
+     */
+    public BrowsingHistoryCookieResolver(Class<? extends BrowsingHistoryCommand> beanClass){
+        super();
+        this.beanClass = beanClass;
+    }
 
     /*
      * (non-Javadoc)
      * 
-     * @see com.feilong.spring.web.servlet.interceptor.browsingHistory.BrowsingHistoryResolver#resolveBrowsingHistory(javax.servlet.http.
-     * HttpServletRequest, javax.servlet.http.HttpServletResponse,
-     * com.feilong.spring.web.servlet.interceptor.browsingHistory.command.BrowsingHistoryCommand)
+     * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#add(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse, com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand)
      */
     @Override
-    public void resolveBrowsingHistory(
-                    HttpServletRequest request,
-                    HttpServletResponse response,
-                    BrowsingHistoryCommand browsingHistoryCommand){
-
-        if (Validator.isNullOrEmpty(browsingHistoryCommand)){
-            LOGGER.warn("browsingHistoryCommand is null or empty");
-            return;
-        }
+    public void add(BrowsingHistoryCommand browsingHistoryCommand,HttpServletRequest request,HttpServletResponse response){
+        Validate.notNull(browsingHistoryCommand, "browsingHistoryCommand can't be null!");
 
         try{
-            String cookieValue = constructBrowsingHistoryCookieValue(request, response, browsingHistoryCommand);
+            List<BrowsingHistoryCommand> list = getBrowsingHistory(request, response);
+            List<BrowsingHistoryCommand> browsingHistoryList = buildBrowsingHistoryList(list, browsingHistoryCommand);
 
-            if (Validator.isNotNullOrEmpty(cookieValue)){
-                CookieEntity cookieEntity = new CookieEntity(cookieName, cookieValue, cookieMaxAge);
-                cookieEntity.setHttpOnly(true);
-                CookieUtil.addCookie(cookieEntity, response);
+            if (Validator.isNullOrEmpty(browsingHistoryList)){
+                return;
             }
+            saveToCookie(browsingHistoryList, response);
         }catch (Exception e){
             LOGGER.error("constructItemBrowsingHistory Exception,but we need code go-on!", e);
         }
+    }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#getBrowsingHistory(javax.servlet.http.
+     * HttpServletRequest)
+     */
+    @Override
+    public List<BrowsingHistoryCommand> getBrowsingHistory(HttpServletRequest request,HttpServletResponse response){
+        String value = cookieAccessor.get(request);
+        return parseValue(request, response, value);
     }
 
     /**
-     * Construct browsing history cookie value.
+     * Resolver value.
      *
      * @param request
      *            the request
      * @param response
      *            the response
-     * @param browsingHistoryCommand
-     *            the browsing history command
-     * @return if nothing to do ,then return null, such as in the cookie, first item is current item
+     * @param value
+     *            the value
+     * @return 如果 value是 null 或者 Empty返回 {@link Collections#emptyList()}<br>
+     *         在解析的过程中出现任何的异常,也会 返回 {@link Collections#emptyList()}
+     * @since 1.5.5
      */
-    private String constructBrowsingHistoryCookieValue(
-                    HttpServletRequest request,
-                    HttpServletResponse response,
-                    BrowsingHistoryCommand browsingHistoryCommand){
-
-        if (Validator.isNullOrEmpty(browsingHistoryCommand)){
-            return null;
+    private List<BrowsingHistoryCommand> parseValue(HttpServletRequest request,HttpServletResponse response,String value){
+        if (Validator.isNullOrEmpty(value)){
+            return Collections.emptyList();
         }
 
-        LinkedList<String> browsingHistoryList = constructBrowsingHistoryList(request, response, browsingHistoryCommand);
+        try{
+            //解密之后的明码
+            String cookiePlainValue = symmetricEncryption.decryptHex(value, symmetricEncryptionCharsetName);
+            LOGGER.debug("value:[{}],cookiePlainValue:[{}]", value, cookiePlainValue);
 
-        //cookie value 是  itemid join--->aes hex 加密格式字符串
-        ToStringConfig toStringConfig = new ToStringConfig(DEFAULT_CONNECTOR);
-        String original = ConvertUtil.toString(toStringConfig, browsingHistoryList);
-
-        //如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie 里加入
-        String encryptHex = symmetricEncryption.encryptHex(original, cookieCharsetName);
-
-        LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, encryptHex);
-        return encryptHex;
+            return new ArrayList<>(JsonUtil.toList(cookiePlainValue, beanClass));//TODO
+        }catch (Exception e){
+            String message = Slf4jUtil.formatMessage(
+                            "getBrowsingHistory cookie value:[{}] error,charset:[{}],will clear",
+                            value,
+                            symmetricEncryptionCharsetName);
+            LOGGER.error(message, e);
+            clear(request, response); //如果出错了,那么就将cookie删掉
+        }
+        return Collections.emptyList();
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see com.feilong.spring.web.servlet.interceptor.browsingHistory.BrowsingHistoryResolver#getBrowsingHistory(javax.servlet.http.
-     * HttpServletRequest)
+     * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryResolver#remove(java.io.Serializable,
+     * javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
     @Override
-    public <T extends Serializable> LinkedList<T> getBrowsingHistory(HttpServletRequest request,Class<T> klass){
+    public void remove(Long id,HttpServletRequest request,HttpServletResponse response){
+        //① 获得所有的历史浏览记录
+        List<BrowsingHistoryCommand> browsingHistoryList = getBrowsingHistory(request, response);
 
-        LinkedList<T> linkedList = new LinkedList<T>();
+        //② 删除指定的 一条历史浏览记录
+        List<BrowsingHistoryCommand> buildBrowsingHistoryList = CollectionsUtil.removeAll(browsingHistoryList, "id", id);
 
-        Cookie cookie = CookieUtil.getCookie(request, cookieName);
-        if (Validator.isNullOrEmpty(cookie) || Validator.isNullOrEmpty(cookie.getValue())){
-            return linkedList;
-        }
-
-        String value = cookie.getValue();
-
-        try{
-            String decryptHex = symmetricEncryption.decryptHex(value, cookieCharsetName);
-            String[] tokenizeToStringArray = StringUtil.tokenizeToStringArray(decryptHex, DEFAULT_CONNECTOR);
-            for (String string : tokenizeToStringArray){
-                linkedList.add(ConvertUtil.convert(string, klass));
-            }
-        }catch (NumberFormatException e){
-            LOGGER.error("", e);
-            throw new IllegalArgumentException(e);
-        }catch (EncryptionException e){
-            LOGGER.error(Slf4jUtil.formatMessage("decryptHex cookie error,value:{},cookieCharsetName:{}", value, cookieCharsetName), e);
-            throw new IllegalArgumentException(e);
-        }
-        return linkedList;
+        //③ 设置整理后的记录到 cookie中
+        saveToCookie(buildBrowsingHistoryList, response);
     }
 
     /*
@@ -220,37 +207,40 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
      */
     @Override
     public void clear(HttpServletRequest request,HttpServletResponse response){
-        CookieUtil.deleteCookie(cookieName, response);
+        cookieAccessor.remove(response);
     }
 
     /**
-     * 设置 the cookie name.
+     * Save to cookie.
      *
-     * @param cookieName
-     *            the cookieName to set
+     * @param browsingHistoryList
+     *            如果是 null或者 empty 那么什么都不做
+     * @param response
+     *            the response
+     * @since 1.5.5
      */
-    public void setCookieName(String cookieName){
-        this.cookieName = cookieName;
+    private void saveToCookie(List<BrowsingHistoryCommand> browsingHistoryList,HttpServletResponse response){
+        if (Validator.isNullOrEmpty(browsingHistoryList)){
+            LOGGER.debug("browsingHistoryList isNullOrEmpty,nothing to do~~");
+            return;
+        }
+
+        String original = JsonUtil.format(browsingHistoryList, 0, 0);
+        String cookieValue = symmetricEncryption.encryptHex(original, symmetricEncryptionCharsetName);
+        LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, cookieValue);
+        cookieAccessor.save(cookieValue, response);
     }
 
-    /**
-     * 设置 单位秒 默认 3个月.
-     *
-     * @param cookieMaxAge
-     *            the cookieMaxAge to set
-     */
-    public void setCookieMaxAge(int cookieMaxAge){
-        this.cookieMaxAge = cookieMaxAge;
-    }
+    //******************************************************************************************************
 
     /**
-     * 设置 cookie编码.
+     * 设置 cookie寄存器.
      *
-     * @param cookieCharsetName
-     *            the cookieCharsetName to set
+     * @param cookieAccessor
+     *            the cookieAccessor to set
      */
-    public void setCookieCharsetName(String cookieCharsetName){
-        this.cookieCharsetName = cookieCharsetName;
+    public void setCookieAccessor(CookieAccessor cookieAccessor){
+        this.cookieAccessor = cookieAccessor;
     }
 
     /**
@@ -261,5 +251,15 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
      */
     public void setSymmetricEncryption(SymmetricEncryption symmetricEncryption){
         this.symmetricEncryption = symmetricEncryption;
+    }
+
+    /**
+     * 设置 对称加密的编码.
+     *
+     * @param symmetricEncryptionCharsetName
+     *            the symmetricEncryptionCharsetName to set
+     */
+    public void setSymmetricEncryptionCharsetName(String symmetricEncryptionCharsetName){
+        this.symmetricEncryptionCharsetName = symmetricEncryptionCharsetName;
     }
 }
