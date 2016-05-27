@@ -194,7 +194,7 @@ public class UriTemplateUtil{
      * Given a pattern and a full path, extract the URI template variables.
      * <p>
      * URI template variables are expressed through curly brackets ('{' and '}'). <br>
-     * For example: For pattern "/hotels/{hotel}" and path "/hotels/1", this method will return a map containing "hotel"->"1".
+     * For example: For pattern "/hotels/{hotel}" and path "/hotels/1", this method 返回 a map containing "hotel"->"1".
      * </p>
      * 
      * @param requestPath
