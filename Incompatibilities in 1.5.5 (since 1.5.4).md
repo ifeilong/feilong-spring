@@ -1,7 +1,12 @@
 #从1.5.4升级到 1.5.5 不兼容
 
+为了支持更灵活的配置以及更多的功能,feilong-spring-web jar的 browsingHistoryResolver做了相关调整和优化
 
-##feilong-spring-web StoreItemBrowsingHistoryInterceptor browsingHistoryResolver的配置 
+
+解决方案
+
+
+##StoreItemBrowsingHistoryInterceptor browsingHistoryResolver的配置 
 
 改变如下:
 
