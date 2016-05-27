@@ -1,4 +1,7 @@
-feilong-spring-web browsingHistoryResolver的配置 从1.5.4升级到 1.5.5 不兼容
+#从1.5.4升级到 1.5.5 不兼容
+
+
+##feilong-spring-web StoreItemBrowsingHistoryInterceptor browsingHistoryResolver的配置 
 
 改变如下:
 
@@ -91,3 +94,113 @@ feilong-spring-web browsingHistoryResolver的配置 从1.5.4升级到 1.5.5 不�
 优点:
 
 1.  可以在外部配置 cookie所有的信息
+
+
+
+## RecommendationEngineBuilder
+
+原来 
+
+```XML
+
+	public interface RecommendationEngineBuilder extends BaseManager{
+	
+	    /**
+	     * 获得 recommendation engine command list.
+	     *
+	     * @param browsingHistoryItemIds
+	     *            the browsing history item ids
+	     * @param currentId
+	     *            the current id
+	     * @return the recommendation engine command list
+	     */
+	    List<RecommendationEngineCommand> getRecommendationEngineCommandList(LinkedList<Long> browsingHistoryItemIds,Long currentId);
+	
+	}
+
+```
+
+
+
+现在 
+
+```XML
+
+	public interface RecommendationEngineBuilder extends BaseManager{
+	
+	    /**
+	     * 获得 recommendation engine command list.
+	     *
+	     * @param browsingHistoryItemIds
+	     *            the browsing history item ids
+	     * @param currentId
+	     *            the current id
+	     * @return the recommendation engine command list
+	     */
+	    List<RecommendationEngineCommand> getRecommendationEngineCommandList(List<Long> browsingHistoryItemIds);
+	
+	}
+
+```
+
+
+# RecommendationEngineController
+
+原来 
+
+
+```JAVA
+
+	@Controller
+	public class RecommendationEngineController extends BaseController{
+	
+	 
+	 
+	    @ResponseBody
+	    @ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)
+	    @RequestMapping(value = { "/item/{itemId}/recommendation.json" },method = RequestMethod.POST,headers = HEADER_WITH_AJAX_SPRINGMVC)
+	    public Map<RecommendationEngineType, List<RecommendationEngineCommand>> doHandler(
+	                    HttpServletRequest request,
+	                    @PathVariable("itemId") Long itemId){
+	
+	        LinkedList<Long> browsingHistoryItemIds = browsingHistoryResolver.getBrowsingHistory(request, Long.class);
+	
+	        List<RecommendationEngineCommand> recommendationEngineCommandList = recommendationEngineBuilder
+	                        .getRecommendationEngineCommandList(browsingHistoryItemIds, itemId);
+	
+	             ******
+	    }
+	}
+
+```
+
+
+
+现在 
+
+
+```JAVA
+
+	@Controller
+	public class RecommendationEngineController extends BaseController{
+	
+	 
+	    @ResponseBody
+	    @ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)
+	    @RequestMapping(value = { "/item/{itemId}/recommendation.json" },method = RequestMethod.POST,headers = HEADER_WITH_AJAX_SPRINGMVC)
+	    public Map<RecommendationEngineType, List<RecommendationEngineCommand>> doHandler(
+	                    HttpServletRequest request,
+	                    HttpServletResponse response,
+	                    @PathVariable("itemId") Long itemId){
+	
+	        List<Long> browsingHistoryItemIds = browsingHistoryResolver.getBrowsingHistoryIdListExcludeId(itemId, request, response);
+	
+	        List<RecommendationEngineCommand> recommendationEngineCommandList = recommendationEngineBuilder
+	                        .getRecommendationEngineCommandList(browsingHistoryItemIds);
+	
+	        ******
+	    }
+	}
+
+
+```
