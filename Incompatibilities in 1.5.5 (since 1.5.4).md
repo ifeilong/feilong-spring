@@ -95,13 +95,6 @@
 
 ```
 
-
-优点:
-
-1.  可以在外部配置 cookie所有的信息
-
-
-
 ## RecommendationEngineBuilder
 
 原来 
@@ -115,8 +108,6 @@
 
 ```
 
-
-
 现在 
 
 ```XML
@@ -129,7 +120,7 @@
 ```
 
 
-# RecommendationEngineController
+## RecommendationEngineController
 
 原来 
 
@@ -189,3 +180,12 @@
 
 
 ```
+
+##最后 重新发布
+
+
+
+
+优点:
+
+1.  可以在外部配置 cookie所有的信息
