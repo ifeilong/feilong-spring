@@ -105,17 +105,7 @@
 
 	public interface RecommendationEngineBuilder extends BaseManager{
 	
-	    /**
-	     * 获得 recommendation engine command list.
-	     *
-	     * @param browsingHistoryItemIds
-	     *            the browsing history item ids
-	     * @param currentId
-	     *            the current id
-	     * @return the recommendation engine command list
-	     */
 	    List<RecommendationEngineCommand> getRecommendationEngineCommandList(LinkedList<Long> browsingHistoryItemIds,Long currentId);
-	
 	}
 
 ```
@@ -128,17 +118,7 @@
 
 	public interface RecommendationEngineBuilder extends BaseManager{
 	
-	    /**
-	     * 获得 recommendation engine command list.
-	     *
-	     * @param browsingHistoryItemIds
-	     *            the browsing history item ids
-	     * @param currentId
-	     *            the current id
-	     * @return the recommendation engine command list
-	     */
 	    List<RecommendationEngineCommand> getRecommendationEngineCommandList(List<Long> browsingHistoryItemIds);
-	
 	}
 
 ```
