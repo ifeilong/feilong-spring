@@ -87,3 +87,7 @@ feilong-spring-web browsingHistoryResolver的配置 从1.5.4升级到 1.5.5 不�
 
 ```
 
+
+优点:
+
+1.  可以在外部配置 cookie所有的信息
