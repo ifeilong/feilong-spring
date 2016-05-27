@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.feilong.platform.spring</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.5.5-SNAPSHOT</version>
+		<version>1.5.5</version>
 	</parent>
 	<artifactId>feilong-spring-web</artifactId>
 
@@ -40,8 +40,8 @@
 
 		<!--用于 com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryCookieResolver<O, T> -->
 		<dependency>
-			<groupId>com.feilong.platform.framework</groupId>
-			<artifactId>feilong-framework-accessor</artifactId>
+			<groupId>com.feilong.platform</groupId>
+			<artifactId>feilong-accessor</artifactId>
 			<version>${version.feilong-platform}</version>
 		</dependency>
 

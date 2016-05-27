@@ -26,10 +26,10 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.core.CharsetType;
 import com.feilong.core.Validator;
 import com.feilong.core.util.CollectionsUtil;
-import com.feilong.framework.accessor.cookie.CookieAccessor;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.tools.jsonlib.JsonUtil;
 import com.feilong.tools.security.symmetric.SymmetricEncryption;
