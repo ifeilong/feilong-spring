@@ -60,7 +60,7 @@ import com.feilong.core.UncheckedIOException;
  * <p>
  * 
  * <blockquote>
- * <table border="1" cellspacing="0" cellpadding="4">
+ * <table border="1" cellspacing="0" cellpadding="4" summary="">
  * <tr style="background-color:#ccccff">
  * <th align="left">实现</th>
  * <th align="left">说明</th>
