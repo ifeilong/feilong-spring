@@ -56,7 +56,7 @@
 		<constructor-arg index="0" value="com.feilong.spring.web.servlet.interceptor.browsinghistory.command.DefaultBrowsingHistoryCommand"></constructor-arg>
 
 		<property name="cookieAccessor">
-			<bean class="com.feilong.framework.accessor.cookie.CookieAccessor">
+			<bean class="com.feilong.accessor.cookie.CookieAccessor">
 				<property name="cookieEntity">
 					<bean class="com.feilong.servlet.http.entity.CookieEntity">
 						<property name="name" value="f_b_h_n" /><!-- feilong_browsing_History_new -->
