@@ -69,7 +69,6 @@ import net.sf.json.JSONException;
  * </blockquote>
  * 
  * @author feilong
- * @version 1.1.1 2015年4月5日 下午6:59:04
  * @see com.feilong.spring.aop.AbstractAspect
  * @see org.aspectj.lang.annotation.Aspect
  * @see org.aspectj.lang.annotation.Around

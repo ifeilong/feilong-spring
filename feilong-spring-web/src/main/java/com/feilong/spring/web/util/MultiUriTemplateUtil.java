@@ -35,7 +35,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * MultiUriTemplateUtil,某些商城筛选条件可以是多值,比如 既是 儿童 又是 男子,此时url应该是混合式的而不是覆盖.
  * 
  * @author feilong
- * @version 1.0.4 2012-5-22 上午11:24:41
+ * @since 1.0.4
  */
 public class MultiUriTemplateUtil{
 

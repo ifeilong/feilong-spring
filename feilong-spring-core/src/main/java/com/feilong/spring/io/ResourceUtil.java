@@ -114,7 +114,6 @@ import com.feilong.core.UncheckedIOException;
  * </blockquote>
  *
  * @author feilong
- * @version 1.0.9 2015年3月8日 下午4:42:40
  * @see org.springframework.core.io.Resource
  * @see org.springframework.core.io.ResourceLoader
  * @see org.springframework.core.io.UrlResource

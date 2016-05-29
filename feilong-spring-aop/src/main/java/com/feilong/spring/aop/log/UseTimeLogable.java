@@ -23,7 +23,6 @@ package com.feilong.spring.aop.log;
  * </p>
  * 
  * @author feilong
- * @version 1.5.0 2016年1月5日 下午2:31:49
  * @since 1.5.0
  */
 public interface UseTimeLogable{

@@ -34,7 +34,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * The Class AbstractBrowsingHistoryResolver.
  *
  * @author feilong
- * @version 1.5.4 2016年4月21日 下午3:26:43
  * @since 1.5.4
  */
 public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistoryResolver{

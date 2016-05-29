@@ -15,8 +15,7 @@
  */
 /**
  *
- * @author feilong 
- * @version 1.1.1 2015年4月20日 上午12:07:51 
+ * @author feilong
  * @since 1.1.1
  */
 package org.springframework.core.res;

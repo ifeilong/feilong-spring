@@ -85,7 +85,6 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdap
  * </blockquote>
  * 
  * @author feilong
- * @version 1.2.2 2015年7月17日 上午12:45:06
  * @see ResponseUtil#setNoCacheHeader(HttpServletResponse)
  * @see ResponseUtil#setCacheHeader(HttpServletResponse, int)
  * @see org.springframework.web.servlet.support.WebContentGenerator

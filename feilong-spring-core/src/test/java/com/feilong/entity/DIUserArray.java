@@ -19,7 +19,6 @@ package com.feilong.entity;
  * 数组.
  *
  * @author feilong
- * @version 1.0.8 2014年10月8日 下午3:57:50
  * @since 1.0.8
  */
 public class DIUserArray extends BaseDIUser{

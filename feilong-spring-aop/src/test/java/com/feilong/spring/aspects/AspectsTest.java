@@ -24,7 +24,6 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
  * The Class AspectsTest.
  * 
  * @author feilong
- * @version 1.0.7 2014-6-25 16:22:57
  */
 @ContextConfiguration(locations = "classpath:spring-aop.xml")
 public class AspectsTest extends AbstractJUnit4SpringContextTests{

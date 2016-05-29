@@ -25,7 +25,6 @@ import java.util.Vector;
  * The Class User.
  * 
  * @author feilong
- * @version 1.0.7 2014-6-16 0:42:08
  */
 public class DIUser extends BaseDIUser{
 

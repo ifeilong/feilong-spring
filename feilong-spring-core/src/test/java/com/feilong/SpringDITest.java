@@ -34,7 +34,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * The Class UserTest.
  * 
  * @author feilong
- * @version 1.0.7 2014-6-16 1:09:06
  */
 public class SpringDITest{
 

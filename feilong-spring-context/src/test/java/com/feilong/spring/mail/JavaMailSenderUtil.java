@@ -41,7 +41,6 @@ import com.feilong.core.CharsetType;
  * The Class MailUtil.
  * 
  * @author feilong
- * @version 1.0 Dec 24, 2011 2:30:50 PM
  */
 public class JavaMailSenderUtil{
 

@@ -97,7 +97,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </blockquote>
  *
  * @author feilong
- * @version 1.5.0 2016年2月24日 下午1:31:07
  * @see <a href="https://searchcode.com/codesearch/view/17495983/#">https://searchcode.com/codesearch/view/17495983/#</a>
  * @since 1.5.0
  */

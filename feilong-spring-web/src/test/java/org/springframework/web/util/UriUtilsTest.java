@@ -26,7 +26,6 @@ import com.feilong.core.CharsetType;
 /**
  *
  * @author feilong
- * @version 1.5.4 2016年5月3日 上午12:38:46
  * @since 1.5.4
  */
 public class UriUtilsTest{

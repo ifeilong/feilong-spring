@@ -25,7 +25,6 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * The Class TransactionAttributeUtil.
  *
  * @author feilong
- * @version 1.1.1 2015年4月6日 上午6:24:35
  * @see org.springframework.transaction.interceptor.TransactionAttribute
  * @see org.springframework.transaction.TransactionDefinition
  * @since 1.1.1

@@ -29,7 +29,6 @@ import com.feilong.core.net.URIUtil;
  * The Class MultiUriTemplateUtilTest.
  * 
  * @author feilong
- * @version 1.0 Sep 17, 2012 7:56:33 PM
  */
 public class MultiUriTemplateUtilTest{
 

@@ -29,7 +29,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * The Class AntPathMatcherTest.
  * 
  * @author feilong
- * @version 1.0 2012-3-29 下午4:14:43
  */
 public class AntPathMatcherTest{
 

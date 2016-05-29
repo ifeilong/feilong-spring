@@ -38,7 +38,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </pre>
  * 
  * @author feilong
- * @version 1.5.4 2016年5月2日 下午10:05:14
  * @since 1.5.4
  */
 public class MultipartFileResolverImpl implements MultipartFileResolver{

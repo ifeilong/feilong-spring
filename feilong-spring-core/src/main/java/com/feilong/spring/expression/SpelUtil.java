@@ -23,7 +23,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
  * The Class SpelUtil.
  * 
  * @author feilong
- * @version 1.0 Dec 25, 2011 4:20:09 PM
+ * @since 1.0.4
  */
 public class SpelUtil{
 

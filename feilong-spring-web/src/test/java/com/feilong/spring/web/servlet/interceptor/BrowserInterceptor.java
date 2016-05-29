@@ -26,7 +26,7 @@
 // * 拦截每个请求 ,拿到UA,封装到 browser,你可以 通过此类来判断 访问方式是否是移动设备.
 // * 
 // * @author feilong
-// * @version 1.0 2013-3-25 15:18
+//@since 1.0.4
 // * @deprecated 最好考虑在session开始的那刻 实用
 // */
 //@Deprecated

@@ -92,7 +92,6 @@ import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.Browsi
  * </blockquote>
  *
  * @author feilong
- * @version 1.2.2 2015年7月20日 下午6:44:27
  * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryInterceptor
  * @since 1.2.2
  */

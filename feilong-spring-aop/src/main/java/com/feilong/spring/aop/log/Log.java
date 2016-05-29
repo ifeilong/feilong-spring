@@ -29,7 +29,7 @@ import org.apache.log4j.Level;
  * The Interface LOGGER.
  * 
  * @author feilong
- * @version 1.0.7 2014-6-25 16:28:08
+ * @since 1.0.7
  */
 @Documented
 // 在jvm加载class时候有效, VM将在运行期也保留注释,因此可以通过反射机制读取注解的信息

@@ -35,7 +35,6 @@ import com.feilong.servlet.http.RequestUtil;
  * {@link org.springframework.util.StringUtils#parseLocaleString(String)}会报错
  *
  * @author feilong
- * @version 1.0.9 2014年12月18日 上午2:29:55
  * @since 1.0.9
  */
 public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{

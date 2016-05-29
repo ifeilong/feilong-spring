@@ -25,7 +25,6 @@ import com.feilong.spring.aop.log.UseTimeLogable;
  * The Class UserManagerImpl.
  * 
  * @author feilong
- * @version 1.0.7 2014-6-25 16:23:02
  */
 public class UserManagerImpl implements UserManager,UseTimeLogable{
 

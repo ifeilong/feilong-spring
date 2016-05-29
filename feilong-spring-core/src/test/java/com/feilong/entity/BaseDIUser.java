@@ -24,7 +24,6 @@ import org.springframework.beans.factory.InitializingBean;
  * 数组
  *
  * @author feilong
- * @version 1.0.8 2014年10月8日 下午3:57:50
  * @since 1.0.8
  */
 public abstract class BaseDIUser implements InitializingBean,DisposableBean{

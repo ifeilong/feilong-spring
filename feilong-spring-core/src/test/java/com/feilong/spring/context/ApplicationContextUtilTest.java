@@ -29,7 +29,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * The Class ApplicationContextUtilTest.
  *
  * @author feilong
- * @version 1.0.8 2014年11月30日 上午3:36:58
  * @since 1.0.8
  */
 @ContextConfiguration(locations = { "classpath:spring-DI.xml" })

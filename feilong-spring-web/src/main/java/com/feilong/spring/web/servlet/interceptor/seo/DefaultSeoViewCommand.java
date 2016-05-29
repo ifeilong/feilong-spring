@@ -19,7 +19,6 @@ package com.feilong.spring.web.servlet.interceptor.seo;
  * 默认的.
  *
  * @author feilong
- * @version 1.2.2 2015年7月15日 上午11:54:44
  * @since 1.2.2
  */
 public class DefaultSeoViewCommand implements SeoViewCommand{

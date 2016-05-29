@@ -26,7 +26,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 /**
  *
  * @author feilong
- * @version 1.2.1 2015年6月14日 下午8:14:04
  * @since 1.2.1
  */
 public class ConfigurableRequestMappingHandlerMapping extends RequestMappingHandlerMapping{

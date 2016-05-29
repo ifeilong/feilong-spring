@@ -105,7 +105,6 @@ import com.feilong.core.TimeInterval;
  * </blockquote>
  *
  * @author feilong
- * @version 1.0.9 2015年3月30日 下午4:25:10
  * @see ClientCacheInterceptor
  * @since 1.0.9
  */

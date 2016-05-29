@@ -21,8 +21,6 @@ import java.io.Serializable;
  * 目前只支持主键,以后视情况而定吧看看要不要把价格等信息放这里.
  *
  * @author feilong
- * @version 1.2.2 2015年7月19日 下午11:29:32
- * @version 1.5.5 2016年5月22日 03:21:14
  * @since 1.2.2
  */
 public interface BrowsingHistoryCommand extends Serializable{

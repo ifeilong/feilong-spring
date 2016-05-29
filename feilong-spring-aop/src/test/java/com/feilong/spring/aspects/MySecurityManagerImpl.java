@@ -23,7 +23,6 @@ import org.aspectj.lang.JoinPoint;
  * The Class MySecurityManagerImpl.
  * 
  * @author feilong
- * @version 1.0.7 2014-6-25 16:22:49
  */
 public class MySecurityManagerImpl implements MySecurityManager{
 

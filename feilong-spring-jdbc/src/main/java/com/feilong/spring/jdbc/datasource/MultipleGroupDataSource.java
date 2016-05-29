@@ -34,7 +34,6 @@ import java.lang.annotation.Target;
  * </blockquote>
  *
  * @author feilong
- * @version 1.1.0 2014-6-25 16:28:08
  * @since 1.1.0
  */
 // 表示产生文档,比如通过javadoc产生文档, 将此注解包含在 javadoc 中, 这个Annotation可以被写入javadoc

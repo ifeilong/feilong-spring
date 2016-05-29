@@ -28,7 +28,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * 国际化.
  *
  * @author feilong
- * @version 1.5.0 2016年3月14日 下午3:26:00
  * @see org.springframework.web.servlet.LocaleResolver
  * @since 1.5.0
  */

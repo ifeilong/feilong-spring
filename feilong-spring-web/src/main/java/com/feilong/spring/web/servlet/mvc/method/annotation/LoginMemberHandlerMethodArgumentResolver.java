@@ -73,7 +73,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </blockquote>
  *
  * @author feilong
- * @version 1.5.0 2016年2月26日 下午6:49:44
  * @see org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#getDefaultArgumentResolvers()
  * @since 1.5.0
  * @since spring 3.1

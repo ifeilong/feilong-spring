@@ -72,7 +72,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </blockquote>
  *
  * @author feilong
- * @version 1.2.0 2015年5月15日 下午9:56:33
  * @see org.springframework.web.servlet.HandlerMapping
  * @see org.springframework.web.servlet.handler.AbstractHandlerMethodMapping
  * @see org.springframework.web.servlet.handler.AbstractUrlHandlerMapping

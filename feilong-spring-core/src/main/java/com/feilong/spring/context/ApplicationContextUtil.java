@@ -30,7 +30,6 @@ import com.feilong.core.Validator;
  * The Class ApplicationContextUtil.
  *
  * @author feilong
- * @version 1.0.8 2014年11月29日 下午7:38:13
  * @since 1.0.8
  */
 public final class ApplicationContextUtil{
@@ -70,9 +69,8 @@ public final class ApplicationContextUtil{
         applicationContextForLogMap.put("ApplicationContext.CLASSPATH_ALL_URL_PREFIX", ApplicationContext.CLASSPATH_ALL_URL_PREFIX);
         applicationContextForLogMap.put("ApplicationContext.CLASSPATH_URL_PREFIX", ApplicationContext.CLASSPATH_URL_PREFIX);
         applicationContextForLogMap.put("ApplicationContext.FACTORY_BEAN_PREFIX", ApplicationContext.FACTORY_BEAN_PREFIX);
-        applicationContextForLogMap.put(
-                        "applicationContext.getParent() info",
-                        getApplicationContextForLogMap(applicationContext.getParent()));
+        applicationContextForLogMap
+                        .put("applicationContext.getParent() info", getApplicationContextForLogMap(applicationContext.getParent()));
 
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
         Arrays.sort(beanDefinitionNames);
@@ -84,9 +82,8 @@ public final class ApplicationContextUtil{
             try{
                 Object bean = applicationContext.getBean(beanDefinitionName);
                 String canonicalName = bean.getClass().getCanonicalName();
-                Object vObject = canonicalName
-                                + (applicationContext.isPrototype(beanDefinitionName) ? "[Prototype]" : (applicationContext
-                                                .isSingleton(beanDefinitionName) ? "[Singleton]" : ""));
+                Object vObject = canonicalName + (applicationContext.isPrototype(beanDefinitionName) ? "[Prototype]"
+                                : (applicationContext.isSingleton(beanDefinitionName) ? "[Singleton]" : ""));
                 beanDefinitionNamesAndClassMap.put(beanDefinitionName, vObject);
             }catch (BeansException e){
                 beanDefinitionNamesAndClassMap.put(beanDefinitionName, e.getMessage());

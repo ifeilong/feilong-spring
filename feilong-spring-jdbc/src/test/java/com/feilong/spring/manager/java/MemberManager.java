@@ -23,7 +23,6 @@ import loxia.dao.ReadWriteSupport;
  * The Interface MemberManager.
  *
  * @author feilong
- * @version 1.1.1 2015年4月6日 上午5:37:19
  * @since 1.1.1
  */
 public interface MemberManager extends ReadWriteSupport{

@@ -31,7 +31,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * The Class AbstractHandlerInterceptorAdapter.
  *
  * @author feilong
- * @version 1.4.0 2015年8月6日 下午10:59:16
  * @since 1.4.0
  */
 public abstract class AbstractHandlerInterceptorAdapter extends HandlerInterceptorAdapter implements Ordered{

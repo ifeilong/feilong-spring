@@ -27,7 +27,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * The Class MailUtilTest.
  * 
  * @author feilong
- * @version 1.0 Dec 24, 2011 2:31:22 PM
  */
 public class JavaMailSenderUtilTest{
 

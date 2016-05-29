@@ -48,7 +48,6 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * </blockquote>
  * 
  * @author feilong
- * @version 1.2.2 2015年7月18日 下午2:22:36
  * @since 1.2.2
  */
 public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{

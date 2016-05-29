@@ -26,7 +26,7 @@ import org.springframework.web.util.UrlPathHelper;
  * UrlPathHelper.
  * 
  * @author feilong
- * @version 1.0 2012-5-30 下午91957
+ * @since 1.0.4
  */
 public class UrlPathHelperUtil{
 

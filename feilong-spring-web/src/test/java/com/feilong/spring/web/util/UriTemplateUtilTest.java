@@ -31,7 +31,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * The Class UriTemplateUtilTest.
  * 
  * @author feilong
- * @version 1.0 Sep 17, 2012 7:37:41 PM
  */
 public class UriTemplateUtilTest{
 

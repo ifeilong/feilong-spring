@@ -59,7 +59,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </blockquote>
  *
  * @author feilong
- * @version 1.2.2 2015年7月19日 下午7:22:00
  * @since 1.2.2
  */
 public abstract class BrowsingHistoryInterceptor extends AbstractHandlerInterceptorAdapter{

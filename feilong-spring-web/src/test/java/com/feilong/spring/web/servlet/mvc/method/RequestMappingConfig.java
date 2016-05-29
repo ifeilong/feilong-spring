@@ -18,7 +18,6 @@ package com.feilong.spring.web.servlet.mvc.method;
 /**
  *
  * @author feilong
- * @version 1.2.1 2015年6月14日 下午11:03:07
  * @since 1.2.1
  */
 public class RequestMappingConfig{

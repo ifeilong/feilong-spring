@@ -36,7 +36,7 @@ import com.feilong.spring.web.servlet.LocaleResolverUtil;
  * 通用的 父类 AbstractController.
  * 
  * @author feilong
- * @version 1.0 Feb 23, 2013 10:54:51 PM
+ * @since 1.0.3
  */
 public abstract class AbstractController{
 

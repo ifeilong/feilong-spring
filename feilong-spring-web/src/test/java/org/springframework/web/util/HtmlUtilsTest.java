@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * The Class HtmlUtilsTest.
  * 
  * @author feilong
- * @version 1.0.7 2014-6-25 16:25:26
  */
 public class HtmlUtilsTest{
 

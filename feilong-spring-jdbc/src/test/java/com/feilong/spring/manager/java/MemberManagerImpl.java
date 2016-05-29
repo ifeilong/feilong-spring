@@ -25,7 +25,6 @@ import com.feilong.test.User;
  * The Class MemberManagerImpl.
  *
  * @author feilong
- * @version 1.1.1 2015年4月6日 上午5:39:18
  * @since 1.1.1
  */
 @MultipleGroupDataSource("storeSource")

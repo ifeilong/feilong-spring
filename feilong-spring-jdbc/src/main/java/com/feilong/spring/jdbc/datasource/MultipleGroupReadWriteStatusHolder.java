@@ -19,7 +19,6 @@ package com.feilong.spring.jdbc.datasource;
  * 以 {@link ThreadLocal} 形式,维护数据源的key.
  *
  * @author feilong
- * @version 1.1.1 2015年3月31日 下午3:19:15
  * @see MultipleGroupReadWriteDataSource
  * @see java.lang.ThreadLocal
  * @see "org.springframework.web.context.request.RequestContextHolder"

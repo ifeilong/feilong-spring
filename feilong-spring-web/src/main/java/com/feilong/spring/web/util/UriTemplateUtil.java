@@ -48,12 +48,12 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </blockquote>
  * 
  * @author feilong
- * @version 1.0.4 2012-5-22 上午11:24:41
  * @see org.springframework.util.AntPathMatcher
  * @see org.springframework.web.servlet.HandlerMapping#URI_TEMPLATE_VARIABLES_ATTRIBUTE
  * @see org.springframework.web.servlet.handler.AbstractUrlHandlerMapping#exposeUriTemplateVariables(Map, HttpServletRequest)
  * @see org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping#handleMatch(RequestMappingInfo, String,
  *      HttpServletRequest)
+ * @since 1.0.4
  */
 public class UriTemplateUtil{
 

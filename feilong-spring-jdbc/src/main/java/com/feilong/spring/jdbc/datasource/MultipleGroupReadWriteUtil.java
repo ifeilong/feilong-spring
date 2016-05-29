@@ -21,7 +21,6 @@ import com.feilong.core.Validator;
  * The Class MultipleGroupReadWriteUtil.
  *
  * @author feilong
- * @version 1.1.1 2015年4月5日 下午11:56:50
  * @since 1.1.1
  */
 public class MultipleGroupReadWriteUtil{

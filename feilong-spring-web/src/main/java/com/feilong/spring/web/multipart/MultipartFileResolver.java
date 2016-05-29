@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
  * The Interface MultipartFileResolver.
  *
  * @author feilong
- * @version 1.5.4 2016年5月2日 下午10:05:05
  * @since 1.5.4
  */
 public interface MultipartFileResolver{

@@ -33,7 +33,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * The Class MemberManagerTest.
  *
  * @author feilong
- * @version 1.1.1 2015年4月6日 上午5:40:44
  * @since 1.1.1
  */
 @RunWith(SpringJUnit4ClassRunner.class)

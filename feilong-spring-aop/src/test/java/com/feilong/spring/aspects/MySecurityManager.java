@@ -21,7 +21,6 @@ import org.aspectj.lang.JoinPoint;
  * The Interface MySecurityManager.
  * 
  * @author feilong
- * @version 1.0.7 2014-6-25 16:22:53
  */
 public interface MySecurityManager{
 

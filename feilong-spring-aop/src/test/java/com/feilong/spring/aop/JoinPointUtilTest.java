@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * The Class JoinPointUtil.
  *
  * @author feilong
- * @version 1.5.0 2016年1月5日 下午3:53:42
  * @since 1.5.0
  */
 public class JoinPointUtilTest{

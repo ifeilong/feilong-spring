@@ -69,9 +69,9 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * </blockquote>
  * 
  * @author feilong
- * @version 1.0 2011-3-31 下午06:08:20
  * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
  * @see org.springframework.web.context.support.WebApplicationContextUtils#getWebApplicationContext(ServletContext)
+ * @since 1.0.4
  */
 public final class WebSpringUtil{
 
@@ -289,8 +289,8 @@ public final class WebSpringUtil{
      * @param request
      *            the request
      * @return 如果有 servlet-specific WebApplicationContext那么返回;否则找 global context; 两个都没有 会抛出 IllegalStateException
-     * @since 1.5.3
      * @see org.springframework.web.servlet.support.RequestContextUtils#getWebApplicationContext(ServletRequest)
+     * @since 1.5.3
      */
     public static WebApplicationContext getWebApplicationContext(HttpServletRequest request){
         //内部调用了  WebApplicationContextUtils.getRequiredWebApplicationContext(ServletContext)

@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * The Class SpelUtilTest.
  *
  * @author feilong
- * @version 1.0.8 2014年10月8日 上午11:21:00
  * @since 1.0.8
  */
 public class SpelUtilTest{

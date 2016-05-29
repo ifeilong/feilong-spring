@@ -23,9 +23,8 @@ import javax.sql.DataSource;
  * 包含 读({@link #readDataSource}),写 ({@link #writeDataSource})数据源配置.
  *
  * @author feilong
- * @version 1.1.1 2015年4月1日 上午3:42:04
- * @since 1.1.1
  * @see javax.sql.DataSource
+ * @since 1.1.1
  */
 public class ReadWriteDataSourceCommand implements Serializable{
 

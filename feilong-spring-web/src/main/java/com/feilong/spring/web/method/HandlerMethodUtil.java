@@ -23,7 +23,6 @@ import org.springframework.web.method.HandlerMethod;
  * The Class HandlerMethodUtil.
  *
  * @author feilong
- * @version 1.4.0 2015年8月10日 下午10:04:22
  * @since 1.4.0
  */
 public class HandlerMethodUtil{

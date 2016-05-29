@@ -56,7 +56,6 @@ import com.feilong.web.command.ViewCommand;
  * </p>
  *
  * @author feilong
- * @version 5.0.0 2015年7月14日 下午8:30:14
  * @see StandardSeoInterceptor
  * @since 5.0.0
  */

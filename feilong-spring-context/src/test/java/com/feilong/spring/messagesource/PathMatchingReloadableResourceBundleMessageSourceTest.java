@@ -27,7 +27,6 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
  * The Class PathMatchingReloadableResourceBundleMessageSourceTest.
  *
  * @author feilong
- * @version 1.5.0 2016年2月24日 下午1:32:28
  * @since 1.5.0
  */
 @ContextConfiguration("classpath:spring-messageSource.xml")

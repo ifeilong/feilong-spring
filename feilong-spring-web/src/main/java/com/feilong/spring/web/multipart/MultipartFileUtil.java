@@ -26,7 +26,6 @@ import com.feilong.io.FileUtil;
  * The Class MultipartFileUtil.
  *
  * @author feilong
- * @version 1.0.9 2014年12月14日 下午7:51:19
  * @since 1.0.9
  */
 public final class MultipartFileUtil{

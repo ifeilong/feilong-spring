@@ -21,9 +21,8 @@ import org.springframework.core.Ordered;
  * {@link org.aspectj.lang.annotation.Aspect}相关父类.
  * 
  * @author feilong
- * @version 1.0 2012-4-13 上午1:14:20
- * @version 1.1.1 add implements Ordered
  * @see org.springframework.core.Ordered
+ * @since 1.0.3
  */
 public abstract class AbstractAspect implements Ordered{
 

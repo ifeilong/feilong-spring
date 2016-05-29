@@ -27,7 +27,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * focus on {@link org.aspectj.lang.ProceedingJoinPoint}.
  *
  * @author feilong
- * @version 1.1.1 2015年4月5日 下午7:58:10
  * @since 1.1.1
  */
 public class ProceedingJoinPointUtil{

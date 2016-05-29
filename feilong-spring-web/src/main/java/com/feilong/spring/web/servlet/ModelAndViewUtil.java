@@ -79,7 +79,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </blockquote>
  * 
  * @author feilong
- * @version 1.4.0 2015年8月6日 下午10:26:30
  * @since 1.4.0
  */
 public final class ModelAndViewUtil{

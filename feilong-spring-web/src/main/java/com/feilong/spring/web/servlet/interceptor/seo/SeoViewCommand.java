@@ -19,7 +19,6 @@ package com.feilong.spring.web.servlet.interceptor.seo;
  * The Class SeoViewCommand.
  *
  * @author feilong
- * @version 1.2.2 2015年7月14日 下午8:30:41
  * @since 1.2.2
  */
 public interface SeoViewCommand{

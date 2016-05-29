@@ -122,7 +122,6 @@ import com.feilong.spring.web.servlet.LocaleResolverUtil;
  * </blockquote>
  *
  * @author feilong
- * @version 1.5.0 2016年3月14日 下午4:31:38
  * @since 1.5.0
  */
 public class StandardSeoInterceptor extends AbstractSeoInterceptor{

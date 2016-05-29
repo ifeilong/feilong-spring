@@ -31,15 +31,14 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 /**
+ * The Class FlashMapUtil.
  *
  * @author feilong
- * @version 1.5.3 2016年4月2日 上午12:23:14
- * @since 1.5.3
- * 
  * @see org.springframework.web.servlet.support.SessionFlashMapManager
  * @see RequestMappingHandlerAdapter#getModelAndView(ModelAndViewContainer, ModelFactory, NativeWebRequest)
  * @see AbstractFlashMapManager#isFlashMapForRequest(FlashMap, HttpServletRequest)
  * @see RedirectView#renderMergedOutputModel(Map, HttpServletRequest, HttpServletResponse)
+ * @since 1.5.3
  */
 public class FlashMapUtil{
 
@@ -50,6 +49,19 @@ public class FlashMapUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    /**
+     * Put.
+     *
+     * @param name
+     *            the name
+     * @param value
+     *            the value
+     * @param targetRequestPath
+     *            the target request path
+     * @param request
+     *            the request
+     * @return the flash map
+     */
     public static FlashMap put(String name,String value,String targetRequestPath,HttpServletRequest request){
         FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
         flashMap.put(name, value);
@@ -59,6 +71,16 @@ public class FlashMapUtil{
         return flashMap;
     }
 
+    /**
+     * Save output flash map.
+     *
+     * @param flashMap
+     *            the flash map
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     */
     public static void saveOutputFlashMap(FlashMap flashMap,HttpServletRequest request,HttpServletResponse response){
         FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);
         flashMapManager.saveOutputFlashMap(flashMap, request, response);

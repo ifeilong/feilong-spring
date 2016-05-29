@@ -28,7 +28,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * The Class SpringPropertyPlaceholderTest.
  *
  * @author feilong
- * @version 1.0.8 2014年10月8日 下午4:03:31
  * @since 1.0.8
  */
 @ContextConfiguration(locations = { "classpath:spring-property-placeholder.xml" })

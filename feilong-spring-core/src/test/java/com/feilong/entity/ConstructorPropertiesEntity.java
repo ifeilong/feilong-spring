@@ -21,7 +21,6 @@ import java.beans.ConstructorProperties;
  * The Class ConstructorPropertiesEntity.
  *
  * @author feilong
- * @version 1.1.1 2015年4月10日 上午2:08:42
  * @since 1.1.1
  */
 public class ConstructorPropertiesEntity{

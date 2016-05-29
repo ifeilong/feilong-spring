@@ -55,7 +55,6 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </blockquote>
  *
  * @author feilong
- * @version 1.5.0 2016年3月14日 下午4:30:53
  * @since 1.5.0
  */
 public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorAdapter{

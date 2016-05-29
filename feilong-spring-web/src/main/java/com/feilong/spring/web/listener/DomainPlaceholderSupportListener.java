@@ -95,7 +95,6 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * </blockquote>
  *
  * @author feilong
- * @version 1.1.1 2015年4月17日 下午9:35:03
  * @see com.feilong.web.domain.DomainListener#CONFIG_LOCATION_PARAM
  * @see com.feilong.spring.web.util.WebSpringUtil#getWebApplicationContext(ServletContext)
  * @see org.springframework.core.env.EnvironmentCapable#getEnvironment()

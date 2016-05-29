@@ -37,7 +37,7 @@ import com.feilong.core.net.URIUtil;
  * </pre></code>
  * 
  * @author feilong
- * @version 1.0 Oct 5, 2012 10:59:38 PM
+ * @since 1.0.4
  */
 public class URLDecoderEditor extends PropertyEditorSupport{
 
