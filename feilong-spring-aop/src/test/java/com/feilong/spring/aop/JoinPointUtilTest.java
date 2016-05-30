@@ -42,7 +42,7 @@ public class JoinPointUtilTest{
      * @param joinPoint
      *            the join point
      * @param klass
-     *            the clazz
+     *            the klass
      * @return the method
      * @deprecated 目前作用不大,将来会重构
      */
@@ -75,19 +75,19 @@ public class JoinPointUtilTest{
      * 
      * @param joinPoint
      *            the join point
-     * @param clazz
-     *            the clazz
+     * @param klass
+     *            the klass
      * @return true, if checks if is annotation present
      * @deprecated 目前作用不大,将来会重构
      */
     @Deprecated
-    protected boolean isAnnotationPresent(JoinPoint joinPoint,Class<? extends Annotation> clazz){
+    protected boolean isAnnotationPresent(JoinPoint joinPoint,Class<? extends Annotation> klass){
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        if (method.isAnnotationPresent(clazz)){
+        if (method.isAnnotationPresent(klass)){
             return true;
         }
-        Target annotation = clazz.getAnnotation(Target.class);
+        Target annotation = klass.getAnnotation(Target.class);
         ElementType[] value = annotation.value();
         try{
             Object target = joinPoint.getTarget();
@@ -95,7 +95,7 @@ public class JoinPointUtilTest{
             String methodName = method.getName();
             Class<?>[] parameterTypes = method.getParameterTypes();
             Method m1 = targetClass.getMethod(methodName, parameterTypes);
-            if (m1.isAnnotationPresent(clazz)){
+            if (m1.isAnnotationPresent(klass)){
                 return true;
             }
         }catch (Exception e){
