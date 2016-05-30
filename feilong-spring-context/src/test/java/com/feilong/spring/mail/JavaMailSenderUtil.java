@@ -40,7 +40,7 @@ import com.feilong.core.CharsetType;
 /**
  * The Class MailUtil.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 public class JavaMailSenderUtil{
 

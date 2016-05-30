@@ -22,7 +22,7 @@ import org.aspectj.lang.JoinPoint;
 /**
  * The Class MySecurityManagerImpl.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 public class MySecurityManagerImpl implements MySecurityManager{
 

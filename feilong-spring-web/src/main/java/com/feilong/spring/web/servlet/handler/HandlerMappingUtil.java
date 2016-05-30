@@ -71,7 +71,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </ul>
  * </blockquote>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.web.servlet.HandlerMapping
  * @see org.springframework.web.servlet.handler.AbstractHandlerMethodMapping
  * @see org.springframework.web.servlet.handler.AbstractUrlHandlerMapping

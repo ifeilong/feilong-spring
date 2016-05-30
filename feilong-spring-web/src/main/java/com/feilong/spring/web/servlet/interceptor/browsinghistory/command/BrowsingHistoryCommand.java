@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * 目前只支持主键,以后视情况而定吧看看要不要把价格等信息放这里.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.2.2
  */
 public interface BrowsingHistoryCommand extends Serializable{

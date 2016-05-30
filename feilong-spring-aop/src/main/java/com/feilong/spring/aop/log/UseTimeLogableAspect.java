@@ -32,7 +32,7 @@ import com.feilong.spring.aop.AbstractAspect;
 /**
  * 用来给所有实现{@link UseTimeLogable}接口的方法输出耗时日志用的.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.0
  */
 @Aspect

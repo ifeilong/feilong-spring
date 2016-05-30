@@ -77,7 +77,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * </table>
  * </blockquote>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.2.2
  */
 public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolver{

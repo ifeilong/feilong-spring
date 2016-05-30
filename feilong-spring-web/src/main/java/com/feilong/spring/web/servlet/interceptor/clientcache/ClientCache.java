@@ -104,7 +104,7 @@ import com.feilong.core.TimeInterval;
  * </p>
  * </blockquote>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see ClientCacheInterceptor
  * @since 1.0.9
  */

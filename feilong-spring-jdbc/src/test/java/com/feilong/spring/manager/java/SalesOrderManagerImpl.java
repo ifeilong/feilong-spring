@@ -27,7 +27,7 @@ import com.feilong.test.User;
 /**
  * The Class SalesOrderManagerImpl.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.1.1
  */
 //@MultipleGroupDataSource("storeSource")

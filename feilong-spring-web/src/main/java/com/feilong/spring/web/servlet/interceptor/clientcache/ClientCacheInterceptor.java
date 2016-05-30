@@ -84,7 +84,7 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdap
  * </p>
  * </blockquote>
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see ResponseUtil#setNoCacheHeader(HttpServletResponse)
  * @see ResponseUtil#setCacheHeader(HttpServletResponse, int)
  * @see org.springframework.web.servlet.support.WebContentGenerator

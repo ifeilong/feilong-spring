@@ -32,7 +32,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 /**
  * The Class MemberManagerTest.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.1.1
  */
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -68,7 +68,7 @@ import net.sf.json.JSONException;
  * </ol>
  * </blockquote>
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see com.feilong.spring.aop.AbstractAspect
  * @see org.aspectj.lang.annotation.Aspect
  * @see org.aspectj.lang.annotation.Around

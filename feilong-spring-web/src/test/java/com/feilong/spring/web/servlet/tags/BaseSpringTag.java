@@ -32,7 +32,7 @@ import com.feilong.spring.web.util.WebSpringUtil;
 /**
  * 自定义标签的父类,需要和spring控制的业务层交互的请使用这个基类.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag
  * @see org.springframework.web.servlet.support.JspAwareRequestContext
  * @since 1.0.0

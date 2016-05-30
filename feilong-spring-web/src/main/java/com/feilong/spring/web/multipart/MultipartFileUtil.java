@@ -25,7 +25,7 @@ import com.feilong.io.FileUtil;
 /**
  * The Class MultipartFileUtil.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.9
  */
 public final class MultipartFileUtil{

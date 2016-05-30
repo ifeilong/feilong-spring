@@ -96,7 +96,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </ol>
  * </blockquote>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see <a href="https://searchcode.com/codesearch/view/17495983/#">https://searchcode.com/codesearch/view/17495983/#</a>
  * @since 1.5.0
  */

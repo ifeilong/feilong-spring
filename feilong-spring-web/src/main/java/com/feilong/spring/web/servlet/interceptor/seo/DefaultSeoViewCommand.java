@@ -18,7 +18,7 @@ package com.feilong.spring.web.servlet.interceptor.seo;
 /**
  * 默认的.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.2.2
  */
 public class DefaultSeoViewCommand implements SeoViewCommand{

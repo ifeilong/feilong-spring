@@ -34,7 +34,7 @@ import com.feilong.servlet.http.RequestUtil;
  * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ,而参数中传入了 不存在的/不支持的 locale 调用
  * {@link org.springframework.util.StringUtils#parseLocaleString(String)}会报错
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.9
  */
 public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{

@@ -23,7 +23,7 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * 数组
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.8
  */
 public abstract class BaseDIUser implements InitializingBean,DisposableBean{

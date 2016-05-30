@@ -26,7 +26,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * focus on {@link org.aspectj.lang.ProceedingJoinPoint}.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.1.1
  */
 public class ProceedingJoinPointUtil{

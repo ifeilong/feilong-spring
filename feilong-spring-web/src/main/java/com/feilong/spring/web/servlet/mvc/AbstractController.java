@@ -35,7 +35,7 @@ import com.feilong.spring.web.servlet.LocaleResolverUtil;
 /**
  * 通用的 父类 AbstractController.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.3
  */
 public abstract class AbstractController{

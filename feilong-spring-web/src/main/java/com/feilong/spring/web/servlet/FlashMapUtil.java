@@ -33,7 +33,7 @@ import org.springframework.web.servlet.view.RedirectView;
 /**
  * The Class FlashMapUtil.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.web.servlet.support.SessionFlashMapManager
  * @see RequestMappingHandlerAdapter#getModelAndView(ModelAndViewContainer, ModelFactory, NativeWebRequest)
  * @see AbstractFlashMapManager#isFlashMapForRequest(FlashMap, HttpServletRequest)

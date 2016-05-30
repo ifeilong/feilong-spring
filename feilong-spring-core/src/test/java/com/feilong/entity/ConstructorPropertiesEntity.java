@@ -20,7 +20,7 @@ import java.beans.ConstructorProperties;
 /**
  * The Class ConstructorPropertiesEntity.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.1.1
  */
 public class ConstructorPropertiesEntity{

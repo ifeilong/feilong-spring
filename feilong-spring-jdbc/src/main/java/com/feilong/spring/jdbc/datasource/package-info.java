@@ -16,7 +16,7 @@
 /**
  * 和数据源相关
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.10
  */
 package com.feilong.spring.jdbc.datasource;

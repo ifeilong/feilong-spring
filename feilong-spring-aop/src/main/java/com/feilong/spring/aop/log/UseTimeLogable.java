@@ -22,7 +22,7 @@ package com.feilong.spring.aop.log;
  * 通常和 {@link com.feilong.spring.aop.log.UseTimeLogableAspect} 搭配使用,用来输出执行方法耗时时间
  * </p>
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.0
  */
 public interface UseTimeLogable{

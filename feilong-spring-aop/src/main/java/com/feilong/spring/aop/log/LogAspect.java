@@ -34,7 +34,7 @@ import com.feilong.spring.aop.JoinPointUtil;
 /**
  * 日志切面 aspect,作用于 所有使用 {@link com.feilong.spring.aop.log.Log}标注 的方法.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.0
  */
 @Aspect

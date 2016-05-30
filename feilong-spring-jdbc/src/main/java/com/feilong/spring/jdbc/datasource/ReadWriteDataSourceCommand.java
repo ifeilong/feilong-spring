@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 /**
  * 包含 读({@link #readDataSource}),写 ({@link #writeDataSource})数据源配置.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see javax.sql.DataSource
  * @since 1.1.1
  */

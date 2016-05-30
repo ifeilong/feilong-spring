@@ -34,7 +34,7 @@ import com.feilong.spring.manager.java.SalesOrderManager;
 /**
  * The Class MemberManagerTest.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.1.1
  */
 @RunWith(SpringJUnit4ClassRunner.class)

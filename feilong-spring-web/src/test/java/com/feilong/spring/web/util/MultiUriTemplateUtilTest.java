@@ -28,7 +28,7 @@ import com.feilong.core.net.URIUtil;
 /**
  * The Class MultiUriTemplateUtilTest.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 public class MultiUriTemplateUtilTest{
 

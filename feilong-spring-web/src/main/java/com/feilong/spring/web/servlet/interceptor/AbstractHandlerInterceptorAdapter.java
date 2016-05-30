@@ -30,7 +30,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 /**
  * The Class AbstractHandlerInterceptorAdapter.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.4.0
  */
 public abstract class AbstractHandlerInterceptorAdapter extends HandlerInterceptorAdapter implements Ordered{

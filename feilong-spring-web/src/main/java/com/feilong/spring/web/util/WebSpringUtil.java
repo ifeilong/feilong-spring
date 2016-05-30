@@ -68,7 +68,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * </p>
  * </blockquote>
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
  * @see org.springframework.web.context.support.WebApplicationContextUtils#getWebApplicationContext(ServletContext)
  * @since 1.0.4

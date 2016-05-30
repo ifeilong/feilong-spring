@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 /**
  * The Class PathMatchingReloadableResourceBundleMessageSourceTest.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.0
  */
 @ContextConfiguration("classpath:spring-messageSource.xml")

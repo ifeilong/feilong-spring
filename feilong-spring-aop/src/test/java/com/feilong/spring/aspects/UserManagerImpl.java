@@ -24,7 +24,7 @@ import com.feilong.spring.aop.log.UseTimeLogable;
 /**
  * The Class UserManagerImpl.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 public class UserManagerImpl implements UserManager,UseTimeLogable{
 

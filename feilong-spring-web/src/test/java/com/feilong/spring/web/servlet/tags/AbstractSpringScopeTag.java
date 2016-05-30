@@ -28,7 +28,7 @@ import com.feilong.spring.web.util.WebSpringUtil;
  * 只需要重写doExecute()方法即可
  * </pre>
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.web.servlet.tags.RequestContextAwareTag
  * @since 1.0.0
  * @deprecated 建议不直接使用 {@link RequestContextAwareTag},使用feilong 原生的 {@link "BaseTag"},如果要想在tag里面得到 spring相关的bean ,可以单独使用

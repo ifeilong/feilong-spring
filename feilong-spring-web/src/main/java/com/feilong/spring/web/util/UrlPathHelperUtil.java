@@ -25,7 +25,7 @@ import org.springframework.web.util.UrlPathHelper;
 /**
  * UrlPathHelper.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.4
  */
 public class UrlPathHelperUtil{

@@ -27,7 +27,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 /**
  * The Class SpringPropertyPlaceholderTest.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.8
  */
 @ContextConfiguration(locations = { "classpath:spring-property-placeholder.xml" })

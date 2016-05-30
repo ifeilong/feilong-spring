@@ -20,7 +20,7 @@ import org.springframework.core.Ordered;
 /**
  * {@link org.aspectj.lang.annotation.Aspect}相关父类.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.core.Ordered
  * @since 1.0.3
  */

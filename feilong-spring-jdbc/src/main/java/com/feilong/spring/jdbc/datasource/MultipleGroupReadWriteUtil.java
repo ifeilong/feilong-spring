@@ -20,7 +20,7 @@ import com.feilong.core.Validator;
 /**
  * The Class MultipleGroupReadWriteUtil.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.1.1
  */
 public class MultipleGroupReadWriteUtil{

@@ -24,7 +24,7 @@ import java.util.Vector;
 /**
  * The Class User.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 public class DIUser extends BaseDIUser{
 

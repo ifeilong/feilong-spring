@@ -19,7 +19,7 @@ package com.feilong.spring.aspects;
 /**
  * The Interface UserManager.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 public interface UserManager{
 

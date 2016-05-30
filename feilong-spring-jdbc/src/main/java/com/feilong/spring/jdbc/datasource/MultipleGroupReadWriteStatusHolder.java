@@ -18,7 +18,7 @@ package com.feilong.spring.jdbc.datasource;
 /**
  * 以 {@link ThreadLocal} 形式,维护数据源的key.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see MultipleGroupReadWriteDataSource
  * @see java.lang.ThreadLocal
  * @see "org.springframework.web.context.request.RequestContextHolder"

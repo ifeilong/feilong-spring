@@ -18,7 +18,7 @@ package org.springframework.core.res;
 /**
  * 通过索引方式实现的查询商品的Dao.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @param <T>
  *            the generic type
  */

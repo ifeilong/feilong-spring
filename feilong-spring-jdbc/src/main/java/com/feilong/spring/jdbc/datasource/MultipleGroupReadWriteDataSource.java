@@ -32,7 +32,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </blockquote>
  * 
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource
  * @since 1.1.1
  */

@@ -72,7 +72,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * 
  * </blockquote>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#getDefaultArgumentResolvers()
  * @since 1.5.0
  * @since spring 3.1

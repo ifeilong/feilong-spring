@@ -20,7 +20,7 @@ import org.aspectj.lang.JoinPoint;
 /**
  * The Interface MySecurityManager.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 public interface MySecurityManager{
 

@@ -18,7 +18,7 @@ package com.feilong.entity;
 /**
  * 数组.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.8
  */
 public class DIUserArray extends BaseDIUser{

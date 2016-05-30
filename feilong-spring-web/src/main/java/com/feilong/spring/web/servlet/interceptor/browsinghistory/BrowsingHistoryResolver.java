@@ -91,7 +91,7 @@ import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.Browsi
  * </p>
  * </blockquote>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryInterceptor
  * @since 1.2.2
  */

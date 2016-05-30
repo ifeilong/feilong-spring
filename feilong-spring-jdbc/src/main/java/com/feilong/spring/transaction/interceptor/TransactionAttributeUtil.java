@@ -24,7 +24,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 /**
  * The Class TransactionAttributeUtil.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.transaction.interceptor.TransactionAttribute
  * @see org.springframework.transaction.TransactionDefinition
  * @since 1.1.1

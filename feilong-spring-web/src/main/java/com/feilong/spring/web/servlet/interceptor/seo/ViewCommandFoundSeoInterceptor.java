@@ -55,7 +55,7 @@ import com.feilong.web.command.ViewCommand;
  * 更多说明,请参考 {@link StandardSeoInterceptor}
  * </p>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see StandardSeoInterceptor
  * @since 5.0.0
  */

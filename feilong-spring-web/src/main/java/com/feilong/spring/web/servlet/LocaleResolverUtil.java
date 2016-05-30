@@ -27,7 +27,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 /**
  * 国际化.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.web.servlet.LocaleResolver
  * @since 1.5.0
  */

@@ -22,7 +22,7 @@ import loxia.dao.ReadWriteSupport;
 /**
  * The Interface SalesOrderManager.
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.1.1
  */
 public interface SalesOrderManager extends ReadWriteSupport{

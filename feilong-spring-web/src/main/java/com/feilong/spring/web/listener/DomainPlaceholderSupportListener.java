@@ -94,7 +94,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * 
  * </blockquote>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see com.feilong.web.domain.DomainListener#CONFIG_LOCATION_PARAM
  * @see com.feilong.spring.web.util.WebSpringUtil#getWebApplicationContext(ServletContext)
  * @see org.springframework.core.env.EnvironmentCapable#getEnvironment()

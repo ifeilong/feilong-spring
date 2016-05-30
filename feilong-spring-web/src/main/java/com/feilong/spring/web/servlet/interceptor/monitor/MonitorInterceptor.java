@@ -47,7 +47,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * 该Interceptor本身对性能的影响几乎为0, 如果不想使用, 可以在spring Interceptor配置文件中去掉该配置
  * </blockquote>
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.2.2
  */
 public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{

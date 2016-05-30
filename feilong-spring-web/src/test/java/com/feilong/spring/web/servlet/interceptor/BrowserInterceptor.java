@@ -25,7 +25,7 @@
 // * 浏览器拦截器<br>
 // * 拦截每个请求 ,拿到UA,封装到 browser,你可以 通过此类来判断 访问方式是否是移动设备.
 // * 
-// * @author feilong
+// * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
 //@since 1.0.4
 // * @deprecated 最好考虑在session开始的那刻 实用
 // */

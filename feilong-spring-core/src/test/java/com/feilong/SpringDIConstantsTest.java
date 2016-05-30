@@ -28,7 +28,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 /**
  * The Class UserTest.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 @ContextConfiguration("classpath:spring-DI-constants.xml")
 public class SpringDIConstantsTest extends AbstractJUnit4SpringContextTests{

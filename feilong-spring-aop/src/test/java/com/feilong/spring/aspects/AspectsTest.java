@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 /**
  * The Class AspectsTest.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 @ContextConfiguration(locations = "classpath:spring-aop.xml")
 public class AspectsTest extends AbstractJUnit4SpringContextTests{

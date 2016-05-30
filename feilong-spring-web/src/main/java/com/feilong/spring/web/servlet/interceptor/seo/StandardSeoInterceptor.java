@@ -121,7 +121,7 @@ import com.feilong.spring.web.servlet.LocaleResolverUtil;
  * </ol>
  * </blockquote>
  *
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.0
  */
 public class StandardSeoInterceptor extends AbstractSeoInterceptor{

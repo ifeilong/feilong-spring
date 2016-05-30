@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The Class HtmlUtilsTest.
  * 
- * @author feilong
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
 public class HtmlUtilsTest{
 
