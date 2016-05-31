@@ -143,7 +143,9 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                 //这里的request.getSession() 可能会报错 Cannot create a session after the response has been committed 
                 //ServletContext servletContext = request.getSession().getServletContext();
             }else{
-                LOGGER.info(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
+                if (LOGGER.isDebugEnabled()){
+                    LOGGER.debug(getPostHandleLogMessage(request, handlerMethod, modelAndView, useTime));
+                }
             }
         }catch (Exception e){//可能有异常,比如  往request/model里面设置了 不能被json处理的对象或者字段
             LOGGER.error(
@@ -218,9 +220,9 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         stopWatch.split();
         long splitTime = stopWatch.getSplitTime();
 
-        if (LOGGER.isInfoEnabled()){
+        if (LOGGER.isDebugEnabled()){
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            LOGGER.info(
+            LOGGER.debug(
                             "afterConcurrentHandlingStarted [{}.{}()], use time:[{}]",
                             HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                             HandlerMethodUtil.getHandlerMethodName(handlerMethod),
@@ -249,8 +251,8 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         stopWatch.stop();
         long time = stopWatch.getTime();
 
-        if (LOGGER.isInfoEnabled()){
-            LOGGER.info(
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(
                             "afterCompletion [{}.{}()], use time:[{}],total time:[{}]",
                             HandlerMethodUtil.getDeclaringClassSimpleName((HandlerMethod) handler),
                             HandlerMethodUtil.getHandlerMethodName((HandlerMethod) handler),
