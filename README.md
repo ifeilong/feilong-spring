@@ -45,7 +45,7 @@ Reduce development, Release ideas
 	
 		....
 		<properties>
-			<version.feilong-platform>1.5.5</version.feilong-platform>
+			<version.feilong-platform>1.5.6</version.feilong-platform>
 			....
 		</properties>
 		
