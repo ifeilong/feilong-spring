@@ -95,7 +95,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
         request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
 
         Date endDate = new Date();
-        LOGGER.info("use time:{}", DateExtensionUtil.getIntervalForView(beginDate, endDate));
+        LOGGER.debug("use time:{}", DateExtensionUtil.getIntervalForView(beginDate, endDate));
     }
 
     /**
