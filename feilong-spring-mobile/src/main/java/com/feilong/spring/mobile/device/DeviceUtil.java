@@ -26,7 +26,7 @@ import org.springframework.mobile.device.LiteDeviceResolver;
 
 /**
  * The Class DeviceUtil.
- *
+ * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.mobile.device.DeviceUtils
  * @since 1.5.7
