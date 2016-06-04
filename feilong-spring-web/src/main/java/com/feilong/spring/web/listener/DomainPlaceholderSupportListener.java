@@ -141,7 +141,7 @@ public class DomainPlaceholderSupportListener extends com.feilong.web.domain.Dom
             return PropertiesLoaderUtils.loadProperties(resource);
         }catch (IOException e){
             String messagePattern = "load domainConfigLocation:[{}] exception";
-            LOGGER.error(Slf4jUtil.formatMessage(messagePattern, domainConfigLocation), e);
+            LOGGER.error(Slf4jUtil.format(messagePattern, domainConfigLocation), e);
             throw new UncheckedIOException(e);
         }
     }

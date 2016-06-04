@@ -170,7 +170,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
 
             return new ArrayList<>(JsonUtil.toList(cookiePlainValue, beanClass));//TODO
         }catch (Exception e){
-            String message = Slf4jUtil.formatMessage(
+            String message = Slf4jUtil.format(
                             "getBrowsingHistory cookie value:[{}] error,charset:[{}],will clear",
                             value,
                             symmetricEncryptionCharsetName);

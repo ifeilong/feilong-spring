@@ -149,7 +149,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
             }
         }catch (Exception e){//可能有异常,比如  往request/model里面设置了 不能被json处理的对象或者字段
             LOGGER.error(
-                            Slf4jUtil.formatMessage(
+                            Slf4jUtil.format(
                                             "postHandle [{}.{}()] occur exception,but we need goon!,just log it,request info:[{}]",
                                             HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                                             HandlerMethodUtil.getHandlerMethodName(handlerMethod),
@@ -176,7 +176,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         String logicOperator = useTime > performanceThreshold ? ">" : useTime == performanceThreshold ? "=" : "<";
 
         //一条日志输出, 这样的话,在并发的情况, 日志还是有上下文的
-        return Slf4jUtil.formatMessage(
+        return Slf4jUtil.format(
                         "postHandle [{}.{}()],RequestInfoMapForLog:{},request attribute:{},modelAndView info:[{}],use time:[{}],[{}] performanceThreshold:[{}]",
                         HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                         HandlerMethodUtil.getHandlerMethodName(handlerMethod),
@@ -204,7 +204,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         Map<String, Object> model = modelAndView.getModel();
         String viewName = ModelAndViewUtil.getViewName(modelAndView);
 
-        return Slf4jUtil.formatMessage("model:[{}],view:[{}]", JsonUtil.formatSimpleMap(model, allowFormatClassTypes), viewName);
+        return Slf4jUtil.format("model:[{}],view:[{}]", JsonUtil.formatSimpleMap(model, allowFormatClassTypes), viewName);
     }
 
     /*
