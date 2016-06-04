@@ -21,8 +21,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import com.feilong.core.Validator;
 
@@ -66,9 +69,9 @@ public final class ApplicationContextUtil{
         applicationContextForLogMap.put("applicationContext.getId()", applicationContext.getId());
         applicationContextForLogMap.put("applicationContext.getStartupDate()", applicationContext.getStartupDate());
 
-        applicationContextForLogMap.put("ApplicationContext.CLASSPATH_ALL_URL_PREFIX", ApplicationContext.CLASSPATH_ALL_URL_PREFIX);
-        applicationContextForLogMap.put("ApplicationContext.CLASSPATH_URL_PREFIX", ApplicationContext.CLASSPATH_URL_PREFIX);
-        applicationContextForLogMap.put("ApplicationContext.FACTORY_BEAN_PREFIX", ApplicationContext.FACTORY_BEAN_PREFIX);
+        applicationContextForLogMap.put("ApplicationContext.CLASSPATH_ALL_URL_PREFIX", ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX);
+        applicationContextForLogMap.put("ApplicationContext.CLASSPATH_URL_PREFIX", ResourceLoader.CLASSPATH_URL_PREFIX);
+        applicationContextForLogMap.put("ApplicationContext.FACTORY_BEAN_PREFIX", BeanFactory.FACTORY_BEAN_PREFIX);
         applicationContextForLogMap
                         .put("applicationContext.getParent() info", getApplicationContextForLogMap(applicationContext.getParent()));
 
