@@ -35,7 +35,7 @@ import org.springframework.web.servlet.ViewResolver;
  * Dynamically loads the the location of JSP using Tiles Expression Language.
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 1.5.7
+ * @since 1.6.0
  */
 public class TilesSupportLiteDeviceDelegatingViewResolver extends LiteDeviceDelegatingViewResolver{
 

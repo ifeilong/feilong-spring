@@ -29,7 +29,7 @@ import org.springframework.mobile.device.LiteDeviceResolver;
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.mobile.device.DeviceUtils
- * @since 1.5.7
+ * @since 1.6.0
  */
 public class DeviceUtil{
 
