@@ -20,14 +20,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.Validate;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
-
-import com.feilong.core.Validator;
 
 /**
  * The Class ApplicationContextUtil.
@@ -52,33 +51,29 @@ public final class ApplicationContextUtil{
      * @return the application context for log map
      */
     public static Map<String, Object> getApplicationContextForLogMap(ApplicationContext applicationContext){
+        Validate.notNull(applicationContext, "applicationContext can't be null!");
 
-        if (Validator.isNullOrEmpty(applicationContext)){
-            return null;
-        }
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-        Map<String, Object> applicationContextForLogMap = new LinkedHashMap<String, Object>();
+        map.put("applicationContext.getBeanDefinitionCount()", applicationContext.getBeanDefinitionCount());
 
-        applicationContextForLogMap.put("applicationContext.getBeanDefinitionCount()", applicationContext.getBeanDefinitionCount());
+        map.put("applicationContext.getApplicationName()", applicationContext.getApplicationName());
+        map.put("applicationContext.getDisplayName()", applicationContext.getDisplayName());
 
-        applicationContextForLogMap.put("applicationContext.getApplicationName()", applicationContext.getApplicationName());
-        applicationContextForLogMap.put("applicationContext.getDisplayName()", applicationContext.getDisplayName());
+        map.put("applicationContext.getClass()", applicationContext.getClass());
 
-        applicationContextForLogMap.put("applicationContext.getClass()", applicationContext.getClass());
+        map.put("applicationContext.getId()", applicationContext.getId());
+        map.put("applicationContext.getStartupDate()", applicationContext.getStartupDate());
 
-        applicationContextForLogMap.put("applicationContext.getId()", applicationContext.getId());
-        applicationContextForLogMap.put("applicationContext.getStartupDate()", applicationContext.getStartupDate());
-
-        applicationContextForLogMap.put("ApplicationContext.CLASSPATH_ALL_URL_PREFIX", ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX);
-        applicationContextForLogMap.put("ApplicationContext.CLASSPATH_URL_PREFIX", ResourceLoader.CLASSPATH_URL_PREFIX);
-        applicationContextForLogMap.put("ApplicationContext.FACTORY_BEAN_PREFIX", BeanFactory.FACTORY_BEAN_PREFIX);
-        applicationContextForLogMap
-                        .put("applicationContext.getParent() info", getApplicationContextForLogMap(applicationContext.getParent()));
+        map.put("ApplicationContext.CLASSPATH_ALL_URL_PREFIX", ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX);
+        map.put("ApplicationContext.CLASSPATH_URL_PREFIX", ResourceLoader.CLASSPATH_URL_PREFIX);
+        map.put("ApplicationContext.FACTORY_BEAN_PREFIX", BeanFactory.FACTORY_BEAN_PREFIX);
+        map.put("applicationContext.getParent() info", getApplicationContextForLogMap(applicationContext.getParent()));
 
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
         Arrays.sort(beanDefinitionNames);
 
-        applicationContextForLogMap.put("applicationContext.getBeanDefinitionNames()", beanDefinitionNames);
+        map.put("applicationContext.getBeanDefinitionNames()", beanDefinitionNames);
 
         Map<String, Object> beanDefinitionNamesAndClassMap = new TreeMap<String, Object>();
         for (String beanDefinitionName : beanDefinitionNames){
@@ -93,11 +88,10 @@ public final class ApplicationContextUtil{
             }
         }
 
-        applicationContextForLogMap.put("beanDefinitionNamesAndClassMap", beanDefinitionNamesAndClassMap);
+        map.put("beanDefinitionNamesAndClassMap", beanDefinitionNamesAndClassMap);
 
         Environment environment = applicationContext.getEnvironment();
-        applicationContextForLogMap.put("applicationContext.getEnvironment()", environment);
-
-        return applicationContextForLogMap;
+        map.put("applicationContext.getEnvironment()", environment);
+        return map;
     }
 }

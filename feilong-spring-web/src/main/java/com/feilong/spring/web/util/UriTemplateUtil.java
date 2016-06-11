@@ -33,6 +33,7 @@ import org.springframework.web.util.UriTemplate;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.feilong.core.Validator;
+import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
@@ -339,9 +340,9 @@ public class UriTemplateUtil{
         for (String variableName : variableNames){
             opMap.put(variableName, null);
         }
-        if (Validator.isNotNullOrEmpty(map)){
-            opMap.putAll(map);// map如果是null 会报错
-        }
+
+        MapUtil.putAllIfNotNull(opMap, map);
+
         UriTemplate uriTemplate = new UriTemplate(uriTemplatePath);
         URI uri = uriTemplate.expand(opMap);
         return uri.toString();

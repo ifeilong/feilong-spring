@@ -46,7 +46,6 @@ public class TransactionAttributeUtil{
      * @return the map for log
      */
     public static final Map<String, Object> getMapForLog(TransactionAttribute transactionAttribute){
-
         if (null == transactionAttribute){
             return null;
         }
@@ -57,15 +56,15 @@ public class TransactionAttributeUtil{
         int propagationBehavior = transactionAttribute.getPropagationBehavior();
         String propagationBehaviorString = toPropagationBehaviorString(propagationBehavior);
 
-        Map<String, Object> object = new LinkedHashMap<String, Object>();
-        object.put("getPropagationBehavior", propagationBehaviorString + "(" + propagationBehavior + ")");
-        object.put("getIsolationLevel", isolationLevelString + "(" + isolationLevel + ")");
-        object.put("isReadOnly", transactionAttribute.isReadOnly());
-        object.put("getName", transactionAttribute.getName());
-        object.put("getQualifier", transactionAttribute.getQualifier());
-        object.put("getTimeout", transactionAttribute.getTimeout());
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("getPropagationBehavior", propagationBehaviorString + "(" + propagationBehavior + ")");
+        map.put("getIsolationLevel", isolationLevelString + "(" + isolationLevel + ")");
+        map.put("isReadOnly", transactionAttribute.isReadOnly());
+        map.put("getName", transactionAttribute.getName());
+        map.put("getQualifier", transactionAttribute.getQualifier());
+        map.put("getTimeout", transactionAttribute.getTimeout());
 
-        return object;
+        return map;
     }
 
     /**
