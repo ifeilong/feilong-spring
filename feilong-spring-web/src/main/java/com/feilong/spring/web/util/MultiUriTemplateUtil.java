@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UrlPathHelper;
@@ -163,7 +164,7 @@ public class MultiUriTemplateUtil{
                     String value,
                     String valueSeparator){
 
-        Map<String, String> opMap = Validator.isNullOrEmpty(map) ? new HashMap<String, String>() : map;
+        Map<String, String> opMap = ObjectUtils.defaultIfNull(map, new HashMap<String, String>());
 
         // 原值
         String oldValue = opMap.get(variableName);

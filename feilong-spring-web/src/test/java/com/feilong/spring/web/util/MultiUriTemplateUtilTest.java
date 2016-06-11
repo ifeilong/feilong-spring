@@ -53,15 +53,15 @@ public class MultiUriTemplateUtilTest{
      */
     @Test
     public void expandWithMultiVariableMap(){
-
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
+
         Map<String, String> map = new HashMap<String, String>();
         map.put("categoryCode", "2541");
         map.put("style", "100");
 
         String variableName = "style";
-
         String value = URIUtil.encode("Lifestyle / Graphic", CharsetType.UTF8);
+
         String valueSeparator = ",";
         LOGGER.info(MultiUriTemplateUtil.expandWithMultiVariable(matchingPatternPath, map, variableName, value, valueSeparator));
     }
