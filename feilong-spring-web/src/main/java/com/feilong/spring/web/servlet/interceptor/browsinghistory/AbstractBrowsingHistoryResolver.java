@@ -22,6 +22,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,6 +116,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
 
         //********************************************************
         Long id = browsingHistoryCommand.getId();
+        Validate.notNull(id, "id can't be null!");
 
         int index = CollectionsUtil.indexOf(list, "id", id);
         if (-1 != index){//list中存在相同id的对象
