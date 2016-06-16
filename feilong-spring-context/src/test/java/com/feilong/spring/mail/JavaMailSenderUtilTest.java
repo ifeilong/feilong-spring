@@ -42,10 +42,6 @@ public class JavaMailSenderUtilTest{
     @Before
     public void init(){
         context = new ClassPathXmlApplicationContext("classpath*:spring-mail.xml");
-        // String[] array = context.getBeanDefinitionNames();
-        // for (int i = 0; i < array.length; ++i){
-        // LOGGER.debug(array[i]);
-        // }
         mailUtil = context.getBean(JavaMailSenderUtil.class);
     }
 
@@ -69,11 +65,6 @@ public class JavaMailSenderUtilTest{
      */
     @Test
     public void send(){
-        // Map<String, Object> model = new HashMap<String, Object>();
-        // model.put("userName", "大关");
-        // model.put("email" + "Address", "woshidaguan@126.com");
-        // String[] files = new String[] { "F:/Photo 照片/2012/else/120120A011.jpg", "F:/Photo 照片/2012/else/120127A001.jpg" };
-        // String vmfile = "com/guan/chapter19/email/welcome.vm";
         String[] to = new String[] { "venusdrogon@163.com" };
         String subject = "欢迎您的加入暗示的发射点法";
         String text = "<span style='color:red'><br>鑫哥艾莉梅阿斯达萨</br></span>";
@@ -85,11 +76,6 @@ public class JavaMailSenderUtilTest{
      */
     @Test
     public void sendMailNative(){
-        // Map<String, Object> model = new HashMap<String, Object>();
-        // model.put("userName", "大关");
-        // model.put("email" + "Address", "woshidaguan@126.com");
-        // String[] files = new String[] { "F:/Photo 照片/2012/else/120120A011.jpg", "F:/Photo 照片/2012/else/120127A001.jpg" };
-        // String vmfile = "com/guan/chapter19/email/welcome.vm";
         String[] to = new String[] { "venusdrogon@163.com" };
         String subject = "你好";
         String text = "<span style='color:red'><br>鑫哥 </br></span>";

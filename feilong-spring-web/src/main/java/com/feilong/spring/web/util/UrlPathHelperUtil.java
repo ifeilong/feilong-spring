@@ -71,7 +71,6 @@ public class UrlPathHelperUtil{
      * @return the url path helper map for log
      */
     public static Map<String, Object> getUrlPathHelperMapForLog(HttpServletRequest request){
-
         Map<String, Object> map = new LinkedHashMap<String, Object>();
 
         UrlPathHelper urlPathHelper = new UrlPathHelper();

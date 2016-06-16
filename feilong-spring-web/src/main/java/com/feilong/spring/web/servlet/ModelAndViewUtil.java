@@ -42,6 +42,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBody
 import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
 
 import com.feilong.core.Validator;
+import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
@@ -126,14 +127,8 @@ public final class ModelAndViewUtil{
 
         //新创建个map对象, 这样操作不会影响原始数据
         Map<String, Object> map = new HashMap<String, Object>();
-
-        if (null != requestAttributeMap){
-            map.putAll(requestAttributeMap);
-        }
-        if (null != model){
-            map.putAll(model);
-        }
-
+        MapUtil.putAllIfNotNull(map, requestAttributeMap);
+        MapUtil.putAllIfNotNull(map, model);
         return map;
     }
 

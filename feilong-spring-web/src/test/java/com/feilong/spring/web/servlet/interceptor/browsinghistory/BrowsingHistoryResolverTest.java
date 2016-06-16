@@ -48,13 +48,4 @@ public class BrowsingHistoryResolverTest{
         JsonUtil.toList(JsonUtil.format(list), DefaultBrowsingHistoryCommand.class);
     }
 
-    @Test
-    public final void test1(){
-        //
-        //        Map<String, Class<?>> map = new HashMap<String, Class<?>>();
-        //        map.put("id", Long.class);
-        //
-        //        BrowsingHistoryCommand<Long> bean = JsonUtil.toBean("{\"id\":38227}", DefaultBrowsingHistoryCommand.class, map);
-        //        LOGGER.debug(JsonUtil.format(bean));
-    }
 }

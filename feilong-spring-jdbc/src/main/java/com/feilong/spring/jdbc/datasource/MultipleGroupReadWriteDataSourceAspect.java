@@ -145,7 +145,6 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
         String currentThreadInfo = JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog());
         if (LOGGER.isInfoEnabled()){
-
             Map<String, Object> map = new LinkedHashMap<String, Object>();
             map.put("groupName", groupName);
             map.put("previousDataSourceNameHolder", previousDataSourceNameHolder);

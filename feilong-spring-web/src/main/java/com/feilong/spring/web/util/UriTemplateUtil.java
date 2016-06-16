@@ -33,6 +33,7 @@ import org.springframework.web.util.UriTemplate;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.feilong.core.Validator;
+import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
@@ -234,9 +235,7 @@ public class UriTemplateUtil{
      * @see #expand(String, Map)
      */
     public static String expandWithVariable(String matchingPatternPath,String variableName,String value){
-        Map<String, String> map = new HashMap<String, String>();
-        map.put(variableName, value);
-        return expand(matchingPatternPath, map);
+        return expand(matchingPatternPath, ConvertUtil.toMap(variableName, value));
     }
 
     /**
