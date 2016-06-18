@@ -29,6 +29,7 @@ import org.springframework.web.util.UrlPathHelper;
 import com.feilong.core.Validator;
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.bean.ToStringConfig;
+import com.feilong.core.lang.StringUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
@@ -71,13 +72,14 @@ public class MultiUriTemplateUtil{
     public static String expandBestMatchingPatternMulti(HttpServletRequest request,String variableName,String value,String valueSeparator){
         String requestPath = RequestUtil.getOriginatingServletPath(request);
         String matchingPatternPath = UriTemplateUtil.getBestMatchingPattern(request);//TODO 这种方法可能不太好 可能被覆盖
+
         String expandUrl = expandWithMultiVariable(requestPath, matchingPatternPath, variableName, value, valueSeparator);
-        String queryString = request.getQueryString();
-        Map<String, Object> map = UrlPathHelperUtil.getUrlPathHelperMapForLog(request);
+
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug(JsonUtil.format(map));
+            LOGGER.debug(JsonUtil.format(UrlPathHelperUtil.getUrlPathHelperMapForLog(request)));
         }
 
+        String queryString = request.getQueryString();
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         return urlPathHelper.getOriginatingContextPath(request) + expandUrl
                         + (Validator.isNullOrEmpty(queryString) ? "?" + queryString : "");
@@ -171,13 +173,13 @@ public class MultiUriTemplateUtil{
         if (Validator.isNullOrEmpty(oldValue)){
             opMap.put(variableName, value);
         }else{
-            String[] oldValues = oldValue.split(valueSeparator);
+            String[] oldValues = StringUtil.split(oldValue, valueSeparator);
 
             List<String> list = ConvertUtil.toList(oldValues);
 
             // 保证重复的value 不会被反复添加
             if (list.contains(value)){
-                LOGGER.debug("list contains value:{}", value);
+                LOGGER.debug("list contains value:[{}]", value);
             }else{
                 list.add(value);
             }
@@ -186,6 +188,8 @@ public class MultiUriTemplateUtil{
         }
         return UriTemplateUtil.expand(matchingPatternPath, opMap);
     }
+
+    //*******************************************************************************************
 
     /**
      * 将一个值从一个变量多值中以除掉.
@@ -235,12 +239,12 @@ public class MultiUriTemplateUtil{
             return requestPath;
         }
 
-        String[] oldValues = oldValue.split(valueSeparator);
+        String[] oldValues = StringUtil.split(oldValue, valueSeparator);
         List<String> list = ConvertUtil.toList(oldValues);
 
         if (!list.contains(value)){
             Object[] objects = { requestPath, matchingPatternPath, variableName, oldValue, value };
-            LOGGER.debug("the requestPath:{},matchingPatternPath:{},variableName:{},oldValue:{},not contains({})~~~", objects);
+            LOGGER.debug("requestPath:{},matchingPatternPath:{},variableName:{},oldValue:{},not contains({})~~~", objects);
             // 原样输出
             return requestPath;
         }

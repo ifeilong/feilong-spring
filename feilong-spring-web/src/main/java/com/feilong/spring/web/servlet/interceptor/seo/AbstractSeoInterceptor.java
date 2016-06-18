@@ -142,6 +142,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
 
     /**
      * 检测以下信息.
+     * 
      * <ul>
      * <li>如果 null==seoViewCommand,返回 <code>defaultSeoViewCommand</code></li>
      * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoDescription()),将设置<code>defaultSeoViewCommand</code>的Description</li>

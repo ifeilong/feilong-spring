@@ -171,14 +171,12 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
      * @return the seo view command
      */
     private SeoViewCommand buildSeoViewCommandFromMessage(){
-
         Locale locale = LocaleResolverUtil.getLocale();
 
         SeoViewCommand seoViewCommand = new DefaultSeoViewCommand();
         seoViewCommand.setSeoDescription(applicationContext.getMessage(keyNameSeoDescription, null, locale));
         seoViewCommand.setSeoKeywords(applicationContext.getMessage(keyNameSeoKeywords, null, locale));
         seoViewCommand.setSeoTitle(applicationContext.getMessage(keyNameSeoTitle, null, locale));
-
         return seoViewCommand;
     }
 
