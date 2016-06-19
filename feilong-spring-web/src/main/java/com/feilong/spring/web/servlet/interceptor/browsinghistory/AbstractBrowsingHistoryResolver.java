@@ -22,6 +22,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,7 +120,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
         Validate.notNull(id, "id can't be null!");
 
         int index = CollectionsUtil.indexOf(list, "id", id);
-        if (-1 != index){//list中存在相同id的对象
+        if (StringUtils.INDEX_NOT_FOUND != index){//list中存在相同id的对象
             boolean isFirst = 0 == index;
             if (isFirst){//如果 list里面的数据第一个是当前item 那么一般表示刷新页面 或者重新打开新窗口
                 LOGGER.debug("in cookie,first pk same as current pk:[{}],nothing to do", id);
