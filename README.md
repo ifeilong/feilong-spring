@@ -30,14 +30,7 @@ Reduce development, Release ideas
 
 `对spring相关类的快速封装,以便快速使用`
 
-#说明
-
-1. 基于`Apache2` 协议,您可以下载,代码用于闭源项目,但每个修改的过的文件必须放置版权说明;
-1. 基于`maven3.3`构建;
-1. 1.5.0及以上版本需要`jdk1.7`及以上环境(1.5.0以下版本需要`jdk1.6`及以上环境);
-
-
-# Maven使用配置
+# :dragon: Maven使用配置
 
 ```XML
 
@@ -103,9 +96,14 @@ Name | Description | JDK编译版本
 `feilong-spring-jdbc` |  常用jdbc的封装  | 1.7
 `feilong-spring-web` |  常用web的封装  | 1.7
 
-# About
+# :memo: 说明
 
-如果您对feilong platform 有任何建议，可以使用下面的联系方式：
+1. 基于`Apache2` 协议,您可以下载,代码用于闭源项目,但每个修改的过的文件必须放置版权说明;
+1. 基于`maven3.3`构建;
+1. 1.5.0及以上版本需要`jdk1.7`及以上环境(1.5.0以下版本需要`jdk1.6`及以上环境);
 
-* 新浪微博:http://weibo.com/venusdrogon
+# :panda_face: About
+
+如果您对feilong core 有任何建议和批评,可以使用下面的联系方式：
+
 * iteye博客:http://feitianbenyue.iteye.com/
