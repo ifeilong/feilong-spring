@@ -84,7 +84,7 @@ public abstract class AbstractController{
      *            也可以传入绝对路径 如:http://www.baidu.com
      * @return the spring redirect path
      */
-    protected String getSpringRedirectPath(String targetUrl){
+    protected String redirect(String targetUrl){
         return UrlBasedViewResolver.REDIRECT_URL_PREFIX + targetUrl;
     }
 
@@ -95,7 +95,7 @@ public abstract class AbstractController{
      *            the forward url
      * @return the spring forward path
      */
-    protected String getSpringForwardPath(String forwardUrl){
+    protected String forward(String forwardUrl){
         return UrlBasedViewResolver.FORWARD_URL_PREFIX + forwardUrl;
     }
 
