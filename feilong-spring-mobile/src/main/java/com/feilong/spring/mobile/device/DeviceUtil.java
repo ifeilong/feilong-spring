@@ -31,7 +31,7 @@ import org.springframework.mobile.device.LiteDeviceResolver;
  * @see org.springframework.mobile.device.DeviceUtils
  * @since 1.6.0
  */
-public class DeviceUtil{
+public final class DeviceUtil{
 
     /**
      * The Constant DEVICE_RESOLVER.
@@ -39,6 +39,13 @@ public class DeviceUtil{
      * @see org.springframework.mobile.device.LiteDeviceResolver#LiteDeviceResolver()
      */
     private static final DeviceResolver DEVICE_RESOLVER = new LiteDeviceResolver();
+
+    /** Don't let anyone instantiate this class. */
+    private DeviceUtil(){
+        //AssertionError不是必须的. 但它可以避免不小心在类的内部调用构造器. 保证该类在任何情况下都不会被实例化.
+        //see 《Effective Java》 2nd
+        throw new AssertionError("No " + getClass().getName() + " instances for you!");
+    }
 
     /**
      * 通过 {@link HttpServletRequest} 解析获得 {@link Device},以便区分 {@link Device#isMobile()},{@link Device#isNormal()},{@link Device#isTablet()}.
