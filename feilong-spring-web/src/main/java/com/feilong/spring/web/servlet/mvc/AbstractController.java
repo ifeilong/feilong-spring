@@ -104,44 +104,15 @@ public abstract class AbstractController{
     /**
      * 获得消息信息.
      * 
-     * @param errorCode
-     *            the error code
-     * @return the message
-     */
-    protected String getMessage(Integer errorCode){
-        Object[] args = null;
-        return getMessage(errorCode, args);
-    }
-
-    /**
-     * 获得消息信息.
-     * 
-     * @param errorCode
-     *            the error code
-     * @param args
-     *            args
-     * @return the message
-     */
-    protected String getMessage(Integer errorCode,Object...args){
-        if (Validator.isNotNullOrEmpty(errorCode)){
-            String prefix = "ExceptionResolver.BUSINESS_EXCEPTION_PREFIX";
-            return getMessage(prefix + errorCode, args);
-        }
-        return null;
-    }
-
-    /**
-     * 获得消息信息.
-     * 
-     * @param code
+     * @param key
      *            code
      * @param args
      *            args
      * @return the message
      */
-    protected String getMessage(String code,Object...args){
-        if (Validator.isNotNullOrEmpty(code)){
-            return context.getMessage(code, args, LocaleUtil.getLocale());
+    protected String getMessage(String key,Object...args){
+        if (Validator.isNotNullOrEmpty(key)){
+            return context.getMessage(key, args, LocaleUtil.getLocale());
         }
         return null;
     }
