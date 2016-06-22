@@ -336,13 +336,11 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      * @since 1.1.1
      */
     private static String getProceedingJoinPointJsonInfoExcludeJsonException(ProceedingJoinPoint proceedingJoinPoint){
-        String format = "";
         try{
-            format = JsonUtil.format(ProceedingJoinPointUtil.getMapForLog(proceedingJoinPoint));
+            return JsonUtil.format(ProceedingJoinPointUtil.getMapForLog(proceedingJoinPoint));
         }catch (JSONException e){
-            format = e.getMessage();
             LOGGER.error("", e);
+            return e.getMessage();
         }
-        return format;
     }
 }
