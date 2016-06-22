@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.core.Validator;
-import com.feilong.spring.web.servlet.LocaleResolverUtil;
+import com.feilong.spring.web.servlet.LocaleUtil;
 
 /**
  * 专门处理每个页面的seo信息,在 {@link HandlerInterceptorAdapter#preHandle(HttpServletRequest, HttpServletResponse, Object)}流程中,查找 request作用域中的数据.
@@ -171,7 +171,7 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
      * @return the seo view command
      */
     private SeoViewCommand buildSeoViewCommandFromMessage(){
-        Locale locale = LocaleResolverUtil.getLocale();
+        Locale locale = LocaleUtil.getLocale();
 
         SeoViewCommand seoViewCommand = new DefaultSeoViewCommand();
         seoViewCommand.setSeoDescription(applicationContext.getMessage(keyNameSeoDescription, null, locale));

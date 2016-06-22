@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
@@ -31,10 +30,10 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * @see org.springframework.web.servlet.LocaleResolver
  * @since 1.5.0
  */
-public final class LocaleResolverUtil{
+public final class LocaleUtil{
 
     /** Don't let anyone instantiate this class. */
-    private LocaleResolverUtil(){
+    private LocaleUtil(){
         //AssertionError不是必须的. 但它可以避免不小心在类的内部调用构造器. 保证该类在任何情况下都不会被实例化.
         //see 《Effective Java》 2nd
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
@@ -52,7 +51,7 @@ public final class LocaleResolverUtil{
         // LocaleContextHolder.getLocale()
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
-        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-        return localeResolver.resolveLocale(request);
+
+        return RequestContextUtils.getLocale(request);
     }
 }

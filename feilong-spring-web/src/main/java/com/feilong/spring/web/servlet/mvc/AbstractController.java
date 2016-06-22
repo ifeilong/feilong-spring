@@ -30,7 +30,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import com.feilong.core.DatePattern;
 import com.feilong.core.Validator;
 import com.feilong.servlet.http.HttpHeaders;
-import com.feilong.spring.web.servlet.LocaleResolverUtil;
+import com.feilong.spring.web.servlet.LocaleUtil;
 
 /**
  * 通用的 父类 AbstractController.
@@ -141,7 +141,7 @@ public abstract class AbstractController{
      */
     protected String getMessage(String code,Object...args){
         if (Validator.isNotNullOrEmpty(code)){
-            return context.getMessage(code, args, LocaleResolverUtil.getLocale());
+            return context.getMessage(code, args, LocaleUtil.getLocale());
         }
         return null;
     }
@@ -154,7 +154,7 @@ public abstract class AbstractController{
      * @return the message
      */
     protected String getMessage(MessageSourceResolvable messageSourceResolvable){
-        return context.getMessage(messageSourceResolvable, LocaleResolverUtil.getLocale());
+        return context.getMessage(messageSourceResolvable, LocaleUtil.getLocale());
     }
 
 }
