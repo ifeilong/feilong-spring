@@ -7,6 +7,8 @@
 	<description>feilong spring el</description>
 	<uri>http://java.feilong.com/el-spring</uri>
 
+
+	<!-- 自动寻找matchingPatternPath 扩充模板值 -->
 	<function>
 		<description>自动寻找matchingPatternPath 扩充模板值</description>
 		<name>expandBestMatchingPattern</name>
@@ -16,4 +18,16 @@
 			${flsp:expandBestMatchingPattern(pageContext.request,"color","001")}
 		</example>
 	</function>
+
+	<!-- 获得当前语言 -->
+	<function>
+		<description>获得当前语言</description>
+		<name>getLocale</name>
+		<function-class>com.feilong.spring.web.servlet.LocaleUtil</function-class>
+		<function-signature>java.util.Locale getLocale()</function-signature>
+		<example>
+			${flsp:getLocale()}
+		</example>
+	</function>
+
 </taglib>
