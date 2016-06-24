@@ -124,7 +124,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
             boolean isFirst = 0 == index;
             if (isFirst){//如果 list里面的数据第一个是当前item 那么一般表示刷新页面 或者重新打开新窗口
                 LOGGER.debug("in cookie,first pk same as current pk:[{}],nothing to do", id);
-                return null;//这种case没有必要操作 cookie
+                return Collections.emptyList();//这种case没有必要操作 cookie
             }
 
             if (LOGGER.isDebugEnabled()){
