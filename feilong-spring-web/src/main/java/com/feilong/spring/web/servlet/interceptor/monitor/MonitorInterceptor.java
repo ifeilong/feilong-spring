@@ -30,6 +30,7 @@ import com.feilong.core.CharsetType;
 import com.feilong.core.TimeInterval;
 import com.feilong.core.Validator;
 import com.feilong.core.date.DateExtensionUtil;
+import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
 import com.feilong.spring.web.method.HandlerMethodUtil;
@@ -69,7 +70,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     private Integer              performanceThreshold  = PERFORMANCE_THRESHOLD;
 
     /**
-     * 允许被json log输出的 request&&model 对象类型, 默认只有基本类型以及数组才会被输出.
+     * 允许被json log输出的 request {@code &&} model 对象类型, 默认只有基本类型以及数组才会被输出.
      * 
      * @see JsonUtil#formatSimpleMap(Map, Class...)
      * @since 1.4.0
@@ -284,17 +285,15 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     private String getRequestAttributeMap(HttpServletRequest request){
         Map<String, Object> attributeMap = RequestUtil.getAttributeMap(request);
 
-        //剔除掉 不常用的属性 不需要care 避免输出过多的日志
-
-        //see org.springframework.web.context.request.RequestContextListener.REQUEST_ATTRIBUTES_ATTRIBUTE
-        attributeMap.remove("org.springframework.web.context.request.RequestContextListener.REQUEST_ATTRIBUTES");
-        attributeMap.remove(org.springframework.web.context.request.async.WebAsyncUtils.WEB_ASYNC_MANAGER_ATTRIBUTE);
-
-        attributeMap.remove(org.springframework.web.servlet.DispatcherServlet.THEME_RESOLVER_ATTRIBUTE);
-        attributeMap.remove(org.springframework.web.servlet.DispatcherServlet.THEME_SOURCE_ATTRIBUTE);
-
-        //        attributeMap.remove(org.springframework.web.servlet.DispatcherServlet.THEME_RESOLVER_ATTRIBUTE);
-        //        attributeMap.remove(org.springframework.web.servlet.DispatcherServlet.THEME_SOURCE_ATTRIBUTE);
+        //剔除掉不常用的属性 不需要care 避免输出过多的日志
+        MapUtil.removeKeys(
+                        attributeMap,
+                        STOPWATCH_ATTRIBUTE,
+                        org.springframework.web.servlet.DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE,
+                        org.springframework.web.context.request.RequestContextListener.class.getName() + ".REQUEST_ATTRIBUTES",
+                        org.springframework.web.context.request.async.WebAsyncUtils.WEB_ASYNC_MANAGER_ATTRIBUTE,
+                        org.springframework.web.servlet.DispatcherServlet.THEME_RESOLVER_ATTRIBUTE,
+                        org.springframework.web.servlet.DispatcherServlet.THEME_SOURCE_ATTRIBUTE);
 
         return JsonUtil.formatSimpleMap(attributeMap, allowFormatClassTypes);
     }
@@ -312,7 +311,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     }
 
     /**
-     * 允许被json log输出的 request&&model 对象类型, 默认只有基本类型以及数组才会被输出.
+     * 允许被json log输出的 request {@code &&} model 对象类型, 默认只有基本类型以及数组才会被输出.
      *
      * @param allowFormatClassTypes
      *            the allowFormatClassTypes to set
