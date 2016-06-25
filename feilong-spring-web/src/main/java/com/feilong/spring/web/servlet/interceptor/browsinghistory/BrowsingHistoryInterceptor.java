@@ -117,7 +117,7 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerIntercep
     /**
      * Construct browsing history command.
      * <p>
-     * 如果返回 null or empty 那么不会操作cookie
+     * 如果返回 null或者empty 那么不会操作cookie
      * </p>
      *
      * @param request
