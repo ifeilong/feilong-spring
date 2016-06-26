@@ -43,6 +43,9 @@ public @interface Log{
      * log级别 {@link Level#toLevel(String, Level)}.
      * 
      * @return the string
+     * @see org.apache.log4j.Level
+     * @see ch.qos.logback.classic.Level
+     * @see org.slf4j.event.Level
      */
     String level() default "debug";
 
