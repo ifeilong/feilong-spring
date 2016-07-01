@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.aop.log;
 
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -26,7 +28,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.spring.aop.AbstractAspect;
 
 /**
@@ -74,8 +75,7 @@ public class UseTimeLogableAspect extends AbstractAspect{
         Object result = proceedingJoinPoint.proceed();
         // 在来得到方法名吧,就是通知所要织入目标对象中的方法名称
 
-        Date endDate = new Date();
-        LOGGER.info("end [{}.{}],use time:{}", targetClassSimpleName, methodName, DateExtensionUtil.getIntervalForView(beginDate, endDate));
+        LOGGER.info("end [{}.{}],use time:{}", targetClassSimpleName, methodName, getIntervalForView(beginDate, new Date()));
 
         return result;
     }

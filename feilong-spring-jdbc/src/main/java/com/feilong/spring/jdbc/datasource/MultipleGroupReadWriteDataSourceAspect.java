@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,7 +34,6 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
 import com.feilong.core.Validator;
-import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.coreextension.lang.ThreadUtil;
 import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
@@ -314,14 +315,12 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         Object returnValue = proceedingJoinPoint.proceed(args);
 
         //***********************************************************
-        Date endDate = new Date();
-
         if (LOGGER.isInfoEnabled()){
             LOGGER.info(
                             "end proceed:[{}],thread info:[{}],time:{},return:[{}]",
                             format,
                             JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()),
-                            DateExtensionUtil.getIntervalForView(beginDate, endDate),
+                            getIntervalForView(beginDate, new Date()),
                             returnValue);
         }
         return returnValue;

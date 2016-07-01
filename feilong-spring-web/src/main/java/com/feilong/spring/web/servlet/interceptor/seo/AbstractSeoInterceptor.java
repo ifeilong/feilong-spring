@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.web.servlet.interceptor.seo;
 
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -26,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feilong.core.Validator;
-import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.lang.ClassUtil;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
@@ -94,8 +95,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
 
         request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
 
-        Date endDate = new Date();
-        LOGGER.debug("use time:{}", DateExtensionUtil.getIntervalForView(beginDate, endDate));
+        LOGGER.debug("use time:{}", getIntervalForView(beginDate, new Date()));
     }
 
     /**

@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.aop.log;
 
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -26,7 +28,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
-import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.lang.StringUtil;
 import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
@@ -87,10 +88,8 @@ public class LogAspect extends AbstractAspect{
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = methodSignature.getMethod();
 
-        String format = "method:%s(%s),耗时:%s";
-        Object[] objects = { method.getName(), proceedingJoinPoint.getArgs(), DateExtensionUtil.getIntervalForView(begin, end) };
-
-        Object message = StringUtil.format(format, objects);
+        Object[] objects = { method.getName(), proceedingJoinPoint.getArgs(), getIntervalForView(begin, end) };
+        Object message = StringUtil.format("method:%s(%s),use time:[%s]", objects);
         LOGGER.log(Level.toLevel(level), message);
 
         return result;

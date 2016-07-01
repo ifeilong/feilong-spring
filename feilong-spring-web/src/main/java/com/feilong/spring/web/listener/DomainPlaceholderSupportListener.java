@@ -31,6 +31,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.feilong.core.UncheckedIOException;
 import com.feilong.spring.web.util.WebSpringUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
+import com.feilong.web.domain.AbstractDomainListener;
 
 /**
  * 初始化配置监听器.
@@ -95,7 +96,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * </blockquote>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @see com.feilong.web.domain.DomainListener#CONFIG_LOCATION_PARAM
+ * @see com.feilong.web.domain.AbstractDomainListener#CONFIG_LOCATION_PARAM
  * @see com.feilong.spring.web.util.WebSpringUtil#getWebApplicationContext(ServletContext)
  * @see org.springframework.core.env.EnvironmentCapable#getEnvironment()
  * @see org.springframework.core.io.ResourceLoader#getResource(String)
@@ -103,7 +104,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * @see org.springframework.core.io.support.PropertiesLoaderUtils#loadProperties(Resource)
  * @since 1.1.1
  */
-public class DomainPlaceholderSupportListener extends com.feilong.web.domain.DomainListener{
+public class DomainPlaceholderSupportListener extends AbstractDomainListener{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainPlaceholderSupportListener.class);
@@ -111,25 +112,12 @@ public class DomainPlaceholderSupportListener extends com.feilong.web.domain.Dom
     /*
      * (non-Javadoc)
      * 
-     * @see com.feilong.servlet.listener.DomainListener#getDomainConfigLocation(javax.servlet.ServletContext)
+     * @see com.feilong.web.domain.AbstractDomainListener#loadDomainProperties(javax.servlet.ServletContext)
      */
     @Override
-    protected String getDomainConfigLocation(ServletContext servletContext){
-        WebApplicationContext webApplicationContext = WebSpringUtil.getRequiredWebApplicationContext(servletContext);
+    protected Properties loadDomainProperties(ServletContext servletContext){
+        String domainConfigLocation = resolverDomainConfigLocation(servletContext);
 
-        Environment environment = webApplicationContext.getEnvironment();
-
-        String domainConfigLocation = super.getDomainConfigLocation(servletContext);
-        return environment.resolvePlaceholders(domainConfigLocation);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.feilong.servlet.listener.DomainListener#loadDomainProperties(javax.servlet.ServletContext, java.lang.String)
-     */
-    @Override
-    protected Properties loadDomainProperties(ServletContext servletContext,String domainConfigLocation){
         //org.springframework.web.context.support.XmlWebApplicationContext
         WebApplicationContext webApplicationContext = WebSpringUtil.getRequiredWebApplicationContext(servletContext);
 
@@ -144,5 +132,20 @@ public class DomainPlaceholderSupportListener extends com.feilong.web.domain.Dom
             LOGGER.error(Slf4jUtil.format(messagePattern, domainConfigLocation), e);
             throw new UncheckedIOException(e);
         }
+    }
+
+    /**
+     * Resolver domain config location.
+     *
+     * @param servletContext
+     *            the servlet context
+     * @return the string
+     */
+    private String resolverDomainConfigLocation(ServletContext servletContext){
+        String domainConfigLocation = getConfigLocationParamValue(servletContext);
+
+        WebApplicationContext webApplicationContext = WebSpringUtil.getRequiredWebApplicationContext(servletContext);
+        Environment environment = webApplicationContext.getEnvironment();
+        return environment.resolvePlaceholders(domainConfigLocation);
     }
 }

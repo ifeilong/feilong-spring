@@ -15,13 +15,13 @@
  */
 package cn.javass.spring.chapter6.aop;
 
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+
 import java.util.Date;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.feilong.core.date.DateExtensionUtil;
 
 /**
  * The Class HelloWorldAspect.
@@ -53,7 +53,7 @@ public class HelloWorldAspect{
      */
     public void afterFinallyAdvice(){
         end = new Date();
-        LOGGER.info("2.......after finally advice,{},耗时:{}", begin, DateExtensionUtil.getIntervalForView(begin, end));
+        LOGGER.info("2.......after finally advice,{},耗时:{}", begin, getIntervalForView(begin, end));
     }
 
     /**
