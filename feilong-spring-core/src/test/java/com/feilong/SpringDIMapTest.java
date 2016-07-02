@@ -52,6 +52,6 @@ public class SpringDIMapTest{
     @Test
     public void testUser(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("feitian@");
-        LOGGER.info("diUser:{}", JsonUtil.format(diUser));
+        LOGGER.debug("diUser:{}", JsonUtil.format(diUser));
     }
 }

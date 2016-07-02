@@ -36,18 +36,18 @@ public class SpelUtilTest{
     @Test
     public void getValue(){
         String ex = "'Hello,World'";
-        LOGGER.info("" + SpelUtil.getValue(ex));
-        LOGGER.info("" + SpelUtil.getValue(ex + ".length()"));
-        LOGGER.info("" + SpelUtil.getValue(ex + ".concat('!')"));
-        LOGGER.info("" + SpelUtil.getValue(ex + ".class"));
-        LOGGER.info("" + SpelUtil.getValue(ex + ".bytes.length"));
-        LOGGER.info("" + SpelUtil.getValue("new String(" + ex + ").toUpperCase()"));
+        LOGGER.debug("" + SpelUtil.getValue(ex));
+        LOGGER.debug("" + SpelUtil.getValue(ex + ".length()"));
+        LOGGER.debug("" + SpelUtil.getValue(ex + ".concat('!')"));
+        LOGGER.debug("" + SpelUtil.getValue(ex + ".class"));
+        LOGGER.debug("" + SpelUtil.getValue(ex + ".bytes.length"));
+        LOGGER.debug("" + SpelUtil.getValue("new String(" + ex + ").toUpperCase()"));
     }
 
     @Test
     public void getValue1(){
         System.setProperty("feilong.site", "hongkong");
-        LOGGER.info("" + SpelUtil.getValue("#systemProperties['feilong.site']"));
-        //LOGGER.info("" + SpelUtil.getValue("${feilong.site}=='china'?'CHINA':(${feilong.site}=='hongkong'?'HONGKONG':'TAIWAN')"));
+        LOGGER.debug("" + SpelUtil.getValue("#systemProperties['feilong.site']"));
+        //LOGGER.debug("" + SpelUtil.getValue("${feilong.site}=='china'?'CHINA':(${feilong.site}=='hongkong'?'HONGKONG':'TAIWAN')"));
     }
 }

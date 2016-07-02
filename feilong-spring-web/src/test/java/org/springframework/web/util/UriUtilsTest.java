@@ -39,6 +39,6 @@ public class UriUtilsTest{
      */
     @Test
     public void testUriUtilsTest() throws UnsupportedEncodingException{
-        LOGGER.info(UriUtils.decode("%", CharsetType.UTF8));
+        LOGGER.debug(UriUtils.decode("%", CharsetType.UTF8));
     }
 }

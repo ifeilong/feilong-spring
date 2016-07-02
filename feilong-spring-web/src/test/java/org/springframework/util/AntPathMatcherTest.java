@@ -60,15 +60,15 @@ public class AntPathMatcherTest{
         requestPath = "/s/c-m-c-s-k-s-o.htm";// 请求路径
         patternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";// 路径匹配模式
         boolean result = PATH_MATCHER.match(patternPath, requestPath);
-        LOGGER.info(result + "");
+        LOGGER.debug(result + "");
         Map<String, String> map = PATH_MATCHER.extractUriTemplateVariables(patternPath, requestPath);
-        LOGGER.info("map:{}", JsonUtil.format(map));
+        LOGGER.debug("map:{}", JsonUtil.format(map));
         map.put("color", "XL");
         UriTemplate uriTemplate = new UriTemplate(patternPath);
         URI uri = uriTemplate.expand(map);
-        LOGGER.info(uri.toString());
+        LOGGER.debug(uri.toString());
         // UriComponents uriComponents = UriComponentsBuilder.fromPath(patternPath).buildAndExpand(map);
-        // LOGGER.info(uriComponents.toString());
+        // LOGGER.debug(uriComponents.toString());
     }
 
     /**
@@ -76,18 +76,18 @@ public class AntPathMatcherTest{
      */
     @Test
     public void testMatch1(){
-        LOGGER.info("" + PATH_MATCHER.match("/**/*.json", "/storelocator/list.json"));
-        LOGGER.info("" + PATH_MATCHER.match("/**/*.json", "/list.json"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**/*.json", "/storelocator/list.json"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**/*.json", "/list.json"));
     }
 
     @Test
     public void testMatch2(){
-        LOGGER.info("" + PATH_MATCHER.match("/**/*", "/"));
-        LOGGER.info("" + PATH_MATCHER.match("/**/*", "/a.jsp"));
-        LOGGER.info("" + PATH_MATCHER.match("/**/*", "/s/a.jsp"));
-        LOGGER.info("" + PATH_MATCHER.match("/**", "/"));
-        LOGGER.info("" + PATH_MATCHER.match("/**", "/a.jsp"));
-        LOGGER.info("" + PATH_MATCHER.match("/**", "/s/a.jsp"));
-        LOGGER.info("" + PATH_MATCHER.match("/**", "/s/a/a.jsp"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**/*", "/"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**/*", "/a.jsp"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**/*", "/s/a.jsp"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**", "/"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**", "/a.jsp"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**", "/s/a.jsp"));
+        LOGGER.debug("" + PATH_MATCHER.match("/**", "/s/a/a.jsp"));
     }
 }

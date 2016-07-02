@@ -40,26 +40,26 @@ public class HtmlUtilsTest{
     public void testHtmlUtils(){
         String specialStr = "<div id=\"testDiv\">test1;test2</div>";
         String str1 = HtmlUtils.htmlEscape(specialStr); // ①将 HTML 特殊字符转义为 HTML 通用转义序列;
-        LOGGER.info(str1);
+        LOGGER.debug(str1);
 
         String str2 = HtmlUtils.htmlEscapeDecimal(specialStr);// 将 HTML 特殊字符转义为带 # 的十进制数据转义序列;
-        LOGGER.info(str2);
+        LOGGER.debug(str2);
 
         String str3 = HtmlUtils.htmlEscapeHex(specialStr);// 将 HTML 特殊字符转义为带 # 的十六进制数据转义序列;
-        LOGGER.info(str3);
+        LOGGER.debug(str3);
 
         // ④下面对转义后字符串进行反向操作
-        LOGGER.info(HtmlUtils.htmlUnescape(str1));
-        LOGGER.info(HtmlUtils.htmlUnescape(str2));
-        LOGGER.info(HtmlUtils.htmlUnescape(str3));
+        LOGGER.debug(HtmlUtils.htmlUnescape(str1));
+        LOGGER.debug(HtmlUtils.htmlUnescape(str2));
+        LOGGER.debug(HtmlUtils.htmlUnescape(str3));
 
-        LOGGER.info(StringEscapeUtils.unescapeHtml4(str1));
-        LOGGER.info(StringEscapeUtils.unescapeHtml4(str2));
-        LOGGER.info(StringEscapeUtils.unescapeHtml4(str3));
+        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str1));
+        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str2));
+        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str3));
 
-        LOGGER.info(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str1));
-        LOGGER.info(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str2));
-        LOGGER.info(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str3));
+        LOGGER.debug(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str1));
+        LOGGER.debug(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str2));
+        LOGGER.debug(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str3));
     }
 
     /**
@@ -67,7 +67,7 @@ public class HtmlUtilsTest{
      */
     @Test
     public void htmlUnescape(){
-        LOGGER.info(HtmlUtils.htmlUnescape(a));
+        LOGGER.debug(HtmlUtils.htmlUnescape(a));
     }
 
     /**
@@ -75,7 +75,7 @@ public class HtmlUtilsTest{
      */
     @Test
     public void stringEscapeUtils(){
-        LOGGER.info(StringEscapeUtils.unescapeHtml4(a));
+        LOGGER.debug(StringEscapeUtils.unescapeHtml4(a));
     }
 
     /**
@@ -83,6 +83,6 @@ public class HtmlUtilsTest{
      */
     @Test
     public void stringEscapeUtils2(){
-        LOGGER.info(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(a));
+        LOGGER.debug(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(a));
     }
 }

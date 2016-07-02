@@ -45,6 +45,6 @@ public class SpringConstructorPropertiesTest{
      */
     @Test
     public void testDIConstructorProperties(){
-        LOGGER.info(JsonUtil.format(constructorPropertiesEntity));
+        LOGGER.debug(JsonUtil.format(constructorPropertiesEntity));
     }
 }

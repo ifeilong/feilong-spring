@@ -77,7 +77,7 @@ public class MultiThreadMemberManagerTest //extends AbstractJUnit4SpringContextT
          */
         @Override
         public void run(){
-            LOGGER.info("run thread,thread info:{}", JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
+            LOGGER.debug("run thread,thread info:{}", JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
             // memberManager.addUser("feilong");
             salesOrderManager.addUser("feilong");
             // memberManager.getUser("feilong");

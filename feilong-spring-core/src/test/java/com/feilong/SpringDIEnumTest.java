@@ -46,6 +46,6 @@ public class SpringDIEnumTest extends AbstractJUnit4SpringContextTests{
     @Test
     public void testPlatform(){
         String aString = "china".equals("china") ? "" : ("china".equals("china") ? "" : "");
-        LOGGER.info(JsonUtil.format(site));
+        LOGGER.debug(JsonUtil.format(site));
     }
 }

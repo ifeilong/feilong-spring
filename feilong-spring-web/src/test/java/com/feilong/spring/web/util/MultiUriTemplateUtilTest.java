@@ -45,7 +45,7 @@ public class MultiUriTemplateUtilTest{
         String variableName = "style";
         String value = "Lifestyle / Graphic";
         String valueSeparator = ",";
-        LOGGER.info(MultiUriTemplateUtil.expandWithMultiVariable(requestPath, matchingPatternPath, variableName, value, valueSeparator));
+        LOGGER.debug(MultiUriTemplateUtil.expandWithMultiVariable(requestPath, matchingPatternPath, variableName, value, valueSeparator));
     }
 
     /**
@@ -63,7 +63,7 @@ public class MultiUriTemplateUtilTest{
         String value = URIUtil.encode("Lifestyle / Graphic", CharsetType.UTF8);
 
         String valueSeparator = ",";
-        LOGGER.info(MultiUriTemplateUtil.expandWithMultiVariable(matchingPatternPath, map, variableName, value, valueSeparator));
+        LOGGER.debug(MultiUriTemplateUtil.expandWithMultiVariable(matchingPatternPath, map, variableName, value, valueSeparator));
     }
 
     /**
@@ -76,7 +76,7 @@ public class MultiUriTemplateUtilTest{
         String variableName = "style";
         String value = "Lifestyle / Graphic";
         String valueSeparator = "@";
-        LOGGER.info(MultiUriTemplateUtil.expandWithMultiVariable(requestPath, matchingPatternPath, variableName, value, valueSeparator));
+        LOGGER.debug(MultiUriTemplateUtil.expandWithMultiVariable(requestPath, matchingPatternPath, variableName, value, valueSeparator));
     }
 
     /**
@@ -89,7 +89,7 @@ public class MultiUriTemplateUtilTest{
         String variableName = "style";
         String value = "200";
         String valueSeparator = ",";
-        LOGGER.info(MultiUriTemplateUtil.removeMultiVariableValue(requestPath, matchingPatternPath, variableName, value, valueSeparator));
+        LOGGER.debug(MultiUriTemplateUtil.removeMultiVariableValue(requestPath, matchingPatternPath, variableName, value, valueSeparator));
     }
 
     /**
@@ -102,7 +102,7 @@ public class MultiUriTemplateUtilTest{
         String variableName = "style";
         String value = "200";
         String valueSeparator = ",";
-        LOGGER.info(MultiUriTemplateUtil.removeMultiVariableValue(requestPath, matchingPatternPath, variableName, value, valueSeparator));
+        LOGGER.debug(MultiUriTemplateUtil.removeMultiVariableValue(requestPath, matchingPatternPath, variableName, value, valueSeparator));
     }
 
     /**
@@ -115,6 +115,6 @@ public class MultiUriTemplateUtilTest{
         String variableName = "style";
         String value = "20000";
         String valueSeparator = ",";
-        LOGGER.info(MultiUriTemplateUtil.removeMultiVariableValue(requestPath, matchingPatternPath, variableName, value, valueSeparator));
+        LOGGER.debug(MultiUriTemplateUtil.removeMultiVariableValue(requestPath, matchingPatternPath, variableName, value, valueSeparator));
     }
 }

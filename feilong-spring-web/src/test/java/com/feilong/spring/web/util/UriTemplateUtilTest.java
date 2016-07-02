@@ -47,7 +47,7 @@ public class UriTemplateUtilTest{
     public void testGetVariableNames(){
         List<String> list = UriTemplateUtil.getVariableNames(uriTemplatePath);
 
-        LOGGER.info("list:{}", JsonUtil.format(list));
+        LOGGER.debug("list:{}", JsonUtil.format(list));
     }
 
     /**
@@ -56,7 +56,7 @@ public class UriTemplateUtilTest{
     @Test
     public void testExpandWithVariable(){
         String list = UriTemplateUtil.expandWithVariable(uriTemplatePath, "color", "a");
-        LOGGER.info(list);
+        LOGGER.debug(list);
     }
 
     /**
@@ -115,7 +115,7 @@ public class UriTemplateUtilTest{
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String variableName = "color";
         String value = "100";
-        LOGGER.info(UriTemplateUtil.expandWithVariable(requestPath, matchingPatternPath, variableName, value));
+        LOGGER.debug(UriTemplateUtil.expandWithVariable(requestPath, matchingPatternPath, variableName, value));
     }
 
     /**
@@ -126,7 +126,7 @@ public class UriTemplateUtilTest{
         String requestPath = "/s/c500-m60-cred-s-k-s100-o6.htm";
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String[] variableNames = { "color", "style" };
-        LOGGER.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
+        LOGGER.debug(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
     }
 
     /**
@@ -137,7 +137,7 @@ public class UriTemplateUtilTest{
         String requestPath = "/s/c500-m60-cred-s-k-s100-o6.htm";
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String[] variableNames = { "color", "style" };
-        LOGGER.info(UriTemplateUtil.retainVariablesValue(requestPath, matchingPatternPath, variableNames));
+        LOGGER.debug(UriTemplateUtil.retainVariablesValue(requestPath, matchingPatternPath, variableNames));
     }
 
     /**
@@ -148,7 +148,7 @@ public class UriTemplateUtilTest{
         String requestPath = "/c/m-caaa-s-k-s-o.htm";
         String matchingPatternPath = uriTemplatePath;
         Map<String, String> map = UriTemplateUtil.extractUriTemplateVariables(requestPath, matchingPatternPath);
-        LOGGER.info("map:{}", JsonUtil.format(map));
+        LOGGER.debug("map:{}", JsonUtil.format(map));
     }
 
     /**
@@ -161,7 +161,7 @@ public class UriTemplateUtilTest{
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String variableName = "color";
         String value = "100";
-        LOGGER.info(UriTemplateUtil.expandWithVariable(matchingPatternPath, variableName, value));
+        LOGGER.debug(UriTemplateUtil.expandWithVariable(matchingPatternPath, variableName, value));
 
     }
 
@@ -175,6 +175,6 @@ public class UriTemplateUtilTest{
         map.put("color", "100");
         map.put("size", "L");
         map.put("K", "aaaa");
-        LOGGER.info(UriTemplateUtil.expand(uriTemplatePath, map));
+        LOGGER.debug(UriTemplateUtil.expand(uriTemplatePath, map));
     }
 }

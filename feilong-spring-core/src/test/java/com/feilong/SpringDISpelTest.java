@@ -44,6 +44,6 @@ public class SpringDISpelTest extends AbstractJUnit4SpringContextTests{
      */
     @Test
     public void testPlatform(){
-        LOGGER.info(JsonUtil.format(user));
+        LOGGER.debug(JsonUtil.format(user));
     }
 }

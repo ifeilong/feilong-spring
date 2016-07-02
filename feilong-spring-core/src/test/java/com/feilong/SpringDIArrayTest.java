@@ -42,6 +42,6 @@ public class SpringDIArrayTest extends AbstractJUnit4SpringContextTests{
     @Test
     public void testDIUserArray(){
         DIUserArray diUserArray = applicationContext.getBean(DIUserArray.class);
-        LOGGER.info(JsonUtil.format(diUserArray));
+        LOGGER.debug(JsonUtil.format(diUserArray));
     }
 }

@@ -45,6 +45,6 @@ public class SpringDIConstantsTest extends AbstractJUnit4SpringContextTests{
      */
     @Test
     public void testPlatform(){
-        LOGGER.info(JsonUtil.format(platform));
+        LOGGER.debug(JsonUtil.format(platform));
     }
 }

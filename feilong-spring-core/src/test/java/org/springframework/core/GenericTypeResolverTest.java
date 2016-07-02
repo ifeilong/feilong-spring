@@ -38,6 +38,6 @@ public class GenericTypeResolverTest{
     @Test
     public void testGenericTypeResolverTest(){
         SkuItemRepositoryImpl4<SkuItem> skuItemRepositoryImpl4 = new SkuItemRepositoryImpl4<SkuItem>();
-        LOGGER.info(JsonUtil.format(GenericTypeResolver.getTypeVariableMap(skuItemRepositoryImpl4.getClass())));
+        LOGGER.debug(JsonUtil.format(GenericTypeResolver.getTypeVariableMap(skuItemRepositoryImpl4.getClass())));
     }
 }

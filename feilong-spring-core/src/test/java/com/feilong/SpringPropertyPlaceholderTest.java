@@ -57,9 +57,9 @@ public class SpringPropertyPlaceholderTest extends AbstractJUnit4SpringContextTe
      */
     @Test
     public void testDIUserArray(){
-        LOGGER.info(name);
-        LOGGER.info(skills);
-        LOGGER.info(JsonUtil.format(skillsArray));
-        LOGGER.info(JsonUtil.format(skillsArray2));
+        LOGGER.debug(name);
+        LOGGER.debug(skills);
+        LOGGER.debug(JsonUtil.format(skillsArray));
+        LOGGER.debug(JsonUtil.format(skillsArray2));
     }
 }

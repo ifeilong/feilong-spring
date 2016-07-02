@@ -40,6 +40,6 @@ public class SpringVersionTest{
      */
     @Test
     public void testGetVersion(){
-        LOGGER.info(SpringVersion.getVersion());
+        LOGGER.debug(SpringVersion.getVersion());
     }
 }
