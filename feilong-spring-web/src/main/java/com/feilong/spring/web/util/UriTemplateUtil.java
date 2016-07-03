@@ -15,9 +15,10 @@
  */
 package com.feilong.spring.web.util;
 
+import static com.feilong.core.bean.ConvertUtil.toMap;
+
 import java.net.URI;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,6 @@ import org.springframework.web.util.UriTemplate;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.feilong.core.Validator;
-import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
@@ -209,13 +209,27 @@ public class UriTemplateUtil{
      * <blockquote>
      * 
      * <pre class="code">
-     * For pattern "/hotels/{hotel}" and path "/hotels/1"
+     * 
+     * String requestPath = "/c/m-caaa-s-k-s-o.htm";
+     * String matchingPatternPath = "/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
+     * Map<String, String> map = UriTemplateUtil.extractUriTemplateVariables(requestPath, matchingPatternPath);
+     * LOGGER.debug("map:{}", JsonUtil.format(map));
+     * 
      * </pre>
      * 
      * 返回:
      * 
      * <pre class="code">
-     * a map containing "hotel"->"1".
+    {
+            "categoryCode": "",
+            "material": "",
+            "color": "aaa",
+            "size": "",
+            "kind": "",
+            "style": "",
+            "order": ""
+        }
+     * 
      * </pre>
      * 
      * </blockquote>
@@ -228,10 +242,13 @@ public class UriTemplateUtil{
      * @see org.springframework.util.AntPathMatcher
      * @see org.springframework.util.PathMatcher#extractUriTemplateVariables(String, String)
      */
-    public static Map<String, String> extractUriTemplateVariables(String requestPath,String matchingPatternPath){
-        LOGGER.debug("requestPath:[{}],matchingPatternPath:[{}]", requestPath, matchingPatternPath);
+    static Map<String, String> extractUriTemplateVariables(String requestPath,String matchingPatternPath){
         PathMatcher matcher = new AntPathMatcher();
-        return matcher.extractUriTemplateVariables(matchingPatternPath, requestPath);
+        Map<String, String> map = matcher.extractUriTemplateVariables(matchingPatternPath, requestPath);
+
+        LOGGER.debug("requestPath:[{}],matchingPatternPath:[{}],result:[{}]", requestPath, matchingPatternPath, JsonUtil.format(map));
+
+        return map;
     }
 
     //**************************************************************************************
@@ -239,14 +256,26 @@ public class UriTemplateUtil{
     /**
      * 扩充模板值.
      * 
+     * <h3>示例:</h3>
+     * 
+     * <blockquote>
+     * 
      * <pre class="code">
+     * 
      * String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
      * String variableName = "color";
      * String value = "100";
      * expandWithVariable(matchingPatternPath, variableName, value);
      * 
-     * return /s/c-m-c<span style="color:red">100</span>-s-k-s-o.htm
      * </pre>
+     * 
+     * 返回:
+     * 
+     * <pre class="code">
+     * /s/c-m-c<span style="color:red">100</span>-s-k-s-o.htm
+     * </pre>
+     * 
+     * </blockquote>
      * 
      * @param matchingPatternPath
      *            the matching pattern path
@@ -258,21 +287,32 @@ public class UriTemplateUtil{
      * @see #expand(String, Map)
      */
     public static String expandWithVariable(String matchingPatternPath,String variableName,String value){
-        return expand(matchingPatternPath, ConvertUtil.toMap(variableName, value));
+        return expand(matchingPatternPath, toMap(variableName, value));
     }
 
     /**
-     * 清除 基于 variableNames 变量名称的值.
+     * 删除 variableNames 变量名称的值.
+     * 
+     * <h3>示例:</h3>
+     * 
+     * <blockquote>
      * 
      * <pre class="code">
      * 
-     * String requestPath = &quot;/s/c500-m60-cred-s-k-s100-o6.htm&quot;;
-     * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;;
-     * String[] variableNames = { &quot;color&quot;, &quot;style&quot; };
-     * LOGGER.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
+     * String requestPath = "/s/c500-m60-cred-s-k-s100-o6.htm";
+     * String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
+     * String[] variableNames = { "color", "style" };
+     * LOGGER.debug(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
      * 
-     * return /s/c500-m60-c-s-k-s-o6.htm
      * </pre>
+     * 
+     * 返回:
+     * 
+     * <pre class="code">
+     * /s/c500-m60-c-s-k-s-o6.htm
+     * </pre>
+     * 
+     * </blockquote>
      * 
      * @param requestPath
      *            请求路径
@@ -286,26 +326,32 @@ public class UriTemplateUtil{
      */
     public static String clearVariablesValue(String requestPath,String matchingPatternPath,String[] variableNames){
         Map<String, String> map = extractUriTemplateVariables(requestPath, matchingPatternPath);
-        if (Validator.isNotNullOrEmpty(variableNames)){
-            for (String variableName : variableNames){
-                map.put(variableName, "");// 将这些变量的值 设为""
-            }
-        }
-        return expand(matchingPatternPath, map);
+        return expand(matchingPatternPath, MapUtil.getSubMapExcludeKeys(map, variableNames));
     }
 
     /**
      * 仅仅保留这些参数的值,和 clearVariablesValue相反.
      * 
+     * <h3>示例:</h3>
+     * 
+     * <blockquote>
+     * 
      * <pre class="code">
      * 
-     * String requestPath = &quot;/s/c500-m60-cred-s-k-s100-o6.htm&quot;;
-     * String matchingPatternPath = &quot;/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm&quot;;
-     * String[] variableNames = { &quot;color&quot;, &quot;style&quot; };
-     * LOGGER.info(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
+     * String requestPath = "/s/c500-m60-cred-s-k-s100-o6.htm";
+     * String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
+     * String[] variableNames = { "color", "style" };
+     * LOGGER.debug(UriTemplateUtil.retainVariablesValue(requestPath, matchingPatternPath, variableNames));
      * 
-     * return /s/c-m-cred-s-k-s100-o.htm
      * </pre>
+     * 
+     * 返回:
+     * 
+     * <pre class="code">
+     * /s/c-m-cred-s-k-s100-o.htm
+     * </pre>
+     * 
+     * </blockquote>
      * 
      * @param requestPath
      *            请求路径
@@ -319,28 +365,36 @@ public class UriTemplateUtil{
      * @see #expand(String, Map)
      */
     public static String retainVariablesValue(String requestPath,String matchingPatternPath,String[] variableNames){
-        Map<String, String> map = new HashMap<String, String>();
-
         if (Validator.isNotNullOrEmpty(variableNames)){
             Map<String, String> opMap = extractUriTemplateVariables(requestPath, matchingPatternPath);
-            for (String variableName : variableNames){
-                map.put(variableName, opMap.get(variableName));
-            }
+            return expand(matchingPatternPath, MapUtil.getSubMap(opMap, variableNames));
         }
-        return expand(matchingPatternPath, map);
+        return expand(matchingPatternPath, Collections.<String, String> emptyMap());
     }
 
+    //******************************************************************************
     /**
      * 扩充模板值.
      * 
+     * <h3>示例:</h3>
+     * 
+     * <blockquote>
+     * 
      * <pre class="code">
-     *  String uriTemplatePath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
-     *  Map<String, String> map = new HashMap<String, String>();
-     *  map.put("color", "100");
-     *  map.put("size", "L");
-     *   
-     * return /s/c-m-c<span style="color:red">100</span>-s<span style="color:red">L</span>-k-s-o.htm
+     * String uriTemplatePath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
+     * 
+     * Map{@code <String, String>} map = new HashMap{@code <String, String>}();
+     * map.put("color", "100");
+     * map.put("size", "L");
      * </pre>
+     * 
+     * 返回:
+     * 
+     * <pre class="code">
+     * /s/c-m-c<span style="color:red">100</span>-s<span style="color:red">L</span>-k-s-o.htm
+     * </pre>
+     * 
+     * </blockquote>
      * 
      * @param uriTemplatePath
      *            模板
@@ -357,10 +411,10 @@ public class UriTemplateUtil{
         // 所有的变量
         List<String> variableNames = getVariableNames(uriTemplatePath);
 
-        Map<String, String> opMap = new LinkedHashMap<String, String>();
+        Map<String, String> opMap = MapUtil.newLinkedHashMap(variableNames.size());
         // 基于变量 生成对应的 值空map
         for (String variableName : variableNames){
-            opMap.put(variableName, null);
+            opMap.put(variableName, null);//如果不设置默认值,那么会抛出异常 java.lang.IllegalArgumentException: Map has no value for 'categoryCode'
         }
 
         MapUtil.putAllIfNotNull(opMap, map);
@@ -372,6 +426,34 @@ public class UriTemplateUtil{
 
     /**
      * 变量名称 Return the names of the variables in the template, in order.
+     * 
+     * <h3>示例:</h3>
+     * 
+     * <blockquote>
+     * 
+     * <pre class="code">
+     * 
+     * List{@code <String>} list = UriTemplateUtil.getVariableNames("/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm");
+     * LOGGER.debug("list:{}", JsonUtil.format(list));
+     * 
+     * </pre>
+     * 
+     * 返回:
+     * 
+     * <pre class="code">
+     * [
+     * "categoryCode",
+     * "material",
+     * "color",
+     * "size",
+     * "kind",
+     * "style",
+     * "order"
+     * ]
+     * 
+     * </pre>
+     * 
+     * </blockquote>
      * 
      * @param uriTemplatePath
      *            the uri template path

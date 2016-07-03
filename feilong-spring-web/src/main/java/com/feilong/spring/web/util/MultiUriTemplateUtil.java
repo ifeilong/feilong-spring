@@ -165,28 +165,36 @@ public class MultiUriTemplateUtil{
                     String variableName,
                     String value,
                     String valueSeparator){
-
         Map<String, String> opMap = ObjectUtils.defaultIfNull(map, new HashMap<String, String>());
 
         // 原值
         String oldValue = opMap.get(variableName);
-        if (Validator.isNullOrEmpty(oldValue)){
-            opMap.put(variableName, value);
-        }else{
-            String[] oldValues = StringUtil.split(oldValue, valueSeparator);
-
-            List<String> list = ConvertUtil.toList(oldValues);
-
-            // 保证重复的value 不会被反复添加
-            if (list.contains(value)){
-                LOGGER.debug("list contains value:[{}]", value);
-            }else{
-                list.add(value);
-            }
-            ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-            opMap.put(variableName, ConvertUtil.toString(toStringConfig, list));
-        }
+        opMap.put(variableName, Validator.isNullOrEmpty(oldValue) ? value : buildMutiValue(value, valueSeparator, oldValue));
         return UriTemplateUtil.expand(matchingPatternPath, opMap);
+    }
+
+    /**
+     * Builds the muti value.
+     *
+     * @param value
+     *            the value
+     * @param valueSeparator
+     *            the value separator
+     * @param oldValue
+     *            the old value
+     * @return the string
+     * @since 1.8.0
+     */
+    private static String buildMutiValue(String value,String valueSeparator,String oldValue){
+        List<String> list = toList(oldValue, valueSeparator);
+
+        // 保证重复的value 不会被反复添加
+        if (list.contains(value)){
+            LOGGER.debug("list contains value:[{}]", value);
+        }else{
+            list.add(value);
+        }
+        return toMutiValue(list, valueSeparator);
     }
 
     //*******************************************************************************************
@@ -233,28 +241,54 @@ public class MultiUriTemplateUtil{
         String oldValue = map.get(variableName);
         // 如果没有值
         if (Validator.isNullOrEmpty(oldValue)){
-            Object[] objects = { requestPath, matchingPatternPath, variableName };
-            LOGGER.debug("the requestPath:{},matchingPatternPath:{},variableName:{},value is null or empty~~~", objects);
-            // 原样输出
-            return requestPath;
+            String messagePattern = "the requestPath:[{}],matchingPatternPath:[{}],variableName:[{}],value is null or empty~~~";
+            LOGGER.debug(messagePattern, requestPath, matchingPatternPath, variableName);
+            return requestPath; // 原样输出
         }
 
-        String[] oldValues = StringUtil.split(oldValue, valueSeparator);
-        List<String> list = ConvertUtil.toList(oldValues);
+        //************************************************************************************
+        List<String> list = toList(oldValue, valueSeparator);
 
         if (!list.contains(value)){
-            Object[] objects = { requestPath, matchingPatternPath, variableName, oldValue, value };
-            LOGGER.debug("requestPath:{},matchingPatternPath:{},variableName:{},oldValue:{},not contains({})~~~", objects);
-            // 原样输出
-            return requestPath;
+            String messagePattern = "requestPath:[{}],matchingPatternPath:[{}],variableName:[{}],oldValue:[{}],not contains({})~~~";
+            LOGGER.debug(messagePattern, requestPath, matchingPatternPath, variableName, oldValue, value);
+            return requestPath; // 原样输出
         }
 
-        // 如果值里面有 就移除
-        list.remove(value);
+        list.remove(value);// 如果值里面有 就移除
 
-        ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-        map.put(variableName, ConvertUtil.toString(toStringConfig, list));
+        map.put(variableName, toMutiValue(list, valueSeparator));
 
         return UriTemplateUtil.expand(matchingPatternPath, map);
+    }
+
+    /**
+     * To list.
+     *
+     * @param oldValue
+     *            the old value
+     * @param valueSeparator
+     *            the value separator
+     * @return the list
+     * @since 1.8.0
+     */
+    private static List<String> toList(String oldValue,String valueSeparator){
+        String[] oldValues = StringUtil.split(oldValue, valueSeparator);
+        return ConvertUtil.toList(oldValues);
+    }
+
+    /**
+     * To muti value.
+     *
+     * @param list
+     *            the list
+     * @param valueSeparator
+     *            the value separator
+     * @return the string
+     * @since 1.8.0
+     */
+    private static String toMutiValue(List<String> list,String valueSeparator){
+        ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
+        return ConvertUtil.toString(toStringConfig, list);
     }
 }

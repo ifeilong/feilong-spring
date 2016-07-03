@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.web.util;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,80 +35,21 @@ import com.feilong.tools.jsonlib.JsonUtil;
 public class UriTemplateUtilTest{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER          = LoggerFactory.getLogger(UriTemplateUtilTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UriTemplateUtilTest.class);
 
-    /** The uri template path. */
-    String                      uriTemplatePath = "/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
-
-    /**
-     * Test method for {@link com.feilong.spring.web.util.UriTemplateUtil#getVariableNames(java.lang.String)}.
-     */
     @Test
     public void testGetVariableNames(){
-        List<String> list = UriTemplateUtil.getVariableNames(uriTemplatePath);
-
+        List<String> list = UriTemplateUtil.getVariableNames("/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm");
         LOGGER.debug("list:{}", JsonUtil.format(list));
     }
 
-    /**
-     * Test expand with variable.
-     */
     @Test
     public void testExpandWithVariable(){
-        String list = UriTemplateUtil.expandWithVariable(uriTemplatePath, "color", "a");
-        LOGGER.debug(list);
+        String result = UriTemplateUtil
+                        .expandWithVariable("/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm", "color", "a");
+        LOGGER.debug(result);
     }
 
-    /**
-     * Test method for
-     * {@link com.feilong.spring.web.util.UriTemplateUtil#getUriTemplateVariableValue(javax.servlet.http.HttpServletRequest, java.lang.String)}
-     * .
-     */
-    @Test
-    public void testGetUriTemplateVariableValue(){
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for
-     * {@link com.feilong.spring.web.util.UriTemplateUtil#hasPathVarName(javax.servlet.http.HttpServletRequest, java.lang.String)}.
-     */
-    @Test
-    public void testHasPathVarName(){
-
-    }
-
-    /**
-     * Test method for {@link com.feilong.spring.web.util.UriTemplateUtil#getUriTemplateVariables(javax.servlet.http.HttpServletRequest)}.
-     */
-    @Test
-    public void testGetUriTemplateVariables(){
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link com.feilong.spring.web.util.UriTemplateUtil#getBestMatchingPattern(javax.servlet.http.HttpServletRequest)}.
-     */
-    @Test
-    public void testGetBestMatchingPattern(){
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for
-     * {@link com.feilong.spring.web.util.UriTemplateUtil#expandBestMatchingPattern(javax.servlet.http.HttpServletRequest, java.lang.String, java.lang.String)}
-     * .
-     */
-    @Test
-    public void testExpandBestMatchingPattern(){
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for
-     * {@link com.feilong.spring.web.util.UriTemplateUtil#expandWithVariable(java.lang.String, java.lang.String, java.lang.String, java.lang.String)}
-     * .
-     */
     @Test
     public void testExpandWithVariable3(){
         String requestPath = "/s/c-m-c-s-k-s100-o.htm";
@@ -118,63 +59,49 @@ public class UriTemplateUtilTest{
         LOGGER.debug(UriTemplateUtil.expandWithVariable(requestPath, matchingPatternPath, variableName, value));
     }
 
-    /**
-     * Clear variables value.
-     */
     @Test
     public void clearVariablesValue(){
         String requestPath = "/s/c500-m60-cred-s-k-s100-o6.htm";
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String[] variableNames = { "color", "style" };
-        LOGGER.debug(UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
+
+        assertEquals("/s/c500-m60-c-s-k-s-o6.htm", UriTemplateUtil.clearVariablesValue(requestPath, matchingPatternPath, variableNames));
     }
 
-    /**
-     * Retain variables value.
-     */
     @Test
     public void retainVariablesValue(){
         String requestPath = "/s/c500-m60-cred-s-k-s100-o6.htm";
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String[] variableNames = { "color", "style" };
         LOGGER.debug(UriTemplateUtil.retainVariablesValue(requestPath, matchingPatternPath, variableNames));
+        LOGGER.debug(UriTemplateUtil.retainVariablesValue(requestPath, matchingPatternPath, null));
     }
 
-    /**
-     * Test method for {@link com.feilong.spring.web.util.UriTemplateUtil#extractUriTemplateVariables(java.lang.String, java.lang.String)}.
-     */
     @Test
     public void testExtractUriTemplateVariables(){
         String requestPath = "/c/m-caaa-s-k-s-o.htm";
-        String matchingPatternPath = uriTemplatePath;
+        String matchingPatternPath = "/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         Map<String, String> map = UriTemplateUtil.extractUriTemplateVariables(requestPath, matchingPatternPath);
         LOGGER.debug("map:{}", JsonUtil.format(map));
     }
 
-    /**
-     * Test method for
-     * {@link com.feilong.spring.web.util.UriTemplateUtil#expandWithVariable(java.lang.String, java.lang.String, java.lang.String)}.
-     */
     @Test
     public void testExpandWithVariable2(){
-
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
         String variableName = "color";
         String value = "100";
         LOGGER.debug(UriTemplateUtil.expandWithVariable(matchingPatternPath, variableName, value));
-
     }
 
-    /**
-     * Test method for {@link com.feilong.spring.web.util.UriTemplateUtil#expand(java.lang.String, java.util.Map)}.
-     */
     @Test
     public void testExpand(){
         String uriTemplatePath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
+
         Map<String, String> map = new HashMap<String, String>();
         map.put("color", "100");
         map.put("size", "L");
         map.put("K", "aaaa");
+
         LOGGER.debug(UriTemplateUtil.expand(uriTemplatePath, map));
     }
 }
