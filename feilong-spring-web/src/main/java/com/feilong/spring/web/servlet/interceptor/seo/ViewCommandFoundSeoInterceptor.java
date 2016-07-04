@@ -57,7 +57,7 @@ import com.feilong.web.command.ViewCommand;
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see StandardSeoInterceptor
- * @since 5.0.0
+ * @since 1.5.1
  */
 public class ViewCommandFoundSeoInterceptor extends StandardSeoInterceptor{
 
