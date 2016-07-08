@@ -16,6 +16,13 @@
 
 	<packaging>pom</packaging>
 
+	<!-- 软件配置管理，如cvs 和svn -->
+	<scm>
+		<url>https://github.com/venusdrogon/feilong-spring</url>
+		<connection>scm:git:https://github.com/venusdrogon/feilong-spring</connection>
+		<developerConnection>scm:git:git@github.com:venusdrogon/feilong-spring.git</developerConnection>
+	</scm>
+
 	<modules>
 		<module>feilong-spring-core</module>
 		<module>feilong-spring-aop</module>

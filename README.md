@@ -12,6 +12,10 @@ Reduce development, Release ideas
 
 # :dragon: Maven使用配置
 
+feilong spring jar 你可以在这里 https://github.com/venusdrogon/feilong-platform/tree/repository/com/feilong/platform/spring 浏览 
+
+在maven `pom.xml` 中,您可以通过以下方式来配置:
+
 ```XML
 
 	<project>
