@@ -303,10 +303,8 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         String format = getProceedingJoinPointJsonInfoExcludeJsonException(proceedingJoinPoint);
 
         if (LOGGER.isInfoEnabled()){
-            LOGGER.info(
-                            "begin proceed ,ProceedingJoinPoint info:[{}],Thread info:{}",
-                            format,
-                            JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
+            String pattern = "begin proceed ,ProceedingJoinPoint info:[{}],Thread info:{}";
+            LOGGER.info(pattern, format, JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
         }
         Date beginDate = new Date();
 
@@ -316,11 +314,12 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
         //***********************************************************
         if (LOGGER.isInfoEnabled()){
+            String pattern = "end proceed:[{}],thread info:[{}],time:[{}],return:[{}]";
             LOGGER.info(
-                            "end proceed:[{}],thread info:[{}],time:{},return:[{}]",
+                            pattern,
                             format,
                             JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()),
-                            getIntervalForView(beginDate, new Date()),
+                            getIntervalForView(beginDate),
                             returnValue);
         }
         return returnValue;

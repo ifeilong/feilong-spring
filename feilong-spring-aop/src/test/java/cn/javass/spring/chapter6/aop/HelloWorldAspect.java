@@ -35,9 +35,6 @@ public class HelloWorldAspect{
     /** The begin. */
     private Date                begin;
 
-    /** The end. */
-    private Date                end;
-
     // 前置通知
     /**
      * Before advice.
@@ -52,8 +49,7 @@ public class HelloWorldAspect{
      * After finally advice.
      */
     public void afterFinallyAdvice(){
-        end = new Date();
-        LOGGER.info("2.......after finally advice,{},耗时:{}", begin, getIntervalForView(begin, end));
+        LOGGER.info("2.......after finally advice,{},耗时:{}", begin, getIntervalForView(begin));
     }
 
     /**

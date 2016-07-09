@@ -75,7 +75,7 @@ public class UseTimeLogableAspect extends AbstractAspect{
         Object result = proceedingJoinPoint.proceed();
         // 在来得到方法名吧,就是通知所要织入目标对象中的方法名称
 
-        LOGGER.info("end [{}.{}],use time:{}", targetClassSimpleName, methodName, getIntervalForView(beginDate, new Date()));
+        LOGGER.info("end [{}.{}],use time:{}", targetClassSimpleName, methodName, getIntervalForView(beginDate));
 
         return result;
     }

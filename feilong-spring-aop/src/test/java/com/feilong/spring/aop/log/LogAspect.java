@@ -77,8 +77,6 @@ public class LogAspect extends AbstractAspect{
         Object result = proceedingJoinPoint.proceed();
         // 在来得到方法名吧,就是通知所要织入目标对象中的方法名称
 
-        Date end = new Date();
-
         log = JoinPointUtil.findAnnotation(proceedingJoinPoint, Log.class);
 
         String level = log.level();
@@ -88,8 +86,8 @@ public class LogAspect extends AbstractAspect{
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = methodSignature.getMethod();
 
-        Object[] objects = { method.getName(), proceedingJoinPoint.getArgs(), getIntervalForView(begin, end) };
-        Object message = StringUtil.format("method:%s(%s),use time:[%s]", objects);
+        String message = StringUtil
+                        .format("method:%s(%s),use time:[%s]", method.getName(), proceedingJoinPoint.getArgs(), getIntervalForView(begin));
         LOGGER.log(Level.toLevel(level), message);
 
         return result;

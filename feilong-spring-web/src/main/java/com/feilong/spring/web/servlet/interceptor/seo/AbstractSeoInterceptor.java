@@ -86,16 +86,16 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
         //解析,如果有些参数没有值,将采用默认的 
         seoViewCommand = detectSeoViewCommand(seoViewCommand, request);
 
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug(
-                            "set seoViewCommand to request,attributeName is:[{}],value is:{}",
+        if (LOGGER.isTraceEnabled()){
+            LOGGER.trace(
+                            "set seoViewCommand to request,attributeName :[{}],value :{}",
                             seoViewCommandRequestAttributeName,
                             JsonUtil.format(seoViewCommand));
         }
 
         request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
 
-        LOGGER.debug("use time:{}", getIntervalForView(beginDate, new Date()));
+        LOGGER.debug("use time:{}", getIntervalForView(beginDate));
     }
 
     /**
