@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.core.CharsetType;
+import static com.feilong.core.CharsetType.UTF8;
 
 /**
  *
@@ -39,6 +39,6 @@ public class UriUtilsTest{
      */
     @Test
     public void testUriUtilsTest() throws UnsupportedEncodingException{
-        LOGGER.debug(UriUtils.decode("%", CharsetType.UTF8));
+        LOGGER.debug(UriUtils.decode("%", UTF8));
     }
 }

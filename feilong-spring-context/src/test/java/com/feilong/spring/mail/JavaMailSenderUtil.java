@@ -35,7 +35,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
-import com.feilong.core.CharsetType;
+import static com.feilong.core.CharsetType.UTF8;
 
 /**
  * The Class MailUtil.
@@ -90,7 +90,7 @@ public class JavaMailSenderUtil{
             public void prepare(MimeMessage mimeMessage) throws Exception{
                 // 这是一个生成Mime邮件简单工具,如果不使用GBK这个,中文会出现乱码
                 // 如果您使用的都是英文,那么可以使用MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                String encoding = CharsetType.UTF8;
+                String encoding = UTF8;
                 MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, encoding);
                 // 设置接收方的email地址
                 mimeMessageHelper.setTo(mailTo);
@@ -101,7 +101,7 @@ public class JavaMailSenderUtil{
                 mimeMessageHelper.setFrom(from);
                 String text = null;
                 text = "asdasdas";
-                // VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, vmfile, CharsetType.GBK, model);
+                // VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, vmfile, GBK, model);
                 // 从模板中加载要发送的内容,vmfile就是模板文件的名字
                 // 注意模板中有中文要加GBK,model中存放的是要替换模板中字段的值
                 mimeMessageHelper.setText(text, true);
@@ -141,7 +141,7 @@ public class JavaMailSenderUtil{
         try{
             mimeMessageHelper.setTo(to);
             mimeMessageHelper.setSubject(subject);
-            String encodeText = MimeUtility.encodeText("三国徐晃", CharsetType.UTF8, "B");
+            String encodeText = MimeUtility.encodeText("三国徐晃", UTF8, "B");
             mimeMessageHelper.setFrom(new InternetAddress("sanguoxuhuang@163.com", encodeText));
             mimeMessageHelper.setText(text, true);
         }catch (UnsupportedEncodingException e){

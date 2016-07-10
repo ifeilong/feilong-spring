@@ -27,10 +27,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-import com.feilong.core.DatePattern;
 import com.feilong.core.Validator;
 import com.feilong.servlet.http.HttpHeaders;
 import com.feilong.spring.web.servlet.LocaleUtil;
+
+import static com.feilong.core.DatePattern.COMMON_DATE;
 
 /**
  * 通用的 父类 AbstractController.
@@ -58,7 +59,7 @@ public abstract class AbstractController{
      */
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DatePattern.COMMON_DATE);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(COMMON_DATE);
         webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, true));
 
         // can be override to add new binding

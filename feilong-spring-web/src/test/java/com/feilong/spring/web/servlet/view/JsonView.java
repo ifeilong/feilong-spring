@@ -25,11 +25,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.view.AbstractView;
 
-import com.feilong.core.CharsetType;
 import com.feilong.io.entity.MimeType;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.ResponseUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.CharsetType.UTF8;
 
 /**
  * The Class JsonView.
@@ -48,7 +49,7 @@ public class JsonView extends AbstractView{
     public static final String  DEFAULT_CONTENT_TYPE = MimeType.JSON.getMime();
 
     /** The Constant DEFAULT_ENCODING. */
-    public static final String  DEFAULT_ENCODING     = CharsetType.UTF8;
+    public static final String  DEFAULT_ENCODING     = UTF8;
 
     /** The prefix json. */
     private boolean             prefixJson           = false;
@@ -121,8 +122,7 @@ public class JsonView extends AbstractView{
         response.getWriter().write(writeStr);
 
         if (LOGGER.isDebugEnabled()){
-            Object[] objects = { RequestUtil.getRequestFullURL(request, CharsetType.UTF8), filterString, writeStr };
-            LOGGER.debug("{} \t filterString:[{}] \n{}", objects);
+            LOGGER.debug("{} \t filterString:[{}] \n{}", RequestUtil.getRequestFullURL(request, UTF8), filterString, writeStr);
         }
     }
 

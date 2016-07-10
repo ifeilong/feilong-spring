@@ -36,6 +36,8 @@ import com.feilong.tools.security.symmetric.SymmetricEncryption;
 import com.feilong.tools.security.symmetric.SymmetricType;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
+import static com.feilong.core.CharsetType.UTF8;
+
 /**
  * The Class DefaultBrowsingHistory.
  * 
@@ -93,7 +95,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
     private SymmetricEncryption                           symmetricEncryption;
 
     /** 对称加密的编码. */
-    private String                                        symmetricEncryptionCharsetName = CharsetType.UTF8;
+    private String                                        symmetricEncryptionCharsetName = UTF8;
 
     //*********************************************************************************************
     /** The bean class. */

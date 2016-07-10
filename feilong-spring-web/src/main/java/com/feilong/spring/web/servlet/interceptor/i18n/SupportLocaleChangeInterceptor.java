@@ -26,9 +26,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import com.feilong.core.CharsetType;
 import com.feilong.core.Validator;
 import com.feilong.servlet.http.RequestUtil;
+
+import static com.feilong.core.CharsetType.UTF8;
 
 /**
  * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ,而参数中传入了 不存在的/不支持的 locale 调用
@@ -56,7 +57,7 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
         if (!(handler instanceof HandlerMethod)){
             LOGGER.warn(
                             "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
-                            RequestUtil.getRequestFullURL(request, CharsetType.UTF8),
+                            RequestUtil.getRequestFullURL(request, UTF8),
                             handler.getClass().getName());
             return true;
         }

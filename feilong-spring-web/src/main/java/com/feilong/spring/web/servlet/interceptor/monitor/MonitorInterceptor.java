@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.feilong.core.CharsetType;
 import com.feilong.core.TimeInterval;
 import com.feilong.core.Validator;
 import com.feilong.core.date.DateExtensionUtil;
@@ -38,6 +37,8 @@ import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.tools.jsonlib.JsonUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
+
+import static com.feilong.core.CharsetType.UTF8;
 
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
@@ -91,7 +92,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         if (!(handler instanceof HandlerMethod)){
             LOGGER.warn(
                             "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
-                            RequestUtil.getRequestFullURL(request, CharsetType.UTF8),
+                            RequestUtil.getRequestFullURL(request, UTF8),
                             handler.getClass().getName());
             return true;
         }
@@ -123,7 +124,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         if (!(handler instanceof HandlerMethod)){
             LOGGER.warn(
                             "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
-                            RequestUtil.getRequestFullURL(request, CharsetType.UTF8),
+                            RequestUtil.getRequestFullURL(request, UTF8),
                             handler.getClass().getName());
             return;
         }

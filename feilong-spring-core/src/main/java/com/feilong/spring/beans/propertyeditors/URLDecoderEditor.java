@@ -32,7 +32,7 @@ import com.feilong.core.net.URIUtil;
  * // 此处的参数也可以是ServletRequestDataBinder类型
  * public void initBinder(WebDataBinder binder) throws Exception{
  *     // 注册自定义的属性编辑器
- *     binder.registerCustomEditor(String.class, new URLDecoderEditor(CharsetType.UTF8));
+ *     binder.registerCustomEditor(String.class, new URLDecoderEditor(UTF8));
  * }
  * </pre></code>
  * 
