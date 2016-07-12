@@ -23,11 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.feilong.core.TimeInterval;
 import com.feilong.coreextension.lang.ThreadUtil;
 import com.feilong.spring.manager.java.MemberManager;
 import com.feilong.spring.manager.java.SalesOrderManager;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.TimeInterval.SECONDS_PER_MINUTE;
 
 /**
  * The Class MemberManagerTest.
@@ -62,7 +63,7 @@ public class MultiThreadMemberManagerTest //extends AbstractJUnit4SpringContextT
             Thread thread = new Thread(new TestRunnable());
             thread.start();
         }
-        Thread.sleep((long) (TimeInterval.SECONDS_PER_MINUTE * 1000 * 0.2));
+        Thread.sleep((long) (SECONDS_PER_MINUTE * 1000 * 0.2));
     }
 
     /**

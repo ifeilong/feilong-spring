@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.feilong.core.TimeInterval;
 import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
@@ -38,6 +37,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
 import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.TimeInterval.MILLISECOND_PER_SECONDS;
 import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
@@ -58,7 +58,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     private static final Logger  LOGGER                = LoggerFactory.getLogger(MonitorInterceptor.class);
 
     /** 性能阀值<code>{@value}</code>,目前初步设置为1.5s,如果构建command 超过1.5s,会有 error log 记录. */
-    private static final Integer PERFORMANCE_THRESHOLD = (int) (TimeInterval.MILLISECOND_PER_SECONDS * 1.5);
+    private static final Integer PERFORMANCE_THRESHOLD = (int) (MILLISECOND_PER_SECONDS * 1.5);
 
     /** The Constant STOPWATCH_ATTRIBUTE. */
     private static final String  STOPWATCH_ATTRIBUTE   = MonitorInterceptor.class.getName() + ".stopWatch";

@@ -65,7 +65,7 @@ import com.feilong.core.TimeInterval;
  * &#064;Controller
  * public class StdPDPController extends AbstractStandardController{
  * 
- *  &#064;ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)
+ *  &#064;ClientCache(value = SECONDS_PER_MINUTE * 5)
  *  &#064;RequestMapping(value = "/pdp/{code}",method = RequestMethod.GET)
  *  public ModelAndView doPDPHandler(HttpServletRequest request,HttpServletResponse response){
  *      .........
@@ -121,7 +121,7 @@ public @interface ClientCache{
      * 举例:
      * Cache-Control: max-age=3600
      * 
-     * 只需要设置 <code>@ClientCache(TimeInterval.SECONDS_PER_HOUR)</code>
+     * 只需要设置 <code>@ClientCache(SECONDS_PER_HOUR)</code>
      * </p>
      * <p>
      * if value <=0表示不缓存<br>

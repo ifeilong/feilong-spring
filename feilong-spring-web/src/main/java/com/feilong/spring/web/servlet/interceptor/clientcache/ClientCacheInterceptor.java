@@ -73,7 +73,7 @@ import static com.feilong.core.CharsetType.UTF8;
  * 
  * Example 2:标识请求需要5分钟 浏览器端缓存
  * <p>
- * <code>@ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)</code>
+ * <code>@ClientCache(value = SECONDS_PER_MINUTE * 5)</code>
  * </p>
  * </blockquote>
  * 

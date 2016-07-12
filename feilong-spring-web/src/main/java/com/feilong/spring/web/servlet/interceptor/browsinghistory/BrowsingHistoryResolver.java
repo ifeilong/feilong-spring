@@ -45,7 +45,7 @@ import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.Browsi
  *     private BrowsingHistoryResolver browsingHistoryResolver;
  * 
  *     &#64;ResponseBody
- *     &#64;ClientCache(value = TimeInterval.SECONDS_PER_MINUTE * 5)
+ *     &#64;ClientCache(value = SECONDS_PER_MINUTE * 5)
  *     &#64;RequestMapping(value = { "/item/{itemId}/recommendation.json" },method = RequestMethod.POST,headers = HEADER_WITH_AJAX_SPRINGMVC)
  *     public Map<RecommendationEngineType, List<RecommendationEngineCommand>> doHandler(
  *                     HttpServletRequest request,
