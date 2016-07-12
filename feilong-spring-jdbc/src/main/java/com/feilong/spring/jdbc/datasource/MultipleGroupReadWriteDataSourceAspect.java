@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
-
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -33,13 +31,16 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
-import com.feilong.core.Validator;
 import com.feilong.coreextension.lang.ThreadUtil;
 import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
 import com.feilong.spring.aop.ProceedingJoinPointUtil;
 import com.feilong.spring.transaction.interceptor.TransactionAttributeUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.Validator.isNotNullOrEmpty;
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
 
 import net.sf.json.JSONException;
 
@@ -116,7 +117,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         String groupName;
         //没有配置multipleGroupDataSourceAnnotation
         //没有配置 当然延续原来的 风格
-        if (null == multipleGroupDataSourceAnnotation || Validator.isNullOrEmpty(multipleGroupDataSourceAnnotation.value())){
+        if (null == multipleGroupDataSourceAnnotation || isNullOrEmpty(multipleGroupDataSourceAnnotation.value())){
             //nothing to do
             groupName = null;
         }else{
@@ -175,7 +176,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         }catch (Throwable e){
             throw e;
         }finally{
-            if (Validator.isNotNullOrEmpty(previousDataSourceNameHolder)){
+            if (isNotNullOrEmpty(previousDataSourceNameHolder)){
                 LOGGER.info(
                                 "Back to previous Read/Write Status:[{}],current thread info:[{}]",
                                 previousDataSourceNameHolder,
@@ -207,7 +208,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      * @since 1.1.1
      */
     private static boolean isSetHolder(TransactionAttribute transactionAttribute,String groupName){
-        if (Validator.isNotNullOrEmpty(groupName)){
+        if (isNotNullOrEmpty(groupName)){
             return true;
         }
 

@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.web.servlet.interceptor.seo;
 
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
-
 import java.util.Date;
 import java.util.Map;
 
@@ -27,11 +25,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.feilong.core.Validator;
 import com.feilong.core.lang.ClassUtil;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
 
 /**
  * Seo 的核心实现.
@@ -145,9 +145,9 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
      * 
      * <ul>
      * <li>如果 null==seoViewCommand,返回 <code>defaultSeoViewCommand</code></li>
-     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoDescription()),将设置<code>defaultSeoViewCommand</code>的Description</li>
-     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoKeywords()),将设置 <code>defaultSeoViewCommand</code>的SeoKeywords</li>
-     * <li>如果Validator.isNullOrEmpty(seoViewCommand.getSeoTitle()),将设置 <code>defaultSeoViewCommand</code>的SeoTitle</li>
+     * <li>如果isNullOrEmpty(seoViewCommand.getSeoDescription()),将设置<code>defaultSeoViewCommand</code>的Description</li>
+     * <li>如果isNullOrEmpty(seoViewCommand.getSeoKeywords()),将设置 <code>defaultSeoViewCommand</code>的SeoKeywords</li>
+     * <li>如果isNullOrEmpty(seoViewCommand.getSeoTitle()),将设置 <code>defaultSeoViewCommand</code>的SeoTitle</li>
      * </ul>
      *
      * @param seoViewCommand
@@ -165,15 +165,15 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
         }
 
         //SeoDescription
-        if (Validator.isNullOrEmpty(seoViewCommand.getSeoDescription())){
+        if (isNullOrEmpty(seoViewCommand.getSeoDescription())){
             seoViewCommand.setSeoDescription(defaultSeoViewCommand.getSeoDescription());
         }
         //SeoKeywords
-        if (Validator.isNullOrEmpty(seoViewCommand.getSeoKeywords())){
+        if (isNullOrEmpty(seoViewCommand.getSeoKeywords())){
             seoViewCommand.setSeoKeywords(defaultSeoViewCommand.getSeoKeywords());
         }
         //SeoTitle
-        if (Validator.isNullOrEmpty(seoViewCommand.getSeoTitle())){
+        if (isNullOrEmpty(seoViewCommand.getSeoTitle())){
             seoViewCommand.setSeoTitle(defaultSeoViewCommand.getSeoTitle());
         }
         return seoViewCommand;

@@ -29,11 +29,12 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.util.WebUtils;
 
-import com.feilong.core.Validator;
 import com.feilong.core.bean.PropertyUtil;
 import com.feilong.core.lang.reflect.FieldUtil;
 import com.feilong.spring.web.bind.annotation.LoginMember;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * 支持spring mvc requestMapping 方法支持 {@link LoginMember} 注解特殊参数.
@@ -142,7 +143,7 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
         }
 
         //如果没有配置#sessionMemberIdName,那么返回null
-        if (Validator.isNullOrEmpty(sessionMemberIdName)){
+        if (isNullOrEmpty(sessionMemberIdName)){
             return null;
         }
 

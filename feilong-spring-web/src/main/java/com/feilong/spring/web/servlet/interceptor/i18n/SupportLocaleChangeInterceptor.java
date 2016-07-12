@@ -26,10 +26,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import com.feilong.core.Validator;
 import com.feilong.servlet.http.RequestUtil;
 
 import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ,而参数中传入了 不存在的/不支持的 locale 调用
@@ -78,7 +78,7 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
      * @since 1.0.9
      */
     private boolean isSupport(HttpServletRequest request){
-        if (Validator.isNullOrEmpty(supportLocales)){
+        if (isNullOrEmpty(supportLocales)){
             LOGGER.warn("SupportLocaleChangeInterceptor's supportLocales is isNullOrEmpty,you can direct use LocaleChangeInterceptor");
             return true; //如果isNotNullOrEmpty supportLocales,那么 就是个普通的  LocaleChangeInterceptor
         }

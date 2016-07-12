@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.web.util;
 
-import static com.feilong.core.bean.ConvertUtil.toMap;
-
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -33,10 +31,13 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.util.UriTemplate;
 import org.springframework.web.util.UrlPathHelper;
 
-import com.feilong.core.Validator;
 import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.Validator.isNotNullOrEmpty;
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toMap;
 
 /**
  * {@link org.springframework.web.util.UriTemplate},此类是 单值 expend.
@@ -164,8 +165,7 @@ public class UriTemplateUtil{
 
         String queryString = request.getQueryString();
         UrlPathHelper urlPathHelper = new UrlPathHelper();
-        return urlPathHelper.getOriginatingContextPath(request) + expandUrl
-                        + (Validator.isNullOrEmpty(queryString) ? "?" + queryString : "");
+        return urlPathHelper.getOriginatingContextPath(request) + expandUrl + (isNullOrEmpty(queryString) ? "?" + queryString : "");
     }
 
     /**
@@ -365,7 +365,7 @@ public class UriTemplateUtil{
      * @see #expand(String, Map)
      */
     public static String retainVariablesValue(String requestPath,String matchingPatternPath,String[] variableNames){
-        if (Validator.isNotNullOrEmpty(variableNames)){
+        if (isNotNullOrEmpty(variableNames)){
             Map<String, String> opMap = extractUriTemplateVariables(requestPath, matchingPatternPath);
             return expand(matchingPatternPath, MapUtil.getSubMap(opMap, variableNames));
         }

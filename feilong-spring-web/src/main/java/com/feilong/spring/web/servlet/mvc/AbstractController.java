@@ -27,9 +27,10 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-import com.feilong.core.Validator;
 import com.feilong.servlet.http.HttpHeaders;
 import com.feilong.spring.web.servlet.LocaleUtil;
+
+import static com.feilong.core.Validator.isNotNullOrEmpty;
 
 import static com.feilong.core.DatePattern.COMMON_DATE;
 
@@ -112,7 +113,7 @@ public abstract class AbstractController{
      * @return the message
      */
     protected String getMessage(String key,Object...args){
-        if (Validator.isNotNullOrEmpty(key)){
+        if (isNotNullOrEmpty(key)){
             return context.getMessage(key, args, LocaleUtil.getLocale());
         }
         return null;

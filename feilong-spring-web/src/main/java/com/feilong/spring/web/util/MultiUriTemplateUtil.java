@@ -26,12 +26,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UrlPathHelper;
 
-import com.feilong.core.Validator;
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.bean.ToStringConfig;
 import com.feilong.core.lang.StringUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * MultiUriTemplateUtil,某些商城筛选条件可以是多值,比如 既是 儿童 又是 男子,此时url应该是混合式的而不是覆盖.
@@ -81,8 +82,7 @@ public class MultiUriTemplateUtil{
 
         String queryString = request.getQueryString();
         UrlPathHelper urlPathHelper = new UrlPathHelper();
-        return urlPathHelper.getOriginatingContextPath(request) + expandUrl
-                        + (Validator.isNullOrEmpty(queryString) ? "?" + queryString : "");
+        return urlPathHelper.getOriginatingContextPath(request) + expandUrl + (isNullOrEmpty(queryString) ? "?" + queryString : "");
     }
 
     /**
@@ -169,7 +169,7 @@ public class MultiUriTemplateUtil{
 
         // 原值
         String oldValue = opMap.get(variableName);
-        opMap.put(variableName, Validator.isNullOrEmpty(oldValue) ? value : buildMutiValue(value, valueSeparator, oldValue));
+        opMap.put(variableName, isNullOrEmpty(oldValue) ? value : buildMutiValue(value, valueSeparator, oldValue));
         return UriTemplateUtil.expand(matchingPatternPath, opMap);
     }
 
@@ -240,7 +240,7 @@ public class MultiUriTemplateUtil{
         Map<String, String> map = UriTemplateUtil.extractUriTemplateVariables(requestPath, matchingPatternPath);
         String oldValue = map.get(variableName);
         // 如果没有值
-        if (Validator.isNullOrEmpty(oldValue)){
+        if (isNullOrEmpty(oldValue)){
             String messagePattern = "the requestPath:[{}],matchingPatternPath:[{}],variableName:[{}],value is null or empty~~~";
             LOGGER.debug(messagePattern, requestPath, matchingPatternPath, variableName);
             return requestPath; // 原样输出

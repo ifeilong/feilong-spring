@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.core.CharsetType;
-import com.feilong.core.Validator;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.tools.jsonlib.JsonUtil;
@@ -37,6 +36,7 @@ import com.feilong.tools.security.symmetric.SymmetricType;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
 import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * The Class DefaultBrowsingHistory.
@@ -126,7 +126,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
             List<BrowsingHistoryCommand> list = getBrowsingHistory(request, response);
             List<BrowsingHistoryCommand> browsingHistoryList = buildBrowsingHistoryList(list, browsingHistoryCommand);
 
-            if (Validator.isNullOrEmpty(browsingHistoryList)){
+            if (isNullOrEmpty(browsingHistoryList)){
                 return;
             }
             saveToCookie(browsingHistoryList, response);
@@ -161,7 +161,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
      * @since 1.5.5
      */
     private List<BrowsingHistoryCommand> parseValue(HttpServletRequest request,HttpServletResponse response,String value){
-        if (Validator.isNullOrEmpty(value)){
+        if (isNullOrEmpty(value)){
             return Collections.emptyList();
         }
 
@@ -221,7 +221,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
      * @since 1.5.5
      */
     private void saveToCookie(List<BrowsingHistoryCommand> browsingHistoryList,HttpServletResponse response){
-        if (Validator.isNullOrEmpty(browsingHistoryList)){
+        if (isNullOrEmpty(browsingHistoryList)){
             LOGGER.debug("browsingHistoryList isNullOrEmpty,nothing to do~~");
             return;
         }

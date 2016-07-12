@@ -25,8 +25,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.feilong.core.Validator;
 import com.feilong.spring.web.servlet.LocaleUtil;
+
+import static com.feilong.core.Validator.isNotNullOrEmpty;
 
 /**
  * 专门处理每个页面的seo信息,在 {@link HandlerInterceptorAdapter#preHandle(HttpServletRequest, HttpServletResponse, Object)}流程中,查找 request作用域中的数据.
@@ -156,8 +157,8 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
      */
     @Override
     protected SeoViewCommand buildDefaultSeoViewCommand(HttpServletRequest request){
-        boolean isMessageConfig = Validator.isNotNullOrEmpty(keyNameSeoTitle) && Validator.isNotNullOrEmpty(keyNameSeoKeywords)
-                        && Validator.isNotNullOrEmpty(keyNameSeoDescription);
+        boolean isMessageConfig = isNotNullOrEmpty(keyNameSeoTitle) && isNotNullOrEmpty(keyNameSeoKeywords)
+                        && isNotNullOrEmpty(keyNameSeoDescription);
         if (isMessageConfig){
             return buildSeoViewCommandFromMessage();
         }

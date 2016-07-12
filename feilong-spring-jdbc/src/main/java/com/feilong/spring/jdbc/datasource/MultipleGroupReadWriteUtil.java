@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
-import com.feilong.core.Validator;
+import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * The Class MultipleGroupReadWriteUtil.
@@ -46,7 +46,7 @@ public class MultipleGroupReadWriteUtil{
      * @since 1.1.1
      */
     public static String getTargetDataSourcesKey(String groupName,String readWriteSupportType){
-        String gName = Validator.isNullOrEmpty(groupName) ? DEFAULT_GROUP_NAME : groupName;
+        String gName = isNullOrEmpty(groupName) ? DEFAULT_GROUP_NAME : groupName;
         return gName + "@" + readWriteSupportType;
     }
 

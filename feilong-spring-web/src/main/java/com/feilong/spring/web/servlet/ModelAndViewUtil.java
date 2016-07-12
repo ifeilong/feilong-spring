@@ -41,10 +41,11 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
 
-import com.feilong.core.Validator;
 import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * The Class ModelAndViewUtil.
@@ -140,11 +141,11 @@ public final class ModelAndViewUtil{
      * @return the view name
      */
     public static String getViewName(ModelAndView modelAndView){
-        if (Validator.isNullOrEmpty(modelAndView)){
+        if (isNullOrEmpty(modelAndView)){
             return StringUtils.EMPTY;
         }
 
         View view = modelAndView.getView();
-        return Validator.isNullOrEmpty(view) ? modelAndView.getViewName() : view.toString();
+        return isNullOrEmpty(view) ? modelAndView.getViewName() : view.toString();
     }
 }

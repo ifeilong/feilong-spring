@@ -27,10 +27,11 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.core.Validator;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * The Class AbstractBrowsingHistoryResolver.
@@ -60,7 +61,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
             LOGGER.debug("browsingHistoryItemIds:[{}],excludeId:[{}]", JsonUtil.format(browsingHistoryItemIds), excludeId);
         }
 
-        if (Validator.isNullOrEmpty(browsingHistoryItemIds)){
+        if (isNullOrEmpty(browsingHistoryItemIds)){
             return Collections.emptyList();
         }
         browsingHistoryItemIds.remove(excludeId);
@@ -110,7 +111,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
                     List<BrowsingHistoryCommand> list,
                     BrowsingHistoryCommand browsingHistoryCommand){
         //**********如果cookie没有,表示第一次访问PDP页面 ,这时逻辑是构建一个往cookie里加入********************
-        if (Validator.isNullOrEmpty(list)){
+        if (isNullOrEmpty(list)){
             LOGGER.debug("list is null or empty,will construct a new list and put element into", list);
             return buildNewBrowsingHistoryList(browsingHistoryCommand);
         }
