@@ -15,7 +15,6 @@
  */
 package com.feilong.spring.context;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -27,6 +26,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
+
+import static com.feilong.core.util.SortUtil.sort;
 
 /**
  * The Class ApplicationContextUtil.
@@ -71,7 +72,8 @@ public final class ApplicationContextUtil{
         map.put("applicationContext.getParent() info", getApplicationContextForLogMap(applicationContext.getParent()));
 
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
-        Arrays.sort(beanDefinitionNames);
+
+        sort(beanDefinitionNames);
 
         map.put("applicationContext.getBeanDefinitionNames()", beanDefinitionNames);
 
