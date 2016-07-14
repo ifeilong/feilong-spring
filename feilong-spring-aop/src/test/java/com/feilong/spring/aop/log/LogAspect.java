@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.aop.log;
 
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
-
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -31,6 +29,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 import com.feilong.core.lang.StringUtil;
 import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
+
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
 
 /**
  * 日志切面 aspect,作用于 所有使用 {@link com.feilong.spring.aop.log.Log}标注 的方法.

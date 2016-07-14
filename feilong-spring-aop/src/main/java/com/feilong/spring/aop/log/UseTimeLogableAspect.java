@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.aop.log;
 
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
-
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -29,6 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.spring.aop.AbstractAspect;
+
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
 
 /**
  * 用来给所有实现{@link UseTimeLogable}接口的方法输出耗时日志用的.

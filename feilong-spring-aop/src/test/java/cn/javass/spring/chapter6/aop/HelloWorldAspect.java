@@ -15,13 +15,13 @@
  */
 package cn.javass.spring.chapter6.aop;
 
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
-
 import java.util.Date;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
 
 /**
  * The Class HelloWorldAspect.
