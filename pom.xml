@@ -16,7 +16,7 @@
 
 	<packaging>pom</packaging>
 
-	<!-- 软件配置管理，如cvs 和svn -->
+	<!-- 软件配置管理SCM (Software Configuration Management), 如cvs ,svn ,git -->
 	<scm>
 		<url>https://github.com/venusdrogon/feilong-spring</url>
 		<connection>scm:git:https://github.com/venusdrogon/feilong-spring</connection>
