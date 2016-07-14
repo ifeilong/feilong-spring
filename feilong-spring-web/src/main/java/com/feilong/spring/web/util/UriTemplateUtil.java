@@ -38,6 +38,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toMap;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
 /**
  * {@link org.springframework.web.util.UriTemplate},此类是 单值 expend.
@@ -411,7 +412,7 @@ public class UriTemplateUtil{
         // 所有的变量
         List<String> variableNames = getVariableNames(uriTemplatePath);
 
-        Map<String, String> opMap = MapUtil.newLinkedHashMap(variableNames.size());
+        Map<String, String> opMap = newLinkedHashMap(variableNames.size());
         // 基于变量 生成对应的 值空map
         for (String variableName : variableNames){
             opMap.put(variableName, null);//如果不设置默认值,那么会抛出异常 java.lang.IllegalArgumentException: Map has no value for 'categoryCode'

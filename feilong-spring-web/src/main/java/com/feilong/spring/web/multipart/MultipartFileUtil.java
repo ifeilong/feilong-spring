@@ -19,8 +19,9 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.feilong.core.util.MapUtil;
 import com.feilong.io.FileUtil;
+
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
 /**
  * The Class MultipartFileUtil.
@@ -46,7 +47,7 @@ public final class MultipartFileUtil{
      * @since 1.0.9
      */
     public static Map<String, Object> getMultipartFileInfoMapForLogMap(MultipartFile importFile){
-        Map<String, Object> map = MapUtil.newLinkedHashMap(5);
+        Map<String, Object> map = newLinkedHashMap(5);
         map.put("importFile.getContentType()", importFile.getContentType());
         map.put("importFile.getName()", importFile.getName());
         map.put("importFile.getOriginalFilename()", importFile.getOriginalFilename());
