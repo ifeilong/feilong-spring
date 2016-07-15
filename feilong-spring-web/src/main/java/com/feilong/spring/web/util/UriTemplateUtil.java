@@ -218,7 +218,7 @@ public class UriTemplateUtil{
      * 
      * </pre>
      * 
-     * 返回:
+     * <b>返回:</b>
      * 
      * <pre class="code">
     {
@@ -270,7 +270,7 @@ public class UriTemplateUtil{
      * 
      * </pre>
      * 
-     * 返回:
+     * <b>返回:</b>
      * 
      * <pre class="code">
      * /s/c-m-c<span style="color:red">100</span>-s-k-s-o.htm
@@ -307,7 +307,7 @@ public class UriTemplateUtil{
      * 
      * </pre>
      * 
-     * 返回:
+     * <b>返回:</b>
      * 
      * <pre class="code">
      * /s/c500-m60-c-s-k-s-o6.htm
@@ -346,7 +346,7 @@ public class UriTemplateUtil{
      * 
      * </pre>
      * 
-     * 返回:
+     * <b>返回:</b>
      * 
      * <pre class="code">
      * /s/c-m-cred-s-k-s100-o.htm
@@ -389,7 +389,7 @@ public class UriTemplateUtil{
      * map.put("size", "L");
      * </pre>
      * 
-     * 返回:
+     * <b>返回:</b>
      * 
      * <pre class="code">
      * /s/c-m-c<span style="color:red">100</span>-s<span style="color:red">L</span>-k-s-o.htm
@@ -439,7 +439,7 @@ public class UriTemplateUtil{
      * 
      * </pre>
      * 
-     * 返回:
+     * <b>返回:</b>
      * 
      * <pre class="code">
      * [
