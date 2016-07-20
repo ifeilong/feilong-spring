@@ -15,13 +15,14 @@
  */
 package com.feilong.spring.web.servlet;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -142,7 +143,7 @@ public final class ModelAndViewUtil{
      */
     public static String getViewName(ModelAndView modelAndView){
         if (isNullOrEmpty(modelAndView)){
-            return StringUtils.EMPTY;
+            return EMPTY;
         }
 
         View view = modelAndView.getView();
