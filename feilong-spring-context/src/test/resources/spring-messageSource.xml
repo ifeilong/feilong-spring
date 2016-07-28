@@ -15,6 +15,8 @@
 	<!-- 内部使用 org.springframework.core.io.DefaultResourceLoader 来读取 , -->
 	<!-- 支持classpath: ,但是不支持 classpath*: -->
 	<!-- 不支持通配符 比如 i18n/* -->
+
+	<!-- 配置文件名字非语言部分不要出现 下划线_ ,否则正则表达式截取会出现错误的结果 -->
 	<bean id="messageSource" class="com.feilong.spring.messagesource.PathMatchingReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>

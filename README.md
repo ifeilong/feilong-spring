@@ -71,16 +71,6 @@ feilong spring jar 你可以在这里 https://github.com/venusdrogon/feilong-pla
 	</project>
 ```
 
-# feilong-spring module:
-
-Name | Description | JDK编译版本
------------- | ---------|------------
-`feilong-spring-aop` | 常用aop的封装 | 1.7
-`feilong-spring-context` | 常用context的封装  | 1.7
-`feilong-spring-core` |  常用core的封装  | 1.7
-`feilong-spring-jdbc` |  常用jdbc的封装  | 1.7
-`feilong-spring-web` |  常用web的封装  | 1.7
-
 # :memo: 说明
 
 1. 基于`Apache2` 协议,您可以下载,代码用于闭源项目,但每个修改的过的文件必须放置版权说明;

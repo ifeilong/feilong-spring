@@ -15,6 +15,10 @@
  */
 package com.feilong.spring.messagesource;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
+import static org.springframework.util.ResourceUtils.JAR_URL_SEPARATOR;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,9 +33,13 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.ResourceUtils;
 
-import com.feilong.core.bean.ConvertUtil;
+import com.feilong.core.UncheckedIOException;
+import com.feilong.core.lang.StringUtil;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
+
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toArray;
 
 /**
  * 支持通配符配置的 {@link ReloadableResourceBundleMessageSource}.
@@ -58,8 +66,14 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * }
  * </pre>
  * 
- * <p>
- * 也支持 不带通配符形式的配置 ,如
+ * </blockquote>
+ * 
+ * <h3>注意事项:</h3>
+ * <blockquote>
+ * <ol>
+ * <li>由于使用正则表达式来截取扫描的文件,如果文件名称出现非语言的下划线_,可能会出现文件名称不准确的情况</li>
+ * <li>如果重复的配置,将会去重</li>
+ * <li>也支持不带通配符形式的配置 ,如
  * 
  * <pre class="code">
  * {@code
@@ -67,12 +81,9 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * }
  * </pre>
  * 
- * </p>
- * 
- * <p>
- * 如果重复的配置,将会去重
- * </p>
- * 
+ * </li>
+ * <li></li>
+ * </ol>
  * </blockquote>
  * 
  * 
@@ -85,7 +96,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * </p>
  * </blockquote>
  * 
- * <h3>关于 {@link ReloadableResourceBundleMessageSource}:</h3>
+ * <h3>关于Spring自带的 {@link ReloadableResourceBundleMessageSource}:</h3>
  * 
  * <blockquote>
  * <ol>
@@ -116,23 +127,42 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
      */
     @Override
     public void setBasenames(String...basenames){
-        LOGGER.info("input basenames:{}", JsonUtil.format(basenames));
+        LOGGER.info("begin parse input basenames:{}", JsonUtil.format(basenames));
 
-        List<String> basenameList = new ArrayList<String>();
+        List<String> basenameList = resolverBasenameList(basenames);
+        //*************************************************************************
+
+        //去重
+        List<String> removeDuplicateBasenameList = CollectionsUtil.removeDuplicate(basenameList);
+        String[] finalBaseNames = toArray(removeDuplicateBasenameList, String.class);
+
+        LOGGER.info("resolver finalBaseNames:{}", JsonUtil.format(finalBaseNames));
+        super.setBasenames(finalBaseNames);
+    }
+
+    /**
+     * Resolver basename list.
+     *
+     * @param basenames
+     *            the basenames
+     * @return the list
+     * @since 1.8.2
+     */
+    private List<String> resolverBasenameList(String...basenames){
+        List<String> basenameList = new ArrayList<>();
         for (String basename : basenames){
+            if (isNullOrEmpty(basename)){
+                LOGGER.warn("basename:[{}] is null or empty", basename);
+                continue;
+            }
+
             if (basename.contains("*")){//如果带有通配符
                 basenameList.addAll(resolverWildcardConfig(basename));
             }else{
                 basenameList.add(basename);
             }
         }
-
-        //去重
-        List<String> removeDuplicateBasenameList = CollectionsUtil.removeDuplicate(basenameList);
-        String[] finalBaseNames = ConvertUtil.toArray(removeDuplicateBasenameList, String.class);
-
-        LOGGER.info("finalBaseNames:{}", JsonUtil.format(finalBaseNames));
-        super.setBasenames(finalBaseNames);
+        return basenameList;
     }
 
     /**
@@ -144,18 +174,18 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
      * @since 1.5.0
      */
     private List<String> resolverWildcardConfig(String basename){
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         try{
             Resource[] resources = resourcePatternResolver.getResources(basename);
             for (Resource resource : resources){
                 list.add(resolverBaseName(resource));
             }
+            return list;
         }catch (IOException e){
             LOGGER.error("", e);
+            throw new UncheckedIOException(e);
         }
-
-        return list;
     }
 
     /**
@@ -166,22 +196,31 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
      * @return the string
      * @throws IOException
      *             the IO exception
-     * 
      * @see <a href="https://searchcode.com/codesearch/view/17495983/#">https://searchcode.com/codesearch/view/17495983/#</a>
+     * @see <a href=
+     *      "https://github.com/asual/summer/blob/8635d0799db7588c7ebf7e989a11e99294951b83/modules/core/src/main/java/com/asual/summer/core/resource/MessageResource.java">
+     *      MessageResource</a>
      */
     private static String resolverBaseName(Resource resource) throws IOException{
         URL url = resource.getURL();
         String file = url.getFile();
 
         boolean isJar = ResourceUtils.isJarURL(url);
+        String replaceFirst = file.replaceFirst(isJar ? "^.*" + JAR_URL_SEPARATOR : "^(.*/test-classes|.*/classes|.*/resources)/", "");
 
-        String baseName = ResourceUtils.CLASSPATH_URL_PREFIX + file
-                        .replaceFirst(isJar ? "^.*" + ResourceUtils.JAR_URL_SEPARATOR : "^(.*/test-classes|.*/classes|.*/resources)/", "")
-                        .replaceAll("(_\\w+){0,3}\\.(properties|xml)", "");
+        LOGGER.debug("file:[{}],replaceFirst:[{}]", url.getFile(), replaceFirst);
 
-        LOGGER.debug("" + resource.getURL() + "(====>)" + baseName);
+        //help_message_en_GB.properties
+        //message_zh_CN.properties
+
+        String replaceAll = StringUtil.replaceAll(replaceFirst, "(_\\w+){0,3}\\.(properties|xml)", EMPTY);
+        String baseName = CLASSPATH_URL_PREFIX + replaceAll;
+
+        LOGGER.debug("file:[{}],baseName is:[{}]", url.getFile(), baseName);
         return baseName;
     }
+
+    //*******************************************************************************************************
 
     /**
      * 设置 resource pattern resolver.
