@@ -15,7 +15,6 @@
  */
 package com.feilong.spring.aop;
 
-import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -46,22 +45,27 @@ public class ProceedingJoinPointUtil{
      * @return the map for log
      */
     public static final Map<String, Object> getMapForLog(ProceedingJoinPoint proceedingJoinPoint){
-        Signature signature = proceedingJoinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-
-        Method method = methodSignature.getMethod();
-        Object[] args = proceedingJoinPoint.getArgs();
-
-        Object target = proceedingJoinPoint.getTarget();
+        MethodSignature methodSignature = getMethodSignature(proceedingJoinPoint);
 
         Class<?> declaringType = methodSignature.getDeclaringType();
 
-        Class<? extends Object> targetClass = target.getClass();
-
         Map<String, Object> map = new LinkedHashMap<String, Object>();
-        map.put("target", targetClass.getCanonicalName());
-        map.put("method", method.getName());
-        map.put("args", args);
+        map.put("target", proceedingJoinPoint.getTarget().getClass().getCanonicalName());
+        map.put("method", methodSignature.getMethod().getName());
+        map.put("args", proceedingJoinPoint.getArgs());
         return map;
+    }
+
+    /**
+     * Gets the method signature.
+     *
+     * @param proceedingJoinPoint
+     *            the proceeding join point
+     * @return the method signature
+     * @since 1.8.3
+     */
+    private static MethodSignature getMethodSignature(ProceedingJoinPoint proceedingJoinPoint){
+        Signature signature = proceedingJoinPoint.getSignature();
+        return (MethodSignature) signature;
     }
 }

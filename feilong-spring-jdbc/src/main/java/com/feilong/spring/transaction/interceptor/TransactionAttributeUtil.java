@@ -15,11 +15,26 @@
  */
 package com.feilong.spring.transaction.interceptor;
 
+import static org.apache.commons.lang3.tuple.Pair.of;
+import static org.springframework.transaction.TransactionDefinition.ISOLATION_DEFAULT;
+import static org.springframework.transaction.TransactionDefinition.ISOLATION_READ_COMMITTED;
+import static org.springframework.transaction.TransactionDefinition.ISOLATION_READ_UNCOMMITTED;
+import static org.springframework.transaction.TransactionDefinition.ISOLATION_REPEATABLE_READ;
+import static org.springframework.transaction.TransactionDefinition.ISOLATION_SERIALIZABLE;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_MANDATORY;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NESTED;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NEVER;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NOT_SUPPORTED;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRED;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_SUPPORTS;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.interceptor.TransactionAttribute;
+
+import static com.feilong.core.bean.ConvertUtil.toMap;
 
 /**
  * The Class TransactionAttributeUtil.
@@ -31,12 +46,63 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  */
 public class TransactionAttributeUtil{
 
+    /**
+     * 隔离性级别.
+     * 
+     * @see org.springframework.transaction.TransactionDefinition#ISOLATION_DEFAULT
+     * @see org.springframework.transaction.TransactionDefinition#ISOLATION_READ_COMMITTED
+     * @see org.springframework.transaction.TransactionDefinition#ISOLATION_READ_UNCOMMITTED
+     * @see org.springframework.transaction.TransactionDefinition#ISOLATION_REPEATABLE_READ
+     * @see org.springframework.transaction.TransactionDefinition#ISOLATION_SERIALIZABLE
+     * 
+     * @see java.sql.Connection#TRANSACTION_READ_UNCOMMITTED
+     * @see java.sql.Connection#TRANSACTION_READ_COMMITTED
+     * @see java.sql.Connection#TRANSACTION_REPEATABLE_READ
+     * @see java.sql.Connection#TRANSACTION_SERIALIZABLE
+     */
+    private static final Map<Integer, String> ISOLATION_LEVEL_AND_NAME_MAP      = toMap(
+                    of(ISOLATION_DEFAULT, "default"),
+                    of(ISOLATION_READ_COMMITTED, "read_committed"),
+                    of(ISOLATION_READ_UNCOMMITTED, "read_uncommitted"),
+                    of(ISOLATION_REPEATABLE_READ, "repeatable_read"),
+                    of(ISOLATION_SERIALIZABLE, "serializable"));
+
+    /**
+     * 事务传播行为.
+     * 
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_MANDATORY
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_NESTED
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_NEVER
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_NOT_SUPPORTED
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_REQUIRED
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_REQUIRES_NEW
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_SUPPORTS
+     */
+    private static final Map<Integer, String> PROPAGATION_BEHAVIOR_AND_NAME_MAP = toMap(
+                    //默认的事务传播行为,表示必须有逻辑事务,否则新建一个事务
+                    of(PROPAGATION_REQUIRED, "required"),
+                    //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚.
+                    of(PROPAGATION_REQUIRES_NEW, "requires_new"),
+                    //指如果当前存在逻辑事务,就加入到该逻辑事务, 如果当前没有逻辑事务,就以非事务方式执行.
+                    of(PROPAGATION_SUPPORTS, "supports"),
+                    //不支持事务,如果当前存在事务则暂停该事务,如果当前存在逻辑事务,就把当前事务暂停,以非事务方式执行
+                    of(PROPAGATION_NOT_SUPPORTED, "not_supported"),
+                    //如果当前有事务,使用当前事务执行,如果当前没有事务,则抛出异常(IllegalTransactionStateException)
+                    of(PROPAGATION_MANDATORY, "mandatory"),
+                    //不支持事务,如果当前存在是事务则抛出IllegalTransactionStateException异常,
+                    of(PROPAGATION_NEVER, "never"),
+                    //嵌套事务支持
+                    of(PROPAGATION_NESTED, "mandatory"));
+
+    //****************************************************************************************************
     /** Don't let anyone instantiate this class. */
     private TransactionAttributeUtil(){
         //AssertionError不是必须的. 但它可以避免不小心在类的内部调用构造器. 保证该类在任何情况下都不会被实例化.
         //see 《Effective Java》 2nd
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
+
+    //****************************************************************************************************
 
     /**
      * 获得 map for LOGGER.
@@ -51,10 +117,10 @@ public class TransactionAttributeUtil{
         }
 
         int isolationLevel = transactionAttribute.getIsolationLevel();
-        String isolationLevelString = toIsolationLevelString(isolationLevel);
+        String isolationLevelString = ISOLATION_LEVEL_AND_NAME_MAP.get(isolationLevel);
 
         int propagationBehavior = transactionAttribute.getPropagationBehavior();
-        String propagationBehaviorString = toPropagationBehaviorString(propagationBehavior);
+        String propagationBehaviorString = PROPAGATION_BEHAVIOR_AND_NAME_MAP.get(propagationBehavior);
 
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         map.put("getPropagationBehavior", propagationBehaviorString + "(" + propagationBehavior + ")");
@@ -66,88 +132,4 @@ public class TransactionAttributeUtil{
 
         return map;
     }
-
-    /**
-     * To isolation level string.
-     *
-     * @param isolationLevel
-     *            the isolation level
-     * @return the string
-     * @since 1.1.1
-     */
-    private static String toIsolationLevelString(int isolationLevel){
-        switch (isolationLevel) {
-            case TransactionDefinition.ISOLATION_DEFAULT:
-                return "default";
-
-            case TransactionDefinition.ISOLATION_READ_COMMITTED:
-                return "read_committed";
-
-            case TransactionDefinition.ISOLATION_READ_UNCOMMITTED:
-                return "read_uncommitted";
-
-            case TransactionDefinition.ISOLATION_REPEATABLE_READ:
-                return "repeatable_read";
-
-            case TransactionDefinition.ISOLATION_SERIALIZABLE:
-                return "serializable";
-
-            default:
-                throw new UnsupportedOperationException("isolationLevel:[" + isolationLevel + "] not support!");
-        }
-    }
-
-    /**
-     * To propagation behavior string.
-     *
-     * @param propagationBehavior
-     *            the propagation behavior
-     * @return the string
-     * @since 1.1.1
-     */
-    private static String toPropagationBehaviorString(int propagationBehavior){
-        String propagationBehaviorString = "";
-        switch (propagationBehavior) {
-
-            //默认的事务传播行为,表示必须有逻辑事务,否则新建一个事务
-            case TransactionDefinition.PROPAGATION_REQUIRED:
-                propagationBehaviorString = "required";
-                break;
-
-            //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚.
-            case TransactionDefinition.PROPAGATION_REQUIRES_NEW:
-                propagationBehaviorString = "requires_new";
-                break;
-
-            //指如果当前存在逻辑事务,就加入到该逻辑事务, 如果当前没有逻辑事务,就以非事务方式执行.
-            case TransactionDefinition.PROPAGATION_SUPPORTS:
-                propagationBehaviorString = "supports";
-                break;
-
-            //不支持事务,如果当前存在事务则暂停该事务,如果当前存在逻辑事务,就把当前事务暂停,以非事务方式执行
-            case TransactionDefinition.PROPAGATION_NOT_SUPPORTED:
-                propagationBehaviorString = "not_supported";
-                break;
-
-            //如果当前有事务,使用当前事务执行,如果当前没有事务,则抛出异常(IllegalTransactionStateException)
-            case TransactionDefinition.PROPAGATION_MANDATORY:
-                propagationBehaviorString = "mandatory";
-                break;
-
-            //不支持事务,  如果当前存在是事务则抛出IllegalTransactionStateException异常,
-            case TransactionDefinition.PROPAGATION_NEVER:
-                propagationBehaviorString = "never";
-                break;
-
-            //嵌套事务支持
-            case TransactionDefinition.PROPAGATION_NESTED:
-                propagationBehaviorString = "nested";
-                break;
-
-            default:
-                throw new UnsupportedOperationException("propagationBehavior:[" + propagationBehavior + "] not support!");
-        }
-        return propagationBehaviorString;
-    }
-
 }
