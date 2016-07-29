@@ -190,6 +190,11 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
 
     /**
      * 提供从 <code>requestAttributeValue</code>中提取/构造 {@link SeoViewCommand}的扩展点.
+     * 
+     * <p>
+     * 如果结果不是null,那么使用当前的结果<br>
+     * 如果结果是null,那么将处理下一个 requestAttributeName
+     * </p>
      *
      * @param requestAttributeName
      *            request 作用域 属性名称
