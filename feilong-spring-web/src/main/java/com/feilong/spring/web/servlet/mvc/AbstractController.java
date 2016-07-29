@@ -15,6 +15,11 @@
  */
 package com.feilong.spring.web.servlet.mvc;
 
+import static com.feilong.servlet.http.HttpHeaders.X_REQUESTED_WITH;
+import static com.feilong.servlet.http.HttpHeaders.X_REQUESTED_WITH_VALUE_AJAX;
+import static org.springframework.web.servlet.view.UrlBasedViewResolver.FORWARD_URL_PREFIX;
+import static org.springframework.web.servlet.view.UrlBasedViewResolver.REDIRECT_URL_PREFIX;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -25,9 +30,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-import com.feilong.servlet.http.HttpHeaders;
 import com.feilong.spring.web.servlet.LocaleUtil;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
@@ -43,14 +46,13 @@ import static com.feilong.core.DatePattern.COMMON_DATE;
 public abstract class AbstractController{
 
     /** The Constant header_with_ajax_springmvc. */
-    public static final String   HEADER_WITH_AJAX_SPRINGMVC = HttpHeaders.X_REQUESTED_WITH + "=" + HttpHeaders.X_REQUESTED_WITH_VALUE_AJAX;
+    public static final String   HEADER_WITH_AJAX_SPRINGMVC = X_REQUESTED_WITH + "=" + X_REQUESTED_WITH_VALUE_AJAX;
 
     /** The context. */
     @Resource
-    protected ApplicationContext context;
+    protected ApplicationContext applicationContext;
 
-    // @Autowired
-    // protected ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource;
+    //***********************************************************************************
 
     /**
      * Inits the binder.
@@ -76,6 +78,8 @@ public abstract class AbstractController{
     protected void initBinderInternal(@SuppressWarnings("unused") WebDataBinder webDataBinder){
     }
 
+    //***********************************************************************************
+
     /**
      * 生成spring 的跳转路径<br>
      * e.g. getSpringRedirectPath("/shoppingcart") <br>
@@ -87,7 +91,7 @@ public abstract class AbstractController{
      * @return the spring redirect path
      */
     protected String redirect(String targetUrl){
-        return UrlBasedViewResolver.REDIRECT_URL_PREFIX + targetUrl;
+        return REDIRECT_URL_PREFIX + targetUrl;
     }
 
     /**
@@ -98,7 +102,7 @@ public abstract class AbstractController{
      * @return the spring forward path
      */
     protected String forward(String forwardUrl){
-        return UrlBasedViewResolver.FORWARD_URL_PREFIX + forwardUrl;
+        return FORWARD_URL_PREFIX + forwardUrl;
     }
 
     // **********************************************************************************************
@@ -114,7 +118,7 @@ public abstract class AbstractController{
      */
     protected String getMessage(String key,Object...args){
         if (isNotNullOrEmpty(key)){
-            return context.getMessage(key, args, LocaleUtil.getLocale());
+            return applicationContext.getMessage(key, args, LocaleUtil.getLocale());
         }
         return null;
     }
@@ -127,7 +131,6 @@ public abstract class AbstractController{
      * @return the message
      */
     protected String getMessage(MessageSourceResolvable messageSourceResolvable){
-        return context.getMessage(messageSourceResolvable, LocaleUtil.getLocale());
+        return applicationContext.getMessage(messageSourceResolvable, LocaleUtil.getLocale());
     }
-
 }

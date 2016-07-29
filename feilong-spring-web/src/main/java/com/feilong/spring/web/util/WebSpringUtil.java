@@ -82,19 +82,6 @@ public final class WebSpringUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
-    //    /**
-    //     * 获得消息信息
-    //     * 
-    //     * @param request
-    //     * @param messageSourceResolvable
-    //     *            适用于 ObjectError 以及 FieldError
-    //     * @return
-    //     */
-    //    public static String getMessage(MessageSourceResolvable messageSourceResolvable,HttpServletRequest request){
-    //        WebApplicationContext webApplicationContext = getWebApplicationContext(request);
-    //        return webApplicationContext.getMessage(messageSourceResolvable, request.getLocale());
-    //    }
-
     //********************************************************************************
     /**
      * 普通类获得spring 注入的类方法.
@@ -288,7 +275,9 @@ public final class WebSpringUtil{
      *
      * @param request
      *            the request
-     * @return 如果有 servlet-specific WebApplicationContext那么返回;否则找 global context; 两个都没有 会抛出 IllegalStateException
+     * @return 如果有 servlet-specific WebApplicationContext那么返回;<br>
+     *         否则找 global context; <br>
+     *         两个都没有 会抛出 IllegalStateException
      * @see org.springframework.web.servlet.support.RequestContextUtils#getWebApplicationContext(ServletRequest)
      * @since 1.5.3
      */
