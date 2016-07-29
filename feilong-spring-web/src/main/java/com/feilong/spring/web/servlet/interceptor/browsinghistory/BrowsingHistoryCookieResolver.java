@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
+import static java.util.Collections.emptyList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -162,7 +164,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
      */
     private List<BrowsingHistoryCommand> parseValue(HttpServletRequest request,HttpServletResponse response,String value){
         if (isNullOrEmpty(value)){
-            return Collections.emptyList();
+            return emptyList();
         }
 
         try{
@@ -172,14 +174,11 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
 
             return new ArrayList<>(JsonUtil.toList(cookiePlainValue, beanClass));//TODO
         }catch (Exception e){
-            String message = Slf4jUtil.format(
-                            "getBrowsingHistory cookie value:[{}] error,charset:[{}],will clear",
-                            value,
-                            symmetricEncryptionCharsetName);
-            LOGGER.error(message, e);
+            String pattern = "getBrowsingHistory cookie value:[{}] error,charset:[{}],will clear";
+            LOGGER.error(Slf4jUtil.format(pattern, value, symmetricEncryptionCharsetName), e);
             clear(request, response); //如果出错了,那么就将cookie删掉
         }
-        return Collections.emptyList();
+        return emptyList();
     }
 
     /*
@@ -228,6 +227,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
 
         String original = JsonUtil.format(browsingHistoryList, 0, 0);
         String cookieValue = symmetricEncryption.encryptHex(original, symmetricEncryptionCharsetName);
+
         LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, cookieValue);
         cookieAccessor.save(cookieValue, response);
     }
