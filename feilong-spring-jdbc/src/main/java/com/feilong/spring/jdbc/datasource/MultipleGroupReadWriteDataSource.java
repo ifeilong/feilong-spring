@@ -15,6 +15,10 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
+import static com.feilong.spring.jdbc.datasource.MultipleGroupReadWriteUtil.DEFAULT_GROUP_NAME;
+import static loxia.dao.ReadWriteSupport.READ;
+import static loxia.dao.ReadWriteSupport.WRITE;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,16 +83,12 @@ public class MultipleGroupReadWriteDataSource extends AbstractRoutingDataSource{
             DataSource writeDataSource = readWriteDataSourceCommand.getWriteDataSource();
 
             // 默认读的是 default 组的 写库
-            if (MultipleGroupReadWriteUtil.DEFAULT_GROUP_NAME.equals(groupName)){
+            if (DEFAULT_GROUP_NAME.equals(groupName)){
                 defaultTargetDataSource = writeDataSource;
             }
 
-            targetDataSources.put(
-                            MultipleGroupReadWriteUtil.getTargetDataSourcesKey(groupName, loxia.dao.ReadWriteSupport.WRITE),
-                            writeDataSource);
-            targetDataSources.put(
-                            MultipleGroupReadWriteUtil.getTargetDataSourcesKey(groupName, loxia.dao.ReadWriteSupport.READ),
-                            readDataSource);
+            targetDataSources.put(MultipleGroupReadWriteUtil.getTargetDataSourcesKey(groupName, WRITE), writeDataSource);
+            targetDataSources.put(MultipleGroupReadWriteUtil.getTargetDataSourcesKey(groupName, READ), readDataSource);
         }
 
         this.setTargetDataSources(targetDataSources);

@@ -15,6 +15,19 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
+import static com.feilong.coreextension.lang.ThreadUtil.getCurrentThreadMapForLog;
+import static loxia.dao.ReadWriteSupport.READ;
+import static loxia.dao.ReadWriteSupport.WRITE;
+import static org.apache.commons.lang3.tuple.Pair.of;
+import static org.slf4j.LoggerFactory.getLogger;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_MANDATORY;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NESTED;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NEVER;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NOT_SUPPORTED;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRED;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_SUPPORTS;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,9 +38,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
@@ -40,6 +51,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toMap;
 import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
 
 import net.sf.json.JSONException;
@@ -84,11 +96,29 @@ import net.sf.json.JSONException;
 public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
     /** The Constant logger. */
-    private static final Logger        LOGGER = LoggerFactory.getLogger(MultipleGroupReadWriteDataSourceAspect.class);
+    private static final Logger                LOGGER                                  = getLogger(
+                    MultipleGroupReadWriteDataSourceAspect.class);
 
     /** The transaction attribute souce. */
     @Autowired(required = false)
-    private TransactionAttributeSource transactionAttributeSouce;
+    private TransactionAttributeSource         transactionAttributeSouce;
+
+    /** 传播行为和是否必须是write的对照map. */
+    private static final Map<Integer, Boolean> PROPAGATION_BEHAVIOR_AND_MUST_WRITE_MAP = toMap(
+                    //默认的事务传播行为,表示必须有逻辑事务,否则新建一个事务
+                    of(PROPAGATION_REQUIRED, false),
+                    //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚.
+                    of(PROPAGATION_REQUIRES_NEW, true),
+                    //指如果当前存在逻辑事务,就加入到该逻辑事务, 如果当前没有逻辑事务,就以非事务方式执行.
+                    of(PROPAGATION_SUPPORTS, false),
+                    //不支持事务,如果当前存在事务则暂停该事务,如果当前存在逻辑事务,就把当前事务暂停,以非事务方式执行
+                    of(PROPAGATION_NOT_SUPPORTED, false),
+                    //如果当前有事务,使用当前事务执行,如果当前没有事务,则抛出异常(IllegalTransactionStateException)
+                    of(PROPAGATION_MANDATORY, false),
+                    //不支持事务,如果当前存在是事务则抛出IllegalTransactionStateException异常,
+                    of(PROPAGATION_NEVER, false),
+                    //嵌套事务支持
+                    of(PROPAGATION_NESTED, false));
 
     /**
      * Point.
@@ -101,29 +131,36 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      */
     @Around("this(loxia.dao.ReadWriteSupport)")
     public Object point(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
-
         Signature signature = proceedingJoinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
-        //事务
         TransactionAttribute transactionAttribute = null;
         if (null != transactionAttributeSouce){
             transactionAttribute = transactionAttributeSouce
                             .getTransactionAttribute(methodSignature.getMethod(), proceedingJoinPoint.getTarget().getClass());
         }
 
-        MultipleGroupDataSource multipleGroupDataSourceAnnotation = JoinPointUtil
-                        .findAnnotation(proceedingJoinPoint, MultipleGroupDataSource.class);
+        String groupName = getGroupName(proceedingJoinPoint);
+        return proceed(proceedingJoinPoint, transactionAttribute, groupName);
+    }
+
+    /**
+     * Gets the group name.
+     *
+     * @param proceedingJoinPoint
+     *            the proceeding join point
+     * @return the group name
+     * @since 1.8.3
+     */
+    private static String getGroupName(ProceedingJoinPoint proceedingJoinPoint){
+        MultipleGroupDataSource multipleGroupDataSource = JoinPointUtil.findAnnotation(proceedingJoinPoint, MultipleGroupDataSource.class);
         //组名
-        String groupName;
         //没有配置multipleGroupDataSourceAnnotation
         //没有配置 当然延续原来的 风格
-        if (null == multipleGroupDataSourceAnnotation || isNullOrEmpty(multipleGroupDataSourceAnnotation.value())){
+        if (null == multipleGroupDataSource || isNullOrEmpty(multipleGroupDataSource.value())){
             //nothing to do
-            groupName = null;
-        }else{
-            groupName = multipleGroupDataSourceAnnotation.value();
+            return null;
         }
-        return proceed(proceedingJoinPoint, transactionAttribute, groupName);
+        return multipleGroupDataSource.value();
     }
 
     /**
@@ -152,8 +189,9 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
             map.put("previousDataSourceNameHolder", previousDataSourceNameHolder);
             map.put("transactionAttribute:", TransactionAttributeUtil.getMapForLog(transactionAttribute));
 
+            String pattern = "before determine datasource :[{}],proceedingJoinPoint info:[{}],current thread info:[{}]";
             LOGGER.info(
-                            "before determine datasource :[{}],proceedingJoinPoint info:[{}],current thread info:[{}]",
+                            pattern,
                             JsonUtil.format(map),
                             getProceedingJoinPointJsonInfoExcludeJsonException(proceedingJoinPoint),
                             currentThreadInfo);
@@ -177,21 +215,17 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
             throw e;
         }finally{
             if (isNotNullOrEmpty(previousDataSourceNameHolder)){
-                LOGGER.info(
-                                "Back to previous Read/Write Status:[{}],current thread info:[{}]",
-                                previousDataSourceNameHolder,
-                                currentThreadInfo);
-                //神来之笔,这样才能兼容 嵌套
+                String pattern = "Back to previous Read/Write Status:[{}],current thread info:[{}]";
+                LOGGER.info(pattern, previousDataSourceNameHolder, currentThreadInfo);
+                //神来之笔,这样才能兼容嵌套
                 MultipleGroupReadWriteStatusHolder.setMultipleDataSourceGroupName(previousDataSourceNameHolder);
             }
 
-            //TODO 可能还可以优化 现规则和loxia相同
+            //XXX 可能还可以优化 现规则和loxia相同
             //不存在previousDataSourceNameHolder,则清空
             else{
-                LOGGER.info(
-                                "previousDataSourceNameHolder is NullOrEmpty,Clear Read/Write Status:[{}],current thread info:[{}]",
-                                MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName(),
-                                currentThreadInfo);
+                String pattern = "previousDataSourceNameHolder is NullOrEmpty,Clear Read/Write Status:[{}],current thread info:[{}]";
+                LOGGER.info(pattern, MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName(), currentThreadInfo);
                 MultipleGroupReadWriteStatusHolder.clearMultipleDataSourceGroupName();
             }
         }
@@ -216,9 +250,8 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
             return true;
         }
 
-        int propagationBehavior = transactionAttribute.getPropagationBehavior();
-        //TODO 可能还可以优化 现规则和loxia相同
-        return propagationBehavior != TransactionDefinition.PROPAGATION_REQUIRES_NEW;
+        //可能还可以优化 现规则和loxia相同
+        return transactionAttribute.getPropagationBehavior() != PROPAGATION_REQUIRES_NEW;
     }
 
     /**
@@ -232,61 +265,19 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
      * @since 1.1.1
      */
     private static String getReadWriteSupport(TransactionAttribute transactionAttribute){
-
-        String readWriteSupport = "";
-
         if (null == transactionAttribute){
-            return loxia.dao.ReadWriteSupport.READ;
+            return READ;
         }
 
-        boolean mustWrite = false;
-
-        int propagationBehavior = transactionAttribute.getPropagationBehavior();
-
-        switch (propagationBehavior) {
-
-            //默认的事务传播行为,表示必须有逻辑事务,否则新建一个事务
-            case TransactionDefinition.PROPAGATION_REQUIRED:
-                break;
-
-            //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚.
-            case TransactionDefinition.PROPAGATION_REQUIRES_NEW:
-                mustWrite = true;
-                break;
-
-            //指如果当前存在逻辑事务,就加入到该逻辑事务, 如果当前没有逻辑事务,就以非事务方式执行.
-            case TransactionDefinition.PROPAGATION_SUPPORTS:
-                break;
-
-            //不支持事务,如果当前存在事务则暂停该事务,如果当前存在逻辑事务,就把当前事务暂停,以非事务方式执行
-            case TransactionDefinition.PROPAGATION_NOT_SUPPORTED:
-                break;
-
-            //如果当前有事务,使用当前事务执行,如果当前没有事务,则抛出异常(IllegalTransactionStateException)
-            case TransactionDefinition.PROPAGATION_MANDATORY:
-                break;
-
-            //不支持事务,  如果当前存在是事务则抛出IllegalTransactionStateException异常,
-            case TransactionDefinition.PROPAGATION_NEVER:
-                break;
-
-            //嵌套事务支持
-            case TransactionDefinition.PROPAGATION_NESTED:
-                break;
-
-            default:
-                throw new UnsupportedOperationException("propagationBehavior:[" + propagationBehavior + "] not support!");
-        }
-
+        boolean mustWrite = PROPAGATION_BEHAVIOR_AND_MUST_WRITE_MAP.get(transactionAttribute.getPropagationBehavior());
         if (mustWrite){
             LOGGER.info("New writable connection is required for new transaction.");
-            readWriteSupport = loxia.dao.ReadWriteSupport.WRITE;
-        }else{
-            //see "org.postgresql.jdbc2.AbstractJdbc2Connection#setReadOnly(boolean)"
-            boolean readOnly = transactionAttribute.isReadOnly();
-            readWriteSupport = readOnly ? loxia.dao.ReadWriteSupport.READ : loxia.dao.ReadWriteSupport.WRITE;
+            return WRITE;
         }
-        return readWriteSupport;
+
+        //see "org.postgresql.jdbc2.AbstractJdbc2Connection#setReadOnly(boolean)"
+        boolean readOnly = transactionAttribute.isReadOnly();
+        return readOnly ? READ : WRITE;
     }
 
     /**
@@ -305,23 +296,17 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
         if (LOGGER.isInfoEnabled()){
             String pattern = "begin proceed ,ProceedingJoinPoint info:[{}],Thread info:{}";
-            LOGGER.info(pattern, format, JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
+            LOGGER.info(pattern, format, JsonUtil.format(getCurrentThreadMapForLog()));
         }
         Date beginDate = new Date();
 
         //***********************************************************
-
         Object returnValue = proceedingJoinPoint.proceed(args);
 
         //***********************************************************
         if (LOGGER.isInfoEnabled()){
             String pattern = "end proceed:[{}],thread info:[{}],time:[{}],return:[{}]";
-            LOGGER.info(
-                            pattern,
-                            format,
-                            JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()),
-                            getIntervalForView(beginDate),
-                            returnValue);
+            LOGGER.info(pattern, format, JsonUtil.format(getCurrentThreadMapForLog()), getIntervalForView(beginDate), returnValue);
         }
         return returnValue;
     }

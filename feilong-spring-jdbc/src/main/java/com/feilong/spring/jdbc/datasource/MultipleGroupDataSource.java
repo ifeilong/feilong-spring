@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
+import static com.feilong.spring.jdbc.datasource.MultipleGroupReadWriteUtil.DEFAULT_GROUP_NAME;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -49,5 +51,5 @@ public @interface MultipleGroupDataSource{
      *
      * @return the string
      */
-    String value() default MultipleGroupReadWriteUtil.DEFAULT_GROUP_NAME;
+    String value() default DEFAULT_GROUP_NAME;
 }
