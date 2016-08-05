@@ -289,6 +289,6 @@ public class MultiUriTemplateUtil{
      */
     private static String toMutiValue(List<String> list,String valueSeparator){
         ToStringConfig toStringConfig = new ToStringConfig(valueSeparator);
-        return ConvertUtil.toString(toStringConfig, list);
+        return ConvertUtil.toString(list, toStringConfig);
     }
 }
