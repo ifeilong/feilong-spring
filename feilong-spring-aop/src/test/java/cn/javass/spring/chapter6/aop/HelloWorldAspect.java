@@ -21,7 +21,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 /**
  * The Class HelloWorldAspect.
@@ -49,7 +49,7 @@ public class HelloWorldAspect{
      * After finally advice.
      */
     public void afterFinallyAdvice(){
-        LOGGER.info("2.......after finally advice,{},耗时:{}", begin, getIntervalForView(begin));
+        LOGGER.info("2.......after finally advice,{},耗时:{}", begin, formatDuration(begin));
     }
 
     /**

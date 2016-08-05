@@ -30,7 +30,7 @@ import com.feilong.core.lang.StringUtil;
 import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
 
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 /**
  * 日志切面 aspect,作用于 所有使用 {@link com.feilong.spring.aop.log.Log}标注 的方法.
@@ -87,7 +87,7 @@ public class LogAspect extends AbstractAspect{
         Method method = methodSignature.getMethod();
 
         String message = StringUtil
-                        .format("method:%s(%s),use time:[%s]", method.getName(), proceedingJoinPoint.getArgs(), getIntervalForView(begin));
+                        .format("method:%s(%s),use time:[%s]", method.getName(), proceedingJoinPoint.getArgs(), formatDuration(begin));
         LOGGER.log(Level.toLevel(level), message);
 
         return result;

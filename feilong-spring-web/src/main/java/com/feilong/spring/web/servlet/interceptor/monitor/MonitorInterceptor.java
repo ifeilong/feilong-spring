@@ -38,7 +38,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
 import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.core.TimeInterval.MILLISECOND_PER_SECONDS;
 import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
@@ -185,7 +185,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                         JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
                         getRequestAttributeMap(request),
                         getModelAndViewLogInfo(modelAndView),
-                        getIntervalForView(useTime),
+                        formatDuration(useTime),
                         logicOperator,
                         performanceThreshold);
     }
@@ -228,7 +228,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                             "afterConcurrentHandlingStarted [{}.{}()], use time:[{}]",
                             HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                             HandlerMethodUtil.getHandlerMethodName(handlerMethod),
-                            getIntervalForView(splitTime));
+                            formatDuration(splitTime));
         }
     }
 
@@ -258,8 +258,8 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                             "afterCompletion [{}.{}()], use time:[{}],total time:[{}]",
                             HandlerMethodUtil.getDeclaringClassSimpleName((HandlerMethod) handler),
                             HandlerMethodUtil.getHandlerMethodName((HandlerMethod) handler),
-                            getIntervalForView(splitTime),
-                            getIntervalForView(time));
+                            formatDuration(splitTime),
+                            formatDuration(time));
         }
     }
 

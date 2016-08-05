@@ -52,7 +52,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toMap;
-import static com.feilong.core.date.DateExtensionUtil.getIntervalForView;
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 import net.sf.json.JSONException;
 
@@ -306,7 +306,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         //***********************************************************
         if (LOGGER.isInfoEnabled()){
             String pattern = "end proceed:[{}],thread info:[{}],time:[{}],return:[{}]";
-            LOGGER.info(pattern, format, JsonUtil.format(getCurrentThreadMapForLog()), getIntervalForView(beginDate), returnValue);
+            LOGGER.info(pattern, format, JsonUtil.format(getCurrentThreadMapForLog()), formatDuration(beginDate), returnValue);
         }
         return returnValue;
     }
