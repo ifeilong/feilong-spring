@@ -92,7 +92,7 @@ public class TransactionAttributeUtil{
      * 
      * <blockquote>
      * <p>
-     * 由低到高依次为Read uncommitted 、Read committed 、Repeatable read 、Serializable ，这四个级别可以逐个解决脏读 、不可重复读 、幻读这几类问题:
+     * 由低到高依次为Read uncommitted 、Read committed 、Repeatable read 、Serializable ,这四个级别可以逐个解决脏读 、不可重复读 、幻读这几类问题:
      * </p>
      * 
      * 
