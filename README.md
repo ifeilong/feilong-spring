@@ -23,7 +23,7 @@ feilong spring jar你可以在 [仓库](https://github.com/venusdrogon/feilong-p
 	
 		....
 		<properties>
-			<version.feilong-platform>1.8.4</version.feilong-platform>
+			<version.feilong-platform>1.8.5</version.feilong-platform>
 			....
 		</properties>
 		
