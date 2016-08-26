@@ -27,7 +27,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import static com.feilong.core.util.SortUtil.sort;
+import static com.feilong.core.util.SortUtil.sortArray;
 
 /**
  * The Class ApplicationContextUtil.
@@ -73,7 +73,7 @@ public final class ApplicationContextUtil{
 
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
 
-        sort(beanDefinitionNames);
+        sortArray(beanDefinitionNames);
 
         map.put("applicationContext.getBeanDefinitionNames()", beanDefinitionNames);
 
