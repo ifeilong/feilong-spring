@@ -1,4 +1,4 @@
-feilong-platform feilong-spring
+feilong-spring
 ================
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
@@ -7,7 +7,7 @@ feilong-platform feilong-spring
 
 Reduce development, Release ideas
 
-#Welcome to feilong-platform feilong-spring
+#Welcome to feilong-spring
 
 `对spring相关类的快速封装,以便快速使用`
 
