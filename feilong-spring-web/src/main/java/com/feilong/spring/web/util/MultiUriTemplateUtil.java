@@ -15,13 +15,14 @@
  */
 package com.feilong.spring.web.util;
 
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UrlPathHelper;
@@ -165,7 +166,7 @@ public class MultiUriTemplateUtil{
                     String variableName,
                     String value,
                     String valueSeparator){
-        Map<String, String> opMap = ObjectUtils.defaultIfNull(map, new HashMap<String, String>());
+        Map<String, String> opMap = defaultIfNull(map, new HashMap<String, String>());
 
         // 原值
         String oldValue = opMap.get(variableName);
