@@ -65,8 +65,6 @@ import net.sf.json.JSONException;
  * <ol>
  * <li>
  * controller调用 AManager.a(); A是 adatabase</li>
- * <li></li>
- * <li></li>
  * <li>
  * 
  * <pre class="code">
@@ -184,7 +182,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
         String currentThreadInfo = JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog());
         if (LOGGER.isInfoEnabled()){
-            Map<String, Object> map = new LinkedHashMap<String, Object>();
+            Map<String, Object> map = new LinkedHashMap<>();
             map.put("groupName", groupName);
             map.put("previousDataSourceNameHolder", previousDataSourceNameHolder);
             map.put("transactionAttribute:", TransactionAttributeUtil.getMapForLog(transactionAttribute));

@@ -250,7 +250,7 @@ public class TransactionAttributeUtil{
         int propagationBehavior = transactionAttribute.getPropagationBehavior();
         String propagationBehaviorString = PROPAGATION_BEHAVIOR_AND_NAME_MAP.get(propagationBehavior);
 
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        Map<String, Object> map = new LinkedHashMap<>();
         map.put("getPropagationBehavior", propagationBehaviorString + "(" + propagationBehavior + ")");
         map.put("getIsolationLevel", isolationLevelString + "(" + isolationLevel + ")");
         map.put("isReadOnly", transactionAttribute.isReadOnly());

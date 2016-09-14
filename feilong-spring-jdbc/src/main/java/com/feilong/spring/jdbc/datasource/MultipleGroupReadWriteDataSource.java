@@ -73,7 +73,7 @@ public class MultipleGroupReadWriteDataSource extends AbstractRoutingDataSource{
         Validate.notNull(readWriteDataSourceCommandMap, "readWriteDataSourceCommandMap can't be null!");
 
         Object defaultTargetDataSource = null;
-        Map<Object, Object> targetDataSources = new HashMap<Object, Object>();
+        Map<Object, Object> targetDataSources = new HashMap<>();
 
         for (Map.Entry<String, ReadWriteDataSourceCommand> entry : readWriteDataSourceCommandMap.entrySet()){
             String groupName = entry.getKey();
