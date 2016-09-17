@@ -63,7 +63,7 @@ public class TransactionAttributeUtil{
      * <tr valign="top">
      * <td>Dirty reads<br>
      * 读脏数据</td>
-     * <td>比如事务A的未提交（还依然缓存）的数据被事务B读走,如果事务A失败回滚,会导致事务B所读取的的数据是错误的。</td>
+     * <td>比如事务A的未提交(还依然缓存)的数据被事务B读走,如果事务A失败回滚,会导致事务B所读取的的数据是错误的。</td>
      * </tr>
      * 
      * <tr valign="top" style="background-color:#eeeeff">
@@ -78,7 +78,7 @@ public class TransactionAttributeUtil{
      * 幻象读数据</td>
      * 
      * <td>这个和non-repeatable reads相似,也是同一个事务中多次读不一致的问题。<br>
-     * 但是non-repeatable reads的不一致是因为他所要取的数据集被改变了（比如total的数据）,<br>
+     * 但是non-repeatable reads的不一致是因为他所要取的数据集被改变了(比如total的数据),<br>
      * 但是phantom reads所要读的数据的不一致却不是他所要读的数据集改变,而是他的条件数据集改变。<br>
      * 比如Select account.id where account.name="ppgogo*",<br>
      * 第一次读去了6个符合条件的id,<br>
@@ -190,7 +190,7 @@ public class TransactionAttributeUtil{
                     of(ISOLATION_READ_COMMITTED, "read_committed"),
                     //保证了读取过程中不会读取到非法数据。隔离级别在于处理多事务的并发问题。
                     of(ISOLATION_READ_UNCOMMITTED, "read_uncommitted"),
-                    //保证了一个事务不会修改已经由另一个事务读取但未提交（回滚）的数据。避免了“脏读取”和“不可重复读取”的情况,但是带来了更多的性能损失。
+                    //保证了一个事务不会修改已经由另一个事务读取但未提交(回滚)的数据。避免了“脏读取”和“不可重复读取”的情况,但是带来了更多的性能损失。
                     of(ISOLATION_REPEATABLE_READ, "repeatable_read"),
                     //最严格的级别,事务串行执行,资源消耗最大
                     of(ISOLATION_SERIALIZABLE, "serializable"));
