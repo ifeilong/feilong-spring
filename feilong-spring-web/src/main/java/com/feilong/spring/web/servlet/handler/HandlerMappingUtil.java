@@ -111,7 +111,7 @@ public class HandlerMappingUtil{
      * @since 1.3.0
      */
     public static final Map<String, Object> getHandlerMappingVariablesInfoForLog(HttpServletRequest request){
-        Map<String, Object> map = new TreeMap<String, Object>();
+        Map<String, Object> map = new TreeMap<>();
         map.put("bestMatchingPattern", request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE));
         map.put("introspectTypeLevelMapping", request.getAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING));
         map.put("matrixVariables", request.getAttribute(HandlerMapping.MATRIX_VARIABLES_ATTRIBUTE));
@@ -131,7 +131,7 @@ public class HandlerMappingUtil{
     public static final Map<String, Object> getRequestMappingHandlerMappingInfoMapForLog(WebApplicationContext webApplicationContext){
         RequestMappingHandlerMapping requestMappingHandlerMapping = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
 
-        Map<String, Object> mappingInfoMap = new LinkedHashMap<String, Object>();
+        Map<String, Object> mappingInfoMap = new LinkedHashMap<>();
 
         mappingInfoMap.put("useRegisteredSuffixPatternMatch()", requestMappingHandlerMapping.useRegisteredSuffixPatternMatch());
         mappingInfoMap.put("useSuffixPatternMatch()", requestMappingHandlerMapping.useSuffixPatternMatch());
@@ -162,7 +162,7 @@ public class HandlerMappingUtil{
      */
     private static Map<String, RequestMappingInfo> buildMethodAndRequestMappingInfoMap(
                     RequestMappingHandlerMapping requestMappingHandlerMapping){
-        Map<String, RequestMappingInfo> methodAndRequestMappingInfoMap = new LinkedHashMap<String, RequestMappingInfo>();
+        Map<String, RequestMappingInfo> methodAndRequestMappingInfoMap = new LinkedHashMap<>();
 
         //**************************************************************************************************************
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();

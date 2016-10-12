@@ -50,7 +50,7 @@ public class JavaMailSenderUtilTest{
      */
     @Test
     public void sendEmail(){
-        Map<String, Object> model = new HashMap<String, Object>();
+        Map<String, Object> model = new HashMap<>();
         model.put("userName", "大关");
         model.put("email" + "Address", "woshidaguan@126.com");
         String[] mailTo = new String[] { "venusdrogon@163.com" };

@@ -54,7 +54,7 @@ public final class ApplicationContextUtil{
     public static Map<String, Object> getApplicationContextForLogMap(ApplicationContext applicationContext){
         Validate.notNull(applicationContext, "applicationContext can't be null!");
 
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        Map<String, Object> map = new LinkedHashMap<>();
 
         map.put("applicationContext.getBeanDefinitionCount()", applicationContext.getBeanDefinitionCount());
 
@@ -77,7 +77,7 @@ public final class ApplicationContextUtil{
 
         map.put("applicationContext.getBeanDefinitionNames()", beanDefinitionNames);
 
-        Map<String, Object> beanDefinitionNamesAndClassMap = new TreeMap<String, Object>();
+        Map<String, Object> beanDefinitionNamesAndClassMap = new TreeMap<>();
         for (String beanDefinitionName : beanDefinitionNames){
             try{
                 Object bean = applicationContext.getBean(beanDefinitionName);

@@ -128,7 +128,7 @@ public final class ModelAndViewUtil{
         Map<String, Object> requestAttributeMap = RequestUtil.getAttributeMap(request);
 
         //新创建个map对象, 这样操作不会影响原始数据
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         MapUtil.putAllIfNotNull(map, requestAttributeMap);
         MapUtil.putAllIfNotNull(map, model);
         return map;

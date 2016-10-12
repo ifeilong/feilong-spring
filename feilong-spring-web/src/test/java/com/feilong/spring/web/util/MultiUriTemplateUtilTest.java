@@ -50,7 +50,7 @@ public class MultiUriTemplateUtilTest{
     public void expandWithMultiVariableMap(){
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("categoryCode", "2541");
         map.put("style", "100");
 

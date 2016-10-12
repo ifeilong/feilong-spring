@@ -97,7 +97,7 @@ public class UriTemplateUtilTest{
     public void testExpand(){
         String uriTemplatePath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("color", "100");
         map.put("size", "L");
         map.put("K", "aaaa");

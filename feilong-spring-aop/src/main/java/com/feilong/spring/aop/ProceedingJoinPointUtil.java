@@ -49,7 +49,7 @@ public class ProceedingJoinPointUtil{
 
         Class<?> declaringType = methodSignature.getDeclaringType();
 
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        Map<String, Object> map = new LinkedHashMap<>();
         map.put("target", proceedingJoinPoint.getTarget().getClass().getCanonicalName());
         map.put("method", methodSignature.getMethod().getName());
         map.put("args", proceedingJoinPoint.getArgs());

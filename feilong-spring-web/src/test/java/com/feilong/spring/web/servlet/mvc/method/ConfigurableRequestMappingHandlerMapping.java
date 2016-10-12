@@ -56,7 +56,7 @@ public class ConfigurableRequestMappingHandlerMapping extends RequestMappingHand
         //        Class<?> handlerType = (handler instanceof String ? getApplicationContext().getType((String) handler) : handler.getClass());
         //
         //        // Avoid repeated calls to getMappingForMethod which would rebuild RequestMatchingInfo instances
-        //        final Map<Method, RequestMappingInfo> mappings = new IdentityHashMap<Method, RequestMappingInfo>();
+        //        final Map<Method, RequestMappingInfo> mappings = new IdentityHashMap<>();
         //        final Class<?> userType = ClassUtils.getUserClass(handlerType);
         //
         //        Set<Method> methods = HandlerMethodSelector.selectMethods(userType, new MethodFilter(){
