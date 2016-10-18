@@ -78,6 +78,6 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 
 # :panda_face: About
 
-如果您对feilong core 有任何建议和批评,可以使用下面的联系方式：
+如果您对本项目有任何建议和批评,可以使用下面的联系方式：
 
 * iteye博客:http://feitianbenyue.iteye.com/
