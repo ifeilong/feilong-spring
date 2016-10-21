@@ -131,23 +131,23 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
 
         Object sessionMember = WebUtils.getSessionAttribute(request, sessionKey);
 
-        //如果session中的 <code>sessionKey</code>是 <code>null</code>,那么直接返回<code>null</code>
+        //1.如果session中的  sessionKey 是 null ,那么直接返回 null 
         if (null == sessionMember){
             return null;
         }
 
-        //如果标识的是session对象本身#sessionMemberClass,那么直接获取返回;
+        //2.如果标识的是session对象本身#sessionMemberClass,那么直接获取返回;
         Class<?> klass = parameter.getParameterType();
         if (klass.isAssignableFrom(sessionMemberClass)){
             return sessionMember;
         }
 
-        //如果没有配置#sessionMemberIdName,那么返回null
+        //3.如果没有配置#sessionMemberIdName,那么返回null
         if (isNullOrEmpty(sessionMemberIdName)){
             return null;
         }
 
-        //如果标识的是session对象中的某个字段#sessionMemberIdName,那么提取该字段返回;
+        //4.如果标识的是session对象中的某个字段#sessionMemberIdName,那么提取该字段返回;
         return PropertyUtil.getProperty(sessionMember, sessionMemberIdName);
     }
 
