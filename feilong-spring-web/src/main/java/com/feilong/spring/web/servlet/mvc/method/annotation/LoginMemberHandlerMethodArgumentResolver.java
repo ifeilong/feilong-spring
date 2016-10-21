@@ -136,7 +136,7 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
             return null;
         }
 
-        //2.如果标识的是session对象本身#sessionMemberClass,那么直接获取返回;
+        //2.如果标识的是session对象本身是配置的类型,那么直接获取返回;
         Class<?> klass = parameter.getParameterType();
         if (klass.isAssignableFrom(sessionMemberClass)){
             return sessionMember;
