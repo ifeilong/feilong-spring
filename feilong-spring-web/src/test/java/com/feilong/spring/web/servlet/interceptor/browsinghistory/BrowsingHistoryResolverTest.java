@@ -44,7 +44,6 @@ public class BrowsingHistoryResolverTest{
         list.add(browsingHistoryCommand);
 
         LOGGER.debug(JsonUtil.format(list));
-
         JsonUtil.toList(JsonUtil.format(list), DefaultBrowsingHistoryCommand.class);
     }
 
