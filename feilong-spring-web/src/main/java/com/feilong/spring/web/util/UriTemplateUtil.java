@@ -384,7 +384,7 @@ public class UriTemplateUtil{
      * <pre class="code">
      * String uriTemplatePath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
      * 
-     * Map{@code <String, String>} map = new HashMap{@code <String, String>}();
+     * Map{@code <String, String>} map = new HashMap{@code <>}();
      * map.put("color", "100");
      * map.put("size", "L");
      * </pre>
