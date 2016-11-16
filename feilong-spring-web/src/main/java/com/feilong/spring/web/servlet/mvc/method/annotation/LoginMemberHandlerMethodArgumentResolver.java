@@ -57,15 +57,15 @@ import static com.feilong.core.Validator.isNullOrEmpty;
  * <pre class="code">
  * {@code
  *             <bean class="com.feilong.spring.web.servlet.mvc.method.annotation.LoginMemberHandlerMethodArgumentResolver">
- *                 <!-- 在session中保存的标识用户session对象的key -->
+ *                 <span style="color:green"><!-- 在session中保存的标识用户session对象的key --></span>
  *                 <property name="sessionKey">
  *                     <util:constant static-field="com.baozun.nebula.web.constants.SessionKeyConstants.MEMBER_CONTEXT" />
  *                 </property>
  * 
- *                 <!-- session 里面存放的 对象类型 -->
+ *                 <span style="color:green"><!-- session 里面存放的 对象类型 --></span>
  *                 <property name="sessionMemberClass" value="com.baozun.nebula.web.MemberDetails" />
  * 
- *                 <!-- 对象的主键名称 -->
+ *                 <span style="color:green"><!-- 对象的主键名称 --></span>
  *                 <property name="sessionMemberIdName" value="memberId" />
  *             </bean>
  * }
