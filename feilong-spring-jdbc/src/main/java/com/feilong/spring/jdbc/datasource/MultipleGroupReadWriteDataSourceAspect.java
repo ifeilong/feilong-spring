@@ -51,7 +51,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.bean.ConvertUtil.toMap;
+import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
 import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 import net.sf.json.JSONException;
@@ -102,7 +102,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
     private TransactionAttributeSource         transactionAttributeSouce;
 
     /** 传播行为和是否必须是write的对照map. */
-    private static final Map<Integer, Boolean> PROPAGATION_BEHAVIOR_AND_MUST_WRITE_MAP = toMap(
+    private static final Map<Integer, Boolean> PROPAGATION_BEHAVIOR_AND_MUST_WRITE_MAP = toMapUseEntrys(
                     //默认的事务传播行为,表示必须有逻辑事务,否则新建一个事务
                     of(PROPAGATION_REQUIRED, false),
                     //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚.

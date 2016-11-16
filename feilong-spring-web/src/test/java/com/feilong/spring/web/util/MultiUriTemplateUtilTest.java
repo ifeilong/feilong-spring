@@ -15,7 +15,6 @@
  */
 package com.feilong.spring.web.util;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
@@ -25,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.feilong.core.net.URIUtil;
 
 import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.bean.ConvertUtil.toMap;
 
 /**
  * The Class MultiUriTemplateUtilTest.
@@ -49,10 +49,7 @@ public class MultiUriTemplateUtilTest{
     @Test
     public void expandWithMultiVariableMap(){
         String matchingPatternPath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
-
-        Map<String, String> map = new HashMap<>();
-        map.put("categoryCode", "2541");
-        map.put("style", "100");
+        Map<String, String> map = toMap("categoryCode", "2541", "style", "100");
 
         String variableName = "style";
         String value = URIUtil.encode("Lifestyle / Graphic", UTF8);

@@ -35,7 +35,7 @@ import java.util.Map;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
-import static com.feilong.core.bean.ConvertUtil.toMap;
+import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
 
 /**
  * The Class TransactionAttributeUtil.
@@ -184,7 +184,7 @@ public class TransactionAttributeUtil{
      * @see java.sql.Connection#TRANSACTION_REPEATABLE_READ
      * @see java.sql.Connection#TRANSACTION_SERIALIZABLE
      */
-    private static final Map<Integer, String> ISOLATION_LEVEL_AND_NAME_MAP      = toMap(
+    private static final Map<Integer, String> ISOLATION_LEVEL_AND_NAME_MAP      = toMapUseEntrys(
                     of(ISOLATION_DEFAULT, "default"),
                     //大多数主流数据库的默认事务等级,保证了一个事务不会读到另一个并行事务已修改但未提交的数据,避免了“脏读取”。该级别适用于大多数系统。
                     of(ISOLATION_READ_COMMITTED, "read_committed"),
@@ -206,7 +206,7 @@ public class TransactionAttributeUtil{
      * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_REQUIRES_NEW
      * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_SUPPORTS
      */
-    private static final Map<Integer, String> PROPAGATION_BEHAVIOR_AND_NAME_MAP = toMap(
+    private static final Map<Integer, String> PROPAGATION_BEHAVIOR_AND_NAME_MAP = toMapUseEntrys(
                     //默认的事务传播行为,表示必须有逻辑事务,否则新建一个事务
                     of(PROPAGATION_REQUIRED, "required"),
                     //创建新的逻辑事务,表示每次都创建新的逻辑事务(物理事务也是不同的),因此外部事务可以不受内部事务回滚状态的影响独立提交或者回滚.
