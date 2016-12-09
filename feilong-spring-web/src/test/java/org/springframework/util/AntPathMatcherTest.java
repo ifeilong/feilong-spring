@@ -15,6 +15,8 @@
  */
 package org.springframework.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.net.URI;
 import java.util.Map;
 
@@ -76,8 +78,8 @@ public class AntPathMatcherTest{
      */
     @Test
     public void testMatch1(){
-        LOGGER.debug("" + PATH_MATCHER.match("/**/*.json", "/storelocator/list.json"));
-        LOGGER.debug("" + PATH_MATCHER.match("/**/*.json", "/list.json"));
+        assertEquals(true, PATH_MATCHER.match("/**/*.json", "/storelocator/list.json"));
+        assertEquals(true, PATH_MATCHER.match("/**/*.json", "/list.json"));
     }
 
     @Test
