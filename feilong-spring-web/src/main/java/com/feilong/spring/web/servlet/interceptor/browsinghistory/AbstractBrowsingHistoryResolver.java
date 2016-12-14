@@ -78,7 +78,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
     @Override
     public List<BrowsingHistoryCommand> getBrowsingHistoryExcludeId(Long excludeId,HttpServletRequest request,HttpServletResponse response){
         List<BrowsingHistoryCommand> browsingHistory = getBrowsingHistory(request, response);
-        return CollectionsUtil.removeAll(browsingHistory, "id", excludeId);
+        return CollectionsUtil.selectRejected(browsingHistory, "id", excludeId);
     }
 
     /*

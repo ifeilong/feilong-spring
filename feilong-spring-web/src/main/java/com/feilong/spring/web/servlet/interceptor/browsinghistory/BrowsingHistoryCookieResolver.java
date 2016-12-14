@@ -193,7 +193,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
         List<BrowsingHistoryCommand> browsingHistoryList = getBrowsingHistory(request, response);
 
         //② 删除指定的 一条历史浏览记录
-        List<BrowsingHistoryCommand> buildBrowsingHistoryList = CollectionsUtil.removeAll(browsingHistoryList, "id", id);
+        List<BrowsingHistoryCommand> buildBrowsingHistoryList = CollectionsUtil.selectRejected(browsingHistoryList, "id", id);
 
         //③ 设置整理后的记录到 cookie中
         saveToCookie(buildBrowsingHistoryList, response);
