@@ -1,0 +1,50 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+
+	<id>all</id>
+
+	<formats>
+		<format>jar</format>
+	</formats>
+
+	<!-- <fileSets>
+		<fileSet>
+		<includes>
+		<include>pom.xml</include>
+		</includes>
+		<useDefaultExcludes>true</useDefaultExcludes>
+		</fileSet>
+		<fileSet>
+		<directory>src</directory>
+		<useDefaultExcludes>true</useDefaultExcludes>
+		</fileSet>
+		</fileSets> -->
+
+	<includeBaseDirectory>false</includeBaseDirectory>
+
+	<dependencySets>
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<useTransitiveDependencies>true</useTransitiveDependencies>
+			<!-- <outputDirectory>lib</outputDirectory> -->
+			<unpack>true</unpack>
+
+			<includes>
+				<include>${project.groupId}:*:*</include>
+			</includes>
+			<!-- <excludes>
+				<exclude>${project.groupId}:*:*</exclude>
+				</excludes> -->
+		</dependencySet>
+	</dependencySets>
+
+	<moduleSets>
+		<moduleSet>
+			<!-- <useAllReactorProjects>true</useAllReactorProjects> -->
+			<binaries>
+				<outputDirectory>modules</outputDirectory>
+				<unpack>false</unpack>
+			</binaries>
+		</moduleSet>
+	</moduleSets>
+</assembly>

@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.feilong.platform</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.9.7-SNAPSHOT</version>
+		<version>1.10.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>com.feilong.platform.spring</groupId>
@@ -30,6 +30,7 @@
 		<module>feilong-spring-web</module>
 		<module>feilong-spring-context</module>
 		<module>feilong-spring-mobile</module>
+		<module>feilong-spring-all</module>
 	</modules>
 
 	<dependencies>

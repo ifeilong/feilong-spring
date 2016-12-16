@@ -3,9 +3,13 @@
 	<parent>
 		<groupId>com.feilong.platform.spring</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.9.7-SNAPSHOT</version>
+		<version>1.10.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>feilong-spring-aop</artifactId>
+
+	<properties>
+		<version.aspectjweaver>1.6.8</version.aspectjweaver>
+	</properties>
 
 	<dependencies>
 
@@ -31,8 +35,8 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
+			<version>${version.aspectjweaver}</version>
 		</dependency>
-
 
 	</dependencies>
 </project>
