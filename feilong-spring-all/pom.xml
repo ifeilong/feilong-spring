@@ -58,7 +58,7 @@
 						<!---->
 						<configuration>
 							<descriptors>
-								<descriptor>all-assembly.xml</descriptor>
+								<descriptor>src/main/assembly/all-assembly.xml</descriptor>
 							</descriptors>
 						</configuration>
 					</execution>

@@ -56,10 +56,6 @@ public class HtmlUtilsTest{
         LOGGER.debug(StringEscapeUtils.unescapeHtml4(str1));
         LOGGER.debug(StringEscapeUtils.unescapeHtml4(str2));
         LOGGER.debug(StringEscapeUtils.unescapeHtml4(str3));
-
-        LOGGER.debug(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str1));
-        LOGGER.debug(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str2));
-        LOGGER.debug(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(str3));
     }
 
     /**
@@ -83,6 +79,6 @@ public class HtmlUtilsTest{
      */
     @Test
     public void stringEscapeUtils2(){
-        LOGGER.debug(org.apache.commons.lang.StringEscapeUtils.unescapeHtml(a));
+        LOGGER.debug(StringEscapeUtils.unescapeHtml4(a));
     }
 }
