@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.feilong.spring.jdbc.datasource.MultipleGroupDataSource;
-import com.feilong.test.User;
+import com.feilong.store.member.User;
 
 /**
  * The Class MemberManagerImpl.

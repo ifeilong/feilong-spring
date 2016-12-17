@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.manager.java;
 
-import com.feilong.test.User;
+import com.feilong.store.member.User;
 
 import loxia.dao.ReadWriteSupport;
 
