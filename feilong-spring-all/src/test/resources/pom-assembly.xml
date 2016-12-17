@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
 		<groupId>com.feilong.platform.spring</groupId>
 		<artifactId>parent</artifactId>
@@ -8,11 +7,7 @@
 	</parent>
 
 	<artifactId>feilong-spring-all</artifactId>
-	<packaging>jar</packaging>
-
-	<properties>
-		<v.maven-shade-plugin>2.4.3</v.maven-shade-plugin>
-	</properties>
+	<packaging>pom</packaging>
 
 	<dependencies>
 
@@ -57,27 +52,23 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>${v.maven-shade-plugin}</version>
+				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<id>make-bundles</id>
 						<goals>
-							<goal>shade</goal>
+							<goal>single</goal>
 						</goals>
+						<phase>package</phase>
+						<!---->
 						<configuration>
-							<!-- With version 2.2 of the maven-shade-plugin, they added a "shadeTestJar" option (see MSHADE-158): http://maven.apache.org/plugins/maven-shade-plugin/shade-mojo.html#shadeTestJar -->
-							<shadeTestJar>true</shadeTestJar>
-							<!-- When true, it will attempt to create a sources jar as well -->
-							<createSourcesJar>true</createSourcesJar>
+							<descriptors>
+								<descriptor>src/main/assembly/assembly.xml</descriptor>
+							</descriptors>
 
-							<artifactSet>
-								<includes>
-									<include>${project.groupId}:*:*</include>
-								</includes>
-							</artifactSet>
-
+							<!-- We _do_ want the assembly output to be the actual artifact produced for this Maven module. -->
+							<!-- not append assembly id in release file name -->
+							<appendAssemblyId>false</appendAssemblyId>
 						</configuration>
 					</execution>
 				</executions>
