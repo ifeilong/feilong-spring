@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.FrameworkServlet;
@@ -80,6 +83,43 @@ public final class WebSpringUtil{
         //AssertionError不是必须的. 但它可以避免不小心在类的内部调用构造器. 保证该类在任何情况下都不会被实例化.
         //see 《Effective Java》 2nd
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
+    }
+
+    /**
+     * 获得 request.
+     *
+     * @return the request
+     * @see <a href="http://www.cnblogs.com/softidea/p/6125087.html">Spring MVC的RequestContextHolder使用误区</a>
+     * @see <a href="http://www.cnblogs.com/mikevictor07/p/3436393.html">springMVC 中几种获取request和response的方式</a>
+     * @see <a href="http://www.programering.com/q/MDO3QjMwATY.html">How to obtain the HttpServletResponse Spring AOP?</a>
+     * @see RequestContextHolder#getRequestAttributes()
+     * @see ServletRequestAttributes#getRequest()
+     * @see org.springframework.web.servlet.mvc.method.annotation.ServletRequestMethodArgumentResolver
+     * @see org.springframework.web.util.WebUtils#getNativeRequest(ServletRequest, Class)
+     * @since 1.10.0
+     */
+    public static HttpServletRequest getRequest(){
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return servletRequestAttributes.getRequest();
+    }
+
+    /**
+     * 获得 response.
+     *
+     * @return the response
+     * @see <a href="http://www.cnblogs.com/softidea/p/6125087.html">Spring MVC的RequestContextHolder使用误区</a>
+     * @see <a href="http://www.cnblogs.com/mikevictor07/p/3436393.html">springMVC 中几种获取request和response的方式</a>
+     * @see <a href="http://www.programering.com/q/MDO3QjMwATY.html">How to obtain the HttpServletResponse Spring AOP?</a>
+     * @see RequestContextHolder#getRequestAttributes()
+     * @see ServletWebRequest#getResponse()
+     * @see org.springframework.web.servlet.mvc.method.annotation.ServletResponseMethodArgumentResolver
+     * @see org.springframework.web.util.WebUtils#getNativeResponse(javax.servlet.ServletResponse, Class)
+     * @since 1.10.0
+     */
+    public static HttpServletResponse getResponse(){
+        HttpServletRequest request = getRequest();
+        ServletWebRequest servletWebRequest = new ServletWebRequest(request);
+        return servletWebRequest.getResponse();
     }
 
     //********************************************************************************
