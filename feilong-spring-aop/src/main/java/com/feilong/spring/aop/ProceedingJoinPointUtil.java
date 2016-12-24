@@ -47,8 +47,6 @@ public class ProceedingJoinPointUtil{
     public static final Map<String, Object> getMapForLog(ProceedingJoinPoint proceedingJoinPoint){
         MethodSignature methodSignature = getMethodSignature(proceedingJoinPoint);
 
-        Class<?> declaringType = methodSignature.getDeclaringType();
-
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("target", proceedingJoinPoint.getTarget().getClass().getCanonicalName());
         map.put("method", methodSignature.getMethod().getName());
