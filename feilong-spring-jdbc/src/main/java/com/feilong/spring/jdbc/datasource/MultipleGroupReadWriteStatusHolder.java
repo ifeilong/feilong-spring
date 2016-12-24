@@ -28,7 +28,7 @@ package com.feilong.spring.jdbc.datasource;
 public class MultipleGroupReadWriteStatusHolder{
 
     /** 为每一个线程维护变量的副本 . */
-    private static final ThreadLocal<String> MULTIPLE_DATASOURCE_GROUP_NAME_HOLDER = new ThreadLocal<String>();
+    private static final ThreadLocal<String> MULTIPLE_DATASOURCE_GROUP_NAME_HOLDER = new ThreadLocal<>();
 
     /** Don't let anyone instantiate this class. */
     private MultipleGroupReadWriteStatusHolder(){
