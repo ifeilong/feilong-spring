@@ -73,6 +73,40 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 </project>
 ```
 
+如果你不需要这么细致的引用feilong-spring ,你可以使用 
+
+```XML
+<project>
+
+	....
+	<properties>
+		<version.feilong-platform>1.10.0</version.feilong-platform>
+		....
+	</properties>
+	
+	....
+	<repositories>
+		<repository>
+			<id>feilong-repository</id>
+			<url>https://raw.github.com/venusdrogon/feilong-platform/repository</url>
+		</repository>
+	</repositories>
+	
+	....
+	<dependencies>
+		....
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-all</artifactId>
+			<version>${version.feilong-platform}</version>
+		</dependency>
+		....
+	</dependencies>
+	....
+	
+</project>
+```
+
 ## How to install?
 
 有些小伙伴想下载并自行install 进行研究, 你需要执行以下4个步骤:
