@@ -3,7 +3,7 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>com.feilong.platform.spring</groupId>
-    <version>1.10.0</version>
+    <version>1.10.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>feilong-spring-all</artifactId>
@@ -36,7 +36,7 @@
     <dependency>
       <groupId>com.feilong.platform</groupId>
       <artifactId>feilong-core</artifactId>
-      <version>1.10.0</version>
+      <version>1.10.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
