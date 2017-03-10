@@ -86,7 +86,15 @@ public final class WebSpringUtil{
 
     /**
      * 获得 request.
-     *
+     * 
+     * <h3>说明:</h3>
+     * <blockquote>
+     * <p>
+     * spring 3中可以通过 {@link RequestContextHolder} 得到 {@link HttpServletRequest},但是得不到 {@link HttpServletResponse},具体参见
+     * {@link <a href="https://github.com/venusdrogon/feilong-spring/issues/6">WebSpringUtil.getResponse()方法获取到的response是null</a>}
+     * </p>
+     * </blockquote>
+     * 
      * @return the request
      * @see <a href="http://www.cnblogs.com/softidea/p/6125087.html">Spring MVC的RequestContextHolder使用误区</a>
      * @see <a href="http://www.cnblogs.com/mikevictor07/p/3436393.html">springMVC 中几种获取request和response的方式</a>
