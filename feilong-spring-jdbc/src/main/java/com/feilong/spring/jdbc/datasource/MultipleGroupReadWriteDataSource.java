@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-import com.feilong.coreextension.lang.ThreadUtil;
+import com.feilong.coreextension.lang.ThreadExtensionUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
@@ -108,7 +108,7 @@ public class MultipleGroupReadWriteDataSource extends AbstractRoutingDataSource{
     @Override
     protected Object determineCurrentLookupKey(){
         String dataSourceName = MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName();
-        LOGGER.info("Current LookupKey:[{}],thread info:{}", dataSourceName, JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
+        LOGGER.info("Current LookupKey:[{}],thread info:{}", dataSourceName, JsonUtil.format(ThreadExtensionUtil.getCurrentThreadMapForLog()));
         return dataSourceName;
     }
 

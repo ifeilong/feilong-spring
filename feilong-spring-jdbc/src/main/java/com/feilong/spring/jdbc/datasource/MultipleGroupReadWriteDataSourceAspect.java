@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
-import static com.feilong.coreextension.lang.ThreadUtil.getCurrentThreadMapForLog;
+import static com.feilong.coreextension.lang.ThreadExtensionUtil.getCurrentThreadMapForLog;
 import static loxia.dao.ReadWriteSupport.READ;
 import static loxia.dao.ReadWriteSupport.WRITE;
 import static org.apache.commons.lang3.tuple.Pair.of;
@@ -42,7 +42,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
-import com.feilong.coreextension.lang.ThreadUtil;
+import com.feilong.coreextension.lang.ThreadExtensionUtil;
 import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
 import com.feilong.spring.aop.ProceedingJoinPointUtil;
@@ -180,7 +180,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         //当前的holder
         String previousDataSourceNameHolder = MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName();
 
-        String currentThreadInfo = JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog());
+        String currentThreadInfo = JsonUtil.format(ThreadExtensionUtil.getCurrentThreadMapForLog());
         if (LOGGER.isInfoEnabled()){
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("groupName", groupName);

@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.feilong.coreextension.lang.ThreadUtil;
+import com.feilong.coreextension.lang.ThreadExtensionUtil;
 import com.feilong.spring.manager.java.MemberManager;
 import com.feilong.spring.manager.java.SalesOrderManager;
 import com.feilong.tools.jsonlib.JsonUtil;
@@ -78,7 +78,7 @@ public class MultiThreadMemberManagerTest //extends AbstractJUnit4SpringContextT
          */
         @Override
         public void run(){
-            LOGGER.debug("run thread,thread info:{}", JsonUtil.format(ThreadUtil.getCurrentThreadMapForLog()));
+            LOGGER.debug("run thread,thread info:{}", JsonUtil.format(ThreadExtensionUtil.getCurrentThreadMapForLog()));
             // memberManager.addUser("feilong");
             salesOrderManager.addUser("feilong");
             // memberManager.getUser("feilong");
