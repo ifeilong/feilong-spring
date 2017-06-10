@@ -81,23 +81,29 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerIntercep
         //是否支持解析,有可能在xml里面配置的一些不相关的路径透过到了这个拦截器
         //比如 配置的 mapping path 是 item/* 但是有一些url地址是 item/wishlist 诸如此类的也到了该拦截器
         boolean isSupport = isSupport(request, handler, modelAndView);
-        if (isSupport){
-            BrowsingHistoryCommand browsingHistoryCommand = constructBrowsingHistoryCommand(request, response, handler, modelAndView);
-
-            if (null != browsingHistoryCommand){
-                browsingHistoryResolver.add(browsingHistoryCommand, request, response);
-            }else{
-                LOGGER.debug(
-                                "browsingHistoryCommand is null,don't add browsingHistory,request info:{}",
-                                JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, RequestLogSwitch.NORMAL)));
-            }
-        }else{
+        if (!isSupport){
             if (LOGGER.isInfoEnabled()){
                 LOGGER.info(
                                 "current request:[{}] not support this BrowsingHistoryInterceptor,maybe you can config path in spring config 'mvc:exclude-mapping' node!",
                                 JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
             }
+            return;
         }
+
+        //---------------------------------------------------------------
+        BrowsingHistoryCommand browsingHistoryCommand = constructBrowsingHistoryCommand(request, response, handler, modelAndView);
+        if (null != browsingHistoryCommand){
+            browsingHistoryResolver.add(browsingHistoryCommand, request, response);
+            return;
+        }
+
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(
+                            "browsingHistoryCommand is null,don't add browsingHistory,request info:{}",
+                            JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, RequestLogSwitch.NORMAL)));
+        }
+        return;
     }
 
     /**

@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.messagesource;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toArray;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
 import static org.springframework.util.ResourceUtils.JAR_URL_SEPARATOR;
@@ -37,9 +39,6 @@ import com.feilong.core.UncheckedIOException;
 import com.feilong.core.lang.StringUtil;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
-
-import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.bean.ConvertUtil.toArray;
 
 /**
  * 支持通配符配置的 {@link ReloadableResourceBundleMessageSource}.
@@ -127,16 +126,22 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
      */
     @Override
     public void setBasenames(String...basenames){
-        LOGGER.info("begin parse input basenames:{}", JsonUtil.format(basenames));
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("begin parse input basenames:{}", JsonUtil.format(basenames));
+        }
 
+        //---------------------------------------------------------------
         List<String> basenameList = resolverBasenameList(basenames);
-        //*************************************************************************
 
         //去重
         List<String> removeDuplicateBasenameList = CollectionsUtil.removeDuplicate(basenameList);
         String[] finalBaseNames = toArray(removeDuplicateBasenameList, String.class);
 
-        LOGGER.info("resolver finalBaseNames:{}", JsonUtil.format(finalBaseNames));
+        //---------------------------------------------------------------
+
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("resolver finalBaseNames:{}", JsonUtil.format(finalBaseNames));
+        }
         super.setBasenames(finalBaseNames);
     }
 

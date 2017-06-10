@@ -15,6 +15,7 @@
  */
 package com.feilong.spring.web.servlet;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import java.util.HashMap;
@@ -45,8 +46,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHan
 import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
-
-import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * The Class ModelAndViewUtil.
@@ -109,8 +108,12 @@ public final class ModelAndViewUtil{
      */
     public static Map<String, Object> getRequestAndModelAttributeMap(HttpServletRequest request,ModelAndView modelAndView){
         if (null == modelAndView){
-            LOGGER.debug("modelAndView is null,request info:[{}]", JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
+            if (LOGGER.isDebugEnabled()){
+                LOGGER.debug("modelAndView is null,request info:[{}]", JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
+            }
         }
+
+        //---------------------------------------------------------------
         Map<String, Object> model = (null == modelAndView) ? null : modelAndView.getModel();
         return getRequestAndModelAttributeMap(request, model);
     }

@@ -15,6 +15,9 @@
  */
 package com.feilong.spring.web.servlet.interceptor.seo;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -29,9 +32,6 @@ import com.feilong.core.lang.ClassUtil;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.tools.jsonlib.JsonUtil;
-
-import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 /**
  * Seo 的核心实现.
@@ -95,7 +95,9 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
 
         request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
 
-        LOGGER.debug("use time:{}", formatDuration(beginDate));
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("use time:{}", formatDuration(beginDate));
+        }
     }
 
     /**

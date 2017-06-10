@@ -15,6 +15,11 @@
  */
 package com.feilong.spring.web.util;
 
+import static com.feilong.core.Validator.isNotNullOrEmpty;
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toMap;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
+
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -34,11 +39,6 @@ import org.springframework.web.util.UrlPathHelper;
 import com.feilong.core.util.MapUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
-
-import static com.feilong.core.Validator.isNotNullOrEmpty;
-import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.bean.ConvertUtil.toMap;
-import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
 /**
  * {@link org.springframework.web.util.UriTemplate},此类是 单值 expend.
@@ -247,8 +247,9 @@ public class UriTemplateUtil{
         PathMatcher matcher = new AntPathMatcher();
         Map<String, String> map = matcher.extractUriTemplateVariables(matchingPatternPath, requestPath);
 
-        LOGGER.debug("requestPath:[{}],matchingPatternPath:[{}],result:[{}]", requestPath, matchingPatternPath, JsonUtil.format(map));
-
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("requestPath:[{}],matchingPatternPath:[{}],result:[{}]", requestPath, matchingPatternPath, JsonUtil.format(map));
+        }
         return map;
     }
 

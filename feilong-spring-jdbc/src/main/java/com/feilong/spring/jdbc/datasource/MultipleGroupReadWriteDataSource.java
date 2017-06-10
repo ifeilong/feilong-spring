@@ -108,7 +108,13 @@ public class MultipleGroupReadWriteDataSource extends AbstractRoutingDataSource{
     @Override
     protected Object determineCurrentLookupKey(){
         String dataSourceName = MultipleGroupReadWriteStatusHolder.getMultipleDataSourceGroupName();
-        LOGGER.info("Current LookupKey:[{}],thread info:{}", dataSourceName, JsonUtil.format(ThreadExtensionUtil.getCurrentThreadMapForLog()));
+
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(
+                            "Current LookupKey:[{}],thread info:{}",
+                            dataSourceName,
+                            JsonUtil.format(ThreadExtensionUtil.getCurrentThreadMapForLog()));
+        }
         return dataSourceName;
     }
 

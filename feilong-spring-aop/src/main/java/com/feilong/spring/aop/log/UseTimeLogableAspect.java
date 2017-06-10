@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.aop.log;
 
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -27,8 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.spring.aop.AbstractAspect;
-
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 /**
  * 用来给所有实现{@link UseTimeLogable}接口的方法输出耗时日志用的.
@@ -75,8 +75,9 @@ public class UseTimeLogableAspect extends AbstractAspect{
         Object result = proceedingJoinPoint.proceed();
         // 在来得到方法名吧,就是通知所要织入目标对象中的方法名称
 
-        LOGGER.info("end [{}.{}],use time:{}", targetClassSimpleName, methodName, formatDuration(beginDate));
-
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("end [{}.{}],use time:{}", targetClassSimpleName, methodName, formatDuration(beginDate));
+        }
         return result;
     }
 }
