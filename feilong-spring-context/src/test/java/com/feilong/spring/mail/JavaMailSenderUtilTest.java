@@ -31,10 +31,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class JavaMailSenderUtilTest{
 
     /** The context. */
-    private ApplicationContext context;
+    private ApplicationContext    context;
 
     /** The mail util. */
-    private JavaMailSenderUtil mailUtil;
+    private JavaMailSenderUtil    mailUtil;
+
+    private final static String[] to = new String[] { "venusdrogon@163.com" };
 
     /**
      * Inits the.
@@ -53,11 +55,10 @@ public class JavaMailSenderUtilTest{
         Map<String, Object> model = new HashMap<>();
         model.put("userName", "大关");
         model.put("email" + "Address", "woshidaguan@126.com");
-        String[] mailTo = new String[] { "venusdrogon@163.com" };
         // String[] files = new String[] { "F:/Photo 照片/2012/else/120120A011.jpg", "F:/Photo 照片/2012/else/120127A001.jpg" };
         String vmfile = "com/guan/chapter19/email/welcome.vm";
         String subject = "欢迎您的加入";
-        mailUtil.sendEmail(null, subject, vmfile, mailTo, null);
+        mailUtil.sendEmail(null, subject, vmfile, to, null);
     }
 
     /**
@@ -65,7 +66,6 @@ public class JavaMailSenderUtilTest{
      */
     @Test
     public void send(){
-        String[] to = new String[] { "venusdrogon@163.com" };
         String subject = "欢迎您的加入暗示的发射点法";
         String text = "<span style='color:red'><br>鑫哥艾莉梅阿斯达萨</br></span>";
         mailUtil.send(to, subject, text, null);
@@ -76,7 +76,7 @@ public class JavaMailSenderUtilTest{
      */
     @Test
     public void sendMailNative(){
-        String[] to = new String[] { "venusdrogon@163.com" };
+
         String subject = "你好";
         String text = "<span style='color:red'><br>鑫哥 </br></span>";
         mailUtil.sendMailNative(to, subject, text, null);
