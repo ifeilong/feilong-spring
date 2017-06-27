@@ -19,6 +19,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.feilong.tools.jsonlib.JsonUtil;
+
 /**
  * The Class SpelUtilTest.
  *
@@ -49,5 +51,15 @@ public class SpelUtilTest{
         System.setProperty("feilong.site", "hongkong");
         LOGGER.debug("" + SpelUtil.getValue("#systemProperties['feilong.site']"));
         //LOGGER.debug("" + SpelUtil.getValue("${feilong.site}=='china'?'CHINA':(${feilong.site}=='hongkong'?'HONGKONG':'TAIWAN')"));
+    }
+
+    @Test
+    public void getValue2(){
+        String expressionString = "T(com.feilong.core.lang.StringUtil).tokenizeToStringArray('xin,jin',',')";
+
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(JsonUtil.format(SpelUtil.getValue(expressionString)));
+        }
+
     }
 }

@@ -96,7 +96,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
         request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
 
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("use time:{}", formatDuration(beginDate));
+            LOGGER.debug("use time:[{}]", formatDuration(beginDate));
         }
     }
 
@@ -162,7 +162,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
         SeoViewCommand defaultSeoViewCommand = buildDefaultSeoViewCommand(request);
 
         if (null == seoViewCommand){
-            LOGGER.debug("can not find SeoViewCommand object in Request And ModelAndView attribute,use defaultSeoViewCommand.");
+            LOGGER.debug("can not find [SeoViewCommand] in Request or ModelAndView attribute,use [defaultSeoViewCommand].");
             return defaultSeoViewCommand;
         }
 
