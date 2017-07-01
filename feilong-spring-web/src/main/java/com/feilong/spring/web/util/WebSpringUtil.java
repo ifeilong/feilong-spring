@@ -115,8 +115,8 @@ public final class WebSpringUtil{
      * 普通类获得spring 注入的类方法.
      * 
      * <p>
-     * 此方法底层调用的是 {@link RequestContextUtils#getWebApplicationContext(ServletRequest,
-     * ServletContext)} ,会从spingmvc 以及spring ApplicationContext 查找bean
+     * 此方法底层调用的是 {@link RequestContextUtils#getWebApplicationContext(ServletRequest, ServletContext)} ,会从spingmvc 以及spring
+     * ApplicationContext 查找bean
      * </p>
      * 
      * @param <T>
@@ -125,8 +125,9 @@ public final class WebSpringUtil{
      *            request
      * @param beanName
      *            xml文件中配置的bean beanName
-     * @return 先在servlet-specific WebApplicationContext 里面找 bean;如果没有,会在 global context里面找<br>
-     *         如果在servlet-specific 或者 global context 都找不到 会抛出 IllegalStateException
+     * @return 先在servlet-specific {@link WebApplicationContext} 里面找 bean;<br>
+     *         如果没有,会在 global context里面找;<br>
+     *         如果在servlet-specific 或者 global context 都找不到,会抛出 {@link IllegalStateException}
      * @see #getWebApplicationContext(HttpServletRequest)
      * @see RequestContextUtils#getWebApplicationContext(ServletRequest, ServletContext)
      */
@@ -150,8 +151,9 @@ public final class WebSpringUtil{
      *            the request
      * @param requiredType
      *            the required type
-     * @return 先在servlet-specific WebApplicationContext 里面找 bean;如果没有,会在 global context里面找<br>
-     *         如果在servlet-specific 或者 global context 都找不到 会抛出 IllegalStateException
+     * @return 先在servlet-specific {@link WebApplicationContext} 里面找 bean;<br>
+     *         如果没有,会在 global context里面找;<br>
+     *         如果在servlet-specific 或者 global context 都找不到,会抛出 {@link IllegalStateException}
      * @see #getWebApplicationContext(HttpServletRequest)
      * @see RequestContextUtils#getWebApplicationContext(ServletRequest, ServletContext)
      */
@@ -242,7 +244,7 @@ public final class WebSpringUtil{
      *            the application context
      * @param beanName
      *            the bean name
-     * @return the bean
+     * @return NoSuchBeanDefinitionException - if there is no bean definition with the specified name
      */
     @SuppressWarnings("unchecked")
     private static <T> T getBean(ApplicationContext applicationContext,String beanName){
@@ -267,11 +269,15 @@ public final class WebSpringUtil{
     //*******************************************************************************************
 
     /**
-     * 获得 web application context.
+     * Find the root {@link WebApplicationContext} for this web app, typically loaded via
+     * {@link org.springframework.web.context.ContextLoaderListener}.
+     * <p>
+     * Will rethrow an exception that happened on root context startup,
+     * to differentiate between a failed context startup and no context at all.
      *
      * @param servletContext
      *            the servlet context
-     * @return the web application context
+     * @return the root WebApplicationContext for this web app, or {@code null} if none
      * @see org.springframework.web.context.WebApplicationContext#ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
      * @see org.springframework.web.context.support.WebApplicationContextUtils#getWebApplicationContext(ServletContext)
      * @since 1.1.1

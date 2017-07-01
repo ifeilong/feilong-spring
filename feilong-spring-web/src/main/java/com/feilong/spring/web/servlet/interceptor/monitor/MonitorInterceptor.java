@@ -15,6 +15,11 @@
  */
 package com.feilong.spring.web.servlet.interceptor.monitor;
 
+import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.TimeInterval.MILLISECOND_PER_SECONDS;
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +39,6 @@ import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
 import com.feilong.tools.jsonlib.JsonUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
-
-import static com.feilong.core.CharsetType.UTF8;
-import static com.feilong.core.TimeInterval.MILLISECOND_PER_SECONDS;
-import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
@@ -104,7 +104,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
 
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(
-                            "RequestInfoMapForLog:{},request attribute:{},start StopWatch",
+                            "RequestInfoMapForLog:{},[request] attribute:{},start StopWatch",
                             JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
                             getRequestAttributeMap(request));
         }
@@ -179,7 +179,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
 
         //一条日志输出, 这样的话,在并发的情况, 日志还是有上下文的
         return Slf4jUtil.format(
-                        "postHandle [{}.{}()],RequestInfoMapForLog:{},request attribute:{},modelAndView info:[{}],use time:[{}],[{}] performanceThreshold:[{}]",
+                        "postHandle [{}.{}()],RequestInfoMapForLog:{},[request] attribute:{},modelAndView info:[{}],use time:[{}],[{}] performanceThreshold:[{}]",
                         HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                         HandlerMethodUtil.getHandlerMethodName(handlerMethod),
                         JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
