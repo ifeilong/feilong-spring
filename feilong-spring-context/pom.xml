@@ -10,6 +10,13 @@
 	<description>feilong-spring-context</description>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-core</artifactId>
+			<version>${version.feilong-platform}</version>
+		</dependency>
+
 		<!-- spring-context -->
 		<dependency>
 			<groupId>org.springframework</groupId>

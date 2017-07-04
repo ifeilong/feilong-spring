@@ -69,7 +69,7 @@ public class UseTimeLogableAspect extends AbstractAspect{
 
         String targetClassSimpleName = proceedingJoinPoint.getTarget().getClass().getSimpleName();
 
-        LOGGER.info("begin [{}.{}] ~~~~", targetClassSimpleName, methodName);
+        LOGGER.debug("begin [{}.{}] ~~~~", targetClassSimpleName, methodName);
 
         // 通过反射执行目标对象的连接点处的方法
         Object result = proceedingJoinPoint.proceed();

@@ -104,7 +104,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
 
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(
-                            "RequestInfoMapForLog:{},[request] attribute:{},start StopWatch",
+                            "[Request] base info:{},[request] attribute:{},start StopWatch",
                             JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
                             getRequestAttributeMap(request));
         }

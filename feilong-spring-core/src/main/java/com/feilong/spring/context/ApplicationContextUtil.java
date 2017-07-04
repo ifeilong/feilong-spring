@@ -44,58 +44,75 @@ public final class ApplicationContextUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
     /**
      * 获得 application context for log map.
      *
      * @param applicationContext
      *            the application context
-     * @return the application context for log map
+     * @return 如果 <code>applicationContext</code> 是null,抛出 {@link NullPointerException}<br>
      */
     public static Map<String, Object> getApplicationContextForLogMap(ApplicationContext applicationContext){
         Validate.notNull(applicationContext, "applicationContext can't be null!");
 
+        //---------------------------------------------------------------
+
         Map<String, Object> map = new LinkedHashMap<>();
 
-        map.put("applicationContext.getBeanDefinitionCount()", applicationContext.getBeanDefinitionCount());
+        map.put("beanDefinitionCount", applicationContext.getBeanDefinitionCount());
+        map.put("startupDate", applicationContext.getStartupDate());
 
-        map.put("applicationContext.getApplicationName()", applicationContext.getApplicationName());
-        map.put("applicationContext.getDisplayName()", applicationContext.getDisplayName());
+        map.put("applicationName", applicationContext.getApplicationName());
+        map.put("displayName", applicationContext.getDisplayName());
 
-        map.put("applicationContext.getClass()", applicationContext.getClass());
+        map.put("class", applicationContext.getClass());
 
-        map.put("applicationContext.getId()", applicationContext.getId());
-        map.put("applicationContext.getStartupDate()", applicationContext.getStartupDate());
+        map.put("id", applicationContext.getId());
+
+        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+        sortArray(beanDefinitionNames);
+
+        //map.put("beanDefinitionNames", beanDefinitionNames);
+
+        Map<String, Object> beanDefinitionNamesAndClassMap = buildBeanDefinitionNamesAndClassMap(applicationContext, beanDefinitionNames);
+
+        map.put("beanDefinitionNamesAndClassMap", beanDefinitionNamesAndClassMap);
+
+        Environment environment = applicationContext.getEnvironment();
+        map.put("environment", environment);
 
         map.put("ApplicationContext.CLASSPATH_ALL_URL_PREFIX", ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX);
         map.put("ApplicationContext.CLASSPATH_URL_PREFIX", ResourceLoader.CLASSPATH_URL_PREFIX);
         map.put("ApplicationContext.FACTORY_BEAN_PREFIX", BeanFactory.FACTORY_BEAN_PREFIX);
 
         ApplicationContext parent = applicationContext.getParent();
-        map.put("applicationContext.getParent() info", null == parent ? null : getApplicationContextForLogMap(parent));
+        map.put("parent info", null == parent ? null : getApplicationContextForLogMap(parent));
+        return map;
+    }
 
-        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
-
-        sortArray(beanDefinitionNames);
-
-        map.put("applicationContext.getBeanDefinitionNames()", beanDefinitionNames);
-
+    /**
+     * @param applicationContext
+     * @param beanDefinitionNames
+     * @return
+     * @since 1.10.4
+     */
+    private static Map<String, Object> buildBeanDefinitionNamesAndClassMap(
+                    ApplicationContext applicationContext,
+                    String[] beanDefinitionNames){
         Map<String, Object> beanDefinitionNamesAndClassMap = new TreeMap<>();
         for (String beanDefinitionName : beanDefinitionNames){
             try{
                 Object bean = applicationContext.getBean(beanDefinitionName);
                 String canonicalName = bean.getClass().getCanonicalName();
+
                 Object vObject = canonicalName + (applicationContext.isPrototype(beanDefinitionName) ? "[Prototype]"
                                 : (applicationContext.isSingleton(beanDefinitionName) ? "[Singleton]" : ""));
+
                 beanDefinitionNamesAndClassMap.put(beanDefinitionName, vObject);
             }catch (BeansException e){
                 beanDefinitionNamesAndClassMap.put(beanDefinitionName, e.getMessage());
             }
         }
-
-        map.put("beanDefinitionNamesAndClassMap", beanDefinitionNamesAndClassMap);
-
-        Environment environment = applicationContext.getEnvironment();
-        map.put("applicationContext.getEnvironment()", environment);
-        return map;
+        return beanDefinitionNamesAndClassMap;
     }
 }
