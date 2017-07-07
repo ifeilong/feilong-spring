@@ -114,10 +114,10 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 
 ```bat
 git clone https://github.com/venusdrogon/feilong-platform.git --depth 1
-mvn install -f feilong-platform
+mvn install -f feilong-platform/pom.xml
 
 git clone https://github.com/venusdrogon/feilong-spring.git --depth 1
-mvn install -f feilong-spring
+mvn install -f feilong-spring/pom.xml
 ```
 
 ## :memo: 说明
