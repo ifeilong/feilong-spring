@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.web.servlet.interceptor.clientcache;
 
+import static com.feilong.core.CharsetType.UTF8;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,8 +31,6 @@ import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.ResponseUtil;
 import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
-
-import static com.feilong.core.CharsetType.UTF8;
 
 /**
  * 用来拦截所有 标识有 {@link ClientCache}的 请求方法.
@@ -115,6 +115,8 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
             return;
         }
 
+        //---------------------------------------------------------------
+
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         //如果没有标识{@link ClientCache},那么自动通过拦截器,不进行任何处理
         ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
@@ -123,6 +125,8 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
         }
 
         int value = clientCache.value();
+
+        //---------------------------------------------------------------
 
         //如果标识的{@link ClientCache},{@link ClientCache#value()} <=0,那么标识不设置缓存,参见 {@link ResponseUtil#setNoCacheHeader(HttpServletResponse)}
         if (value <= 0){
