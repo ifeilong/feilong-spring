@@ -15,6 +15,9 @@
  */
 package com.feilong.spring.web.servlet.interceptor.i18n;
 
+import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.Validator.isNullOrEmpty;
+
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -27,9 +30,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.feilong.servlet.http.RequestUtil;
-
-import static com.feilong.core.CharsetType.UTF8;
-import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ,而参数中传入了 不存在的/不支持的 locale 调用
@@ -46,6 +46,8 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
     /** The support locales. */
     private List<String>        supportLocales;
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -61,6 +63,9 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
                             handler.getClass().getName());
             return true;
         }
+
+        //---------------------------------------------------------------
+
         boolean canHandle = isSupport(request);
         if (canHandle){
             super.preHandle(request, response, handler);
@@ -90,6 +95,8 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
         }
         return contains; //是否属于支持的locale
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 设置 support locales.

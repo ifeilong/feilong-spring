@@ -7,7 +7,7 @@
 	</parent>
 
 	<artifactId>feilong-spring-core</artifactId>
-	<name>feilong-spring-core (will restructure)</name>
+	<name>feilong-spring-core</name>
 	<description>feilong-spring-core</description>
 
 	<dependencies>

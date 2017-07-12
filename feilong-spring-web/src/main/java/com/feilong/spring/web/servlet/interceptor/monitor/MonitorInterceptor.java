@@ -15,10 +15,12 @@
  */
 package com.feilong.spring.web.servlet.interceptor.monitor;
 
-import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.core.TimeInterval.MILLISECOND_PER_SECONDS;
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+import static com.feilong.servlet.http.RequestUtil.getRequestInfoMapForLog;
+import static com.feilong.spring.web.method.HandlerMethodUtil.getDeclaringClassSimpleName;
+import static com.feilong.spring.web.method.HandlerMethodUtil.getHandlerMethodName;
 
 import java.util.Map;
 
@@ -36,7 +38,7 @@ import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
 import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
-import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;
 import com.feilong.tools.jsonlib.JsonUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
@@ -52,10 +54,12 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.2.2
  */
-public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
+public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
 
     /** The Constant LOGGER. */
     private static final Logger  LOGGER                = LoggerFactory.getLogger(MonitorInterceptor.class);
+
+    //---------------------------------------------------------------
 
     /** 性能阀值<code>{@value}</code>,目前初步设置为1.5s,如果构建command 超过1.5s,会有 error log 记录. */
     private static final Integer PERFORMANCE_THRESHOLD = (int) (MILLISECOND_PER_SECONDS * 1.5);
@@ -81,26 +85,25 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
     /** The request log switch. */
     private RequestLogSwitch     requestLogSwitch;
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#preHandle(javax.servlet.http.HttpServletRequest,
+     * @see
+     * com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doPreHandle(javax.servlet.http.HttpServletRequest,
      * javax.servlet.http.HttpServletResponse, java.lang.Object)
      */
     @Override
-    public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
-        if (!(handler instanceof HandlerMethod)){
-            LOGGER.warn(
-                            "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
-                            RequestUtil.getRequestFullURL(request, UTF8),
-                            handler.getClass().getName());
-            return true;
-        }
-
+    public boolean doPreHandle(HttpServletRequest request,HttpServletResponse response,Object handler){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
+        //---------------------------------------------------------------
+
         request.setAttribute(STOPWATCH_ATTRIBUTE, stopWatch);
+
+        //---------------------------------------------------------------
 
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(
@@ -108,27 +111,17 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                             JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch)),
                             getRequestAttributeMap(request));
         }
-        return super.preHandle(request, response, handler);
+        return true;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#postHandle(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+     * @see com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doPostHandle(javax.servlet.http.
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
      */
     @Override
-    public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
-                    throws Exception{
-
-        if (!(handler instanceof HandlerMethod)){
-            LOGGER.warn(
-                            "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
-                            RequestUtil.getRequestFullURL(request, UTF8),
-                            handler.getClass().getName());
-            return;
-        }
-
+    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView){
         HandlerMethod handlerMethod = (HandlerMethod) handler;
 
         StopWatch stopWatch = getStopWatch(request);
@@ -136,6 +129,8 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
         long useTime = stopWatch.getSplitTime();
 
         boolean isMoreThanPerformanceThreshold = useTime > performanceThreshold;
+
+        //---------------------------------------------------------------
 
         try{
             //如果超过阀值, 那么以error的形式记录
@@ -150,12 +145,13 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
                 }
             }
         }catch (Exception e){//可能有异常,比如  往request/model里面设置了 不能被json处理的对象或者字段
+            String pattern = "postHandle [{}.{}()] occur exception,but we need goon!,just log it,request info:[{}]";
             LOGGER.error(
                             Slf4jUtil.format(
-                                            "postHandle [{}.{}()] occur exception,but we need goon!,just log it,request info:[{}]",
-                                            HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
-                                            HandlerMethodUtil.getHandlerMethodName(handlerMethod),
-                                            JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, requestLogSwitch))),
+                                            pattern,
+                                            getDeclaringClassSimpleName(handlerMethod),
+                                            getHandlerMethodName(handlerMethod),
+                                            JsonUtil.format(getRequestInfoMapForLog(request, requestLogSwitch))),
                             e);
         }
     }
@@ -216,8 +212,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
      * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
      */
     @Override
-    public void afterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception{
-
+    public void doAfterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,Object handler){
         StopWatch stopWatch = getStopWatch(request);
         stopWatch.split();
         long splitTime = stopWatch.getSplitTime();
@@ -239,7 +234,7 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
      * javax.servlet.http.HttpServletResponse, java.lang.Object, java.lang.Exception)
      */
     @Override
-    public void afterCompletion(HttpServletRequest request,HttpServletResponse response,Object handler,Exception ex) throws Exception{
+    public void doAfterCompletion(HttpServletRequest request,HttpServletResponse response,Object handler,Exception ex){
         StopWatch stopWatch = getStopWatch(request);
 
         if (null == stopWatch || stopWatch.isStopped()){
@@ -247,11 +242,15 @@ public class MonitorInterceptor extends AbstractHandlerInterceptorAdapter{
             return;
         }
 
+        //---------------------------------------------------------------
+
         stopWatch.split();
         long splitTime = stopWatch.getSplitTime();
 
         stopWatch.stop();
         long time = stopWatch.getTime();
+
+        //---------------------------------------------------------------
 
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(

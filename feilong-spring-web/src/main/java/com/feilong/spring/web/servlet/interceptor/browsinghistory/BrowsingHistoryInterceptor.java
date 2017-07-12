@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
-import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.tools.jsonlib.JsonUtil;
 
@@ -61,7 +61,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.2.2
  */
-public abstract class BrowsingHistoryInterceptor extends AbstractHandlerInterceptorAdapter{
+public abstract class BrowsingHistoryInterceptor extends AbstractHandlerMethodInterceptorAdapter{
 
     /** The Constant log. */
     private static final Logger     LOGGER = LoggerFactory.getLogger(BrowsingHistoryInterceptor.class);
@@ -69,15 +69,16 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerIntercep
     /** The browsing history resolver. */
     private BrowsingHistoryResolver browsingHistoryResolver;
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#postHandle(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+     * @see com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doPostHandle(javax.servlet.http.
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
      */
     @Override
-    public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
-                    throws Exception{
+    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView){
         //是否支持解析,有可能在xml里面配置的一些不相关的路径透过到了这个拦截器
         //比如 配置的 mapping path 是 item/* 但是有一些url地址是 item/wishlist 诸如此类的也到了该拦截器
         boolean isSupport = isSupport(request, handler, modelAndView);
@@ -141,6 +142,8 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerIntercep
                     HttpServletResponse response,
                     Object handler,
                     ModelAndView modelAndView);
+
+    //---------------------------------------------------------------
 
     /**
      * 设置 the browsing history resolver.

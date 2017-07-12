@@ -38,6 +38,8 @@ public abstract class AbstractHandlerInterceptorAdapter extends HandlerIntercept
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractHandlerInterceptorAdapter.class);
 
+    //---------------------------------------------------------------
+
     /**
      * Post construct.
      */
@@ -48,6 +50,8 @@ public abstract class AbstractHandlerInterceptorAdapter extends HandlerIntercept
             LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.formatSimpleMap(map));
         }
     }
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)

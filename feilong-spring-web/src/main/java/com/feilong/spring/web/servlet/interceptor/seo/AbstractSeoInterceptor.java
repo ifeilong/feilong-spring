@@ -30,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.feilong.core.lang.ClassUtil;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
-import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;
 import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
@@ -58,10 +58,12 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.0
  */
-public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorAdapter{
+public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterceptorAdapter{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER                             = LoggerFactory.getLogger(AbstractSeoInterceptor.class);
+
+    //---------------------------------------------------------------
 
     /** request作用域,关于 SEOVIEWCOMMAND 属性的里面的值. */
     private static final String REQUEST_ATTRIBUTE_SEOVIEWCOMMAND   = "seoViewCommand";
@@ -69,15 +71,16 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
     /** 您可以修改seoViewCommand在 作用域里面的名称,默认是 {@link #REQUEST_ATTRIBUTE_SEOVIEWCOMMAND}. */
     private String              seoViewCommandRequestAttributeName = REQUEST_ATTRIBUTE_SEOVIEWCOMMAND;
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#postHandle(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+     * @see com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doPostHandle(javax.servlet.http.
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
      */
     @Override
-    public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
-                    throws Exception{
+    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView){
         Date beginDate = new Date();
 
         //查找
@@ -93,7 +96,11 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
                             JsonUtil.format(seoViewCommand));
         }
 
+        //---------------------------------------------------------------
+
         request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
+
+        //---------------------------------------------------------------
 
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug("use time:[{}]", formatDuration(beginDate));
@@ -204,11 +211,11 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerInterceptorA
      *            request 作用域 属性值
      * @return the seo view command
      */
-    protected SeoViewCommand buildSeoViewCommandFromRequestAttributeValue(
-                    @SuppressWarnings("unused") String requestAttributeName,
-                    @SuppressWarnings("unused") Object requestAttributeValue){
+    protected SeoViewCommand buildSeoViewCommandFromRequestAttributeValue(String requestAttributeName,Object requestAttributeValue){
         return null;
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 设置 您可以修改seoViewCommand在 作用域里面的名称,默认是 {@link #REQUEST_ATTRIBUTE_SEOVIEWCOMMAND}.

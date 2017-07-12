@@ -25,7 +25,6 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
@@ -78,8 +77,8 @@ public final class ApplicationContextUtil{
 
         map.put("beanDefinitionNamesAndClassMap", beanDefinitionNamesAndClassMap);
 
-        Environment environment = applicationContext.getEnvironment();
-        map.put("environment", environment);
+        //        Environment environment = applicationContext.getEnvironment();
+        //        map.put("environment", environment);
 
         map.put("ApplicationContext.CLASSPATH_ALL_URL_PREFIX", ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX);
         map.put("ApplicationContext.CLASSPATH_URL_PREFIX", ResourceLoader.CLASSPATH_URL_PREFIX);

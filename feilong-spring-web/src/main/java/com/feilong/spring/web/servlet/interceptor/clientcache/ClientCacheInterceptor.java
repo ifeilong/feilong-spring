@@ -15,15 +15,15 @@
  */
 package com.feilong.spring.web.servlet.interceptor.clientcache;
 
-import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.servlet.http.HttpHeaders.CACHE_CONTROL;
-import static com.feilong.servlet.http.RequestUtil.getRequestFullURL;
 import static com.feilong.spring.web.method.HandlerMethodUtil.getDeclaringClassSimpleName;
 import static com.feilong.spring.web.method.HandlerMethodUtil.getHandlerMethodName;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.feilong.servlet.http.HttpHeaders;
 import com.feilong.servlet.http.ResponseUtil;
-import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdapter;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;
 
 /**
  * 用来拦截所有 标识有 {@link ClientCache}的 请求方法.
@@ -95,7 +95,7 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerInterceptorAdap
  * @see <a href="http://www-archive.mozilla.org/projects/netlib/http/http-caching-faq.html">http-caching-faq</a>
  * @since 1.2.2
  */
-public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
+public class ClientCacheInterceptor extends AbstractHandlerMethodInterceptorAdapter{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER           = LoggerFactory.getLogger(ClientCacheInterceptor.class);
@@ -111,28 +111,26 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
 
     //---------------------------------------------------------------
 
+    /**
+     * Post construct.
+     */
+    @PostConstruct
+    protected void postConstructLoad(){
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(StringUtils.center("a", 100));
+        }
+
+    }
+
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#postHandle(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+     * @see com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doPostHandle(javax.servlet.http.
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
      */
+    //---------------------------------------------------------------
     @Override
-    public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView)
-                    throws Exception{
-        if (!(handler instanceof HandlerMethod)){
-
-            if (LOGGER.isWarnEnabled()){
-                LOGGER.warn(
-                                "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
-                                getRequestFullURL(request, UTF8),
-                                handler.getClass().getName());
-            }
-            return;
-        }
-
-        //---------------------------------------------------------------
-
+    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView){
         HandlerMethod handlerMethod = (HandlerMethod) handler;
 
         //如果没有标识{@link ClientCache}
@@ -189,6 +187,8 @@ public class ClientCacheInterceptor extends AbstractHandlerInterceptorAdapter{
      *            the response
      * @param handlerMethod
      *            the handler method
+     * @param reason
+     *            the reason
      * @since 1.10.4
      */
     private static void setNoCacheAndLog(HttpServletResponse response,HandlerMethod handlerMethod,String reason){
