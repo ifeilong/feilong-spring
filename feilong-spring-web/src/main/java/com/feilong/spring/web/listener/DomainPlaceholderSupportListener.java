@@ -34,7 +34,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
 import com.feilong.web.domain.AbstractDomainListener;
 
 /**
- * 初始化配置监听器.
+ * 初始化域名配置监听器.
  * 
  * <p>
  * 注意: 此 {@link DomainPlaceholderSupportListener}由于需要使用到 {@link WebApplicationContext} ,需要配置在
@@ -108,6 +108,7 @@ public class DomainPlaceholderSupportListener extends AbstractDomainListener{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainPlaceholderSupportListener.class);
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)
