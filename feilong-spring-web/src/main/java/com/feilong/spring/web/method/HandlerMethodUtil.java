@@ -17,15 +17,16 @@ package com.feilong.spring.web.method;
 
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang3.Validate;
 import org.springframework.web.method.HandlerMethod;
 
 /**
- * The Class HandlerMethodUtil.
+ * {@link HandlerMethod} 的工具类.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.4.0
  */
-public class HandlerMethodUtil{
+public final class HandlerMethodUtil{
 
     /** Don't let anyone instantiate this class. */
     private HandlerMethodUtil(){
@@ -34,26 +35,32 @@ public class HandlerMethodUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
-     * 获得 handler method name.
+     * 获得方法名称.
      *
      * @param handlerMethod
      *            the handler method
-     * @return the handler method name
+     * @return 如果 <code>handlerMethod</code> 是null,抛出 {@link NullPointerException}<br>
      */
     public static String getHandlerMethodName(HandlerMethod handlerMethod){
+        Validate.notNull(handlerMethod, "handlerMethod can't be null!");
+
         Method method = handlerMethod.getMethod();
         return method.getName();
     }
 
     /**
-     * 获得 declaring class simple name.
+     * 获得类型的名称.
      *
      * @param handlerMethod
      *            the handler method
-     * @return the declaring class simple name
+     * @return 如果 <code>handlerMethod</code> 是null,抛出 {@link NullPointerException}<br>
      */
     public static String getDeclaringClassSimpleName(HandlerMethod handlerMethod){
+        Validate.notNull(handlerMethod, "handlerMethod can't be null!");
+
         Method method = handlerMethod.getMethod();
         return method.getDeclaringClass().getSimpleName();
     }
