@@ -15,7 +15,12 @@
  */
 package com.feilong.spring.web.servlet.handler;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static java.util.Collections.emptyMap;
+
+import java.lang.annotation.Annotation;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -28,10 +33,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.feilong.core.bean.ConvertUtil;
+import com.feilong.core.bean.ToStringConfig;
+import com.feilong.core.lang.annotation.AnnotationToStringBuilder;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
@@ -101,6 +110,52 @@ public class HandlerMappingUtil{
         //see 《Effective Java》 2nd
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Builds the url and annotation string map.
+     *
+     * @param <T>
+     *            the generic type
+     * @param handlerMethods
+     *            the handler methods
+     * @param annotationClass
+     *            the annotation class
+     * @param annotationToStringBuilder
+     *            the annotation builder
+     * @return 如果 <code>handlerMethods</code> 是null或者empty,返回 {@link Collections#emptyMap()}<br>
+     * 
+     * @since 1.10.4
+     */
+    public static <T extends Annotation> Map<String, String> buildUrlAndAnnotationStringMap(
+                    Map<RequestMappingInfo, HandlerMethod> handlerMethods,
+                    Class<T> annotationClass,
+                    AnnotationToStringBuilder<T> annotationToStringBuilder){
+        if (isNullOrEmpty(handlerMethods)){
+            return emptyMap();
+        }
+
+        //---------------------------------------------------------------
+        Map<String, String> urlAndAnnotationStringMap = new TreeMap<>();
+
+        for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()){
+            RequestMappingInfo requestMappingInfo = entry.getKey();
+            HandlerMethod handlerMethod = entry.getValue();
+
+            //如果没有标识{@link ClientCache}
+            T annotation = handlerMethod.getMethodAnnotation(annotationClass);
+
+            if (null != annotation){
+                PatternsRequestCondition patternsRequestCondition = requestMappingInfo.getPatternsCondition();
+                urlAndAnnotationStringMap.put(
+                                ConvertUtil.toString(patternsRequestCondition.getPatterns(), ToStringConfig.DEFAULT_CONFIG),
+                                annotationToStringBuilder.build(annotation));
+            }
+        }
+        return urlAndAnnotationStringMap;
+    }
+    //---------------------------------------------------------------
 
     /**
      * 获得 handler mapping variables info for log.
