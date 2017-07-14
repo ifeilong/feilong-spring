@@ -15,12 +15,16 @@
  */
 package com.feilong.spring.event;
 
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import com.feilong.spring.context.ApplicationContextUtil;
+import com.feilong.core.lang.reflect.FieldUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
@@ -76,24 +80,19 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * @see org.springframework.context.event.SmartApplicationListener
  * @since 1.10.4
  */
-public class ContextRefreshedLoggingListener extends AbstractContextRefreshedEventListener{
+public abstract class AbstractContextRefreshedEventListener implements ApplicationListener<ContextRefreshedEvent>{
 
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedLoggingListener.class);
+    /** The Constant log. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractContextRefreshedEventListener.class);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+    /**
+     * Post construct.
      */
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
-        if (LOGGER.isDebugEnabled()){
-            ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
-            LOGGER.debug(
-                            "applicationContext info:{}",
-                            JsonUtil.format(ApplicationContextUtil.getApplicationContextForLogMap(applicationContext)));
+    @PostConstruct
+    protected void postConstruct(){
+        if (LOGGER.isInfoEnabled()){
+            Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(this);
+            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.formatSimpleMap(map));
         }
-
     }
 }
