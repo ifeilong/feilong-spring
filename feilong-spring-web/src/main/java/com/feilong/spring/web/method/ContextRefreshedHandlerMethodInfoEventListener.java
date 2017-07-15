@@ -113,7 +113,6 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
 
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = buildHandlerMethods(contextRefreshedEvent);
 
-        //---------------------------------------------------------------
         List<Map<String, Object>> list = buildList(handlerMethods);
 
         LOGGER.info("Handler Method Info:{}", FormatterUtil.formatToSimpleTable(sortListByPropertyNamesValue(list, "url")));
@@ -132,7 +131,7 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
             RequestMappingInfo requestMappingInfo = entry.getKey();
             HandlerMethod handlerMethod = entry.getValue();
 
-            list.add(HandlerMethodInfoBuilder.build(requestMappingInfo, handlerMethod, annotationAndAnnotationToStringBuilderMap));
+            list.add(HandlerMethodInfoExtractor.extract(requestMappingInfo, handlerMethod, annotationAndAnnotationToStringBuilderMap));
         }
         return list;
     }
