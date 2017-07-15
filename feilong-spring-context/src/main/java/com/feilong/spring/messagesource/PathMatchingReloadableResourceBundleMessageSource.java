@@ -17,6 +17,7 @@ package com.feilong.spring.messagesource;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toArray;
+import static com.feilong.core.util.CollectionsUtil.removeDuplicate;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
 import static org.springframework.util.ResourceUtils.JAR_URL_SEPARATOR;
@@ -37,7 +38,6 @@ import org.springframework.util.ResourceUtils;
 
 import com.feilong.core.UncheckedIOException;
 import com.feilong.core.lang.StringUtil;
-import com.feilong.core.util.CollectionsUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
@@ -134,7 +134,7 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
         List<String> basenameList = resolverBasenameList(basenames);
 
         //去重
-        List<String> removeDuplicateBasenameList = CollectionsUtil.removeDuplicate(basenameList);
+        List<String> removeDuplicateBasenameList = removeDuplicate(basenameList);
         String[] finalBaseNames = toArray(removeDuplicateBasenameList, String.class);
 
         //---------------------------------------------------------------

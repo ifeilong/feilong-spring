@@ -15,6 +15,10 @@
  */
 package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.util.CollectionsUtil.getPropertyValueList;
+import static com.feilong.core.util.CollectionsUtil.selectRejected;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +34,6 @@ import org.slf4j.LoggerFactory;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.tools.jsonlib.JsonUtil;
-
-import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * The Class AbstractBrowsingHistoryResolver.
@@ -78,7 +80,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
     @Override
     public List<BrowsingHistoryCommand> getBrowsingHistoryExcludeId(Long excludeId,HttpServletRequest request,HttpServletResponse response){
         List<BrowsingHistoryCommand> browsingHistory = getBrowsingHistory(request, response);
-        return CollectionsUtil.selectRejected(browsingHistory, "id", excludeId);
+        return selectRejected(browsingHistory, "id", excludeId);
     }
 
     /*
@@ -90,7 +92,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
     @Override
     public List<Long> getBrowsingHistoryIdList(HttpServletRequest request,HttpServletResponse response){
         List<BrowsingHistoryCommand> browsingHistory = getBrowsingHistory(request, response);
-        return CollectionsUtil.getPropertyValueList(browsingHistory, "id");
+        return getPropertyValueList(browsingHistory, "id");
     }
 
     /**

@@ -15,6 +15,9 @@
  */
 package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
+import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.util.CollectionsUtil.selectRejected;
 import static java.util.Collections.emptyList;
 
 import java.util.ArrayList;
@@ -30,15 +33,11 @@ import org.slf4j.LoggerFactory;
 
 import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.core.CharsetType;
-import com.feilong.core.util.CollectionsUtil;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.tools.jsonlib.JsonUtil;
 import com.feilong.tools.security.symmetric.SymmetricEncryption;
 import com.feilong.tools.security.symmetric.SymmetricType;
 import com.feilong.tools.slf4j.Slf4jUtil;
-
-import static com.feilong.core.CharsetType.UTF8;
-import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * The Class DefaultBrowsingHistory.
@@ -193,7 +192,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
         List<BrowsingHistoryCommand> browsingHistoryList = getBrowsingHistory(request, response);
 
         //② 删除指定的 一条历史浏览记录
-        List<BrowsingHistoryCommand> buildBrowsingHistoryList = CollectionsUtil.selectRejected(browsingHistoryList, "id", id);
+        List<BrowsingHistoryCommand> buildBrowsingHistoryList = selectRejected(browsingHistoryList, "id", id);
 
         //③ 设置整理后的记录到 cookie中
         saveToCookie(buildBrowsingHistoryList, response);

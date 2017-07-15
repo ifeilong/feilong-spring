@@ -16,6 +16,7 @@
 package com.feilong.spring.web.servlet.handler;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.util.CollectionsUtil.getPropertyValueList;
 import static java.util.Collections.emptyMap;
 
 import java.lang.annotation.Annotation;
@@ -41,7 +42,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.bean.ToStringConfig;
 import com.feilong.core.lang.annotation.AnnotationToStringBuilder;
-import com.feilong.core.util.CollectionsUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
@@ -230,8 +230,7 @@ public class HandlerMappingUtil{
 
         if (LOGGER.isInfoEnabled()){
             Collection<RequestMappingInfo> requestMappingInfoCollection = methodAndRequestMappingInfoMap.values();
-            String format = JsonUtil
-                            .format(CollectionsUtil.getPropertyValueList(requestMappingInfoCollection, "patternsCondition.patterns"));
+            String format = JsonUtil.format(getPropertyValueList(requestMappingInfoCollection, "patternsCondition.patterns"));
             LOGGER.info("all requestMapping value:{}", format);
         }
         return methodAndRequestMappingInfoMap;
