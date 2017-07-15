@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.method;
+package com.feilong.spring.web.event;
 
 import static com.feilong.core.bean.ToStringConfig.DEFAULT_CONFIG;
 
