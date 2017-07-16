@@ -111,7 +111,7 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
             return;
         }
 
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = buildHandlerMethods(contextRefreshedEvent);
+        Map<RequestMappingInfo, HandlerMethod> handlerMethods = buildHandlerMethods(contextRefreshedEvent.getApplicationContext());
 
         List<Map<String, Object>> list = buildList(handlerMethods);
 
@@ -145,9 +145,7 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
      * @throws BeansException
      *             the beans exception
      */
-    private static Map<RequestMappingInfo, HandlerMethod> buildHandlerMethods(ContextRefreshedEvent contextRefreshedEvent){
-        ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
-
+    private static Map<RequestMappingInfo, HandlerMethod> buildHandlerMethods(ApplicationContext applicationContext){
         RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext.getBean(RequestMappingHandlerMapping.class);//通过上下文对象获取RequestMappingHandlerMapping实例对象  
 
         if (null == requestMappingHandlerMapping){

@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.servlet.interceptor.clientcache;
+package com.feilong.spring.web.event;
 
-import static com.feilong.core.util.SortUtil.sortMapByKeyAsc;
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.util.SortUtil.sortListByPropertyNamesValue;
 import static java.util.Collections.emptyMap;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -26,13 +30,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.feilong.accessor.cookie.CookieAccessor;
+import com.feilong.formatter.FormatterUtil;
+import com.feilong.servlet.http.entity.CookieEntity;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
-import com.feilong.spring.web.servlet.handler.HandlerMappingUtil;
-import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The listener interface for receiving contextStartedLogging events.
@@ -87,10 +89,12 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * @see org.springframework.context.event.SmartApplicationListener
  * @since 1.10.4
  */
-public class ContextRefreshedClientCacheInfoEventListener extends AbstractContextRefreshedEventListener{
+public class ContextRefreshedCookieAccessorEventListener extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedClientCacheInfoEventListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedCookieAccessorEventListener.class);
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)
@@ -103,15 +107,49 @@ public class ContextRefreshedClientCacheInfoEventListener extends AbstractContex
             return;
         }
 
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = buildHandlerMethods(contextRefreshedEvent.getApplicationContext());
+        Map<String, CookieAccessor> handlerMethods = buildHandlerMethods(contextRefreshedEvent.getApplicationContext());
+
+        if (isNullOrEmpty(handlerMethods)){
+            LOGGER.info("not find CookieAccessor");
+            return;
+        }
 
         //---------------------------------------------------------------
-        Map<String, String> urlAndClientCacheMap = HandlerMappingUtil
-                        .buildUrlAndAnnotationStringMap(handlerMethods, ClientCache.class, ClientCacheToStringBuilder.INSTANCE);
 
-        //---------------------------------------------------------------
+        List<Map<String, Object>> list = buildList(handlerMethods);
 
-        LOGGER.info("url And ClientCache info:{}", JsonUtil.format(sortMapByKeyAsc(urlAndClientCacheMap)));
+        LOGGER.info("Cookie Accessor Info:{}", FormatterUtil.formatToSimpleTable(sortListByPropertyNamesValue(list, "name")));
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * @param handlerMethods
+     * @return
+     */
+    private List<Map<String, Object>> buildList(Map<String, CookieAccessor> handlerMethods){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        for (Map.Entry<String, CookieAccessor> entry : handlerMethods.entrySet()){
+            String key = entry.getKey();
+            CookieAccessor cookieAccessor = entry.getValue();
+
+            CookieEntity cookieEntity = cookieAccessor.getCookieEntity();
+
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("key", key);
+            map.put("name", cookieEntity.getName());
+            map.put("path", cookieEntity.getPath());
+            map.put("httpOnly", cookieEntity.getHttpOnly());
+            map.put("maxAge", cookieEntity.getMaxAge());
+            map.put("domain", cookieEntity.getDomain());
+            map.put("secure", cookieEntity.getSecure());
+            map.put("version", cookieEntity.getVersion());
+            map.put("IsValueEncoding", cookieAccessor.getIsValueEncoding());
+
+            list.add(map);
+        }
+        return list;
     }
 
     /**
@@ -123,13 +161,16 @@ public class ContextRefreshedClientCacheInfoEventListener extends AbstractContex
      * @throws BeansException
      *             the beans exception
      */
-    private static Map<RequestMappingInfo, HandlerMethod> buildHandlerMethods(ApplicationContext applicationContext){
-        RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext.getBean(RequestMappingHandlerMapping.class);//通过上下文对象获取RequestMappingHandlerMapping实例对象  
+    private static Map<String, CookieAccessor> buildHandlerMethods(ApplicationContext applicationContext){
+        Map<String, CookieAccessor> beansOfType = applicationContext.getBeansOfType(CookieAccessor.class, true, true);
 
-        if (null == requestMappingHandlerMapping){
+        if (null == beansOfType){
             return emptyMap();
         }
 
-        return requestMappingHandlerMapping.getHandlerMethods();
+        return beansOfType;
     }
+
+    //---------------------------------------------------------------
+
 }
