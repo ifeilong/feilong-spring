@@ -96,6 +96,7 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
     private static final Logger                                           LOGGER = LoggerFactory
                     .getLogger(ContextRefreshedHandlerMethodInfoEventListener.class);
 
+    /** The annotation and annotation to string builder map. */
     private Map<Class<Annotation>, AnnotationToStringBuilder<Annotation>> annotationAndAnnotationToStringBuilderMap;
 
     //---------------------------------------------------------------
@@ -115,14 +116,29 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
 
         List<Map<String, Object>> list = buildList(handlerMethods);
 
-        LOGGER.info("Handler Method Info:{}", FormatterUtil.formatToSimpleTable(sortListByPropertyNamesValue(list, "url")));
+        render(list);
+    }
+
+    /**
+     * Render.
+     *
+     * @param list
+     *            the list
+     */
+    protected void render(List<Map<String, Object>> list){
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("handler method info:{}", FormatterUtil.formatToSimpleTable(sortListByPropertyNamesValue(list, "url")));
+        }
     }
 
     //---------------------------------------------------------------
 
     /**
+     * Builds the list.
+     *
      * @param handlerMethods
-     * @return
+     *            the handler methods
+     * @return the list
      */
     private List<Map<String, Object>> buildList(Map<RequestMappingInfo, HandlerMethod> handlerMethods){
         List<Map<String, Object>> list = new ArrayList<>();
@@ -139,8 +155,8 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
     /**
      * Builds the handler methods.
      *
-     * @param contextRefreshedEvent
-     *            the context refreshed event
+     * @param applicationContext
+     *            the application context
      * @return 如果取不到 <code>RequestMappingHandlerMapping</code>,返回 {@link Collections#emptyMap()}<br>
      * @throws BeansException
      *             the beans exception
@@ -158,6 +174,8 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
     //---------------------------------------------------------------
 
     /**
+     * 设置 annotation and annotation to string builder map.
+     *
      * @param annotationAndAnnotationToStringBuilderMap
      *            the annotationAndAnnotationToStringBuilderMap to set
      */
