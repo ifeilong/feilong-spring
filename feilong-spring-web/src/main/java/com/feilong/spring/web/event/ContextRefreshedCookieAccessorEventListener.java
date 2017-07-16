@@ -16,6 +16,7 @@
 package com.feilong.spring.web.event;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toLong;
 import static com.feilong.core.util.SortUtil.sortListByPropertyNamesValue;
 import static java.util.Collections.emptyMap;
 
@@ -32,6 +33,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.feilong.accessor.cookie.CookieAccessor;
+import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.formatter.FormatterUtil;
 import com.feilong.servlet.http.entity.CookieEntity;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
@@ -124,8 +126,11 @@ public class ContextRefreshedCookieAccessorEventListener extends AbstractContext
     //---------------------------------------------------------------
 
     /**
+     * Builds the list.
+     *
      * @param handlerMethods
-     * @return
+     *            the handler methods
+     * @return the list
      */
     private List<Map<String, Object>> buildList(Map<String, CookieAccessor> handlerMethods){
         List<Map<String, Object>> list = new ArrayList<>();
@@ -137,15 +142,19 @@ public class ContextRefreshedCookieAccessorEventListener extends AbstractContext
             CookieEntity cookieEntity = cookieAccessor.getCookieEntity();
 
             Map<String, Object> map = new LinkedHashMap<>();
-            map.put("key", key);
+            map.put("beanName", key);
             map.put("name", cookieEntity.getName());
-            map.put("path", cookieEntity.getPath());
             map.put("httpOnly", cookieEntity.getHttpOnly());
-            map.put("maxAge", cookieEntity.getMaxAge());
+            map.put("path", cookieEntity.getPath());
+
+            int maxAge = cookieEntity.getMaxAge();
+
+            map.put("maxAge", toShowMaxAge(maxAge));
+
             map.put("domain", cookieEntity.getDomain());
             map.put("secure", cookieEntity.getSecure());
             map.put("version", cookieEntity.getVersion());
-            map.put("IsValueEncoding", cookieAccessor.getIsValueEncoding());
+            map.put("isValueEncoding", cookieAccessor.getIsValueEncoding());
 
             list.add(map);
         }
@@ -153,10 +162,24 @@ public class ContextRefreshedCookieAccessorEventListener extends AbstractContext
     }
 
     /**
+     * To show max age.
+     *
+     * @param maxAge
+     *            单位秒
+     * @return the string
+     */
+    private String toShowMaxAge(int maxAge){
+        if (maxAge <= 0){
+            return String.valueOf(maxAge);
+        }
+        return DateExtensionUtil.formatDuration(toLong(maxAge) * 1000);
+    }
+
+    /**
      * Builds the handler methods.
      *
-     * @param contextRefreshedEvent
-     *            the context refreshed event
+     * @param applicationContext
+     *            the application context
      * @return 如果取不到 <code>RequestMappingHandlerMapping</code>,返回 {@link Collections#emptyMap()}<br>
      * @throws BeansException
      *             the beans exception
