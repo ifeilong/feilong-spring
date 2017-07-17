@@ -16,14 +16,10 @@
 package com.feilong.spring.web.event;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.bean.ConvertUtil.toLong;
-import static com.feilong.core.util.SortUtil.sortListByPropertyNamesValue;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
 import static java.util.Collections.emptyMap;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,20 +28,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.feilong.accessor.cookie.CookieAccessor;
-import com.feilong.core.date.DateExtensionUtil;
-import com.feilong.servlet.http.entity.CookieEntity;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
 
 /**
- * The listener interface for receiving contextStartedLogging events.
- * The class that is interested in processing a contextStartedLogging
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addContextStartedLoggingListener</code> method. When
- * the contextStartedLogging event occurs, that object's appropriate
- * method is invoked.
+ * ApplicationContext 初始化或刷新完成后触发的事件,用来分析 HandlerMethod信息的父类.
  * 
  * <p>
  * 
@@ -89,14 +79,12 @@ import com.feilong.spring.event.AbstractContextRefreshedEventListener;
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.context.event.SmartApplicationListener
- * @since 1.10.4
+ * @since 1.10.5
  */
-public class ContextRefreshedCookieAccessorEventListener extends AbstractContextRefreshedEventListener{
+public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedCookieAccessorEventListener.class);
-
-    //---------------------------------------------------------------
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractContextRefreshedHandlerMethodLogginEventListener.class);
 
     /*
      * (non-Javadoc)
@@ -109,71 +97,58 @@ public class ContextRefreshedCookieAccessorEventListener extends AbstractContext
             return;
         }
 
-        Map<String, CookieAccessor> beanNameAndCookieAccessorMap = buildHandlerMethods(contextRefreshedEvent.getApplicationContext());
+        ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
+        Map<RequestMappingInfo, HandlerMethod> requestMappingInfoAndHandlerMethodMap = buildHandlerMethods(applicationContext);
 
-        if (isNullOrEmpty(beanNameAndCookieAccessorMap)){
-            LOGGER.info("can not find CookieAccessor bean");
+        if (isNullOrEmpty(requestMappingInfoAndHandlerMethodMap)){
+            LOGGER.info("requestMappingInfo And HandlerMethod Map is null or empty!!");
+            return;
+        }
+        //---------------------------------------------------------------
+        doLogging(requestMappingInfoAndHandlerMethodMap);
+    }
+
+    /**
+     * @param requestMappingInfoAndHandlerMethodMap
+     * @since 1.10.5
+     */
+    protected void doLogging(Map<RequestMappingInfo, HandlerMethod> requestMappingInfoAndHandlerMethodMap){
+        List<Map<String, Object>> list = buildList(requestMappingInfoAndHandlerMethodMap);
+
+        if (isNullOrEmpty(list)){
+            LOGGER.info("list is null or empty");
             return;
         }
 
-        //---------------------------------------------------------------
-
-        List<Map<String, Object>> list = buildList(beanNameAndCookieAccessorMap);
-
-        LOGGER.info("Cookie Accessor size:[{}], Info:{}", list.size(), formatToSimpleTable(sortListByPropertyNamesValue(list, "name")));
+        render(list);
     }
 
     //---------------------------------------------------------------
 
     /**
-     * Builds the list.
+     * Render.
+     *
+     * @param list
+     *            the list
+     */
+    protected void render(List<Map<String, Object>> list){
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("handler method ,size:[{}],info:{}", list.size(), formatToSimpleTable(list));
+        }
+    }
+
+    /**
+     * 构造数据.
      *
      * @param handlerMethods
      *            the handler methods
      * @return the list
      */
-    private List<Map<String, Object>> buildList(Map<String, CookieAccessor> handlerMethods){
-        List<Map<String, Object>> list = new ArrayList<>();
-
-        for (Map.Entry<String, CookieAccessor> entry : handlerMethods.entrySet()){
-            String key = entry.getKey();
-            CookieAccessor cookieAccessor = entry.getValue();
-
-            CookieEntity cookieEntity = cookieAccessor.getCookieEntity();
-
-            Map<String, Object> map = new LinkedHashMap<>();
-            map.put("beanName", key);
-            map.put("name", cookieEntity.getName());
-            map.put("httpOnly", cookieEntity.getHttpOnly());
-            map.put("path", cookieEntity.getPath());
-
-            int maxAge = cookieEntity.getMaxAge();
-
-            map.put("maxAge", toShowMaxAge(maxAge));
-
-            map.put("domain", cookieEntity.getDomain());
-            map.put("secure", cookieEntity.getSecure());
-            map.put("version", cookieEntity.getVersion());
-            map.put("isValueEncoding", cookieAccessor.getIsValueEncoding());
-
-            list.add(map);
-        }
-        return list;
+    protected List<Map<String, Object>> buildList(Map<RequestMappingInfo, HandlerMethod> handlerMethods){
+        return null;
     }
 
-    /**
-     * To show max age.
-     *
-     * @param maxAge
-     *            单位秒
-     * @return the string
-     */
-    private String toShowMaxAge(int maxAge){
-        if (maxAge <= 0){
-            return String.valueOf(maxAge);
-        }
-        return DateExtensionUtil.formatDuration(toLong(maxAge) * 1000);
-    }
+    //---------------------------------------------------------------
 
     /**
      * Builds the handler methods.
@@ -184,16 +159,14 @@ public class ContextRefreshedCookieAccessorEventListener extends AbstractContext
      * @throws BeansException
      *             the beans exception
      */
-    private static Map<String, CookieAccessor> buildHandlerMethods(ApplicationContext applicationContext){
-        Map<String, CookieAccessor> beansOfType = applicationContext.getBeansOfType(CookieAccessor.class, true, true);
+    private static Map<RequestMappingInfo, HandlerMethod> buildHandlerMethods(ApplicationContext applicationContext){
+        RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext.getBean(RequestMappingHandlerMapping.class);//通过上下文对象获取RequestMappingHandlerMapping实例对象  
 
-        if (null == beansOfType){
+        if (null == requestMappingHandlerMapping){
             return emptyMap();
         }
 
-        return beansOfType;
+        return requestMappingHandlerMapping.getHandlerMethods();
     }
-
-    //---------------------------------------------------------------
 
 }

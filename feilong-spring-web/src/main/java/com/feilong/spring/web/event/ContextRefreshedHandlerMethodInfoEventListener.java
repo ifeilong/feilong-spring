@@ -16,33 +16,25 @@
 package com.feilong.spring.web.event;
 
 import static com.feilong.core.util.SortUtil.sortListByPropertyNamesValue;
-import static java.util.Collections.emptyMap;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.feilong.core.lang.annotation.AnnotationToStringBuilder;
-import com.feilong.formatter.FormatterUtil;
-import com.feilong.spring.event.AbstractContextRefreshedEventListener;
 
 /**
  * The listener interface for receiving contextStartedLogging events.
  * The class that is interested in processing a contextStartedLogging
  * event implements this interface, and the object created
  * with that class is registered with a component using the
- * component's <code>addContextStartedLoggingListener<code> method. When
+ * component's <code>addContextStartedLoggingListener</code> method. When
  * the contextStartedLogging event occurs, that object's appropriate
  * method is invoked.
  * 
@@ -90,7 +82,7 @@ import com.feilong.spring.event.AbstractContextRefreshedEventListener;
  * @see org.springframework.context.event.SmartApplicationListener
  * @since 1.10.4
  */
-public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractContextRefreshedEventListener{
+public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractContextRefreshedHandlerMethodLogginEventListener{
 
     /** The Constant LOGGER. */
     private static final Logger                                           LOGGER = LoggerFactory
@@ -101,38 +93,6 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
 
     //---------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
-     */
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
-        if (!LOGGER.isInfoEnabled()){
-            return;
-        }
-
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = buildHandlerMethods(contextRefreshedEvent.getApplicationContext());
-
-        List<Map<String, Object>> list = buildList(handlerMethods);
-
-        render(list);
-    }
-
-    /**
-     * Render.
-     *
-     * @param list
-     *            the list
-     */
-    protected void render(List<Map<String, Object>> list){
-        if (LOGGER.isInfoEnabled()){
-            LOGGER.info("handler method info:{}", FormatterUtil.formatToSimpleTable(sortListByPropertyNamesValue(list, "url")));
-        }
-    }
-
-    //---------------------------------------------------------------
-
     /**
      * Builds the list.
      *
@@ -140,7 +100,8 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
      *            the handler methods
      * @return the list
      */
-    private List<Map<String, Object>> buildList(Map<RequestMappingInfo, HandlerMethod> handlerMethods){
+    @Override
+    protected List<Map<String, Object>> buildList(Map<RequestMappingInfo, HandlerMethod> handlerMethods){
         List<Map<String, Object>> list = new ArrayList<>();
 
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()){
@@ -149,26 +110,16 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
 
             list.add(HandlerMethodInfoExtractor.extract(requestMappingInfo, handlerMethod, annotationAndAnnotationToStringBuilderMap));
         }
-        return list;
+        return sortDataList(list);
     }
 
     /**
-     * Builds the handler methods.
-     *
-     * @param applicationContext
-     *            the application context
-     * @return 如果取不到 <code>RequestMappingHandlerMapping</code>,返回 {@link Collections#emptyMap()}<br>
-     * @throws BeansException
-     *             the beans exception
+     * @param list
+     * @return
+     * @since 1.10.5
      */
-    private static Map<RequestMappingInfo, HandlerMethod> buildHandlerMethods(ApplicationContext applicationContext){
-        RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext.getBean(RequestMappingHandlerMapping.class);//通过上下文对象获取RequestMappingHandlerMapping实例对象  
-
-        if (null == requestMappingHandlerMapping){
-            return emptyMap();
-        }
-
-        return requestMappingHandlerMapping.getHandlerMethods();
+    private List<Map<String, Object>> sortDataList(List<Map<String, Object>> list){
+        return sortListByPropertyNamesValue(list, "url");
     }
 
     //---------------------------------------------------------------

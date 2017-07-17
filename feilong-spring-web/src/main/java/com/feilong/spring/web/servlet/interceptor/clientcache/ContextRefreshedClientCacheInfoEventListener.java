@@ -15,22 +15,17 @@
  */
 package com.feilong.spring.web.servlet.interceptor.clientcache;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.util.SortUtil.sortMapByKeyAsc;
-import static java.util.Collections.emptyMap;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.feilong.spring.event.AbstractContextRefreshedEventListener;
+import com.feilong.spring.web.event.AbstractContextRefreshedHandlerMethodLogginEventListener;
 import com.feilong.spring.web.servlet.handler.HandlerMappingUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
@@ -87,7 +82,7 @@ import com.feilong.tools.jsonlib.JsonUtil;
  * @see org.springframework.context.event.SmartApplicationListener
  * @since 1.10.4
  */
-public class ContextRefreshedClientCacheInfoEventListener extends AbstractContextRefreshedEventListener{
+public class ContextRefreshedClientCacheInfoEventListener extends AbstractContextRefreshedHandlerMethodLogginEventListener{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedClientCacheInfoEventListener.class);
@@ -95,41 +90,25 @@ public class ContextRefreshedClientCacheInfoEventListener extends AbstractContex
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+     * @see com.feilong.spring.web.event.AbstractContextRefreshedHandlerMethodLogginEventListener#doLogging(java.util.Map)
      */
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
-        if (!LOGGER.isInfoEnabled()){
+    protected void doLogging(Map<RequestMappingInfo, HandlerMethod> requestMappingInfoAndHandlerMethodMap){
+        Map<String, String> urlAndClientCacheMap = HandlerMappingUtil.buildUrlAndAnnotationStringMap(
+                        requestMappingInfoAndHandlerMethodMap,
+                        ClientCache.class,
+                        ClientCacheToStringBuilder.INSTANCE);
+
+        if (isNullOrEmpty(urlAndClientCacheMap)){
+            LOGGER.info("urlAndClientCacheMap is null or empty");
             return;
         }
 
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = buildHandlerMethods(contextRefreshedEvent.getApplicationContext());
-
         //---------------------------------------------------------------
-        Map<String, String> urlAndClientCacheMap = HandlerMappingUtil
-                        .buildUrlAndAnnotationStringMap(handlerMethods, ClientCache.class, ClientCacheToStringBuilder.INSTANCE);
-
-        //---------------------------------------------------------------
-
-        LOGGER.info("url And ClientCache info:{}", JsonUtil.format(sortMapByKeyAsc(urlAndClientCacheMap)));
+        LOGGER.info(
+                        "url And ClientCache,size:[{}], info:{}",
+                        urlAndClientCacheMap.size(),
+                        JsonUtil.format(sortMapByKeyAsc(urlAndClientCacheMap)));
     }
 
-    /**
-     * Builds the handler methods.
-     *
-     * @param contextRefreshedEvent
-     *            the context refreshed event
-     * @return 如果取不到 <code>RequestMappingHandlerMapping</code>,返回 {@link Collections#emptyMap()}<br>
-     * @throws BeansException
-     *             the beans exception
-     */
-    private static Map<RequestMappingInfo, HandlerMethod> buildHandlerMethods(ApplicationContext applicationContext){
-        RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext.getBean(RequestMappingHandlerMapping.class);//通过上下文对象获取RequestMappingHandlerMapping实例对象  
-
-        if (null == requestMappingHandlerMapping){
-            return emptyMap();
-        }
-
-        return requestMappingHandlerMapping.getHandlerMethods();
-    }
 }
