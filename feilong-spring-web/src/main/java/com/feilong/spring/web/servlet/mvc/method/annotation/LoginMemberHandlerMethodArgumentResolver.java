@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.web.servlet.mvc.method.annotation;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
+
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -33,8 +35,6 @@ import com.feilong.core.bean.PropertyUtil;
 import com.feilong.core.lang.reflect.FieldUtil;
 import com.feilong.spring.web.bind.annotation.LoginMember;
 import com.feilong.tools.jsonlib.JsonUtil;
-
-import static com.feilong.core.Validator.isNullOrEmpty;
 
 /**
  * 支持spring mvc requestMapping 方法支持 {@link LoginMember} 注解特殊参数.
@@ -92,6 +92,8 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
     /** 对象的主键名称. */
     private String              sessionMemberIdName;
 
+    //---------------------------------------------------------------
+
     /**
      * Post construct.
      */
@@ -103,6 +105,8 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
         }
     }
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -112,6 +116,8 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
     public boolean supportsParameter(MethodParameter parameter){
         return parameter.hasParameterAnnotation(LoginMember.class);
     }
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)
@@ -128,7 +134,6 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
                     WebDataBinderFactory binderFactory) throws Exception{
 
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-
         Object sessionMember = WebUtils.getSessionAttribute(request, sessionKey);
 
         //1.如果session中的  sessionKey 是 null ,那么直接返回 null 
@@ -136,20 +141,28 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
             return null;
         }
 
+        //---------------------------------------------------------------
+
         //2.如果标识的是session对象本身是配置的类型,那么直接获取返回;
         Class<?> klass = parameter.getParameterType();
         if (klass.isAssignableFrom(sessionMemberClass)){
             return sessionMember;
         }
 
+        //---------------------------------------------------------------
+
         //3.如果没有配置#sessionMemberIdName,那么返回null
         if (isNullOrEmpty(sessionMemberIdName)){
             return null;
         }
 
+        //---------------------------------------------------------------
+
         //4.如果标识的是session对象中的某个字段#sessionMemberIdName,那么提取该字段返回;
         return PropertyUtil.getProperty(sessionMember, sessionMemberIdName);
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 设置 在session中保存的标识用户session对象的key.
