@@ -18,34 +18,15 @@
 		</filter>
 	</appender>
 
-	<category name="org.springframework">
+	<!-- <category name="org.springframework">
 		<priority value="info" />
-	</category>
+		</category>
 
-	<category name="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<category name="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<priority value="info" />
-	</category>
+		</category>
+	-->
 
-	<category name="com.feilong">
-		<priority value="debug" />
-	</category>
-
-	<category name="com.feilong.tools.security">
-		<priority value="debug" />
-	</category>
-
-	<logger name="org.apache.commons.digester.Digester">
-		<level value="warn"></level>
-	</logger>
-	<logger name="org.apache.commons.beanutils.ConvertUtilsBean">
-		<level value="warn"></level>
-	</logger>
-	<logger name="org.apache.commons.beanutils.converters">
-		<level value="warn"></level>
-	</logger>
-	<logger name="org.apache.commons.beanutils.converters.AbstractConverter">
-		<level value="warn"></level>
-	</logger>
 
 	<!-- 设置接收所有输出的通道 -->
 	<root>
