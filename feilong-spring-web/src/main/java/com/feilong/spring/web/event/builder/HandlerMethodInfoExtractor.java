@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.event;
+package com.feilong.spring.web.event.builder;
 
 import static com.feilong.core.bean.ToStringConfig.DEFAULT_CONFIG;
 
@@ -36,7 +36,7 @@ import com.feilong.core.lang.annotation.AnnotationToStringBuilder;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.10.4
  */
-class HandlerMethodInfoExtractor{
+public class HandlerMethodInfoExtractor{
 
     /**
      * 提取.
@@ -49,7 +49,7 @@ class HandlerMethodInfoExtractor{
      *            the annotation and annotation to string builder map
      * @return the map
      */
-    static Map<String, Object> extract(
+    public static Map<String, Object> extract(
                     RequestMappingInfo requestMappingInfo,
                     HandlerMethod handlerMethod,
                     Map<Class<Annotation>, AnnotationToStringBuilder<Annotation>> annotationAndAnnotationToStringBuilderMap){
