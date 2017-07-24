@@ -25,10 +25,44 @@ import org.springframework.mobile.device.DeviceResolverRequestFilter;
 import org.springframework.mobile.device.LiteDeviceResolver;
 
 /**
- * The Class DeviceUtil.
+ * 识别设备的工具类.
+ * 
+ * <h3>本项目需要 spring-mobile</h3>
+ * 
+ * <blockquote>
+ * 
+ * <pre>
+{@code
+<dependency>
+    <groupId>org.springframework.mobile</groupId>
+    <artifactId>spring-mobile-device</artifactId>
+    <version>1.1.5.RELEASE</version>
+</dependency>
+}
+ * </pre>
+ * 
+ * </blockquote>
+ * 
+ * <h3>使用</h3>
+ * <blockquote>
+ * 通过调用 {@link #getDevice(HttpServletRequest)} 来获得 {@link Device}, 从而得到
+ * 
+ * <dl>
+ * <dt>{@link Device#isMobile()}</dt>
+ * <dd>手机访问</dd>
+ * 
+ * <dt>{@link Device#isTablet()}</dt>
+ * <dd>平板访问</dd>
+ * 
+ * <dt>{@link Device#isNormal()}</dt>
+ * <dd>普通设备访问</dd>
+ * </dl>
+ * 
+ * </blockquote>
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.mobile.device.DeviceUtils
+ * @see <a href="https://github.com/spring-projects/spring-mobile">spring-mobile</a>
  * @since 1.6.0
  */
 public final class DeviceUtil{
@@ -46,6 +80,8 @@ public final class DeviceUtil{
         //see 《Effective Java》 2nd
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 通过 {@link HttpServletRequest} 解析获得 {@link Device},以便区分 {@link Device#isMobile()},{@link Device#isNormal()},{@link Device#isTablet()}.
