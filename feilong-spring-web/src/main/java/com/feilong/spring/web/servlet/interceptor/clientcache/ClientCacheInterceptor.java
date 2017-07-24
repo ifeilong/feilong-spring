@@ -19,11 +19,9 @@ import static com.feilong.servlet.http.HttpHeaders.CACHE_CONTROL;
 import static com.feilong.spring.web.method.HandlerMethodUtil.getDeclaringClassSimpleName;
 import static com.feilong.spring.web.method.HandlerMethodUtil.getHandlerMethodName;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
@@ -110,17 +108,6 @@ public class ClientCacheInterceptor extends AbstractHandlerMethodInterceptorAdap
     private boolean             isDefaultNoCache = false;
 
     //---------------------------------------------------------------
-
-    /**
-     * Post construct.
-     */
-    @PostConstruct
-    protected void postConstructLoad(){
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug(StringUtils.center("a", 100));
-        }
-
-    }
 
     /*
      * (non-Javadoc)
