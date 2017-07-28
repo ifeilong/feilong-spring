@@ -115,8 +115,11 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
     }
 
     /**
+     * 对 list map 进行排序.
+     *
      * @param list
-     * @return
+     *            the list
+     * @return the list
      * @since 1.10.5
      */
     private List<Map<String, Object>> sortDataList(List<Map<String, Object>> list){
