@@ -29,10 +29,10 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import org.springframework.web.util.WebUtils;
 
 import com.feilong.core.bean.PropertyUtil;
 import com.feilong.core.lang.reflect.FieldUtil;
+import com.feilong.servlet.http.SessionUtil;
 import com.feilong.spring.web.bind.annotation.LoginMember;
 import com.feilong.tools.jsonlib.JsonUtil;
 
@@ -134,7 +134,7 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
                     WebDataBinderFactory binderFactory) throws Exception{
 
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-        Object sessionMember = WebUtils.getSessionAttribute(request, sessionKey);
+        Object sessionMember = SessionUtil.getAttribute(request, sessionKey);
 
         //1.如果session中的  sessionKey 是 null ,那么直接返回 null 
         if (null == sessionMember){
