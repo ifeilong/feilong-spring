@@ -20,6 +20,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.Validate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -316,7 +317,14 @@ public final class WebSpringUtil{
      * @since 1.5.3
      */
     public static WebApplicationContext getWebApplicationContext(HttpServletRequest request){
+        Validate.notNull(request, "request can't be null!");
+
+        //Gets the servlet context to which this ServletRequest was last dispatched.
+        //since Servlet 3.0
+        ServletContext servletContext = request.getServletContext();
+        Validate.notNull(servletContext, "servletContext can't be null!,request class is:[%s]", request.getClass().getName());
+
         //内部调用了  WebApplicationContextUtils.getRequiredWebApplicationContext(ServletContext)
-        return RequestContextUtils.getWebApplicationContext(request, request.getServletContext());
+        return RequestContextUtils.getWebApplicationContext(request, servletContext);
     }
 }
