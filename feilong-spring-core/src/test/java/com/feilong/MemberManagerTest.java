@@ -29,7 +29,7 @@ import com.feilong.manager.MemberManagerImpl;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.10.2
  */
-@ContextConfiguration(locations = { "classpath:spring-scan.xml" })
+@ContextConfiguration(locations = { "classpath:applicationContext.xml", "classpath:spring-scan.xml" })
 public class MemberManagerTest extends AbstractJUnit4SpringContextTests{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberManagerTest.class);

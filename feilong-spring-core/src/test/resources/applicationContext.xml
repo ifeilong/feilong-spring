@@ -9,4 +9,6 @@
 			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		">
 	<!-- <import resource="classpath*:feilong-aop.xml"/> -->
+
+	<bean class="com.feilong.LogBeanPostProcessor"></bean>
 </beans>
