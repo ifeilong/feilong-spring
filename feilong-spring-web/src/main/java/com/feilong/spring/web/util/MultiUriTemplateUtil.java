@@ -15,6 +15,7 @@
  */
 package com.feilong.spring.web.util;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
 import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 import java.util.HashMap;
@@ -33,8 +34,6 @@ import com.feilong.core.lang.StringUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.tools.jsonlib.JsonUtil;
 
-import static com.feilong.core.Validator.isNullOrEmpty;
-
 /**
  * MultiUriTemplateUtil,某些商城筛选条件可以是多值,比如 既是 儿童 又是 男子,此时url应该是混合式的而不是覆盖.
  * 
@@ -52,6 +51,8 @@ public class MultiUriTemplateUtil{
         //see 《Effective Java》 2nd
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 自动寻找matchingPatternPath 扩充模板值.

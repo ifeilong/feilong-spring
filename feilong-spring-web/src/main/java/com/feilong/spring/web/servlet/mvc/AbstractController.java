@@ -15,10 +15,8 @@
  */
 package com.feilong.spring.web.servlet.mvc;
 
-import static com.feilong.servlet.http.HttpHeaders.X_REQUESTED_WITH;
-import static com.feilong.servlet.http.HttpHeaders.X_REQUESTED_WITH_VALUE_AJAX;
-import static org.springframework.web.servlet.view.UrlBasedViewResolver.FORWARD_URL_PREFIX;
-import static org.springframework.web.servlet.view.UrlBasedViewResolver.REDIRECT_URL_PREFIX;
+import static com.feilong.core.DatePattern.COMMON_DATE;
+import static com.feilong.core.Validator.isNotNullOrEmpty;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,10 +31,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 import com.feilong.spring.web.servlet.LocaleUtil;
 
-import static com.feilong.core.Validator.isNotNullOrEmpty;
-
-import static com.feilong.core.DatePattern.COMMON_DATE;
-
 /**
  * 通用的 父类 AbstractController.
  * 
@@ -44,9 +38,6 @@ import static com.feilong.core.DatePattern.COMMON_DATE;
  * @since 1.0.3
  */
 public abstract class AbstractController{
-
-    /** The Constant header_with_ajax_springmvc. */
-    public static final String   HEADER_WITH_AJAX_SPRINGMVC = X_REQUESTED_WITH + "=" + X_REQUESTED_WITH_VALUE_AJAX;
 
     /** The context. */
     @Resource
@@ -76,33 +67,6 @@ public abstract class AbstractController{
      *            webDataBinder
      */
     protected void initBinderInternal(@SuppressWarnings("unused") WebDataBinder webDataBinder){
-    }
-
-    //***********************************************************************************
-
-    /**
-     * 生成spring 的跳转路径<br>
-     * e.g. getSpringRedirectPath("/shoppingcart") <br>
-     * 注:不需要你手工的 拼接request.getContextPath()
-     * 
-     * @param targetUrl
-     *            如果是相对根目录路径 只需要传递 如"/shoppingcart" spring会自动添加request.getContextPath() <br>
-     *            也可以传入绝对路径 如:http://www.baidu.com
-     * @return the spring redirect path
-     */
-    protected String redirect(String targetUrl){
-        return REDIRECT_URL_PREFIX + targetUrl;
-    }
-
-    /**
-     * 生成 spring Forward 路径.
-     * 
-     * @param forwardUrl
-     *            the forward url
-     * @return the spring forward path
-     */
-    protected String forward(String forwardUrl){
-        return FORWARD_URL_PREFIX + forwardUrl;
     }
 
     // **********************************************************************************************

@@ -37,6 +37,8 @@ public class UrlPathHelperUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 显示 属性 一般 debug 使用 看看
      * 

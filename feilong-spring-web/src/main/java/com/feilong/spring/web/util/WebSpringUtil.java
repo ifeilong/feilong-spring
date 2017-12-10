@@ -85,6 +85,8 @@ public final class WebSpringUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 request.
      * 

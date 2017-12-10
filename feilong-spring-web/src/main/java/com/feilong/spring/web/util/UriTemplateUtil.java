@@ -71,6 +71,8 @@ public class UriTemplateUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 获得当前uri template 变量值.
      * 
