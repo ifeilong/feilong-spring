@@ -25,7 +25,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.feilong.core.lang.reflect.FieldUtil;
-import com.feilong.tools.jsonlib.JsonUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 
 /**
  * The listener interface for receiving contextStartedLogging events.

@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriTemplate;
 
-import com.feilong.tools.jsonlib.JsonUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 
 /**
  * The Class AntPathMatcherTest.

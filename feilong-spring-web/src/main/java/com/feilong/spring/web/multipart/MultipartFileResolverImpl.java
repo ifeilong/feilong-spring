@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.feilong.core.UncheckedIOException;
 import com.feilong.io.IOWriteUtil;
-import com.feilong.tools.jsonlib.JsonUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 
 /**
  * 需要在spring相关xml里面配置

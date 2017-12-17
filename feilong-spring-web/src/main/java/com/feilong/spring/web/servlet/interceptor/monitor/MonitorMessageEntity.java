@@ -20,8 +20,8 @@ import static com.feilong.core.TimeInterval.MILLISECOND_PER_SECONDS;
 import java.io.Serializable;
 import java.util.Map;
 
+import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
-import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class MonitorMessageEntity.

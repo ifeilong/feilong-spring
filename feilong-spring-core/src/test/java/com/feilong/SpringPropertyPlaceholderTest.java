@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.tools.jsonlib.JsonUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 
 /**
  * The Class SpringPropertyPlaceholderTest.

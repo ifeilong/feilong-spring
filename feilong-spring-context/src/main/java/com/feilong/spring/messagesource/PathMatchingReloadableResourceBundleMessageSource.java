@@ -38,7 +38,7 @@ import org.springframework.util.ResourceUtils;
 
 import com.feilong.core.UncheckedIOException;
 import com.feilong.core.lang.StringUtil;
-import com.feilong.tools.jsonlib.JsonUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 
 /**
  * 支持通配符配置的 {@link ReloadableResourceBundleMessageSource}.

@@ -37,8 +37,8 @@ import org.springframework.web.util.UriTemplate;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.feilong.core.util.MapUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.servlet.http.RequestUtil;
-import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * {@link org.springframework.web.util.UriTemplate},此类是 单值 expend.

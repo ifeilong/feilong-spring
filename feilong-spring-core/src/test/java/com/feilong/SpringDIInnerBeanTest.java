@@ -25,8 +25,8 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
+import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.store.member.UserInfo;
-import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class UserTest.

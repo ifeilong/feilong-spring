@@ -31,8 +31,8 @@ import org.springframework.web.util.UrlPathHelper;
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.bean.ToStringConfig;
 import com.feilong.core.lang.StringUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.servlet.http.RequestUtil;
-import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * MultiUriTemplateUtil,某些商城筛选条件可以是多值,比如 既是 儿童 又是 男子,此时url应该是混合式的而不是覆盖.

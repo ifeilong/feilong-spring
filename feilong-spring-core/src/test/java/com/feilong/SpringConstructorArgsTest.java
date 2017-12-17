@@ -24,7 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.feilong.entity.ConstructorArgsEntity;
-import com.feilong.tools.jsonlib.JsonUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 
 @ContextConfiguration(locations = { "classpath:spring-DI-ConstructorArgs.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)

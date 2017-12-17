@@ -32,8 +32,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.core.util.CollectionsUtil;
+import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
-import com.feilong.tools.jsonlib.JsonUtil;
 
 /**
  * The Class AbstractBrowsingHistoryResolver.
