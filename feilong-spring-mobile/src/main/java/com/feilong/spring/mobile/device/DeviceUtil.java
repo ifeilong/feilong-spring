@@ -113,4 +113,61 @@ public final class DeviceUtil{
     public static Device getDevice(HttpServletRequest request){
         return DEVICE_RESOLVER.resolveDevice(request);
     }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 如果设备是手机,比如Apple iPhone或者Nexus One Android,那么返回true .
+     * 
+     * <p>
+     * Could be used by a pre-handle interceptor to redirect the user to a dedicated mobile web site.<br>
+     * Could be used to apply a different page layout or stylesheet when the device is a mobile device.
+     * </p>
+     *
+     * @param request
+     *            the request
+     * @return true, if is mobile
+     * @see org.springframework.mobile.device.Device#isMobile()
+     * @since 1.10.7
+     */
+    public static boolean isMobile(HttpServletRequest request){
+        Device device = getDevice(request);
+        return device.isMobile();
+    }
+
+    /**
+     * 如果设备是平板,比如Apple ipad或者 Motorola Xoom , 那么返回true .
+     * 
+     * <p>
+     * Could be used by a pre-handle interceptor to redirect the user to a dedicated tablet web site.<br>
+     * Could be used to apply a different page layout or stylesheet when the device is a tablet device.
+     * </p>
+     *
+     * @param request
+     *            the request
+     * @return true, if is tablet
+     * 
+     * @see org.springframework.mobile.device.Device#isTablet()
+     * 
+     * @since 1.10.7
+     */
+    public static boolean isTablet(HttpServletRequest request){
+        Device device = getDevice(request);
+        return device.isTablet();
+    }
+
+    /**
+     * 如果设备既不是手机 {@link #isMobile(HttpServletRequest)} 也不会平板 {@link #isTablet(HttpServletRequest)},那么返回true.
+     *
+     * @param request
+     *            the request
+     * @return true, if is normal
+     * @see org.springframework.mobile.device.Device#isNormal()
+     * @since 1.10.7
+     */
+    public static boolean isNormal(HttpServletRequest request){
+        Device device = getDevice(request);
+        return device.isNormal();
+    }
+
 }
