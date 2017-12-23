@@ -118,7 +118,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
             return buildNewBrowsingHistoryList(browsingHistoryCommand);
         }
 
-        //********************************************************
+        //---------------------------------------------------------------
         Long id = browsingHistoryCommand.getId();
         Validate.notNull(id, "id can't be null!");
 
@@ -180,7 +180,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
         return new ArrayList<>(list.subList(0, maxCount)); //linkedList=(LinkedList<Serializable>) subList;//java.util.SubList cannot be cast to java.util.LinkedList
     }
 
-    //***************************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * 设置 最大记录数量,超过的记录将被去掉.

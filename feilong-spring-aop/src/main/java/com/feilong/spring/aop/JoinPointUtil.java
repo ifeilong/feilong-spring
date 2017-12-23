@@ -64,7 +64,7 @@ public class JoinPointUtil{
         Validate.notNull(joinPoint, "joinPoint can't be null!");
         Validate.notNull(annotationClass, "annotationClass can't be null!");
 
-        //**************************************************************************
+        //---------------------------------------------------------------
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
@@ -74,7 +74,7 @@ public class JoinPointUtil{
             return annotation;
         }
 
-        //**************************************************************************
+        //---------------------------------------------------------------
         Method targetMethod = MethodUtils
                         .getAccessibleMethod(joinPoint.getTarget().getClass(), method.getName(), method.getParameterTypes());
         annotation = AnnotationUtils.findAnnotation(targetMethod, annotationClass);

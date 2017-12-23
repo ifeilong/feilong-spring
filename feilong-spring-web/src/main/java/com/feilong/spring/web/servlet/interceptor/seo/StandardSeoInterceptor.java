@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.web.servlet.interceptor.seo;
 
+import static com.feilong.core.Validator.isNotNullOrEmpty;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.spring.web.servlet.LocaleUtil;
-
-import static com.feilong.core.Validator.isNotNullOrEmpty;
 
 /**
  * 专门处理每个页面的seo信息,在 {@link HandlerInterceptorAdapter#preHandle(HttpServletRequest, HttpServletResponse, Object)}流程中,查找 request作用域中的数据.
@@ -127,11 +127,11 @@ import static com.feilong.core.Validator.isNotNullOrEmpty;
  */
 public class StandardSeoInterceptor extends AbstractSeoInterceptor{
 
-    //************************************************************************
+    //---------------------------------------------------------------
     //
     //keyNameSeoTitle  keyNameSeoKeywords keyNameSeoDescription 优先级 高于 defaultSeoViewCommand
     //
-    //************************************************************************
+    //---------------------------------------------------------------
 
     /** 资源文件中的 seo title key. */
     private String             keyNameSeoTitle;

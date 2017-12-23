@@ -77,7 +77,8 @@ public class SpringDITest{
         // -----------------------------------------
         Properties properties = diUser.getProperties();
         LOGGER.debug("properties:{}", JsonUtil.format(properties));
-        // *********************************
+
+        //---------------------------------------------------------------
         Set<String> set = diUser.getSet();
         LOGGER.debug("set:{}", JsonUtil.format(set));
     }

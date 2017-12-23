@@ -15,6 +15,7 @@
  */
 package com.feilong.spring.transaction.interceptor;
 
+import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
 import static org.apache.commons.lang3.tuple.Pair.of;
 import static org.springframework.transaction.TransactionDefinition.ISOLATION_DEFAULT;
 import static org.springframework.transaction.TransactionDefinition.ISOLATION_READ_COMMITTED;
@@ -34,8 +35,6 @@ import java.util.Map;
 
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.interceptor.TransactionAttribute;
-
-import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
 
 /**
  * The Class TransactionAttributeUtil.
@@ -222,7 +221,7 @@ public class TransactionAttributeUtil{
                     //嵌套事务支持
                     of(PROPAGATION_NESTED, "nested"));
 
-    //****************************************************************************************************
+    //---------------------------------------------------------------
     /** Don't let anyone instantiate this class. */
     private TransactionAttributeUtil(){
         //AssertionError不是必须的. 但它可以避免不小心在类的内部调用构造器. 保证该类在任何情况下都不会被实例化.
@@ -230,7 +229,7 @@ public class TransactionAttributeUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
-    //****************************************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * 获得 map for LOGGER.

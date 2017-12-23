@@ -43,7 +43,7 @@ public abstract class AbstractController{
     @Resource
     protected ApplicationContext applicationContext;
 
-    //***********************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * Inits the binder.
@@ -69,7 +69,7 @@ public abstract class AbstractController{
     protected void initBinderInternal(@SuppressWarnings("unused") WebDataBinder webDataBinder){
     }
 
-    // **********************************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * 获得消息信息.

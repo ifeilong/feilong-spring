@@ -15,6 +15,10 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
+import static com.feilong.core.Validator.isNotNullOrEmpty;
+import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 import static com.feilong.coreextension.lang.ThreadExtensionUtil.getCurrentThreadMapForLog;
 import static loxia.dao.ReadWriteSupport.READ;
 import static loxia.dao.ReadWriteSupport.WRITE;
@@ -48,11 +52,6 @@ import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
 import com.feilong.spring.aop.ProceedingJoinPointUtil;
 import com.feilong.spring.transaction.interceptor.TransactionAttributeUtil;
-
-import static com.feilong.core.Validator.isNotNullOrEmpty;
-import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
 import net.sf.json.JSONException;
 
@@ -197,7 +196,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
         boolean isSetHolder = isSetHolder(transactionAttribute, groupName);
 
-        //***************************************************************************
+        //---------------------------------------------------------------
         if (isSetHolder){
             //read or write
             String readWriteSupport = getReadWriteSupport(transactionAttribute);
@@ -298,10 +297,10 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
         }
         Date beginDate = new Date();
 
-        //***********************************************************
+        //---------------------------------------------------------------
         Object returnValue = proceedingJoinPoint.proceed(args);
 
-        //***********************************************************
+        //---------------------------------------------------------------
         if (LOGGER.isInfoEnabled()){
             String pattern = "end proceed:[{}],thread info:[{}],time:[{}],return:[{}]";
             LOGGER.info(pattern, format, JsonUtil.format(getCurrentThreadMapForLog()), formatDuration(beginDate), returnValue);

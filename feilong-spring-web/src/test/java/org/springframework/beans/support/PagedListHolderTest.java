@@ -12,7 +12,7 @@ public class PagedListHolderTest{
         PagedListHolder<String> pagedListHolder = new PagedListHolder<String>(sourceList);
         pagedListHolder.setPageSize(10);//设置每一页的元素数量
 
-        //***********************************************************************************
+        //---------------------------------------------------------------
         //操作
         int count = pagedListHolder.getPageCount();//得到总页数
         System.out.println("总页数是：" + count);// 输出：总页数是：3

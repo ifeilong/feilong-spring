@@ -113,7 +113,7 @@ public final class WebSpringUtil{
         return servletRequestAttributes.getRequest();
     }
 
-    //********************************************************************************
+    //---------------------------------------------------------------
     /**
      * 普通类获得spring 注入的类方法.
      * 
@@ -165,7 +165,7 @@ public final class WebSpringUtil{
         return getBean(webApplicationContext, requiredType);
     }
 
-    //********************************************************************************************
+    //---------------------------------------------------------------
     /**
      * 普通类获得spring 注入的类方法<br>
      * 注意:<b>(如果找不到bean,返回null)</b>.
@@ -201,7 +201,7 @@ public final class WebSpringUtil{
         return getBean(webApplicationContext, requiredType);
     }
 
-    //********************************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * Gets the required bean.
@@ -237,7 +237,7 @@ public final class WebSpringUtil{
         return getBean(webApplicationContext, requiredType);
     }
 
-    //*******************************************************************************************
+    //---------------------------------------------------------------
     /**
      * Gets the bean.
      *
@@ -269,7 +269,7 @@ public final class WebSpringUtil{
         return applicationContext.getBean(requiredType);
     }
 
-    //*******************************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * Find the root {@link WebApplicationContext} for this web app, typically loaded via

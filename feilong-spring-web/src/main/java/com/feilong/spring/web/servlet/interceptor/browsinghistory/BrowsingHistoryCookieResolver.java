@@ -98,7 +98,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
     /** 对称加密的编码. */
     private String                                        symmetricEncryptionCharsetName = UTF8;
 
-    //*********************************************************************************************
+    //---------------------------------------------------------------
     /** The bean class. */
     private final Class<? extends BrowsingHistoryCommand> beanClass;
 
@@ -231,7 +231,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
         cookieAccessor.save(cookieValue, response);
     }
 
-    //******************************************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * 设置 cookie寄存器.

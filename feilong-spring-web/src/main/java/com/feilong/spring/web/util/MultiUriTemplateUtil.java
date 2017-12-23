@@ -199,7 +199,7 @@ public class MultiUriTemplateUtil{
         return toMutiValue(list, valueSeparator);
     }
 
-    //*******************************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * 将一个值从一个变量多值中以除掉.
@@ -248,7 +248,7 @@ public class MultiUriTemplateUtil{
             return requestPath; // 原样输出
         }
 
-        //************************************************************************************
+        //---------------------------------------------------------------
         List<String> list = toList(oldValue, valueSeparator);
 
         if (!list.contains(value)){

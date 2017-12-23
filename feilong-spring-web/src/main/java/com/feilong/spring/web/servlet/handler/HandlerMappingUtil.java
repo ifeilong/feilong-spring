@@ -197,7 +197,7 @@ public class HandlerMappingUtil{
         mappingInfoMap.put("getPathMatcher()", requestMappingHandlerMapping.getPathMatcher());
         mappingInfoMap.put("getUrlPathHelper()", requestMappingHandlerMapping.getUrlPathHelper());
 
-        //***************************************************************************************************
+        //---------------------------------------------------------------
         Map<String, RequestMappingInfo> methodAndRequestMappingInfoMapMap = buildMethodAndRequestMappingInfoMap(
                         requestMappingHandlerMapping);
         mappingInfoMap.put("methodAndRequestMappingInfoMapMap", methodAndRequestMappingInfoMapMap);
@@ -219,7 +219,7 @@ public class HandlerMappingUtil{
                     RequestMappingHandlerMapping requestMappingHandlerMapping){
         Map<String, RequestMappingInfo> methodAndRequestMappingInfoMap = new LinkedHashMap<>();
 
-        //**************************************************************************************************************
+        //---------------------------------------------------------------
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()){
             RequestMappingInfo requestMappingInfo = entry.getKey();

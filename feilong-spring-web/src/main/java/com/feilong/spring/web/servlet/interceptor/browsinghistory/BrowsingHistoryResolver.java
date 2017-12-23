@@ -124,7 +124,7 @@ public interface BrowsingHistoryResolver{
      */
     void add(BrowsingHistoryCommand browsingHistoryCommand,HttpServletRequest request,HttpServletResponse response);
 
-    //****************************************************************************************************
+    //---------------------------------------------------------------
     /**
      * 获得所有存储的历史浏览记录.
      * 
@@ -190,7 +190,7 @@ public interface BrowsingHistoryResolver{
      */
     List<Long> getBrowsingHistoryIdListExcludeId(Long excludeId,HttpServletRequest request,HttpServletResponse response);
 
-    //************************************************************************************************
+    //---------------------------------------------------------------
     /**
      * 根据id删除某个指定的历史浏览记录.
      * 

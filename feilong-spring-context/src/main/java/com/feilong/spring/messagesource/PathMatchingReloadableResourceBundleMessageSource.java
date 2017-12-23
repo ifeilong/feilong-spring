@@ -225,7 +225,7 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
         return baseName;
     }
 
-    //*******************************************************************************************************
+    //---------------------------------------------------------------
 
     /**
      * 设置 resource pattern resolver.
