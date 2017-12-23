@@ -30,7 +30,6 @@
 		<module>feilong-spring-web</module>
 		<module>feilong-spring-context</module>
 		<module>feilong-spring-mobile</module>
-		<module>feilong-spring-all</module>
 	</modules>
 
 	<dependencies>
