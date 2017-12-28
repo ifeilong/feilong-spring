@@ -16,6 +16,7 @@
 package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toList;
 import static com.feilong.core.util.CollectionsUtil.getPropertyValueList;
 import static com.feilong.core.util.CollectionsUtil.selectRejected;
 
@@ -49,6 +50,8 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
     /** 最大记录数量,超过的记录将被去掉. */
     protected Integer           maxCount = 10;
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -66,6 +69,9 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
         if (isNullOrEmpty(browsingHistoryItemIds)){
             return Collections.emptyList();
         }
+
+        //---------------------------------------------------------------
+
         browsingHistoryItemIds.remove(excludeId);
         return browsingHistoryItemIds;
     }
@@ -94,6 +100,8 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
         List<BrowsingHistoryCommand> browsingHistory = getBrowsingHistory(request, response);
         return getPropertyValueList(browsingHistory, "id");
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 构造需要被存储的历史记录.
@@ -146,6 +154,8 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
         return judgeSize(list);
     }
 
+    //---------------------------------------------------------------
+
     /**
      * New list.
      *
@@ -155,9 +165,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
      * @since 1.5.5
      */
     private static List<BrowsingHistoryCommand> buildNewBrowsingHistoryList(BrowsingHistoryCommand browsingHistoryCommand){
-        List<BrowsingHistoryCommand> list = new ArrayList<>();
-        list.add(browsingHistoryCommand);
-        return list;
+        return toList(browsingHistoryCommand);
     }
 
     /**
