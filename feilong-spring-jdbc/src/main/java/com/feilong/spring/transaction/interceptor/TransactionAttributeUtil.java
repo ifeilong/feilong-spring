@@ -16,6 +16,7 @@
 package com.feilong.spring.transaction.interceptor;
 
 import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static org.apache.commons.lang3.tuple.Pair.of;
 import static org.springframework.transaction.TransactionDefinition.ISOLATION_DEFAULT;
 import static org.springframework.transaction.TransactionDefinition.ISOLATION_READ_COMMITTED;
@@ -30,7 +31,6 @@ import static org.springframework.transaction.TransactionDefinition.PROPAGATION_
 import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW;
 import static org.springframework.transaction.TransactionDefinition.PROPAGATION_SUPPORTS;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.transaction.TransactionDefinition;
@@ -249,7 +249,7 @@ public class TransactionAttributeUtil{
         int propagationBehavior = transactionAttribute.getPropagationBehavior();
         String propagationBehaviorString = PROPAGATION_BEHAVIOR_AND_NAME_MAP.get(propagationBehavior);
 
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map = newLinkedHashMap();
         map.put("getPropagationBehavior", propagationBehaviorString + "(" + propagationBehavior + ")");
         map.put("getIsolationLevel", isolationLevelString + "(" + isolationLevel + ")");
         map.put("isReadOnly", transactionAttribute.isReadOnly());

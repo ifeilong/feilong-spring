@@ -15,9 +15,9 @@
  */
 package com.feilong.spring.context;
 
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static com.feilong.core.util.SortUtil.sortArray;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -56,7 +56,7 @@ public final class ApplicationContextUtil{
 
         //---------------------------------------------------------------
 
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map = newLinkedHashMap();
 
         map.put("beanDefinitionCount", applicationContext.getBeanDefinitionCount());
         map.put("startupDate", applicationContext.getStartupDate());

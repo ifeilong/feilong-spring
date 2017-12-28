@@ -15,7 +15,8 @@
  */
 package com.feilong.spring.web.util;
 
-import java.util.LinkedHashMap;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,7 +74,7 @@ public class UrlPathHelperUtil{
      * @return the url path helper map for log
      */
     public static Map<String, Object> getUrlPathHelperMapForLog(HttpServletRequest request){
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map = newLinkedHashMap();
 
         UrlPathHelper urlPathHelper = new UrlPathHelper();
 

@@ -19,6 +19,7 @@ import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
 import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static com.feilong.coreextension.lang.ThreadExtensionUtil.getCurrentThreadMapForLog;
 import static loxia.dao.ReadWriteSupport.READ;
 import static loxia.dao.ReadWriteSupport.WRITE;
@@ -33,7 +34,6 @@ import static org.springframework.transaction.TransactionDefinition.PROPAGATION_
 import static org.springframework.transaction.TransactionDefinition.PROPAGATION_SUPPORTS;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -181,7 +181,7 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
 
         String currentThreadInfo = JsonUtil.format(ThreadExtensionUtil.getCurrentThreadMapForLog());
         if (LOGGER.isInfoEnabled()){
-            Map<String, Object> map = new LinkedHashMap<>();
+            Map<String, Object> map = newLinkedHashMap();
             map.put("groupName", groupName);
             map.put("previousDataSourceNameHolder", previousDataSourceNameHolder);
             map.put("transactionAttribute:", TransactionAttributeUtil.getMapForLog(transactionAttribute));

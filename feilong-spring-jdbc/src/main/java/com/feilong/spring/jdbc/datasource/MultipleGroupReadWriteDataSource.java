@@ -15,11 +15,11 @@
  */
 package com.feilong.spring.jdbc.datasource;
 
+import static com.feilong.core.util.MapUtil.newHashMap;
 import static com.feilong.spring.jdbc.datasource.MultipleGroupReadWriteUtil.DEFAULT_GROUP_NAME;
 import static loxia.dao.ReadWriteSupport.READ;
 import static loxia.dao.ReadWriteSupport.WRITE;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -73,7 +73,7 @@ public class MultipleGroupReadWriteDataSource extends AbstractRoutingDataSource{
         Validate.notNull(readWriteDataSourceCommandMap, "readWriteDataSourceCommandMap can't be null!");
 
         Object defaultTargetDataSource = null;
-        Map<Object, Object> targetDataSources = new HashMap<>();
+        Map<Object, Object> targetDataSources = newHashMap();
 
         for (Map.Entry<String, ReadWriteDataSourceCommand> entry : readWriteDataSourceCommandMap.entrySet()){
             String groupName = entry.getKey();
