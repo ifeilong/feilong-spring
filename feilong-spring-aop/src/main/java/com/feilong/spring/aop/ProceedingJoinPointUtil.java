@@ -15,7 +15,8 @@
  */
 package com.feilong.spring.aop;
 
-import java.util.LinkedHashMap;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
+
 import java.util.Map;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -47,7 +48,7 @@ public class ProceedingJoinPointUtil{
     public static final Map<String, Object> getMapForLog(ProceedingJoinPoint proceedingJoinPoint){
         MethodSignature methodSignature = getMethodSignature(proceedingJoinPoint);
 
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map = newLinkedHashMap();
         map.put("target", proceedingJoinPoint.getTarget().getClass().getCanonicalName());
         map.put("method", methodSignature.getMethod().getName());
         map.put("args", proceedingJoinPoint.getArgs());

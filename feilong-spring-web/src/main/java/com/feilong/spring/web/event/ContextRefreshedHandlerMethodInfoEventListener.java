@@ -15,10 +15,10 @@
  */
 package com.feilong.spring.web.event;
 
+import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.core.util.SortUtil.sortListByPropertyNamesValue;
 
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -103,7 +103,7 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
      */
     @Override
     protected List<Map<String, Object>> buildList(Map<RequestMappingInfo, HandlerMethod> handlerMethods){
-        List<Map<String, Object>> list = new ArrayList<>();
+        List<Map<String, Object>> list = newArrayList();
 
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()){
             RequestMappingInfo requestMappingInfo = entry.getKey();

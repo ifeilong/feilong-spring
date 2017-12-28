@@ -17,6 +17,7 @@ package com.feilong.spring.messagesource;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toArray;
+import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.core.util.CollectionsUtil.removeDuplicate;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
@@ -24,7 +25,6 @@ import static org.springframework.util.ResourceUtils.JAR_URL_SEPARATOR;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -154,7 +154,7 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
      * @since 1.8.2
      */
     private List<String> resolverBasenameList(String...basenames){
-        List<String> basenameList = new ArrayList<>();
+        List<String> basenameList = newArrayList();
         for (String basename : basenames){
             if (isNullOrEmpty(basename)){
                 LOGGER.warn("basename:[{}] is null or empty", basename);
@@ -179,7 +179,7 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
      * @since 1.5.0
      */
     private List<String> resolverWildcardConfig(String basename){
-        List<String> list = new ArrayList<>();
+        List<String> list = newArrayList();
 
         try{
             Resource[] resources = resourcePatternResolver.getResources(basename);

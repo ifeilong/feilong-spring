@@ -16,9 +16,9 @@
 package com.feilong.spring.web.servlet;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.util.MapUtil.newHashMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -131,7 +131,7 @@ public final class ModelAndViewUtil{
         Map<String, Object> requestAttributeMap = RequestUtil.getAttributeMap(request);
 
         //新创建个map对象, 这样操作不会影响原始数据
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = newHashMap();
         MapUtil.putAllIfNotNull(map, requestAttributeMap);
         MapUtil.putAllIfNotNull(map, model);
         return map;

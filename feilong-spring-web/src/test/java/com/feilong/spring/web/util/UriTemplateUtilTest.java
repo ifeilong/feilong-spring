@@ -15,9 +15,9 @@
  */
 package com.feilong.spring.web.util;
 
+import static com.feilong.core.util.MapUtil.newHashMap;
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +97,7 @@ public class UriTemplateUtilTest{
     public void testExpand(){
         String uriTemplatePath = "/s/c{categoryCode}-m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = newHashMap();
         map.put("color", "100");
         map.put("size", "L");
         map.put("K", "aaaa");

@@ -15,7 +15,8 @@
  */
 package com.feilong.spring.web.event.builder;
 
-import java.util.LinkedHashMap;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
+
 import java.util.Map;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -48,7 +49,7 @@ public class MappedInterceptorBeanToMapBuilder implements BeanToMapBuilder<Mappe
         Object readField = getExcludePatterns(mappedInterceptor);
 
         //---------------------------------------------------------------
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map = newLinkedHashMap();
         map.put("handlerInterceptor", handlerInterceptor.getClass().getName());
         map.put("includePatterns", pathPatterns);
         map.put("excludePatterns", readField);

@@ -15,7 +15,8 @@
  */
 package com.feilong.spring.mail;
 
-import java.util.HashMap;
+import static com.feilong.core.util.MapUtil.newHashMap;
+
 import java.util.Map;
 
 import org.junit.Before;
@@ -52,7 +53,7 @@ public class JavaMailSenderUtilTest{
      */
     @Test
     public void sendEmail(){
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = newHashMap();
         model.put("userName", "大关");
         model.put("email" + "Address", "woshidaguan@126.com");
         // String[] files = new String[] { "F:/Photo 照片/2012/else/120120A011.jpg", "F:/Photo 照片/2012/else/120127A001.jpg" };

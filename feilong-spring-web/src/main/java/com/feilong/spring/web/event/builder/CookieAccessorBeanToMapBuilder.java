@@ -16,8 +16,8 @@
 package com.feilong.spring.web.event.builder;
 
 import static com.feilong.core.bean.ConvertUtil.toLong;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.feilong.accessor.cookie.CookieAccessor;
@@ -45,7 +45,7 @@ public class CookieAccessorBeanToMapBuilder implements BeanToMapBuilder<CookieAc
     public Map<String, Object> build(String beanName,CookieAccessor cookieAccessor){
         CookieEntity cookieEntity = cookieAccessor.getCookieEntity();
 
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map = newLinkedHashMap();
         map.put("beanName", beanName);
         map.put("name", cookieEntity.getName());
         map.put("httpOnly", cookieEntity.getHttpOnly());

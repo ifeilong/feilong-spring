@@ -16,11 +16,11 @@
 package com.feilong.spring.web.event;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.core.util.SortUtil.sortListByPropertyNamesValue;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
 import static java.util.Collections.emptyMap;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -134,7 +134,7 @@ public class ContextRefreshedCookieAccessorEventListener extends AbstractContext
      * @return the list
      */
     private List<Map<String, Object>> buildList(Map<String, CookieAccessor> handlerMethods){
-        List<Map<String, Object>> list = new ArrayList<>();
+        List<Map<String, Object>> list = newArrayList();
 
         for (Map.Entry<String, CookieAccessor> entry : handlerMethods.entrySet()){
             list.add(beanToMapBuilder.build(entry.getKey(), entry.getValue()));

@@ -16,9 +16,9 @@
 package com.feilong.spring.web.event.builder;
 
 import static com.feilong.core.bean.ToStringConfig.DEFAULT_CONFIG;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
 import java.lang.annotation.Annotation;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.web.method.HandlerMethod;
@@ -60,7 +60,7 @@ public class HandlerMethodInfoExtractor{
                     RequestMappingInfo requestMappingInfo,
                     HandlerMethod handlerMethod,
                     Map<Class<Annotation>, AnnotationToStringBuilder<Annotation>> annotationAndAnnotationToStringBuilderMap){
-        Map<String, Object> keyAndValueMap = new LinkedHashMap<>();
+        Map<String, Object> keyAndValueMap = newLinkedHashMap();
 
         //塞RequestMappingInfo 本身的信息,比如 url ,method,header 等信息进去.
         putRequestMappingInfo(keyAndValueMap, requestMappingInfo);

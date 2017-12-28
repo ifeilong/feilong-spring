@@ -17,12 +17,12 @@ package com.feilong.spring.web.servlet.handler;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.util.CollectionsUtil.getPropertyValueList;
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static java.util.Collections.emptyMap;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -186,7 +186,7 @@ public class HandlerMappingUtil{
     public static final Map<String, Object> getRequestMappingHandlerMappingInfoMapForLog(WebApplicationContext webApplicationContext){
         RequestMappingHandlerMapping requestMappingHandlerMapping = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
 
-        Map<String, Object> mappingInfoMap = new LinkedHashMap<>();
+        Map<String, Object> mappingInfoMap = newLinkedHashMap();
 
         mappingInfoMap.put("useRegisteredSuffixPatternMatch()", requestMappingHandlerMapping.useRegisteredSuffixPatternMatch());
         mappingInfoMap.put("useSuffixPatternMatch()", requestMappingHandlerMapping.useSuffixPatternMatch());
@@ -217,7 +217,7 @@ public class HandlerMappingUtil{
      */
     private static Map<String, RequestMappingInfo> buildMethodAndRequestMappingInfoMap(
                     RequestMappingHandlerMapping requestMappingHandlerMapping){
-        Map<String, RequestMappingInfo> methodAndRequestMappingInfoMap = new LinkedHashMap<>();
+        Map<String, RequestMappingInfo> methodAndRequestMappingInfoMap = newLinkedHashMap();
 
         //---------------------------------------------------------------
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
