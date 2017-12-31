@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.core.CharsetType;
 import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.security.symmetric.SymmetricEncryption;
+import com.feilong.security.symmetric.SymmetricType;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
-import com.feilong.tools.security.symmetric.SymmetricEncryption;
-import com.feilong.tools.security.symmetric.SymmetricType;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**

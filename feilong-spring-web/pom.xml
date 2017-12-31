@@ -47,8 +47,8 @@
 
 		<!-- 目前用于 历史浏览记录 加密 -->
 		<dependency>
-			<groupId>com.feilong.platform.tools</groupId>
-			<artifactId>feilong-tools-security</artifactId>
+			<groupId>com.feilong.platform</groupId>
+			<artifactId>feilong-security</artifactId>
 			<optional>true</optional>
 		</dependency>
 
