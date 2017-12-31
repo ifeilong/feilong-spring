@@ -47,6 +47,8 @@ public class ClientCacheToStringBuilder implements AnnotationToStringBuilder<Cli
     // the static instance works for all types
     public static final ClientCacheToStringBuilder INSTANCE = new ClientCacheToStringBuilder();
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -57,6 +59,8 @@ public class ClientCacheToStringBuilder implements AnnotationToStringBuilder<Cli
         if (null == clientCache){
             return EMPTY;
         }
-        return formatDuration(clientCache.value() * 1000);
+        //Math operands should be cast before assignment
+        //squid:S2184
+        return formatDuration((long) clientCache.value() * 1000);
     }
 }

@@ -65,6 +65,8 @@ public class TilesSupportLiteDeviceDelegatingViewResolver extends LiteDeviceDele
         Device device = DeviceUtils.getCurrentDevice(request);
         SitePreference sitePreference = SitePreferenceUtils.getCurrentSitePreference(request);
 
+        //---------------------------------------------------------------
+
         String resolvedViewName = viewName;
 
         String attributeValue = null;
@@ -78,10 +80,14 @@ public class TilesSupportLiteDeviceDelegatingViewResolver extends LiteDeviceDele
             resolvedViewName = getTabletPrefix() + viewName + getTabletSuffix();
             attributeValue = getTabletPrefix();
         }
+
+        //---------------------------------------------------------------
         request.setAttribute(deviceType, attributeValue);
         // MOBILE-63 "redirect:/" and "forward:/" can result in the view name containing multiple trailing slashes
         return stripTrailingSlash(resolvedViewName);
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Strip trailing slash.
@@ -96,6 +102,8 @@ public class TilesSupportLiteDeviceDelegatingViewResolver extends LiteDeviceDele
         }
         return viewName;
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Sets the device type.
