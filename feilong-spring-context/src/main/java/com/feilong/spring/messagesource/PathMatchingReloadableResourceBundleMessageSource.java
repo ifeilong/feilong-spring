@@ -19,12 +19,8 @@ import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toArray;
 import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.core.util.CollectionsUtil.removeDuplicate;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
-import static org.springframework.util.ResourceUtils.JAR_URL_SEPARATOR;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -37,7 +33,6 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.ResourceUtils;
 
 import com.feilong.core.UncheckedIOException;
-import com.feilong.core.lang.StringUtil;
 import com.feilong.json.jsonlib.JsonUtil;
 
 /**
@@ -119,6 +114,8 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
     /** The resource pattern resolver. */
     private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -145,6 +142,8 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
         super.setBasenames(finalBaseNames);
     }
 
+    //---------------------------------------------------------------
+
     /**
      * Resolver basename list.
      *
@@ -161,6 +160,8 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
                 continue;
             }
 
+            //---------------------------------------------------------------
+
             if (basename.contains("*")){//如果带有通配符
                 basenameList.addAll(resolverWildcardConfig(basename));
             }else{
@@ -169,6 +170,8 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
         }
         return basenameList;
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Resolver wildcard config.
@@ -184,45 +187,13 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
         try{
             Resource[] resources = resourcePatternResolver.getResources(basename);
             for (Resource resource : resources){
-                list.add(resolverBaseName(resource));
+                list.add(BasenameBuilder.build(resource));
             }
             return list;
         }catch (IOException e){
             LOGGER.error("", e);
             throw new UncheckedIOException(e);
         }
-    }
-
-    /**
-     * Resolver base name.
-     *
-     * @param resource
-     *            the resource
-     * @return the string
-     * @throws IOException
-     *             the IO exception
-     * @see <a href="https://searchcode.com/codesearch/view/17495983/#">https://searchcode.com/codesearch/view/17495983/#</a>
-     * @see <a href=
-     *      "https://github.com/asual/summer/blob/8635d0799db7588c7ebf7e989a11e99294951b83/modules/core/src/main/java/com/asual/summer/core/resource/MessageResource.java">
-     *      MessageResource</a>
-     */
-    private static String resolverBaseName(Resource resource) throws IOException{
-        URL url = resource.getURL();
-        String file = url.getFile();
-
-        boolean isJar = ResourceUtils.isJarURL(url);
-        String replaceFirst = file.replaceFirst(isJar ? "^.*" + JAR_URL_SEPARATOR : "^(.*/test-classes|.*/classes|.*/resources)/", "");
-
-        LOGGER.debug("file:[{}],replaceFirst:[{}]", url.getFile(), replaceFirst);
-
-        //help_message_en_GB.properties
-        //message_zh_CN.properties
-
-        String replaceAll = StringUtil.replaceAll(replaceFirst, "(_\\w+){0,3}\\.(properties|xml)", EMPTY);
-        String baseName = CLASSPATH_URL_PREFIX + replaceAll;
-
-        LOGGER.debug("file:[{}],baseName is:[{}]", url.getFile(), baseName);
-        return baseName;
     }
 
     //---------------------------------------------------------------
