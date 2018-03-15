@@ -85,6 +85,8 @@ public abstract class AbstractContextRefreshedEventListener implements Applicati
     /** The Constant log. */
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractContextRefreshedEventListener.class);
 
+    //---------------------------------------------------------------
+
     /**
      * Post construct.
      */

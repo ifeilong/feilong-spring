@@ -81,6 +81,8 @@ public class ContextRefreshedLoggingListener extends AbstractContextRefreshedEve
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedLoggingListener.class);
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
