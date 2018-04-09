@@ -92,7 +92,7 @@ public class MonitorMessageBuilder{
                     MonitorMessageEntity monitorMessageEntity,
                     HttpServletRequest request){
         long performanceThreshold = monitorMessageEntity.getPerformanceThreshold();
-        String logicOperator = useTime > performanceThreshold ? ">" : useTime == performanceThreshold ? "=" : "<";
+        String logicOperator = useTime > performanceThreshold ? ">" : (useTime == performanceThreshold ? "=" : "<");
 
         //一条日志输出, 这样的话,在并发的情况, 日志还是有上下文的
         return Slf4jUtil.format(
