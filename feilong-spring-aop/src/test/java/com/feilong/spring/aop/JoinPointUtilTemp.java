@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.0
  */
-public class JoinPointUtilTest{
+public class JoinPointUtilTemp{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(JoinPointUtil.class);
