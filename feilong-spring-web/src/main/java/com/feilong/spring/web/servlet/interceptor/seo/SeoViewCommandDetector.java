@@ -49,9 +49,8 @@ class SeoViewCommandDetector{
      * @return the seo view command
      */
     static SeoViewCommand detect(SeoViewCommand seoViewCommand,SeoViewCommand defaultSeoViewCommand){
-
         if (null == seoViewCommand){
-            LOGGER.debug("can not find [SeoViewCommand] in Request or ModelAndView attribute,use [defaultSeoViewCommand].");
+            LOGGER.debug("can't find [SeoViewCommand] in Request or ModelAndView attribute,use [defaultSeoViewCommand].");
             return defaultSeoViewCommand;
         }
 
