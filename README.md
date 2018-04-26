@@ -26,7 +26,7 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 
 	....
 	<properties>
-		<version.feilong-platform>1.11.1</version.feilong-platform>
+		<version.feilong-spring>1.11.1</version.feilong-spring>
 		....
 	</properties>
 	
@@ -44,27 +44,27 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-core</artifactId>
-			<version>${version.feilong-platform}</version>
+			<version>${version.feilong-spring}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-aop</artifactId>
-			<version>${version.feilong-platform}</version>
+			<version>${version.feilong-spring}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-context</artifactId>
-			<version>${version.feilong-platform}</version>
+			<version>${version.feilong-spring}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-jdbc</artifactId>
-			<version>${version.feilong-platform}</version>
+			<version>${version.feilong-spring}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-web</artifactId>
-			<version>${version.feilong-platform}</version>
+			<version>${version.feilong-spring}</version>
 		</dependency>
 		....
 	</dependencies>
@@ -81,7 +81,7 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 
 	....
 	<properties>
-		<version.feilong-platform>1.11.1</version.feilong-platform>
+		<version.feilong-spring>1.11.1</version.feilong-spring>
 		....
 	</properties>
 	
@@ -99,7 +99,7 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-all</artifactId>
-			<version>${version.feilong-platform}</version>
+			<version>${version.feilong-spring}</version>
 		</dependency>
 		....
 	</dependencies>
