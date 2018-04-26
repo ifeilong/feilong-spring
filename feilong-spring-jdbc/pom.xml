@@ -5,6 +5,7 @@
 		<artifactId>parent</artifactId>
 		<version>1.11.1-SNAPSHOT</version>
 	</parent>
+	
 	<artifactId>feilong-spring-jdbc</artifactId>
 
 	<properties>

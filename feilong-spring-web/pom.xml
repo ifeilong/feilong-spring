@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-context</artifactId>
-			<version>${version.feilong-platform}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!--*******************feilong************************* -->
