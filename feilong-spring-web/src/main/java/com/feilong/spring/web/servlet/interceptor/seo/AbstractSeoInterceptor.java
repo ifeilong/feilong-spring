@@ -40,7 +40,7 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodIntercept
  * <blockquote>
  * <ol>
  * 
- * <li>先判断自定义的 {@link SeoViewCommandBuilder}, 如果注入了自定义的 {@link SeoViewCommandBuilder}, 并且返回值不是null, 那么将优先使用该结果</li>
+ * <li>先判断自定义的 {@link SeoViewCommandCustomBuilder}, 如果注入了自定义的 {@link SeoViewCommandCustomBuilder}, 并且返回值不是null, 那么将优先使用该结果</li>
  * <li>{@link #findSeoViewCommandFromRequestAndModelAttributeMap(HttpServletRequest, ModelAndView)} 从request 以及 model中提取
  * 
  * <p>
@@ -52,7 +52,7 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodIntercept
  * </ol>
  * </li>
  * 
- * <li>{@link #detectSeoViewCommand(SeoViewCommand, HttpServletRequest)} 检测上面得到的 {@link SeoViewCommand},如果发现上面结果是null,则返回默认的
+ * <li>{@link SeoViewCommandDetector#detect(SeoViewCommand, SeoViewCommand)} 检测上面得到的 {@link SeoViewCommand},如果发现上面结果是null,则返回默认的
  * {@link #buildDefaultSeoViewCommand(HttpServletRequest)},如果上面返回的对象,有属性参数是null或者empty,则自动填充默认的数据</li>
  * 
  * <li>将整理之后的{@link SeoViewCommand} 放入 request作用域</li>
@@ -65,19 +65,19 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodIntercept
 public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterceptorAdapter{
 
     /** The Constant LOGGER. */
-    private static final Logger   LOGGER                             = LoggerFactory.getLogger(AbstractSeoInterceptor.class);
+    private static final Logger         LOGGER                             = LoggerFactory.getLogger(AbstractSeoInterceptor.class);
 
     //---------------------------------------------------------------
 
     /** request作用域,关于 SEOVIEWCOMMAND 属性的里面的值. */
-    private static final String   REQUEST_ATTRIBUTE_SEOVIEWCOMMAND   = "seoViewCommand";
+    private static final String         REQUEST_ATTRIBUTE_SEOVIEWCOMMAND   = "seoViewCommand";
 
     /** 您可以修改seoViewCommand在 作用域里面的名称,默认是 {@link #REQUEST_ATTRIBUTE_SEOVIEWCOMMAND}. */
-    private String                seoViewCommandRequestAttributeName = REQUEST_ATTRIBUTE_SEOVIEWCOMMAND;
+    private String                      seoViewCommandRequestAttributeName = REQUEST_ATTRIBUTE_SEOVIEWCOMMAND;
 
     //---------------------------------------------------------------
     /**
-     * 自定义的 SeoViewCommandBuilder,如果配置了有限使用.
+     * 自定义的 SeoViewCommandBuilder,如果配置了优先使用.
      * 
      * <p>
      * 比如 bluebox 需要不同的店铺配置不同的seo信息
@@ -85,7 +85,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
      * 
      * @since 1.11.1
      */
-    private SeoViewCommandBuilder seoViewCommandBuilder;
+    private SeoViewCommandCustomBuilder seoViewCommandCustomBuilder;
 
     //---------------------------------------------------------------
 
@@ -155,8 +155,8 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
      */
     private SeoViewCommand build(HttpServletRequest request,ModelAndView modelAndView){
         //since 1.11.1
-        if (null != seoViewCommandBuilder){
-            return seoViewCommandBuilder.build(LocaleUtil.getLocale(), request);
+        if (null != seoViewCommandCustomBuilder){
+            return seoViewCommandCustomBuilder.build(LocaleUtil.getLocale(), request);
         }
 
         //查找
@@ -257,14 +257,17 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
     }
 
     /**
-     * 设置 自定义的 SeoViewCommandBuilder,如果配置了有限使用.
+     * 自定义的 SeoViewCommandBuilder,如果配置了优先使用.
+     * 
+     * <p>
+     * 比如 bluebox 需要不同的店铺配置不同的seo信息
+     * </p>
      *
-     * @param seoViewCommandBuilder
-     *            the seoViewCommandBuilder to set
-     * @since 1.11.1
+     * @param seoViewCommandCustomBuilder
+     *            the seoViewCommandCustomBuilder to set
      */
-    public void setSeoViewCommandBuilder(SeoViewCommandBuilder seoViewCommandBuilder){
-        this.seoViewCommandBuilder = seoViewCommandBuilder;
+    public void setSeoViewCommandCustomBuilder(SeoViewCommandCustomBuilder seoViewCommandCustomBuilder){
+        this.seoViewCommandCustomBuilder = seoViewCommandCustomBuilder;
     }
 
 }
