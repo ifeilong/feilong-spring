@@ -11,9 +11,6 @@
 	<artifactId>parent</artifactId>
 	<version>1.11.1-SNAPSHOT</version>
 
-	<description>feilong-spring-parent</description>
-	<name>feilong-spring-parent</name>
-
 	<url>https://github.com/venusdrogon/feilong-spring</url>
 
 	<packaging>pom</packaging>

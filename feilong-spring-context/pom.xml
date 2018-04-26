@@ -5,9 +5,8 @@
 		<artifactId>parent</artifactId>
 		<version>1.11.1-SNAPSHOT</version>
 	</parent>
+	
 	<artifactId>feilong-spring-context</artifactId>
-	<name>feilong-spring-context</name>
-	<description>feilong-spring-context</description>
 
 	<dependencies>
 
