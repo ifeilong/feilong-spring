@@ -159,6 +159,7 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
      */
     @Override
     protected SeoViewCommand buildDefaultSeoViewCommand(HttpServletRequest request){
+        //这里有国际化
         boolean isMessageConfig = isNotNullOrEmpty(keyNameSeoTitle) && isNotNullOrEmpty(keyNameSeoKeywords)
                         && isNotNullOrEmpty(keyNameSeoDescription);
         if (isMessageConfig){

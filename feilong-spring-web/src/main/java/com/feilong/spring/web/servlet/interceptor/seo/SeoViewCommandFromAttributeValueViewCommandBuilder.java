@@ -58,25 +58,24 @@ import com.feilong.web.command.ViewCommand;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see StandardSeoInterceptor
  * @since 1.5.1
+ * @since 1.11.2 change extends to interface
  */
-public class ViewCommandFoundSeoInterceptor extends StandardSeoInterceptor{
+public class SeoViewCommandFromAttributeValueViewCommandBuilder implements SeoViewCommandFromAttributeValueBuilder{
 
     /*
      * (non-Javadoc)
      * 
-     * @see com.feilong.spring.web.servlet.interceptor.seo.AbstractSeoInterceptor#constructSeoViewCommand(java.lang.String,
-     * java.lang.Object)
+     * @see com.feilong.spring.web.servlet.interceptor.seo.SeoViewCommandFromAttributeValueBuilder#build(java.lang.String, java.lang.Object)
      */
     @Override
-    protected SeoViewCommand buildSeoViewCommandFromRequestAttributeValue(String requestAttributeName,Object requestAttributeValue){
-        if (requestAttributeValue instanceof ViewCommand){
+    public SeoViewCommand build(String attributeName,Object attributeValue){
+        if (attributeValue instanceof ViewCommand){
             //级联查询
-            SeoViewCommand seoViewCommand = PropertyUtil.findValueOfType(requestAttributeValue, SeoViewCommand.class);
+            SeoViewCommand seoViewCommand = PropertyUtil.findValueOfType(attributeValue, SeoViewCommand.class);
             if (null != seoViewCommand){
                 return seoViewCommand;
             }
         }
         return null;
     }
-
 }
