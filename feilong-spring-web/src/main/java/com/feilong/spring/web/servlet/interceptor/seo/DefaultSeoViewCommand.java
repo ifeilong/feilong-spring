@@ -32,6 +32,8 @@ public class DefaultSeoViewCommand implements SeoViewCommand{
     /** seoTitle. */
     private String seoTitle;
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 seo搜索描述.
      *

@@ -38,6 +38,8 @@ public interface SeoViewCommand{
      */
     void setSeoDescription(String seoDescription);
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 seo搜索关键字.
      *
@@ -52,6 +54,8 @@ public interface SeoViewCommand{
      *            the seoKeywords to set
      */
     void setSeoKeywords(String seoKeywords);
+
+    //---------------------------------------------------------------
 
     /**
      * 获得 seoTitle.

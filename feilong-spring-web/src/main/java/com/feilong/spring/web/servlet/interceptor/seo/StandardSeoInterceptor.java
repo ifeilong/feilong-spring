@@ -17,8 +17,6 @@ package com.feilong.spring.web.servlet.interceptor.seo;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import com.feilong.spring.web.servlet.LocaleUtil;
 
 /**
  * 专门处理每个页面的seo信息,在 {@link HandlerInterceptorAdapter#preHandle(HttpServletRequest, HttpServletResponse, Object)}流程中,查找 request作用域中的数据.
@@ -142,12 +138,18 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
     /** 资源文件中的 seo Description key. */
     private String             keyNameSeoDescription;
 
+    //---------------------------------------------------------------
+
     /** The default seo view command. */
     private SeoViewCommand     defaultSeoViewCommand;
+
+    //---------------------------------------------------------------
 
     /** The application context. */
     @Autowired
     private ApplicationContext applicationContext;
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)
@@ -160,26 +162,14 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
         boolean isMessageConfig = isNotNullOrEmpty(keyNameSeoTitle) && isNotNullOrEmpty(keyNameSeoKeywords)
                         && isNotNullOrEmpty(keyNameSeoDescription);
         if (isMessageConfig){
-            return buildSeoViewCommandFromMessage();
+            return SeoViewCommandFromMessageBuilder.build(applicationContext, keyNameSeoTitle, keyNameSeoKeywords, keyNameSeoDescription);
         }
 
+        //---------------------------------------------------------------
         return defaultSeoViewCommand;
     }
 
-    /**
-     * Builds the seo view command from message.
-     *
-     * @return the seo view command
-     */
-    private SeoViewCommand buildSeoViewCommandFromMessage(){
-        Locale locale = LocaleUtil.getLocale();
-
-        SeoViewCommand seoViewCommand = new DefaultSeoViewCommand();
-        seoViewCommand.setSeoDescription(applicationContext.getMessage(keyNameSeoDescription, null, locale));
-        seoViewCommand.setSeoKeywords(applicationContext.getMessage(keyNameSeoKeywords, null, locale));
-        seoViewCommand.setSeoTitle(applicationContext.getMessage(keyNameSeoTitle, null, locale));
-        return seoViewCommand;
-    }
+    //---------------------------------------------------------------
 
     /**
      * 设置 default seo view command.
@@ -220,4 +210,5 @@ public class StandardSeoInterceptor extends AbstractSeoInterceptor{
     public void setKeyNameSeoDescription(String keyNameSeoDescription){
         this.keyNameSeoDescription = keyNameSeoDescription;
     }
+
 }

@@ -42,6 +42,8 @@ public class TilesSupportLiteDeviceDelegatingViewResolver extends LiteDeviceDele
     /** The device type. */
     private String deviceType;
 
+    //---------------------------------------------------------------
+
     /**
      * Instantiates a new tiles support lite device delegating view resolver.
      *
@@ -52,6 +54,8 @@ public class TilesSupportLiteDeviceDelegatingViewResolver extends LiteDeviceDele
         super(resolver);
     }
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -61,14 +65,15 @@ public class TilesSupportLiteDeviceDelegatingViewResolver extends LiteDeviceDele
     protected String getDeviceViewNameInternal(String viewName){
         RequestAttributes attrs = RequestContextHolder.getRequestAttributes();
         Assert.isInstanceOf(ServletRequestAttributes.class, attrs);
+
         HttpServletRequest request = ((ServletRequestAttributes) attrs).getRequest();
+
         Device device = DeviceUtils.getCurrentDevice(request);
         SitePreference sitePreference = SitePreferenceUtils.getCurrentSitePreference(request);
 
         //---------------------------------------------------------------
 
         String resolvedViewName = viewName;
-
         String attributeValue = null;
         if (ResolverUtils.isNormal(device, sitePreference)){
             resolvedViewName = getNormalPrefix() + viewName + getNormalSuffix();

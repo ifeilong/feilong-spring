@@ -19,9 +19,9 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+
+import com.feilong.spring.web.util.WebSpringUtil;
 
 /**
  * 国际化.
@@ -39,6 +39,8 @@ public final class LocaleUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 获取当前国际化内容语言.
      *
@@ -46,12 +48,10 @@ public final class LocaleUtil{
      * @see org.springframework.web.context.request.RequestContextHolder#getRequestAttributes()
      * @see org.springframework.web.servlet.support.RequestContextUtils#getLocaleResolver(HttpServletRequest)
      * @see org.springframework.web.servlet.LocaleResolver#resolveLocale(HttpServletRequest)
+     * @see org.springframework.context.i18n.LocaleContextHolder#getLocale()
      */
     public static Locale getLocale(){
         // LocaleContextHolder.getLocale()
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
-
-        return RequestContextUtils.getLocale(request);
+        return RequestContextUtils.getLocale(WebSpringUtil.getRequest());
     }
 }
