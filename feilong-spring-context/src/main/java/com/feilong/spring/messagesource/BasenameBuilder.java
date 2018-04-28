@@ -22,6 +22,7 @@ import static org.springframework.util.ResourceUtils.JAR_URL_SEPARATOR;
 import java.io.IOException;
 import java.net.URL;
 
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -33,6 +34,8 @@ import com.feilong.core.lang.StringUtil;
  * The Class BasenameBuilder.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
+ * @see <a href="https://github.com/venusdrogon/feilong-spring/issues/1">PathMatchingReloadableResourceBundleMessageSource 不支持
+ *      help_message_en_GB.properties 格式文件</a>
  * @since 1.11.0
  */
 class BasenameBuilder{
@@ -40,7 +43,7 @@ class BasenameBuilder{
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(BasenameBuilder.class);
 
-    /** <code>{@value}</code> */
+    /** <code>{@value}</code>. */
     public static final String  REGEX  = "(_\\w+){0,3}\\.(properties|xml)";
 
     //---------------------------------------------------------------
@@ -59,7 +62,7 @@ class BasenameBuilder{
      *
      * @param resource
      *            the resource
-     * @return the string
+     * @return 如果 <code>resource</code> 是null,抛出 {@link NullPointerException}<br>
      * @throws IOException
      *             the IO exception
      * @see <a href="https://searchcode.com/codesearch/view/17495983/#">https://searchcode.com/codesearch/view/17495983/#</a>
@@ -68,6 +71,10 @@ class BasenameBuilder{
      *      MessageResource</a>
      */
     static String build(Resource resource) throws IOException{
+        Validate.notNull(resource, "resource can't be null!");
+
+        //---------------------------------------------------------------
+
         URL url = resource.getURL();
         String fileName = url.getFile();
 
@@ -102,15 +109,14 @@ class BasenameBuilder{
     /**
      * Parses the basename.
      *
-     * @param fileName
-     *            the file name
      * @param replaceFirst
      *            the replace first
-     * @return the string
+     * @return 如果 <code>replaceFirst</code> 是null,抛出 {@link NullPointerException}<br>
+     *         如果 <code>replaceFirst</code> 是blank,抛出 {@link IllegalArgumentException}<br>
      */
     private static String parseBasename(String replaceFirst){
-        String replaceAll = StringUtil.replaceAll(replaceFirst, REGEX, EMPTY);
-        return CLASSPATH_URL_PREFIX + replaceAll;
+        Validate.notBlank(replaceFirst, "replaceFirst can't be blank!");
+        return CLASSPATH_URL_PREFIX + StringUtil.replaceAll(replaceFirst, REGEX, EMPTY);
     }
 
 }

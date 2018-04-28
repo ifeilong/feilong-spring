@@ -20,6 +20,7 @@ import java.io.IOException;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 
 import com.feilong.spring.io.ResourceUtil;
 
@@ -35,6 +36,9 @@ public class BasenameBuilderTest{
     @Test
     public void test() throws IOException{
         String urlOrPath = "classpath:i18n/help_message_zh_HK.properties";
-        LOGGER.debug(BasenameBuilder.build(ResourceUtil.getResource(urlOrPath)));
+        Resource resource = ResourceUtil.getResource(urlOrPath);
+        String build = BasenameBuilder.build(resource);
+
+        LOGGER.debug(build);
     }
 }

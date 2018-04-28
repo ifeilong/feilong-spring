@@ -15,24 +15,14 @@
  */
 package com.feilong.spring.messagesource;
 
-import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.bean.ConvertUtil.toArray;
-import static com.feilong.core.util.CollectionsUtil.newArrayList;
-import static com.feilong.core.util.CollectionsUtil.removeDuplicate;
-
-import java.io.IOException;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.ResourceUtils;
 
-import com.feilong.core.UncheckedIOException;
 import com.feilong.json.jsonlib.JsonUtil;
 
 /**
@@ -65,7 +55,7 @@ import com.feilong.json.jsonlib.JsonUtil;
  * <h3>注意事项:</h3>
  * <blockquote>
  * <ol>
- * <li>由于使用正则表达式来截取扫描的文件,如果文件名称出现非语言的下划线_,可能会出现文件名称不准确的情况</li>
+ * <li>由于使用正则表达式来截取扫描的文件,<span style="color:red">如果文件名称出现非语言的下划线_,可能会出现文件名称不准确的情况</span></li>
  * <li>如果重复的配置,将会去重</li>
  * <li>也支持不带通配符形式的配置 ,如
  * 
@@ -128,72 +118,7 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
         }
 
         //---------------------------------------------------------------
-        List<String> basenameList = resolverBasenameList(basenames);
-
-        //去重
-        List<String> removeDuplicateBasenameList = removeDuplicate(basenameList);
-        String[] finalBaseNames = toArray(removeDuplicateBasenameList, String.class);
-
-        //---------------------------------------------------------------
-
-        if (LOGGER.isInfoEnabled()){
-            LOGGER.info("resolver finalBaseNames:{}", JsonUtil.format(finalBaseNames));
-        }
-        super.setBasenames(finalBaseNames);
-    }
-
-    //---------------------------------------------------------------
-
-    /**
-     * Resolver basename list.
-     *
-     * @param basenames
-     *            the basenames
-     * @return the list
-     * @since 1.8.2
-     */
-    private List<String> resolverBasenameList(String...basenames){
-        List<String> basenameList = newArrayList();
-        for (String basename : basenames){
-            if (isNullOrEmpty(basename)){
-                LOGGER.warn("basename:[{}] is null or empty", basename);
-                continue;
-            }
-
-            //---------------------------------------------------------------
-
-            if (basename.contains("*")){//如果带有通配符
-                basenameList.addAll(resolverWildcardConfig(basename));
-            }else{
-                basenameList.add(basename);
-            }
-        }
-        return basenameList;
-    }
-
-    //---------------------------------------------------------------
-
-    /**
-     * Resolver wildcard config.
-     *
-     * @param basename
-     *            the basename
-     * @return the list< string>
-     * @since 1.5.0
-     */
-    private List<String> resolverWildcardConfig(String basename){
-        List<String> list = newArrayList();
-
-        try{
-            Resource[] resources = resourcePatternResolver.getResources(basename);
-            for (Resource resource : resources){
-                list.add(BasenameBuilder.build(resource));
-            }
-            return list;
-        }catch (IOException e){
-            LOGGER.error("", e);
-            throw new UncheckedIOException(e);
-        }
+        super.setBasenames(BasenamesResolver.resolver(resourcePatternResolver, basenames));
     }
 
     //---------------------------------------------------------------
