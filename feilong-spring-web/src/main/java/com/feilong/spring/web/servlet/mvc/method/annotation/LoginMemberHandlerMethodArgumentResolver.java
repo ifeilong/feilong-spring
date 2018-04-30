@@ -59,11 +59,11 @@ import com.feilong.spring.web.bind.annotation.LoginMember;
  *             <bean class="com.feilong.spring.web.servlet.mvc.method.annotation.LoginMemberHandlerMethodArgumentResolver">
  *                 <span style="color:green"><!-- 在session中保存的标识用户session对象的key --></span>
  *                 <property name="sessionKey">
- *                     <util:constant static-field="com.baozun.nebula.web.constants.SessionKeyConstants.MEMBER_CONTEXT" />
+ *                     <util:constant static-field="com.feilong.web.constants.SessionKeyConstants.MEMBER_CONTEXT" />
  *                 </property>
  * 
  *                 <span style="color:green"><!-- session 里面存放的 对象类型 --></span>
- *                 <property name="sessionMemberClass" value="com.baozun.nebula.web.MemberDetails" />
+ *                 <property name="sessionMemberClass" value="com.feilong.web.MemberDetails" />
  * 
  *                 <span style="color:green"><!-- 对象的主键名称 --></span>
  *                 <property name="sessionMemberIdName" value="memberId" />

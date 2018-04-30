@@ -49,7 +49,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
             <mvc:mapping path="/**" />
             <mvc:exclude-mapping path="/**}/*{@code .json" />
 
-            <bean class="com.baozun.store.web.interceptor.StoreSeoInterceptor">
+            <bean class="com.feilong.store.web.interceptor.StoreSeoInterceptor">
                 <!-- seoViewCommand在 作用域里面的名称,默认是 seoViewCommand,不建议修改 -->
                 <property name="seoViewCommandRequestAttributeName" value="seoViewCommand" />
 
