@@ -70,6 +70,8 @@ public class MonitorMessageBuilder{
         return Slf4jUtil.format("[Request] base info:{} ,start StopWatch", requestBaseInfo);
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 post handle log message.
      *
@@ -94,6 +96,8 @@ public class MonitorMessageBuilder{
         long performanceThreshold = monitorMessageEntity.getPerformanceThreshold();
         String logicOperator = useTime > performanceThreshold ? ">" : (useTime == performanceThreshold ? "=" : "<");
 
+        //---------------------------------------------------------------
+
         //一条日志输出, 这样的话,在并发的情况, 日志还是有上下文的
         return Slf4jUtil.format(
                         "postHandle [{}.{}()],RequestInfoMapForLog:{},[request] attribute:{},modelAndView info:[{}],use time:[{}],[{}] performanceThreshold:[{}]",
@@ -106,6 +110,8 @@ public class MonitorMessageBuilder{
                         logicOperator,
                         performanceThreshold);
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 获得 model and view log info.
@@ -122,6 +128,8 @@ public class MonitorMessageBuilder{
             return "modelAndView is null!!";
         }
 
+        //---------------------------------------------------------------
+
         Map<String, Object> model = modelAndView.getModel();
         String viewName = ModelAndViewUtil.getViewName(modelAndView);
 
@@ -130,6 +138,8 @@ public class MonitorMessageBuilder{
                         JsonUtil.formatSimpleMap(model, monitorMessageEntity.getAllowFormatClassTypes()),
                         viewName);
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 获得 request attribute map.
