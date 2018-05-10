@@ -83,6 +83,8 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
     /** The Constant log. */
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginMemberHandlerMethodArgumentResolver.class);
 
+    //---------------------------------------------------------------
+
     /** 在session中保存的标识用户session对象的key. */
     private String              sessionKey;
 
