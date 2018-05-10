@@ -49,6 +49,8 @@ public class FlashMapUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * Put.
      *

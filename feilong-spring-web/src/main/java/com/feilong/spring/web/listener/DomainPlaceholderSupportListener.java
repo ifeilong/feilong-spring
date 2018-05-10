@@ -135,6 +135,8 @@ public class DomainPlaceholderSupportListener extends AbstractDomainListener{
         }
     }
 
+    //---------------------------------------------------------------
+
     /**
      * Resolver domain config location.
      *

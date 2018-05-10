@@ -44,6 +44,8 @@ public class MultipartFileResolverImpl implements MultipartFileResolver{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MultipartFileResolverImpl.class);
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -72,6 +74,8 @@ public class MultipartFileResolverImpl implements MultipartFileResolver{
             throw new UncheckedIOException(e);
         }
     }
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)

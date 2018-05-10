@@ -15,13 +15,13 @@
  */
 package com.feilong.spring.web.multipart;
 
+import static com.feilong.core.util.MapUtil.newLinkedHashMap;
+
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.feilong.io.FileUtil;
-
-import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
 /**
  * The Class MultipartFileUtil.
@@ -37,6 +37,8 @@ public final class MultipartFileUtil{
         //see 《Effective Java》 2nd
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 获得 multipart file info map for log map.
