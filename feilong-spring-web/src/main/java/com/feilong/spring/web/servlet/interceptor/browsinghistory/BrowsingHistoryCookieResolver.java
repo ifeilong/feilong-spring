@@ -102,6 +102,8 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
     /** The bean class. */
     private final Class<? extends BrowsingHistoryCommand> beanClass;
 
+    //---------------------------------------------------------------
+
     /**
      * The Constructor.
      *
@@ -112,6 +114,8 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
         super();
         this.beanClass = beanClass;
     }
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)

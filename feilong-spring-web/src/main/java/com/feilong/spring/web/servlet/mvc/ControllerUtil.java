@@ -65,7 +65,6 @@ public final class ControllerUtil{
      */
     public static String redirect(String targetUrl){
         Validate.notNull(targetUrl, "targetUrl can't be null!");
-
         return REDIRECT_URL_PREFIX + targetUrl;
     }
 
@@ -87,7 +86,6 @@ public final class ControllerUtil{
      */
     public static String forward(String forwardUrl){
         Validate.notNull(forwardUrl, "forwardUrl can't be null!");
-
         return FORWARD_URL_PREFIX + forwardUrl;
     }
 

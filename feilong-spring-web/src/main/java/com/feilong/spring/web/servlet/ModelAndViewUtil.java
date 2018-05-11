@@ -157,7 +157,6 @@ public final class ModelAndViewUtil{
         }
 
         //---------------------------------------------------------------
-
         View view = modelAndView.getView();
         return isNullOrEmpty(view) ? modelAndView.getViewName() : view.toString();
     }

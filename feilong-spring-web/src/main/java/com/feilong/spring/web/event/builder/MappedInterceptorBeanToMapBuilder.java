@@ -57,6 +57,8 @@ public class MappedInterceptorBeanToMapBuilder implements BeanToMapBuilder<Mappe
         return map;
     }
 
+    //---------------------------------------------------------------
+
     /**
      * Gets the exclude patterns.
      *
@@ -64,7 +66,7 @@ public class MappedInterceptorBeanToMapBuilder implements BeanToMapBuilder<Mappe
      *            the mapped interceptor
      * @return the exclude patterns
      */
-    private Object getExcludePatterns(MappedInterceptor mappedInterceptor){
+    private static Object getExcludePatterns(MappedInterceptor mappedInterceptor){
         try{
             return FieldUtils.readField(mappedInterceptor, "excludePatterns", true);
         }catch (IllegalAccessException e){

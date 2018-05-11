@@ -61,6 +61,8 @@ public class MultipartFileResolverImpl implements MultipartFileResolver{
             return;
         }
 
+        //---------------------------------------------------------------
+
         if (LOGGER.isDebugEnabled()){
             Map<String, Object> map = MultipartFileUtil.getMultipartFileInfoMapForLogMap(multipartFile);
             LOGGER.debug(JsonUtil.format(map));

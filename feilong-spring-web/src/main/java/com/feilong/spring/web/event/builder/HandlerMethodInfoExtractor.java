@@ -45,6 +45,8 @@ public class HandlerMethodInfoExtractor{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 提取.
      *
@@ -88,6 +90,8 @@ public class HandlerMethodInfoExtractor{
         keyAndValueMap.put("method", ConvertUtil.toString(requestMethodsRequestCondition.getMethods(), DEFAULT_CONFIG));
         keyAndValueMap.put("header", ConvertUtil.toString(headersRequestCondition.getExpressions(), DEFAULT_CONFIG));
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 塞配置的要提取的annotaion信息进去.

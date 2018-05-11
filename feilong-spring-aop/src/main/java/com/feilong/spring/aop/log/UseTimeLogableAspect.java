@@ -42,6 +42,8 @@ public class UseTimeLogableAspect extends AbstractAspect{
     /** The Constant log. */
     private static final Logger LOGGER = LoggerFactory.getLogger(UseTimeLogableAspect.class);
 
+    //---------------------------------------------------------------
+
     /**
      * Pointcut.
      */
@@ -49,6 +51,8 @@ public class UseTimeLogableAspect extends AbstractAspect{
     private void pointcut(){
         //only pointcut
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Around.

@@ -89,10 +89,16 @@ public final class ApplicationContextUtil{
         return map;
     }
 
+    //---------------------------------------------------------------
+
     /**
+     * Builds the bean definition names and class map.
+     *
      * @param applicationContext
+     *            the application context
      * @param beanDefinitionNames
-     * @return
+     *            the bean definition names
+     * @return the map
      * @since 1.10.4
      */
     private static Map<String, Object> buildBeanDefinitionNamesAndClassMap(

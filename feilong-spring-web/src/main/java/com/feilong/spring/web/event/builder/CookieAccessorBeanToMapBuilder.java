@@ -36,6 +36,8 @@ public class CookieAccessorBeanToMapBuilder implements BeanToMapBuilder<CookieAc
     // the static instance works for all types
     public static final BeanToMapBuilder<CookieAccessor> INSTANCE = new CookieAccessorBeanToMapBuilder();
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -62,6 +64,8 @@ public class CookieAccessorBeanToMapBuilder implements BeanToMapBuilder<CookieAc
 
         return map;
     }
+
+    //---------------------------------------------------------------
 
     /**
      * To show max age.

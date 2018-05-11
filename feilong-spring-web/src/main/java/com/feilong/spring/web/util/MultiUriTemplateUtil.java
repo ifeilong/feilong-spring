@@ -264,6 +264,8 @@ public class MultiUriTemplateUtil{
         return UriTemplateUtil.expand(matchingPatternPath, map);
     }
 
+    //---------------------------------------------------------------
+
     /**
      * To list.
      *

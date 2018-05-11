@@ -38,6 +38,8 @@ public class ProceedingJoinPointUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 map for LOGGER.
      *
@@ -54,6 +56,8 @@ public class ProceedingJoinPointUtil{
         map.put("args", proceedingJoinPoint.getArgs());
         return map;
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Gets the method signature.

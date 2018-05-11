@@ -39,6 +39,8 @@ public class JoinPointUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 获得运行的annotaion.
      * 

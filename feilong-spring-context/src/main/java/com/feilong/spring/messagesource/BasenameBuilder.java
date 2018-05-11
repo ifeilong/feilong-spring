@@ -43,6 +43,8 @@ class BasenameBuilder{
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(BasenameBuilder.class);
 
+    //---------------------------------------------------------------
+
     /** <code>{@value}</code>. */
     public static final String  REGEX  = "(_\\w+){0,3}\\.(properties|xml)";
 

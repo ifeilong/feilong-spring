@@ -97,6 +97,8 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     /** The bean to map builder. */
     private BeanToMapBuilder<T> beanToMapBuilder;
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 

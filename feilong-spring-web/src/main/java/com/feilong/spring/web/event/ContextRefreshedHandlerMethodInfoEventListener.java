@@ -114,6 +114,8 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
         return sortDataList(list);
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 对 list map 进行排序.
      *
@@ -122,7 +124,7 @@ public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractCont
      * @return the list
      * @since 1.10.5
      */
-    private List<Map<String, Object>> sortDataList(List<Map<String, Object>> list){
+    private static List<Map<String, Object>> sortDataList(List<Map<String, Object>> list){
         return sortListByPropertyNamesValue(list, "url");
     }
 
