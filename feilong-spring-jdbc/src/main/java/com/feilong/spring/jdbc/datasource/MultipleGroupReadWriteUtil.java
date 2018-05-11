@@ -35,6 +35,8 @@ public class MultipleGroupReadWriteUtil{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * Gets the target data sources key.
      * 

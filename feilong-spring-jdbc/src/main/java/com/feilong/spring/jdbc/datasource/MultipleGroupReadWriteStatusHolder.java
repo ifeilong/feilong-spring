@@ -37,6 +37,8 @@ public class MultipleGroupReadWriteStatusHolder{
         throw new AssertionError("No " + getClass().getName() + " instances for you!");
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 设置当前线程的线程局部变量的值.
      *

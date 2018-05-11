@@ -37,6 +37,8 @@ public class ReadWriteDataSourceCommand implements Serializable{
     /** The write data source. */
     private DataSource        writeDataSource;
 
+    //--------------------------------------------------------------- 
+
     /**
      * 获得 read data source.
      *

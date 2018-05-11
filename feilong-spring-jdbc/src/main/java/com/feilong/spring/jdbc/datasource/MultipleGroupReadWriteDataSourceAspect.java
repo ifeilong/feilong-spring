@@ -117,6 +117,8 @@ public class MultipleGroupReadWriteDataSourceAspect extends AbstractAspect{
                     //嵌套事务支持
                     of(PROPAGATION_NESTED, false));
 
+    //---------------------------------------------------------------
+
     /**
      * Point.
      *

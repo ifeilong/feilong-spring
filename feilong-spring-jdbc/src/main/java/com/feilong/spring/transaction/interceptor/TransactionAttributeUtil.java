@@ -243,6 +243,8 @@ public class TransactionAttributeUtil{
             return null;
         }
 
+        //---------------------------------------------------------------
+
         int isolationLevel = transactionAttribute.getIsolationLevel();
         String isolationLevelString = ISOLATION_LEVEL_AND_NAME_MAP.get(isolationLevel);
 
