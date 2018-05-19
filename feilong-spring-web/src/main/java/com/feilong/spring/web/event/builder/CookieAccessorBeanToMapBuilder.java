@@ -25,7 +25,7 @@ import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.servlet.http.entity.CookieEntity;
 
 /**
- * The Class CookieAccessorBeanToMapBuilder.
+ * {@link CookieEntity} 相关信息转成map.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.10.5
@@ -74,7 +74,7 @@ public class CookieAccessorBeanToMapBuilder implements BeanToMapBuilder<CookieAc
      *            单位秒
      * @return the string
      */
-    private String toShowMaxAge(int maxAge){
+    private static String toShowMaxAge(int maxAge){
         if (maxAge <= 0){
             return String.valueOf(maxAge);
         }

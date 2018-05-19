@@ -18,7 +18,11 @@ package com.feilong.spring.web.event.builder;
 import java.util.Map;
 
 /**
- * The Interface BeanToMapBuilder.
+ * 将bean信息转成map 数据.
+ * 
+ * <p>
+ * 方便使用 {@link com.feilong.formatter.FormatterUtil#formatToSimpleTable(Iterable)} 来渲染输出数据
+ * </p>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @param <T>
@@ -28,12 +32,12 @@ import java.util.Map;
 public interface BeanToMapBuilder<T> {
 
     /**
-     * Builds the.
+     * 构造.
      *
      * @param beanName
-     *            the bean name
+     *            bean名字
      * @param bean
-     *            the bean
+     *            bean对象
      * @return the map
      */
     Map<String, Object> build(String beanName,T bean);

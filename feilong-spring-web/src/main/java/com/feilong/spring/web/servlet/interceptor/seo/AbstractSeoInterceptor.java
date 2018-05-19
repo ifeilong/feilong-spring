@@ -48,7 +48,7 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodIntercept
  * <ol>
  * <li>如果发现属性名字 是 {@link #seoViewCommandRequestAttributeName},那么将 <code>attributeValue</code>强转 {@link SeoViewCommand},并返回</li>
  * <li>如果发现属性值 是 {@link SeoViewCommand}类型,那么转成 {@link SeoViewCommand},并返回</li>
- * <li>支持 通过实现 {@link #build(String, Object)}扩展,自己来查找/构建{@link SeoViewCommand}</li>
+ * <li>支持通过实现 {@link #build(HttpServletRequest, ModelAndView)}扩展,自己来查找/构建{@link SeoViewCommand}</li>
  * </ol>
  * </li>
  * 
@@ -108,7 +108,6 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
         Date beginDate = new Date();
 
         //---------------------------------------------------------------
-
         SeoViewCommand seoViewCommand = build(request, modelAndView);
 
         seoViewCommand = detect(seoViewCommand, request);

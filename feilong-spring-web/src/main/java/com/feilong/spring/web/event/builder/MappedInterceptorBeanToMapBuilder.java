@@ -26,7 +26,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.handler.MappedInterceptor;
 
 /**
- * The Class MappedInterceptorBeanToMapBuilder.
+ * {@link HandlerInterceptor} 相关信息转成map.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.10.5

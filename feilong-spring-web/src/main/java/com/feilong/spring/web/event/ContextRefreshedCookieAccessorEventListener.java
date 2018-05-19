@@ -133,7 +133,7 @@ public class ContextRefreshedCookieAccessorEventListener extends AbstractContext
      *            the handler methods
      * @return the list
      */
-    private List<Map<String, Object>> buildList(Map<String, CookieAccessor> handlerMethods){
+    private static List<Map<String, Object>> buildList(Map<String, CookieAccessor> handlerMethods){
         List<Map<String, Object>> list = newArrayList();
 
         for (Map.Entry<String, CookieAccessor> entry : handlerMethods.entrySet()){

@@ -131,11 +131,14 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      * @param list
      *            the list
      */
+    @SuppressWarnings("static-method")
     protected void render(List<Map<String, Object>> list){
         if (LOGGER.isInfoEnabled()){
             LOGGER.info("handler method ,size:[{}],info:{}", list.size(), formatToSimpleTable(list));
         }
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 构造数据.
@@ -144,7 +147,8 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      *            the handler methods
      * @return the list
      */
-    protected List<Map<String, Object>> buildList(Map<RequestMappingInfo, HandlerMethod> handlerMethods){
+    @SuppressWarnings("static-method")
+    protected List<Map<String, Object>> buildList(@SuppressWarnings("unused") Map<RequestMappingInfo, HandlerMethod> handlerMethods){
         return null;
     }
 

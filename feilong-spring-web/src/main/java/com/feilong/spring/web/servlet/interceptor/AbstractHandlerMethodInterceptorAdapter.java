@@ -136,7 +136,11 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @return true, if successful
      */
     //---------------------------------------------------------------
-    public boolean doPreHandle(HttpServletRequest request,HttpServletResponse response,Object handler){
+    @SuppressWarnings("static-method")
+    public boolean doPreHandle(
+                    @SuppressWarnings("unused") HttpServletRequest request,
+                    @SuppressWarnings("unused") HttpServletResponse response,
+                    @SuppressWarnings("unused") Object handler){
         return true;
     }
 
@@ -152,7 +156,11 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @param modelAndView
      *            the model and view
      */
-    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView){
+    public void doPostHandle(
+                    @SuppressWarnings("unused") HttpServletRequest request,
+                    @SuppressWarnings("unused") HttpServletResponse response,
+                    @SuppressWarnings("unused") Object handler,
+                    @SuppressWarnings("unused") ModelAndView modelAndView){
 
     }
 
@@ -168,7 +176,11 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @param ex
      *            the ex
      */
-    public void doAfterCompletion(HttpServletRequest request,HttpServletResponse response,Object handler,Exception ex){
+    public void doAfterCompletion(
+                    @SuppressWarnings("unused") HttpServletRequest request,
+                    @SuppressWarnings("unused") HttpServletResponse response,
+                    @SuppressWarnings("unused") Object handler,
+                    @SuppressWarnings("unused") Exception ex){
 
     }
 
@@ -182,7 +194,10 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @param handler
      *            the handler
      */
-    public void doAfterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,Object handler){
+    public void doAfterConcurrentHandlingStarted(
+                    @SuppressWarnings("unused") HttpServletRequest request,
+                    @SuppressWarnings("unused") HttpServletResponse response,
+                    @SuppressWarnings("unused") Object handler){
 
     }
 

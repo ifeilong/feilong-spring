@@ -22,8 +22,6 @@ import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
@@ -84,10 +82,6 @@ import com.feilong.spring.web.event.builder.HandlerMethodInfoExtractor;
  * @since 1.10.4
  */
 public class ContextRefreshedHandlerMethodInfoEventListener extends AbstractContextRefreshedHandlerMethodLogginEventListener{
-
-    /** The Constant LOGGER. */
-    private static final Logger                                           LOGGER = LoggerFactory
-                    .getLogger(ContextRefreshedHandlerMethodInfoEventListener.class);
 
     /** The annotation and annotation to string builder map. */
     private Map<Class<Annotation>, AnnotationToStringBuilder<Annotation>> annotationAndAnnotationToStringBuilderMap;
