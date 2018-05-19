@@ -176,6 +176,8 @@ public class HandlerMappingUtil{
         return map;
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 request mapping handler mapping info map for LOGGER.
      *
@@ -203,6 +205,8 @@ public class HandlerMappingUtil{
         mappingInfoMap.put("methodAndRequestMappingInfoMapMap", methodAndRequestMappingInfoMapMap);
         return mappingInfoMap;
     }
+
+    //---------------------------------------------------------------
 
     /**
      * key 是handle 方法,value 是 RequestMappingInfo 信息.
