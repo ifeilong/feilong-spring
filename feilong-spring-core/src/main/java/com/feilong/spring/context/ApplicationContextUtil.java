@@ -29,7 +29,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
 /**
- * The Class ApplicationContextUtil.
+ * {@link ApplicationContext} 工具类.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.8
