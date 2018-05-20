@@ -32,9 +32,15 @@ import com.feilong.spring.event.AbstractContextRefreshedEventListener;
 import com.feilong.spring.web.event.builder.BeanToMapBuilder;
 import com.feilong.spring.web.event.builder.CookieAccessorBeanToMapBuilder;
 import com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder;
+import com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder;
 
 /**
  * 启动的时候显示相关bean的日志信息.
+ * 
+ * <p>
+ * 详细使用方法, 参见 {@link CookieAccessorBeanToMapBuilder}, {@link HandlerExceptionResolverBeanToMapBuilder},
+ * {@link MappedInterceptorBeanToMapBuilder} 等类上注释
+ * </p>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @param <T>
@@ -42,12 +48,15 @@ import com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBui
  * @see org.springframework.context.event.SmartApplicationListener
  * @see CookieAccessorBeanToMapBuilder
  * @see HandlerExceptionResolverBeanToMapBuilder
+ * @see MappedInterceptorBeanToMapBuilder
  * @since 1.10.4
  */
 public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
+
+    //---------------------------------------------------------------
 
     /** The bean class. */
     private Class<T>            beanClass;

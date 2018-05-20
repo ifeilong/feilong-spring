@@ -31,7 +31,6 @@ import com.feilong.spring.web.event.builder.HandlerMethodInfoExtractor;
 /**
  * 启动的时候显示 handler method 信息.
  * 
- * 
  * <h3>作用:</h3>
  * 
  * <blockquote>

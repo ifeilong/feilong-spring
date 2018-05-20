@@ -37,7 +37,6 @@ import com.feilong.json.jsonlib.JsonUtil;
  * method is invoked.
  * 
  * <p>
- * 
  * 只有一个ApplicationContextEvent,表示ApplicationContext容器事件,且其又有如下实现：
  * </p>
  * 
@@ -72,8 +71,12 @@ import com.feilong.json.jsonlib.JsonUtil;
  * </tr>
  * 
  * </table>
+ * 
+ * <p>
  * 注: {@link org.springframework.context.support.AbstractApplicationContext}
  * 抽象类实现了LifeCycle的start和stop回调并发布ContextStartedEvent和ContextStoppedEvent事件；但是无任何实现调用它,所以目前无任何作用。
+ * </p>
+ * 
  * </blockquote>
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>

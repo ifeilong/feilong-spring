@@ -30,52 +30,39 @@ import com.feilong.spring.web.event.AbstractContextRefreshedHandlerMethodLogginE
 import com.feilong.spring.web.servlet.handler.HandlerMappingUtil;
 
 /**
- * The listener interface for receiving contextStartedLogging events.
- * The class that is interested in processing a contextStartedLogging
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addContextStartedLoggingListener<code> method. When
- * the contextStartedLogging event occurs, that object's appropriate
- * method is invoked.
+ * 显示{@link ClientCache} 信息.
  * 
- * <p>
- * 
- * 只有一个ApplicationContextEvent,表示ApplicationContext容器事件,且其又有如下实现：
- * </p>
+ * <h3>作用:</h3>
  * 
  * <blockquote>
- * <table border="1" cellspacing="0" cellpadding="4" summary="">
- * <tr style="background-color:#ccccff">
- * <th align="left">字段</th>
- * <th align="left">说明</th>
- * <th align="left">备注</th>
- * </tr>
  * 
- * <tr valign="top">
- * <td>ContextStartedEvent</td>
- * <td>ApplicationContext启动后触发的事件</td>
- * <td>目前版本没有任何作用</td>
- * </tr>
- * <tr valign="top" style="background-color:#eeeeff">
- * <td>ContextStoppedEvent</td>
- * <td>ApplicationContext停止后触发的事件</td>
- * <td>目前版本没有任何作用</td>
- * </tr>
+ * <p>
+ * 可以在日志文件或者控制台输出如下信息:
+ * </p>
  * 
- * <tr valign="top">
- * <td>ContextRefreshedEvent</td>
- * <td>ApplicationContext初始化或刷新完成后触发的事件</td>
- * <td>容器初始化完成后调用</td>
- * </tr>
- * <tr valign="top" style="background-color:#eeeeff">
- * <td>ContextClosedEvent</td>
- * <td>ApplicationContext关闭后触发的事件；</td>
- * <td>（如web容器关闭时自动会触发spring容器的关闭,如果是普通java应用,需要调用ctx.registerShutdownHook();注册虚拟机关闭时的钩子才行）</td>
- * </tr>
+ * <pre class="code">
+
+16:46:11 INFO  (ContextRefreshedEventClientCacheListener.java:117) onApplicationEvent() - url And ClientCache info:    {
+        "/clientcache": "20秒",
+        "/item/{itemid}": "5分钟",
+        "/noclientcache": "0"
+    }
  * 
- * </table>
- * 注: {@link org.springframework.context.support.AbstractApplicationContext}
- * 抽象类实现了LifeCycle的start和stop回调并发布ContextStartedEvent和ContextStoppedEvent事件；但是无任何实现调用它,所以目前无任何作用。
+ * </pre>
+ * 
+ * </blockquote>
+ * 
+ * <h3>参考配置:</h3>
+ * 
+ * <blockquote>
+ * 
+ * <pre class="code">
+{@code 
+    <bean id="contextRefreshedEventClientCacheListener" class=
+"com.feilong.spring.web.servlet.interceptor.clientcache.ContextRefreshedClientCacheInfoEventListener" />
+}
+ * </pre>
+ * 
  * </blockquote>
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
@@ -87,6 +74,8 @@ public class ContextRefreshedClientCacheInfoEventListener extends AbstractContex
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedClientCacheInfoEventListener.class);
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -94,11 +83,13 @@ public class ContextRefreshedClientCacheInfoEventListener extends AbstractContex
      */
     @Override
     protected void doLogging(Map<RequestMappingInfo, HandlerMethod> requestMappingInfoAndHandlerMethodMap){
+
         Map<String, String> urlAndClientCacheMap = HandlerMappingUtil.buildUrlAndAnnotationStringMap(
                         requestMappingInfoAndHandlerMethodMap,
                         ClientCache.class,
                         ClientCacheToStringBuilder.INSTANCE);
 
+        //---------------------------------------------------------------
         if (isNullOrEmpty(urlAndClientCacheMap)){
             LOGGER.info("urlAndClientCacheMap is null or empty");
             return;

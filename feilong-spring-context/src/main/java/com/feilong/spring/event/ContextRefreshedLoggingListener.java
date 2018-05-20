@@ -24,52 +24,126 @@ import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.spring.context.ApplicationContextUtil;
 
 /**
- * The listener interface for receiving contextStartedLogging events.
- * The class that is interested in processing a contextStartedLogging
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addContextStartedLoggingListener<code> method. When
- * the contextStartedLogging event occurs, that object's appropriate
- * method is invoked.
- * 
- * <p>
- * 
- * 只有一个ApplicationContextEvent,表示ApplicationContext容器事件,且其又有如下实现：
- * </p>
+ * 可以在控制台显示 {@link ApplicationContext} 信息.
+ *
+ * <h3>作用:</h3>
  * 
  * <blockquote>
- * <table border="1" cellspacing="0" cellpadding="4" summary="">
- * <tr style="background-color:#ccccff">
- * <th align="left">字段</th>
- * <th align="left">说明</th>
- * <th align="left">备注</th>
- * </tr>
  * 
- * <tr valign="top">
- * <td>ContextStartedEvent</td>
- * <td>ApplicationContext启动后触发的事件</td>
- * <td>目前版本没有任何作用</td>
- * </tr>
- * <tr valign="top" style="background-color:#eeeeff">
- * <td>ContextStoppedEvent</td>
- * <td>ApplicationContext停止后触发的事件</td>
- * <td>目前版本没有任何作用</td>
- * </tr>
+ * <p>
+ * 可以在日志文件或者控制台输出如下信息:
+ * </p>
  * 
- * <tr valign="top">
- * <td>ContextRefreshedEvent</td>
- * <td>ApplicationContext初始化或刷新完成后触发的事件</td>
- * <td>容器初始化完成后调用</td>
- * </tr>
- * <tr valign="top" style="background-color:#eeeeff">
- * <td>ContextClosedEvent</td>
- * <td>ApplicationContext关闭后触发的事件；</td>
- * <td>（如web容器关闭时自动会触发spring容器的关闭,如果是普通java应用,需要调用ctx.registerShutdownHook();注册虚拟机关闭时的钩子才行）</td>
- * </tr>
+ * <pre class="code">
+14:39:39 DEBUG (ContextRefreshedLoggingListener.java:95) onApplicationEvent() - applicationContext info:    {
+        "beanDefinitionCount": 71,
+        "startupDate": 1526798376957,
+        "applicationName": "",
+        "displayName": "WebApplicationContext for namespace 'springmvc-servlet'",
+        "id": "org.springframework.web.context.WebApplicationContext:/springmvc",
+        "beanDefinitionNamesAndClassMap":         {
+            "browsingHistoryResolver": "com.feilong.spring.web.servlet.interceptor.browsinghistory.BrowsingHistoryCookieResolver[Singleton]",
+            "contextRefreshedBeanLoggingEventListener": "com.feilong.spring.web.event.ContextRefreshedBeanLoggingEventListener[Singleton]",
+            "contextRefreshedCookieAccessorEventListener": "com.feilong.spring.web.event.ContextRefreshedCookieAccessorEventListener[Singleton]",
+            "contextRefreshedEventClientCacheListener": "com.feilong.spring.web.servlet.interceptor.clientcache.ContextRefreshedClientCacheInfoEventListener[Singleton]",
+            "contextRefreshedHandlerExceptionResolverEventListener": "com.feilong.spring.web.event.ContextRefreshedBeanLoggingEventListener[Singleton]",
+            "contextRefreshedHandlerMethodInfoEventListener": "com.feilong.spring.web.event.ContextRefreshedHandlerMethodInfoEventListener[Singleton]",
+            "contextRefreshedLoggingListener": "com.feilong.spring.event.ContextRefreshedLoggingListener[Singleton]",
+            "defaultHandlerExceptionResolver": "org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver[Singleton]",
+            "errorController": "com.feilong.controller.ErrorController[Singleton]",
+            "exceptionTestController": "com.feilong.controller.ExceptionTestController[Singleton]",
+            "immediatelyBuyAutoKeyAccessor": "com.feilong.accessor.session.SessionAutoKeyAccessor[Singleton]",
+            "indexController": "com.feilong.controller.IndexController[Singleton]",
+            "jspController": "com.feilong.controller.JspController[Singleton]",
+            "localeResolver": "org.springframework.web.servlet.i18n.CookieLocaleResolver[Singleton]",
+            "loginBindCookieAccessor": "com.feilong.accessor.cookie.CookieAccessor[Singleton]",
+            "loginBindSessionKeyAccessor": "com.feilong.accessor.session.SessionKeyAccessor[Singleton]",
+            "messageSource": "com.feilong.spring.messagesource.PathMatchingReloadableResourceBundleMessageSource[Singleton]",
+            "mvcContentNegotiationManager": "org.springframework.web.accept.ContentNegotiationManager[Singleton]",
+            "mvcPathMatcher": "org.springframework.util.AntPathMatcher[Singleton]",
+            "mvcUrlPathHelper": "org.springframework.web.util.UrlPathHelper[Singleton]",
+            "nickNameCookieAccessor": "com.feilong.accessor.cookie.CookieAccessor[Singleton]",
+            "org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor": "org.springframework.context.annotation.ConfigurationClassPostProcessor.ImportAwareBeanPostProcessor[Singleton]",
+            "org.springframework.context.annotation.internalAutowiredAnnotationProcessor": "org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor[Singleton]",
+            "org.springframework.context.annotation.internalCommonAnnotationProcessor": "org.springframework.context.annotation.CommonAnnotationBeanPostProcessor[Singleton]",
+            "org.springframework.context.annotation.internalConfigurationAnnotationProcessor": "org.springframework.context.annotation.ConfigurationClassPostProcessor[Singleton]",
+            "org.springframework.context.annotation.internalRequiredAnnotationProcessor": "org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor[Singleton]",
+            "org.springframework.format.support.FormattingConversionServiceFactoryBean#0": "org.springframework.format.support.DefaultFormattingConversionService[Singleton]",
+            "org.springframework.web.servlet.config.viewControllerHandlerMapping": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping": "org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.MappedInterceptor#0": "org.springframework.web.servlet.handler.MappedInterceptor[Singleton]",
+            "org.springframework.web.servlet.handler.MappedInterceptor#1": "org.springframework.web.servlet.handler.MappedInterceptor[Singleton]",
+            "org.springframework.web.servlet.handler.MappedInterceptor#2": "org.springframework.web.servlet.handler.MappedInterceptor[Singleton]",
+            "org.springframework.web.servlet.handler.MappedInterceptor#3": "org.springframework.web.servlet.handler.MappedInterceptor[Singleton]",
+            "org.springframework.web.servlet.handler.MappedInterceptor#4": "org.springframework.web.servlet.handler.MappedInterceptor[Singleton]",
+            "org.springframework.web.servlet.handler.MappedInterceptor#5": "org.springframework.web.servlet.handler.MappedInterceptor[Singleton]",
+            "org.springframework.web.servlet.handler.MappedInterceptor#6": "org.springframework.web.servlet.handler.MappedInterceptor[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#0": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#1": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#2": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#3": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#4": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#5": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#6": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#7": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping#8": "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter": "org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter[Singleton]",
+            "org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter": "org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter[Singleton]",
+            "org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0": "org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver[Singleton]",
+            "org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0": "org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver[Singleton]",
+            "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0": "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter[Singleton]",
+            "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0": "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping[Singleton]",
+            "org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0": "org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver[Singleton]",
+            "org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0": "org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0": "org.springframework.web.servlet.resource.ResourceHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1": "org.springframework.web.servlet.resource.ResourceHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.resource.ResourceHttpRequestHandler#2": "org.springframework.web.servlet.resource.ResourceHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.resource.ResourceHttpRequestHandler#3": "org.springframework.web.servlet.resource.ResourceHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.resource.ResourceHttpRequestHandler#4": "org.springframework.web.servlet.resource.ResourceHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.resource.ResourceHttpRequestHandler#5": "org.springframework.web.servlet.resource.ResourceHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.resource.ResourceHttpRequestHandler#6": "org.springframework.web.servlet.resource.ResourceHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.resource.ResourceHttpRequestHandler#7": "org.springframework.web.servlet.resource.ResourceHttpRequestHandler[Singleton]",
+            "org.springframework.web.servlet.view.BeanNameViewResolver#0": "org.springframework.web.servlet.view.BeanNameViewResolver[Singleton]",
+            "org.springframework.web.servlet.view.InternalResourceViewResolver#0": "org.springframework.web.servlet.view.InternalResourceViewResolver[Singleton]",
+            "pathVariableController": "com.feilong.controller.PathVariableController[Singleton]",
+            "pathVariableController1": "com.feilong.controller.PathVariableController1[Singleton]",
+            "paymentSuccessTokenKeyAccessor": "com.feilong.accessor.session.SessionKeyAccessor[Singleton]",
+            "requestBodyController": "com.feilong.controller.RequestBodyController[Singleton]",
+            "simpleMappingHandlerMethodExceptionResolver": "com.feilong.spring.web.servlet.handler.SimpleMappingHandlerMethodExceptionResolver[Singleton]",
+            "stdPDPController": "com.feilong.controller.pdp.StdPDPController[Singleton]",
+            "tilesConfigurer": "org.springframework.web.servlet.view.tiles3.TilesConfigurer[Singleton]",
+            "tilesViewResolver": "org.springframework.web.servlet.view.tiles3.TilesViewResolver[Singleton]"
+        },
+        "ApplicationContext.CLASSPATH_ALL_URL_PREFIX": "classpath*:",
+        "ApplicationContext.CLASSPATH_URL_PREFIX": "classpath:",
+        "ApplicationContext.FACTORY_BEAN_PREFIX": "&",
+        "parent info":         {
+            "beanDefinitionCount": 0,
+            "startupDate": 1526798376498,
+            "applicationName": "",
+            "displayName": "Root WebApplicationContext",
+            "id": "org.springframework.web.context.WebApplicationContext:",
+            "beanDefinitionNamesAndClassMap": {},
+            "ApplicationContext.CLASSPATH_ALL_URL_PREFIX": "classpath*:",
+            "ApplicationContext.CLASSPATH_URL_PREFIX": "classpath:",
+            "ApplicationContext.FACTORY_BEAN_PREFIX": "&",
+            "parent info": null
+        }
+    }
+ * </pre>
  * 
- * </table>
- * 注: {@link org.springframework.context.support.AbstractApplicationContext}
- * 抽象类实现了LifeCycle的start和stop回调并发布ContextStartedEvent和ContextStoppedEvent事件；但是无任何实现调用它,所以目前无任何作用。
+ * </blockquote>
+ * 
+ * <h3>参考配置:</h3>
+ * 
+ * <blockquote>
+ * 
+ * <pre class="code">
+{@code 
+    <bean id="contextRefreshedLoggingListener" class="com.feilong.spring.event.ContextRefreshedLoggingListener" />
+}
+ * </pre>
+ * 
  * </blockquote>
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
