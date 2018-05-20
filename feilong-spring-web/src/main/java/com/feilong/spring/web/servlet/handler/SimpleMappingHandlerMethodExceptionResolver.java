@@ -94,7 +94,10 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
      * @param response
      * @return the resolved view name, or {@code null} if excluded or none found
      */
-    protected String determineViewName(Exception exception,HttpServletRequest request,HttpServletResponse response){
+    protected String determineViewName(
+                    Exception exception,
+                    @SuppressWarnings("unused") HttpServletRequest request,
+                    @SuppressWarnings("unused") HttpServletResponse response){
         String viewName = null;
         //        if (this.excludedExceptions != null) {
         //            for (Class<?> excludedEx : this.excludedExceptions) {
