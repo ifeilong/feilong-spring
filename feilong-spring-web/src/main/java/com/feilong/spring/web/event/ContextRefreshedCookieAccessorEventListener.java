@@ -15,28 +15,24 @@
  */
 package com.feilong.spring.web.event;
 
-import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.core.util.SortUtil.sortListByPropertyNamesValue;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
-import static java.util.Collections.emptyMap;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.feilong.accessor.cookie.CookieAccessor;
-import com.feilong.spring.event.AbstractContextRefreshedEventListener;
-import com.feilong.spring.web.event.builder.BeanToMapBuilder;
 import com.feilong.spring.web.event.builder.CookieAccessorBeanToMapBuilder;
 
 /**
+ * 启动的时候,显示 cookie 信息.
+ * 
+ * <p>
  * The listener interface for receiving contextStartedLogging events.
  * The class that is interested in processing a contextStartedLogging
  * event implements this interface, and the object created
@@ -44,6 +40,7 @@ import com.feilong.spring.web.event.builder.CookieAccessorBeanToMapBuilder;
  * component's <code>addContextStartedLoggingListener</code> method. When
  * the contextStartedLogging event occurs, that object's appropriate
  * method is invoked.
+ * </p>
  * 
  * <p>
  * 
@@ -81,6 +78,7 @@ import com.feilong.spring.web.event.builder.CookieAccessorBeanToMapBuilder;
  * </tr>
  * 
  * </table>
+ * 
  * 注: {@link org.springframework.context.support.AbstractApplicationContext}
  * 抽象类实现了LifeCycle的start和stop回调并发布ContextStartedEvent和ContextStoppedEvent事件；但是无任何实现调用它,所以目前无任何作用。
  * </blockquote>
@@ -88,77 +86,35 @@ import com.feilong.spring.web.event.builder.CookieAccessorBeanToMapBuilder;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.context.event.SmartApplicationListener
  * @since 1.10.4
+ * @deprecated can use ContextRefreshedBeanLoggingEventListener
  */
-public class ContextRefreshedCookieAccessorEventListener extends AbstractContextRefreshedEventListener{
+@Deprecated
+public class ContextRefreshedCookieAccessorEventListener extends ContextRefreshedBeanLoggingEventListener<CookieAccessor>{
 
     /** The Constant LOGGER. */
-    private static final Logger                           LOGGER           = LoggerFactory
-                    .getLogger(ContextRefreshedCookieAccessorEventListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedCookieAccessorEventListener.class);
 
-    private static final BeanToMapBuilder<CookieAccessor> beanToMapBuilder = CookieAccessorBeanToMapBuilder.INSTANCE;
+    //---------------------------------------------------------------
+
+    /**
+     * Post construct.
+     */
+    @PostConstruct
+    protected void postConstruct1(){
+        super.setBeanClass(CookieAccessor.class);
+        super.setBeanToMapBuilder(CookieAccessorBeanToMapBuilder.INSTANCE);
+    }
 
     //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+     * @see com.feilong.spring.web.event.ContextRefreshedBeanLoggingEventListener#doLog(java.util.List)
      */
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
-        if (!LOGGER.isInfoEnabled()){
-            return;
-        }
-
-        Map<String, CookieAccessor> beanNameAndCookieAccessorMap = buildHandlerMethods(contextRefreshedEvent.getApplicationContext());
-
-        if (isNullOrEmpty(beanNameAndCookieAccessorMap)){
-            LOGGER.info("can not find CookieAccessor bean");
-            return;
-        }
-
-        //---------------------------------------------------------------
-
-        List<Map<String, Object>> list = buildList(beanNameAndCookieAccessorMap);
-
-        LOGGER.info("Cookie Accessor size:[{}], Info:{}", list.size(), formatToSimpleTable(sortListByPropertyNamesValue(list, "name")));
+    protected void doLog(List<Map<String, Object>> list){
+        String name = "CookieAccessor";
+        LOGGER.info("{} size:[{}], Info:{}", name, list.size(), formatToSimpleTable(sortListByPropertyNamesValue(list, "name")));
     }
-
-    //---------------------------------------------------------------
-
-    /**
-     * Builds the list.
-     *
-     * @param handlerMethods
-     *            the handler methods
-     * @return the list
-     */
-    private static List<Map<String, Object>> buildList(Map<String, CookieAccessor> handlerMethods){
-        List<Map<String, Object>> list = newArrayList();
-
-        for (Map.Entry<String, CookieAccessor> entry : handlerMethods.entrySet()){
-            list.add(beanToMapBuilder.build(entry.getKey(), entry.getValue()));
-        }
-        return list;
-    }
-
-    /**
-     * Builds the handler methods.
-     *
-     * @param applicationContext
-     *            the application context
-     * @return 如果取不到 <code>RequestMappingHandlerMapping</code>,返回 {@link Collections#emptyMap()}<br>
-     * @throws BeansException
-     *             the beans exception
-     */
-    private static Map<String, CookieAccessor> buildHandlerMethods(ApplicationContext applicationContext){
-        Map<String, CookieAccessor> beansOfType = applicationContext.getBeansOfType(CookieAccessor.class, true, true);
-
-        if (null == beansOfType){
-            return emptyMap();
-        }
-
-        return beansOfType;
-    }
-
 }

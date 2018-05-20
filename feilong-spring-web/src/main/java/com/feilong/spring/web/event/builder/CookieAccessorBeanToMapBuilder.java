@@ -26,7 +26,42 @@ import com.feilong.servlet.http.entity.CookieEntity;
 
 /**
  * {@link CookieEntity} 相关信息转成map.
- *
+ * 
+ * <h3>作用:</h3>
+ * 
+ * <blockquote>
+ * 
+ * <p>
+ * 可以在日志文件或者控制台输出如下信息:
+ * </p>
+ * 
+ * <pre class="code">
+ * 
+14:39:39 INFO  (ContextRefreshedCookieAccessorEventListener.java:118) doLog() - CookieAccessor size:[2], Info:
+beanName                name     httpOnly path maxAge domain secure version isValueEncoding 
+----------------------- -------- -------- ---- ------ ------ ------ ------- --------------- 
+loginBindCookieAccessor l_b_s    true     /    -1            false  0       false           
+nickNameCookieAccessor  nickName false    /    365天          false  0       false
+ * </pre>
+ * 
+ * </blockquote>
+ * 
+ * <h3>参考配置:</h3>
+ * 
+ * <blockquote>
+ * 
+ * <pre class="code">
+{@code 
+
+    <!-- 启动的时候,显示 cookie 信息 -->
+    <bean id="contextRefreshedCookieAccessorEventListener" class=
+"com.feilong.spring.web.event.ContextRefreshedCookieAccessorEventListener" />
+
+}
+ * </pre>
+ * 
+ * </blockquote>
+ * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.10.5
  */

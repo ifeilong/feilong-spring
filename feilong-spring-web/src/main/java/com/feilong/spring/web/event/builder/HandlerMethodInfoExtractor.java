@@ -33,6 +33,59 @@ import com.feilong.core.lang.annotation.AnnotationToStringBuilder;
 /**
  * HandlerMethodInfo 信息提取.
  * 
+ * <h3>作用:</h3>
+ * 
+ * <blockquote>
+ * 
+ * <p>
+ * 可以在日志文件或者控制台输出如下信息:
+ * </p>
+ * 
+ * <pre class="code">
+14:28:16 INFO  (AbstractContextRefreshedHandlerMethodLogginEventListener.java:137) render() - handler method ,size:[13],info:
+url                                                                method   header ClientCache 
+------------------------------------------------------------------ -------- ------ ----------- 
+/c{categoryCode}-{name}                                                                        
+/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}.htm                             
+/errors/404400                                                                                 
+/errors/500                                                                                    
+/exceptiontest                                                                                 
+/index,/,/index.htm                                                GET                         
+/item/{itemid}                                                     GET             5分钟         
+/jsp/{category}/{page}                                             GET,POST                    
+/jsp/{category}/{page}/{small}                                     GET,POST                    
+/requestbodytest                                                                               
+/{c1}-{c2}-{c3}-{c4}-{label1}-{label2}-{label3}.htm                                            
+/{c1}-{c2}-{c3}-{c4}-{label}.htm                                                               
+/{c1}-{c2}-{c3}-{c4}.htm
+ * 
+ * 
+ * </pre>
+ * 
+ * </blockquote>
+ * 
+ * <h3>参考配置:</h3>
+ * 
+ * <blockquote>
+ * 
+ * <pre class="code">
+{@code 
+    <!-- 启动的时候,显示 路径 method等 信息 -->
+    <bean id="contextRefreshedHandlerMethodInfoEventListener" class=
+"com.feilong.spring.web.event.ContextRefreshedHandlerMethodInfoEventListener">
+        <property name="annotationAndAnnotationToStringBuilderMap">
+            <map>
+                <entry key="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCache">
+                    <bean class="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheToStringBuilder" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+}
+ * </pre>
+ * 
+ * </blockquote>
+ * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.10.4
  */

@@ -94,7 +94,7 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     /** The bean class. */
     private Class<T>            beanClass;
 
-    /** The bean to map builder. */
+    /** 提取bean信息到map. */
     private BeanToMapBuilder<T> beanToMapBuilder;
 
     //---------------------------------------------------------------
@@ -111,15 +111,27 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
         }
 
         //---------------------------------------------------------------
-        Map<String, T> buildBeanNameAndBeanMap = buildBeanNameAndBeanMap(contextRefreshedEvent.getApplicationContext(), beanClass);
-
-        if (isNullOrEmpty(buildBeanNameAndBeanMap)){
-            LOGGER.info("can not find [{}] bean", beanClass.getName());
+        Map<String, T> beanNameAndBeanMap = buildBeanNameAndBeanMap(contextRefreshedEvent.getApplicationContext(), beanClass);
+        if (isNullOrEmpty(beanNameAndBeanMap)){
+            LOGGER.info("can't find [{}] bean", beanClass.getName());
             return;
         }
         //---------------------------------------------------------------
-        List<Map<String, Object>> list = buildList(buildBeanNameAndBeanMap);
-        LOGGER.info("list size:[{}], Info:{}", list.size(), formatToSimpleTable(list));
+        List<Map<String, Object>> list = buildList(beanNameAndBeanMap);
+        doLog(list);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Do log.
+     *
+     * @param list
+     *            the list
+     * @since 1.11.4
+     */
+    protected void doLog(List<Map<String, Object>> list){
+        LOGGER.info("[{}] list size:[{}], Info:{}", beanClass, list.size(), formatToSimpleTable(list));
     }
 
     //---------------------------------------------------------------
@@ -127,18 +139,19 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     /**
      * Builds the list.
      *
-     * @param buildBeanNameAndBeanMap
+     * @param beanNameAndBeanMap
      *            the build bean name and bean map
      * @return the list
      */
-    private List<Map<String, Object>> buildList(Map<String, T> buildBeanNameAndBeanMap){
+    protected List<Map<String, Object>> buildList(Map<String, T> beanNameAndBeanMap){
         List<Map<String, Object>> list = newArrayList();
-
-        for (Map.Entry<String, T> entry : buildBeanNameAndBeanMap.entrySet()){
+        for (Map.Entry<String, T> entry : beanNameAndBeanMap.entrySet()){
             list.add(beanToMapBuilder.build(entry.getKey(), entry.getValue()));
         }
         return list;
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Builds the bean name and bean map.
@@ -150,14 +163,17 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      * @param klass
      *            the klass
      * @return the map
+     * @see org.springframework.beans.factory.BeanFactoryUtils#beansOfTypeIncludingAncestors(org.springframework.beans.factory.ListableBeanFactory,
+     *      Class, boolean, boolean)
+     * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class)
+     * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class, boolean, boolean)
      */
-    private static <T> Map<String, T> buildBeanNameAndBeanMap(ApplicationContext applicationContext,Class<T> klass){
+    protected static <T> Map<String, T> buildBeanNameAndBeanMap(ApplicationContext applicationContext,Class<T> klass){
+        //LinkedHashMap
         Map<String, T> beanNameAndBeanMap = applicationContext.getBeansOfType(klass);
-
         if (null == beanNameAndBeanMap){
             return emptyMap();
         }
-
         return beanNameAndBeanMap;
     }
 
