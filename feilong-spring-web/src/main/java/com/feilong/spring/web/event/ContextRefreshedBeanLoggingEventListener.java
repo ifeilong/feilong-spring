@@ -30,60 +30,18 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
 import com.feilong.spring.web.event.builder.BeanToMapBuilder;
+import com.feilong.spring.web.event.builder.CookieAccessorBeanToMapBuilder;
+import com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder;
 
 /**
- * The listener interface for receiving contextStartedLogging events.
- * The class that is interested in processing a contextStartedLogging
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addContextStartedLoggingListener</code> method. When
- * the contextStartedLogging event occurs, that object's appropriate
- * method is invoked.
- * 
- * <p>
- * 
- * 只有一个ApplicationContextEvent,表示ApplicationContext容器事件,且其又有如下实现：
- * </p>
- * 
- * <blockquote>
- * <table border="1" cellspacing="0" cellpadding="4" summary="">
- * <tr style="background-color:#ccccff">
- * <th align="left">字段</th>
- * <th align="left">说明</th>
- * <th align="left">备注</th>
- * </tr>
- * 
- * <tr valign="top">
- * <td>ContextStartedEvent</td>
- * <td>ApplicationContext启动后触发的事件</td>
- * <td>目前版本没有任何作用</td>
- * </tr>
- * <tr valign="top" style="background-color:#eeeeff">
- * <td>ContextStoppedEvent</td>
- * <td>ApplicationContext停止后触发的事件</td>
- * <td>目前版本没有任何作用</td>
- * </tr>
- * 
- * <tr valign="top">
- * <td>ContextRefreshedEvent</td>
- * <td>ApplicationContext初始化或刷新完成后触发的事件</td>
- * <td>容器初始化完成后调用</td>
- * </tr>
- * <tr valign="top" style="background-color:#eeeeff">
- * <td>ContextClosedEvent</td>
- * <td>ApplicationContext关闭后触发的事件；</td>
- * <td>（如web容器关闭时自动会触发spring容器的关闭,如果是普通java应用,需要调用ctx.registerShutdownHook();注册虚拟机关闭时的钩子才行）</td>
- * </tr>
- * 
- * </table>
- * 注: {@link org.springframework.context.support.AbstractApplicationContext}
- * 抽象类实现了LifeCycle的start和stop回调并发布ContextStartedEvent和ContextStoppedEvent事件；但是无任何实现调用它,所以目前无任何作用。
- * </blockquote>
+ * 启动的时候显示相关bean的日志信息.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @param <T>
  *            the generic type
  * @see org.springframework.context.event.SmartApplicationListener
+ * @see CookieAccessorBeanToMapBuilder
+ * @see HandlerExceptionResolverBeanToMapBuilder
  * @since 1.10.4
  */
 public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContextRefreshedEventListener{
