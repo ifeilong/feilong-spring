@@ -51,6 +51,39 @@ public final class BeanLogMessageBuilder{
         Validate.notNull(obj, "obj can't be null!");
 
         Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(obj);
-        return Slf4jUtil.format("[{}] field's value map:\n[{}]", obj.getClass().getCanonicalName(), JsonUtil.format(map));
+        return build(obj, JsonUtil.format(map));
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 生成对象字段相关日志信息.
+     *
+     * @param obj
+     *            the obj
+     * @return 如果 <code>obj</code> 是null,抛出 {@link NullPointerException}<br>
+     * @since 1.11.5
+     */
+    public static String buildFieldsSimpleMessage(Object obj){
+        Validate.notNull(obj, "obj can't be null!");
+
+        Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(obj);
+        return build(obj, JsonUtil.formatSimpleMap(map));
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Builds the.
+     *
+     * @param obj
+     *            the obj
+     * @param mapInfo
+     *            the map info
+     * @return the string
+     * @since 1.11.5
+     */
+    private static String build(Object obj,String mapInfo){
+        return Slf4jUtil.format("[{}] field's value map:\n[{}]", obj.getClass().getCanonicalName(), mapInfo);
     }
 }

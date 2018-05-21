@@ -41,7 +41,7 @@ public abstract class AbstractHandlerInterceptorAdapter extends HandlerIntercept
     @PostConstruct
     protected void postConstruct(){
         if (LOGGER.isInfoEnabled()){
-            LOGGER.info(BeanLogMessageBuilder.buildFieldsMessage(this));
+            LOGGER.info(BeanLogMessageBuilder.buildFieldsSimpleMessage(this));
         }
     }
 
