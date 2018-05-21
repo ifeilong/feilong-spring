@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.web.servlet.interceptor;
 
-import java.util.Map;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -24,11 +22,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.feilong.core.lang.reflect.FieldUtil;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.spring.BeanLogMessageBuilder;
 
 /**
- * The Class AbstractHandlerInterceptorAdapter.
+ * 抽象的 HandlerInterceptor 拦截器.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.4.0
@@ -40,14 +37,11 @@ public abstract class AbstractHandlerInterceptorAdapter extends HandlerIntercept
 
     //---------------------------------------------------------------
 
-    /**
-     * Post construct.
-     */
+    /** Post construct. */
     @PostConstruct
     protected void postConstruct(){
         if (LOGGER.isInfoEnabled()){
-            Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(this);
-            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.formatSimpleMap(map));
+            LOGGER.info(BeanLogMessageBuilder.buildFieldsMessage(this));
         }
     }
 

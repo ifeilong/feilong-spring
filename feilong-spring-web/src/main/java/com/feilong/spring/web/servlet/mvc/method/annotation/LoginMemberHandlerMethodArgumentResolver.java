@@ -17,8 +17,6 @@ package com.feilong.spring.web.servlet.mvc.method.annotation;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
 
-import java.util.Map;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,9 +29,8 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.feilong.core.bean.PropertyUtil;
-import com.feilong.core.lang.reflect.FieldUtil;
-import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.servlet.http.SessionUtil;
+import com.feilong.spring.BeanLogMessageBuilder;
 import com.feilong.spring.web.bind.annotation.LoginMember;
 
 /**
@@ -48,7 +45,6 @@ import com.feilong.spring.web.bind.annotation.LoginMember;
  * <li>如果没有配置 {@link #sessionMemberIdName},那么返回null.</li>
  * </ol>
  * </blockquote>
- * 
  * 
  * <h3>配置示例:</h3>
  * 
@@ -96,14 +92,11 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
 
     //---------------------------------------------------------------
 
-    /**
-     * Post construct.
-     */
+    /** Post construct. */
     @PostConstruct
     protected void postConstruct(){
         if (LOGGER.isInfoEnabled()){
-            Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(this);
-            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.format(map));
+            LOGGER.info(BeanLogMessageBuilder.buildFieldsMessage(this));
         }
     }
 

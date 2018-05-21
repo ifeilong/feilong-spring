@@ -15,7 +15,6 @@
  */
 package com.feilong;
 
-import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -23,33 +22,37 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.core.lang.reflect.FieldUtil;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.spring.BeanLogMessageBuilder;
 
 /**
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.11.0
  */
-public class DiPropertiesManager{
+public class DiPropertiesManager extends AbstractManager{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DiPropertiesManager.class);
 
     private Properties          properties;
 
-    /**
-     * Post construct.
-     */
+    //    @PostConstruct
+    //    protected void postConstruct(){
+    //        if (LOGGER.isInfoEnabled()){
+    //            Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(this);
+    //            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.format(map));
+    //        }
+    //    }
+
+    /** Post construct. */
     @PostConstruct
-    protected void postConstruct(){
+    protected void postConstruct1(){
         if (LOGGER.isInfoEnabled()){
-            Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(this);
-            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.format(map));
+            LOGGER.info(BeanLogMessageBuilder.buildFieldsMessage(this));
         }
     }
 
     public void print(){
-        LOGGER.debug(JsonUtil.format(properties));
+        //LOGGER.debug(JsonUtil.format(properties));
     }
 
     /**

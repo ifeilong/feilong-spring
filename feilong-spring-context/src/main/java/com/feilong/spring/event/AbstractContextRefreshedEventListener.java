@@ -15,8 +15,6 @@
  */
 package com.feilong.spring.event;
 
-import java.util.Map;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -24,8 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import com.feilong.core.lang.reflect.FieldUtil;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.spring.BeanLogMessageBuilder;
 
 /**
  * The listener interface for receiving contextStartedLogging events.
@@ -90,14 +87,11 @@ public abstract class AbstractContextRefreshedEventListener implements Applicati
 
     //---------------------------------------------------------------
 
-    /**
-     * Post construct.
-     */
+    /** Post construct. */
     @PostConstruct
     protected void postConstruct(){
         if (LOGGER.isInfoEnabled()){
-            Map<String, Object> map = FieldUtil.getAllFieldNameAndValueMap(this);
-            LOGGER.info("\n[{}] fieldValueMap: \n[{}]", getClass().getCanonicalName(), JsonUtil.formatSimpleMap(map));
+            LOGGER.info(BeanLogMessageBuilder.buildFieldsMessage(this));
         }
     }
 }
