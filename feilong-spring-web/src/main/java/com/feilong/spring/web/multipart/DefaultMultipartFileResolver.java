@@ -33,16 +33,17 @@ import com.feilong.json.jsonlib.JsonUtil;
  *
  * <pre class="code">
 {@code
-    <bean id="multipartFileResolver" class="com.feilong.spring.web.multipart.MultipartFileResolverImpl" />
+    <bean id="multipartFileResolver" class="com.feilong.spring.web.multipart.DefaultMultipartFileResolver" />
 }
  * </pre>
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.4
+ * @since 1.12.0 rename
  */
-public class MultipartFileResolverImpl implements MultipartFileResolver{
+public class DefaultMultipartFileResolver implements MultipartFileResolver{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultipartFileResolverImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultMultipartFileResolver.class);
 
     //---------------------------------------------------------------
 

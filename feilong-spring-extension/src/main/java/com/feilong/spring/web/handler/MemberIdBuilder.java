@@ -18,17 +18,26 @@ package com.feilong.spring.web.handler;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 登录用户的id构造器.
+ * 用户的id构造器.
+ * 
+ * <p>
+ * 支持构造游客的member Id
+ * </p>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @param <T>
  *            the generic type
  * @since 1.11.3
+ * @since 1.11.6 rename to MemberIdBuilder
  */
-public interface LoginMemberIdBuilder<T> {
+public interface MemberIdBuilder<T> {
 
     /**
-     * 基于request得到当前登录用户的id.
+     * 基于request得到当前用户的id.
+     * 
+     * <p>
+     * 支持构造游客的member Id,比如有些商城固定member id 是 1
+     * </p>
      *
      * @param request
      *            the request

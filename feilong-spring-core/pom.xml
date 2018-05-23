@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.feilong.platform.spring</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.11.6-SNAPSHOT</version>
+		<version>1.12.0</version>
 	</parent>
 
 	<artifactId>feilong-spring-core</artifactId>
@@ -32,12 +32,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-		</dependency>
-
-		<!--feilong-core-extension -->
-		<dependency>
-			<groupId>com.feilong.platform</groupId>
-			<artifactId>feilong-core-extension</artifactId>
 		</dependency>
 
 	</dependencies>

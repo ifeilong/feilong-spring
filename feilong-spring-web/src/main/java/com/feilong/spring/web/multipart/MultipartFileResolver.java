@@ -18,7 +18,7 @@ package com.feilong.spring.web.multipart;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * The Interface MultipartFileResolver.
+ * {@link MultipartFile} 解析器.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.4

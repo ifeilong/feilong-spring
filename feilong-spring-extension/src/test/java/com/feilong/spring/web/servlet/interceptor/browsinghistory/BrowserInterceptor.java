@@ -1,3 +1,4 @@
+package com.feilong.spring.web.servlet.interceptor.browsinghistory;
 ///*
 // * Copyright (C) 2008 feilong
 // *

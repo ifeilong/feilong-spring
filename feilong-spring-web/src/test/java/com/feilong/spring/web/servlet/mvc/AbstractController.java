@@ -24,12 +24,10 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.feilong.spring.messagesource.MessageSourceUtil;
 import com.feilong.spring.web.servlet.LocaleUtil;
 
 /**
@@ -68,24 +66,6 @@ public abstract class AbstractController{
      *            webDataBinder
      */
     protected void initBinderInternal(@SuppressWarnings("unused") WebDataBinder webDataBinder){
-    }
-
-    //---------------------------------------------------------------
-
-    /**
-     * 获得消息信息.
-     * 
-     * @param key
-     *            code
-     * @param args
-     *            args
-     * @return the message
-     * @deprecated pls use {@link com.feilong.spring.messagesource.MessageSourceUtil#getMessage(MessageSource, String, Object...)}
-     * @since 1.11.3 deprecated
-     */
-    @Deprecated
-    protected String getMessage(String key,Object...args){
-        return MessageSourceUtil.getMessage(applicationContext, key, args);
     }
 
     //---------------------------------------------------------------

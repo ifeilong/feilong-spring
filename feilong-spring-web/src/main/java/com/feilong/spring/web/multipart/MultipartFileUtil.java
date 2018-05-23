@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.feilong.io.FileUtil;
 
 /**
- * The Class MultipartFileUtil.
+ * {@link MultipartFile} 工具类.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.9

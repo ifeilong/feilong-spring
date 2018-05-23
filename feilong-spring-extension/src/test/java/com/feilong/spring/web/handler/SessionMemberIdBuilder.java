@@ -26,9 +26,9 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  * @since 1.11.4
  */
-public class SessionLoginMemberIdBuilder<T> implements LoginMemberIdBuilder<T>{
+public class SessionMemberIdBuilder<T> implements MemberIdBuilder<T>{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SessionLoginMemberIdBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SessionMemberIdBuilder.class);
 
     /*
      * (non-Javadoc)
