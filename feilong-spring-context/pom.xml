@@ -5,7 +5,7 @@
 		<artifactId>parent</artifactId>
 		<version>1.12.0</version>
 	</parent>
-	
+
 	<artifactId>feilong-spring-context</artifactId>
 
 	<dependencies>
@@ -44,10 +44,5 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- feilong-json-jsonlib -->
-		<dependency>
-			<groupId>com.feilong.json</groupId>
-			<artifactId>feilong-json-jsonlib</artifactId>
-		</dependency>
 	</dependencies>
 </project>
