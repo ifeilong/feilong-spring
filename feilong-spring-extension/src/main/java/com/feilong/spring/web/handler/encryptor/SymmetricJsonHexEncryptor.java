@@ -43,7 +43,9 @@ public class SymmetricJsonHexEncryptor implements Encryptor{
     private SymmetricType       symmetricType = SymmetricType.DESede;
 
     /** key. */
-    private String              key           = "key@PayResult@bluebox@feilong";
+    private String              key           = SymmetricJsonHexEncryptor.class.getName();
+
+    //---------------------------------------------------------------
 
     /** 编码格式,默认 {@link CharsetType#UTF8}. */
     private String              charsetName   = UTF8;
