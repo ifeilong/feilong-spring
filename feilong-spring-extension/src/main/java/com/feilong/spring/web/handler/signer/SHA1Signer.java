@@ -38,6 +38,39 @@ public class SHA1Signer implements Signer{
     private String charsetName = UTF8;
 
     //---------------------------------------------------------------
+    /**
+     * Instantiates a new SHA 1 signer.
+     */
+    public SHA1Signer(){
+        super();
+    }
+
+    /**
+     * Instantiates a new SHA 1 signer.
+     *
+     * @param key
+     *            the key
+     */
+    public SHA1Signer(String key){
+        super();
+        this.key = key;
+    }
+
+    /**
+     * Instantiates a new SHA 1 signer.
+     *
+     * @param key
+     *            the key
+     * @param charsetName
+     *            the charset name
+     */
+    public SHA1Signer(String key, String charsetName){
+        super();
+        this.key = key;
+        this.charsetName = charsetName;
+    }
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)
