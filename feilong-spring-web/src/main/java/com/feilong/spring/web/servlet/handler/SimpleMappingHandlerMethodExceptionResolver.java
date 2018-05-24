@@ -15,11 +15,17 @@
  */
 package com.feilong.spring.web.servlet.handler;
 
+import static com.feilong.core.Validator.isNotNullOrEmpty;
+import static com.feilong.core.Validator.isNullOrEmpty;
+
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodExceptionResolver;
@@ -27,16 +33,40 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 /**
  * 借鉴了 {@link SimpleMappingExceptionResolver}, 但是适用于 HandlerMethodExceptionResolver.
+ * 
+ * <p>
+ * 优先级 <code>exceptionAndExceptionViewNameBuilderMap</code> {@code >} <code>exceptionMappings</code>
+ * </p>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see SimpleMappingExceptionResolver
  * @since 1.11.4
+ * @since spring 3.1
  */
 public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandlerMethodExceptionResolver{
 
-    private Properties exceptionMappings;
+    /** The Constant log. */
+    private static final Logger                   LOGGER             = LoggerFactory
+                    .getLogger(SimpleMappingHandlerMethodExceptionResolver.class);
 
-    private String     exceptionAttribute = SimpleMappingExceptionResolver.DEFAULT_EXCEPTION_ATTRIBUTE;
+    //---------------------------------------------------------------
+
+    //优先级  exceptionAndExceptionViewNameBuilderMap  >  exceptionMappings
+
+    /** 异常名字和 路径的隐射. */
+    private Properties                            exceptionMappings;
+
+    /**
+     * 异常的名字和自定义视图的构造器对应的map.
+     * 
+     * @since 1.12.1
+     */
+    private Map<String, ExceptionViewNameBuilder> exceptionAndExceptionViewNameBuilderMap;
+
+    //---------------------------------------------------------------
+
+    /** 把对应的异常放到哪个model 名字中, 方便在页面获取. */
+    private String                                exceptionAttribute = SimpleMappingExceptionResolver.DEFAULT_EXCEPTION_ATTRIBUTE;
 
     //---------------------------------------------------------------
 
@@ -53,28 +83,100 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
                     HttpServletResponse response,
                     HandlerMethod handlerMethod,
                     Exception exception){
-        // Expose ModelAndView for chosen error view.
-        String viewName = determineViewName(exception, request, response);
-        if (viewName != null){
-            // Apply HTTP status code for error views, if specified.
-            // Only apply it if we're processing a top-level request.
-            //            Integer statusCode = determineStatusCode(request, viewName);
-            //            if (statusCode != null) {
-            //                applyStatusCodeIfPossible(request, response, statusCode);
-            //            }
+        String viewName = buildViewName(handlerMethod, exception, request, response);
 
-            //Return a ModelAndView for the given request, view name and exception.
-            //The default implementation delegates to {@link #getModelAndView(String, Exception)}.
-            ModelAndView modelAndView = new ModelAndView(viewName);
-            if (this.exceptionAttribute != null){
-                if (logger.isDebugEnabled()){
-                    logger.debug("Exposing Exception as model attribute '" + this.exceptionAttribute + "'");
-                }
-                modelAndView.addObject(this.exceptionAttribute, exception);
-            }
-            return modelAndView;
+        return isNotNullOrEmpty(viewName) ? packModelAndView(viewName, exception) : null;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Builds the view name.
+     * 
+     * @param handlerMethod
+     *            the handler method
+     * @param exception
+     *            the exception
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     *
+     * @return the string
+     * @since 1.12.1
+     */
+    private String buildViewName(HandlerMethod handlerMethod,Exception exception,HttpServletRequest request,HttpServletResponse response){
+        String customerViewName = customerViewName(handlerMethod, exception, request, response);
+
+        if (isNotNullOrEmpty(customerViewName)){
+            return customerViewName;
         }
+
+        String viewName = determineViewName(exception, request, response);
+        if (isNotNullOrEmpty(viewName)){
+            return viewName;
+        }
+
         return null;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Customer view name.
+     * 
+     * @param handlerMethod
+     *            the handler method
+     * @param exception
+     *            the exception
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     * @return the string
+     * @since 1.12.1
+     */
+    protected String customerViewName(
+                    HandlerMethod handlerMethod,
+                    Exception exception,
+                    HttpServletRequest request,
+                    HttpServletResponse response){
+        if (isNullOrEmpty(exceptionAndExceptionViewNameBuilderMap)){
+            return null;
+        }
+
+        //---------------------------------------------------------------
+        ExceptionViewNameBuilder exceptionViewNameBuilder = exceptionAndExceptionViewNameBuilderMap.get(exception.getClass().getName());
+        if (null == exceptionViewNameBuilder){
+            return null;
+        }
+
+        return exceptionViewNameBuilder.build(handlerMethod, exception, request, response);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 封装 {@link ModelAndView}.
+     *
+     * @param viewName
+     *            the view name
+     * @param exception
+     *            the exception
+     * @return the model and view
+     * @since 1.12.1
+     */
+    protected ModelAndView packModelAndView(String viewName,Exception exception){
+        ModelAndView modelAndView = new ModelAndView(viewName);
+
+        //---------------------------------------------------------------
+        if (isNotNullOrEmpty(exceptionAttribute)){
+            if (LOGGER.isDebugEnabled()){
+                LOGGER.debug("Exposing Exception as model attribute '[{}]'", exceptionAttribute);
+            }
+            modelAndView.addObject(exceptionAttribute, exception);
+        }
+        return modelAndView;
     }
 
     //---------------------------------------------------------------
@@ -86,12 +188,13 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
      * {@link #setExcludedExceptions(Class[]) "excludedExecptions"}, then searching the
      * {@link #setExceptionMappings "exceptionMappings"}, and finally using the
      * {@link #setDefaultErrorView "defaultErrorView"} as a fallback.
-     * 
+     *
      * @param exception
      *            the exception that got thrown during handler execution
      * @param request
      *            current HTTP request (useful for obtaining metadata)
      * @param response
+     *            the response
      * @return the resolved view name, or {@code null} if excluded or none found
      */
     protected String determineViewName(
@@ -124,6 +227,8 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
     //---------------------------------------------------------------
 
     /**
+     * 设置 异常名字和 路径的隐射.
+     *
      * @param exceptionMappings
      *            the exceptionMappings to set
      */
@@ -132,10 +237,22 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
     }
 
     /**
+     * 设置 把对应的异常放到哪个model 名字中, 方便在页面获取.
+     *
      * @param exceptionAttribute
      *            the exceptionAttribute to set
      */
     public void setExceptionAttribute(String exceptionAttribute){
         this.exceptionAttribute = exceptionAttribute;
+    }
+
+    /**
+     * 设置 异常的名字和自定义视图的构造器对应的map.
+     *
+     * @param exceptionAndExceptionViewNameBuilderMap
+     *            the exceptionAndExceptionViewNameBuilderMap to set
+     */
+    public void setExceptionAndExceptionViewNameBuilderMap(Map<String, ExceptionViewNameBuilder> exceptionAndExceptionViewNameBuilderMap){
+        this.exceptionAndExceptionViewNameBuilderMap = exceptionAndExceptionViewNameBuilderMap;
     }
 }
