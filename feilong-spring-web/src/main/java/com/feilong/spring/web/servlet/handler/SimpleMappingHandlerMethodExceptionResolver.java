@@ -107,15 +107,17 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
      */
     private String buildViewName(HandlerMethod handlerMethod,Exception exception,HttpServletRequest request,HttpServletResponse response){
         String customerViewName = customerViewName(handlerMethod, exception, request, response);
-
         if (isNotNullOrEmpty(customerViewName)){
             return customerViewName;
         }
 
-        String viewName = determineViewName(exception, request, response);
-        if (isNotNullOrEmpty(viewName)){
-            return viewName;
+        //---------------------------------------------------------------
+        String simpleViewName = determineViewName(exception, request, response);
+        if (isNotNullOrEmpty(simpleViewName)){
+            return simpleViewName;
         }
+
+        //---------------------------------------------------------------
 
         return null;
     }
@@ -210,8 +212,8 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
         //            }
         //        }
         // Check for specific exception mappings.
-        if (this.exceptionMappings != null){
-            viewName = MatchingViewNameFinder.find(this.exceptionMappings, exception);
+        if (exceptionMappings != null){
+            viewName = MatchingViewNameFinder.find(exceptionMappings, exception);
         }
         // Return default error view else, if defined.
         //        if (viewName == null && this.defaultErrorView != null) {
