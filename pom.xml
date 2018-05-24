@@ -9,7 +9,7 @@
 
 	<groupId>com.feilong.platform.spring</groupId>
 	<artifactId>parent</artifactId>
-	<version>1.12.0</version>
+	<version>1.12.1-SNAPSHOT</version>
 
 	<url>https://github.com/venusdrogon/feilong-spring</url>
 
