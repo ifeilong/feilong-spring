@@ -32,7 +32,7 @@ import com.feilong.security.oneway.SHA1Util;
 public class SHA1Signer implements Signer{
 
     /** 可以拼接的key. */
-    private String key;
+    private String key         = SHA1Signer.class.getName();
 
     /** 编码,默认是 {@link CharsetType#UTF8}. */
     private String charsetName = UTF8;
