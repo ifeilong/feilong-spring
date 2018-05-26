@@ -97,7 +97,9 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      * @since 1.11.4
      */
     protected void doLog(List<Map<String, Object>> list){
-        LOGGER.info("[{}] list size:[{}], Info:{}", beanClass, list.size(), formatToSimpleTable(list));
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("[{}] list size:[{}], Info:{}", beanClass, list.size(), formatToSimpleTable(list));
+        }
     }
 
     //---------------------------------------------------------------
