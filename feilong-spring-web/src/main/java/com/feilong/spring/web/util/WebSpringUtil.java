@@ -134,10 +134,9 @@ public final class WebSpringUtil{
      * @see #getWebApplicationContext(HttpServletRequest)
      * @see RequestContextUtils#getWebApplicationContext(ServletRequest, ServletContext)
      */
-    @SuppressWarnings("unchecked")
     public static <T> T getBean(HttpServletRequest request,String beanName){
         WebApplicationContext webApplicationContext = getWebApplicationContext(request);
-        return (T) getBean(webApplicationContext, beanName);
+        return getBean(webApplicationContext, beanName);
     }
 
     /**
@@ -167,8 +166,11 @@ public final class WebSpringUtil{
 
     //---------------------------------------------------------------
     /**
-     * 普通类获得spring 注入的类方法<br>
+     * 普通类获得spring 注入的类方法.
+     * 
+     * <p>
      * 注意:<b>(如果找不到bean,返回null)</b>.
+     * </p>
      * 
      * @param <T>
      *            the generic type
@@ -179,10 +181,9 @@ public final class WebSpringUtil{
      * @return 注入的bean
      * @see #getWebApplicationContext(ServletContext)
      */
-    @SuppressWarnings("unchecked")
     public static <T> T getBean(ServletContext servletContext,String beanName){
         WebApplicationContext webApplicationContext = getWebApplicationContext(servletContext);
-        return (T) getBean(webApplicationContext, beanName);
+        return getBean(webApplicationContext, beanName);
     }
 
     /**
