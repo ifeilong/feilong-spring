@@ -121,6 +121,8 @@ public class DomainPlaceholderSupportListener extends AbstractDomainListener{
         //org.springframework.web.context.support.XmlWebApplicationContext
         WebApplicationContext webApplicationContext = WebSpringUtil.getRequiredWebApplicationContext(servletContext);
 
+        //---------------------------------------------------------------
+
         //org.springframework.web.context.support.ServletContextResource
         Resource resource = webApplicationContext.getResource(domainConfigLocation);
 
@@ -137,7 +139,7 @@ public class DomainPlaceholderSupportListener extends AbstractDomainListener{
     //---------------------------------------------------------------
 
     /**
-     * Resolver domain config location.
+     * 解析地址.
      *
      * @param servletContext
      *            the servlet context
@@ -145,9 +147,24 @@ public class DomainPlaceholderSupportListener extends AbstractDomainListener{
      */
     private String resolverDomainConfigLocation(ServletContext servletContext){
         String domainConfigLocation = getConfigLocationParamValue(servletContext);
+        return resolvePlaceholders(servletContext, domainConfigLocation);
+    }
 
+    //---------------------------------------------------------------
+
+    /**
+     * Resolve placeholders.
+     *
+     * @param servletContext
+     *            the servlet context
+     * @param text
+     *            the text
+     * @return the string
+     * @since 1.12.3
+     */
+    private static String resolvePlaceholders(ServletContext servletContext,String text){
         WebApplicationContext webApplicationContext = WebSpringUtil.getRequiredWebApplicationContext(servletContext);
         Environment environment = webApplicationContext.getEnvironment();
-        return environment.resolvePlaceholders(domainConfigLocation);
+        return environment.resolvePlaceholders(text);
     }
 }

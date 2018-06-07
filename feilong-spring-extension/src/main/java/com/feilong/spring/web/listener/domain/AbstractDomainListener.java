@@ -159,6 +159,7 @@ public abstract class AbstractDomainListener implements ServletContextListener{
      * @return the config location param value
      * @since 1.7.3
      */
+    @SuppressWarnings("static-method")
     protected String getConfigLocationParamValue(ServletContext servletContext){
         return servletContext.getInitParameter(CONFIG_LOCATION_PARAM);
     }

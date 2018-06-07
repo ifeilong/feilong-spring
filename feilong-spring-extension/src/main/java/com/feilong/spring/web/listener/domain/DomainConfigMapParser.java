@@ -25,7 +25,7 @@ import java.util.Properties;
  * The Class DomainConfigMapParser.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 1.12.1
+ * @since 1.12.3
  */
 class DomainConfigMapParser{
 

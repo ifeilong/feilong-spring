@@ -11,14 +11,6 @@
 
 	<dependencies>
 
-		<!-- 目前用于 seo viewCommandFound 以及 DomainPlaceHolderSupport -->
-		<!----> <dependency>
-			<groupId>com.feilong.platform</groupId>
-			<artifactId>feilong-web-extension</artifactId>
-			<version>${version.feilong-platform}</version>
-			<optional>true</optional>
-		</dependency> 
-
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-web</artifactId>
