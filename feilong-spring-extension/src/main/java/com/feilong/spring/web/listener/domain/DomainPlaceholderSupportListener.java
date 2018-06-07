@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.listener;
+package com.feilong.spring.web.listener.domain;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -31,7 +31,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.feilong.core.UncheckedIOException;
 import com.feilong.spring.web.util.WebSpringUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
-import com.feilong.web.domain.AbstractDomainListener;
 
 /**
  * 初始化域名配置监听器.
@@ -96,7 +95,7 @@ import com.feilong.web.domain.AbstractDomainListener;
  * </blockquote>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @see com.feilong.web.domain.AbstractDomainListener#CONFIG_LOCATION_PARAM
+ * @see AbstractDomainListener#CONFIG_LOCATION_PARAM
  * @see com.feilong.spring.web.util.WebSpringUtil#getWebApplicationContext(ServletContext)
  * @see org.springframework.core.env.EnvironmentCapable#getEnvironment()
  * @see org.springframework.core.io.ResourceLoader#getResource(String)
