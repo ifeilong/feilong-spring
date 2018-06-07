@@ -23,7 +23,7 @@ import java.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.core.ReturnResult;
+import com.feilong.context.ReturnResult;
 import com.feilong.core.lang.AbstractPartitionThreadExecutor;
 import com.feilong.core.lang.PartitionRunnableBuilder;
 

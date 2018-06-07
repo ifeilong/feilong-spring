@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import com.feilong.core.ReturnResult;
+import com.feilong.context.ReturnResult;
 import com.feilong.core.lang.PartitionRunnableBuilder;
 import com.feilong.core.lang.PartitionThreadEntity;
 
