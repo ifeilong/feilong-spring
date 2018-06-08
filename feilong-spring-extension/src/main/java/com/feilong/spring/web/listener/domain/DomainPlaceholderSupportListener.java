@@ -120,13 +120,11 @@ public class DomainPlaceholderSupportListener extends AbstractDomainListener{
 
         //org.springframework.web.context.support.XmlWebApplicationContext
         WebApplicationContext webApplicationContext = WebSpringUtil.getRequiredWebApplicationContext(servletContext);
-
-        //---------------------------------------------------------------
-
         //org.springframework.web.context.support.ServletContextResource
         Resource resource = webApplicationContext.getResource(domainConfigLocation);
-
         Validate.isTrue(resource.exists(), "domainConfigLocation:[%s] not exists", domainConfigLocation);
+
+        //---------------------------------------------------------------
         try{
             return PropertiesLoaderUtils.loadProperties(resource);
         }catch (IOException e){
