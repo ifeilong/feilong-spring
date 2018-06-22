@@ -18,10 +18,11 @@ package com.feilong.spring.web.listener.domain;
 import java.io.Serializable;
 
 /**
- * The Class DomainConfig.
+ * 域名的相关配置.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.0.9
+ * @since 1.12.3 move from feilong-web-extension
  */
 public class DomainConfig implements Serializable{
 

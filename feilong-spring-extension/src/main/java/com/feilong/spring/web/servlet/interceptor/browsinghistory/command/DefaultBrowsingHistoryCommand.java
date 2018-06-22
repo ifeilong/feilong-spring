@@ -29,6 +29,8 @@ public class DefaultBrowsingHistoryCommand implements BrowsingHistoryCommand{
     /** The id. */
     private Long              id;
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 the id.
      *

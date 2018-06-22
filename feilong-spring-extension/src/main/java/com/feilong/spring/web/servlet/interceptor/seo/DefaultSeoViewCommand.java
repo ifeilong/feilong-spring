@@ -23,14 +23,19 @@ package com.feilong.spring.web.servlet.interceptor.seo;
  */
 public class DefaultSeoViewCommand implements SeoViewCommand{
 
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -452996858008985302L;
+
+    //---------------------------------------------------------------
+
     /** seo搜索描述. */
-    private String seoDescription;
+    private String            seoDescription;
 
     /** seo搜索关键字. */
-    private String seoKeywords;
+    private String            seoKeywords;
 
     /** seoTitle. */
-    private String seoTitle;
+    private String            seoTitle;
 
     //---------------------------------------------------------------
 

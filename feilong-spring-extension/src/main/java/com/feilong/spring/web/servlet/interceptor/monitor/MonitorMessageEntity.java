@@ -101,6 +101,8 @@ public class MonitorMessageEntity implements Serializable{
         this.isShowRequestAttribute = isShowRequestAttribute;
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 request log switch.
      *

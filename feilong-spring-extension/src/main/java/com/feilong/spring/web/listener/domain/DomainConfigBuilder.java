@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.feilong.json.jsonlib.JsonUtil;
 
 /**
- * The Class DomainConfigBuilder.
+ * {@link DomainConfig} 构造器.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.12.3

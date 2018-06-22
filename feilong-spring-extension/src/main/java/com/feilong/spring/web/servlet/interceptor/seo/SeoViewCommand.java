@@ -15,13 +15,15 @@
  */
 package com.feilong.spring.web.servlet.interceptor.seo;
 
+import java.io.Serializable;
+
 /**
- * The Class SeoViewCommand.
+ * seo相关信息数据.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.2.2
  */
-public interface SeoViewCommand{
+public interface SeoViewCommand extends Serializable{
 
     /**
      * 获得 seo搜索描述.

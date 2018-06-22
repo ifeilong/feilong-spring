@@ -38,12 +38,12 @@ import com.feilong.json.jsonlib.JsonUtil;
  * 
  * <blockquote>
  * <p style="color:red">
- * 本Listener解析的是 固定文件 {@link #DEFAULT_CONFIGURATION_FILE},或者 web.xml 配置的参数 context-param {@link #CONFIG_LOCATION_PARAM} (固定地址),<br>
+ * 本Listener解析的是 web.xml 配置的参数 context-param {@link #CONFIG_LOCATION_PARAM} (固定地址),<br>
  * 不支持解析配置参数地址中含变量形式的地址.
  * </p>
  * 
  * <p>
- * 如果有支持动态参}数的需求, 比如
+ * 如果有支持动态参数的需求, 比如
  * </p>
  * 
  * <pre class="code">
@@ -61,7 +61,6 @@ import com.feilong.json.jsonlib.JsonUtil;
  * 
  * </blockquote>
  * 
- * 
  * <h3>关于配置文件</h3>
  * 
  * <blockquote>
@@ -72,7 +71,6 @@ import com.feilong.json.jsonlib.JsonUtil;
  * </ol>
  * </p>
  * </blockquote>
- * 
  * 
  * <h3>关于 domain.properties</h3>
  * 
