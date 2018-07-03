@@ -24,7 +24,7 @@ import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
 
 /**
- * The Class MonitorMessageEntity.
+ * MonitorMessage Entity.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.10.6
@@ -180,6 +180,8 @@ public class MonitorMessageEntity implements Serializable{
     }
 
     /**
+     * 获得 是否显示AfterCompletion 方法日志.
+     *
      * @return the isShowAfterCompletionLog
      */
     public boolean getIsShowAfterCompletionLog(){
@@ -187,6 +189,8 @@ public class MonitorMessageEntity implements Serializable{
     }
 
     /**
+     * 设置 是否显示AfterCompletion 方法日志.
+     *
      * @param isShowAfterCompletionLog
      *            the isShowAfterCompletionLog to set
      */
@@ -195,6 +199,8 @@ public class MonitorMessageEntity implements Serializable{
     }
 
     /**
+     * 获得 是否显示AfterConcurrentHandlingStarted 方法日志.
+     *
      * @return the isShowAfterConcurrentHandlingStartedLog
      */
     public boolean getIsShowAfterConcurrentHandlingStartedLog(){
@@ -202,6 +208,8 @@ public class MonitorMessageEntity implements Serializable{
     }
 
     /**
+     * 设置 是否显示AfterConcurrentHandlingStarted 方法日志.
+     *
      * @param isShowAfterConcurrentHandlingStartedLog
      *            the isShowAfterConcurrentHandlingStartedLog to set
      */
@@ -210,6 +218,8 @@ public class MonitorMessageEntity implements Serializable{
     }
 
     /**
+     * 获得 是否显示PostHandle 方法日志.
+     *
      * @return the isShowPostHandleLog
      */
     public boolean getIsShowPostHandleLog(){
@@ -217,6 +227,8 @@ public class MonitorMessageEntity implements Serializable{
     }
 
     /**
+     * 设置 是否显示PostHandle 方法日志.
+     *
      * @param isShowPostHandleLog
      *            the isShowPostHandleLog to set
      */

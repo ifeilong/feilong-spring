@@ -74,7 +74,7 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
      * javax.servlet.http.HttpServletResponse, java.lang.Object)
      */
     @Override
-    public boolean doPreHandle(HttpServletRequest request,HttpServletResponse response,Object handler){
+    public boolean doPreHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
@@ -93,19 +93,16 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
      * (non-Javadoc)
      * 
      * @see com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doPostHandle(javax.servlet.http.
-     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.web.method.HandlerMethod,
+     * org.springframework.web.servlet.ModelAndView)
      */
     @Override
-    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView){
-
+    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,ModelAndView modelAndView){
         if (!monitorMessageEntity.getIsShowPostHandleLog()){
             return;
         }
 
         //---------------------------------------------------------------
-
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-
         StopWatch stopWatch = getStopWatch(request);
         stopWatch.split();
         long useTime = stopWatch.getSplitTime();
@@ -141,11 +138,12 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#afterConcurrentHandlingStarted(javax.servlet.http.
-     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
+     * @see
+     * com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doAfterConcurrentHandlingStarted(javax.servlet.
+     * http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.web.method.HandlerMethod)
      */
     @Override
-    public void doAfterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,Object handler){
+    public void doAfterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
         if (!monitorMessageEntity.getIsShowAfterConcurrentHandlingStartedLog()){
             return;
         }
@@ -157,7 +155,6 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
         long splitTime = stopWatch.getSplitTime();
 
         if (LOGGER.isDebugEnabled()){
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
             LOGGER.debug(
                             "afterConcurrentHandlingStarted [{}.{}()], use time:[{}]",
                             HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
@@ -169,11 +166,11 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#afterCompletion(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse, java.lang.Object, java.lang.Exception)
+     * @see com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doAfterCompletion(javax.servlet.http.
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.web.method.HandlerMethod, java.lang.Exception)
      */
     @Override
-    public void doAfterCompletion(HttpServletRequest request,HttpServletResponse response,Object handler,Exception ex){
+    public void doAfterCompletion(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,Exception ex){
         if (!monitorMessageEntity.getIsShowAfterCompletionLog()){
             return;
         }
@@ -200,8 +197,8 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(
                             "afterCompletion [{}.{}()], use time:[{}],total time:[{}]",
-                            HandlerMethodUtil.getDeclaringClassSimpleName((HandlerMethod) handler),
-                            HandlerMethodUtil.getHandlerMethodName((HandlerMethod) handler),
+                            HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
+                            HandlerMethodUtil.getHandlerMethodName(handlerMethod),
                             formatDuration(splitTime),
                             formatDuration(time));
         }
@@ -222,6 +219,8 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
     //---------------------------------------------------------------
 
     /**
+     * 设置 monitorMessageEntity.
+     *
      * @param monitorMessageEntity
      *            the monitorMessageEntity to set
      */

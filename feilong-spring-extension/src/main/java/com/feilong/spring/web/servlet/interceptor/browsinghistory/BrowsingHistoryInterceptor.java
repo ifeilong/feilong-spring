@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feilong.json.jsonlib.JsonUtil;
@@ -75,13 +76,14 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerMethodIn
      * (non-Javadoc)
      * 
      * @see com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doPostHandle(javax.servlet.http.
-     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.web.method.HandlerMethod,
+     * org.springframework.web.servlet.ModelAndView)
      */
     @Override
-    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView){
+    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,ModelAndView modelAndView){
         //是否支持解析,有可能在xml里面配置的一些不相关的路径透过到了这个拦截器
         //比如 配置的 mapping path 是 item/* 但是有一些url地址是 item/wishlist 诸如此类的也到了该拦截器
-        boolean isSupport = isSupport(request, handler, modelAndView);
+        boolean isSupport = isSupport(request, handlerMethod, modelAndView);
         if (!isSupport){
             if (LOGGER.isInfoEnabled()){
                 LOGGER.info(
@@ -92,7 +94,7 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerMethodIn
         }
 
         //---------------------------------------------------------------
-        BrowsingHistoryCommand browsingHistoryCommand = constructBrowsingHistoryCommand(request, response, handler, modelAndView);
+        BrowsingHistoryCommand browsingHistoryCommand = constructBrowsingHistoryCommand(request, response, handlerMethod, modelAndView);
         if (null != browsingHistoryCommand){
             browsingHistoryResolver.add(browsingHistoryCommand, request, response);
             return;
@@ -107,20 +109,23 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerMethodIn
         return;
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 当前请求,是否支持解析.
      *
      * @param request
      *            the request
-     * @param handler
-     *            the handler
+     * @param handlerMethod
+     *            the handler method
      * @param modelAndView
      *            the model and view
      * @return true, if checks if is support
      * @since 1.5.3
      */
-    protected abstract boolean isSupport(HttpServletRequest request,Object handler,ModelAndView modelAndView);
+    protected abstract boolean isSupport(HttpServletRequest request,HandlerMethod handlerMethod,ModelAndView modelAndView);
 
+    //---------------------------------------------------------------
     /**
      * Construct browsing history command.
      * <p>
@@ -131,8 +136,8 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerMethodIn
      *            the request
      * @param response
      *            the response
-     * @param handler
-     *            the handler
+     * @param handlerMethod
+     *            the handler method
      * @param modelAndView
      *            the model and view
      * @return the browsing history command
@@ -140,7 +145,7 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerMethodIn
     protected abstract BrowsingHistoryCommand constructBrowsingHistoryCommand(
                     HttpServletRequest request,
                     HttpServletResponse response,
-                    Object handler,
+                    HandlerMethod handlerMethod,
                     ModelAndView modelAndView);
 
     //---------------------------------------------------------------

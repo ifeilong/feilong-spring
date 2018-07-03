@@ -16,6 +16,7 @@
 package com.feilong.spring.web.servlet.mvc.method.annotation;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -87,8 +88,16 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
     /** session 里面存放的 用户对象类型. */
     private Class<?>            sessionMemberClass;
 
+    //---------------------------------------------------------------
     /** 对象的主键名称. */
     private String              sessionMemberIdName;
+
+    /**
+     * 对象的主键默认值(比如可以设定游客的值,某些商城需要设置为 1).
+     * 
+     * @since 1.12.5
+     */
+    private Object              sessionMemberIdDefaultValue;
 
     //---------------------------------------------------------------
 
@@ -127,7 +136,6 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
                     ModelAndViewContainer mavContainer,
                     NativeWebRequest webRequest,
                     WebDataBinderFactory binderFactory) throws Exception{
-
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
         Object sessionMember = SessionUtil.getAttribute(request, sessionKey);
 
@@ -154,7 +162,9 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
         //---------------------------------------------------------------
 
         //4.如果标识的是session对象中的某个字段#sessionMemberIdName,那么提取该字段返回;
-        return PropertyUtil.getProperty(sessionMember, sessionMemberIdName);
+        Object id = PropertyUtil.getProperty(sessionMember, sessionMemberIdName);
+
+        return defaultIfNull(id, sessionMemberIdDefaultValue);
     }
 
     //---------------------------------------------------------------
@@ -187,6 +197,17 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
      */
     public void setSessionMemberIdName(String sessionMemberIdName){
         this.sessionMemberIdName = sessionMemberIdName;
+    }
+
+    /**
+     * 设置 对象的主键默认值(比如可以设定游客的值,某些商城需要设置为 1).
+     *
+     * @param sessionMemberIdDefaultValue
+     *            the sessionMemberIdDefaultValue to set
+     * @since 1.12.5
+     */
+    public void setSessionMemberIdDefaultValue(Object sessionMemberIdDefaultValue){
+        this.sessionMemberIdDefaultValue = sessionMemberIdDefaultValue;
     }
 
 }

@@ -113,12 +113,11 @@ public class ClientCacheInterceptor extends AbstractHandlerMethodInterceptorAdap
      * (non-Javadoc)
      * 
      * @see com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#doPostHandle(javax.servlet.http.
-     * HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+     * HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.web.method.HandlerMethod,
+     * org.springframework.web.servlet.ModelAndView)
      */
     @Override
-    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView){
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-
+    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,ModelAndView modelAndView){
         //如果没有标识{@link ClientCache}
         ClientCache clientCache = handlerMethod.getMethodAnnotation(ClientCache.class);
 
