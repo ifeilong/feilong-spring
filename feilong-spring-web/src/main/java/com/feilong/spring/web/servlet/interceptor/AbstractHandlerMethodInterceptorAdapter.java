@@ -163,8 +163,6 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
         }
     }
 
-    //---------------------------------------------------------------
-
     /**
      * Log end.
      *
@@ -177,9 +175,9 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @since 1.12.6
      */
     private void logEnd(HttpServletRequest request,String methodName,Date beginDate){
-        if (LOGGER.isInfoEnabled()){
+        if (LOGGER.isDebugEnabled()){
             String message = "end [{}]#[{}],use time: [{}],[{}]";
-            LOGGER.info(message, getClass().getSimpleName(), methodName, formatDuration(beginDate), getRequestFullURL(request, UTF8));
+            LOGGER.debug(message, getClass().getSimpleName(), methodName, formatDuration(beginDate), getRequestFullURL(request, UTF8));
         }
     }
 
