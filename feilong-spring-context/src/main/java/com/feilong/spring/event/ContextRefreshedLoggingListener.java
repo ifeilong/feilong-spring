@@ -15,13 +15,14 @@
  */
 package com.feilong.spring.event;
 
+import static com.feilong.spring.context.ApplicationContextUtil.getApplicationContextForLogMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.feilong.json.jsonlib.JsonUtil;
-import com.feilong.spring.context.ApplicationContextUtil;
 
 /**
  * 可以在控制台显示 {@link ApplicationContext} 信息.
@@ -166,10 +167,7 @@ public class ContextRefreshedLoggingListener extends AbstractContextRefreshedEve
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
         if (LOGGER.isDebugEnabled()){
             ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
-            LOGGER.debug(
-                            "applicationContext info:{}",
-                            JsonUtil.format(ApplicationContextUtil.getApplicationContextForLogMap(applicationContext)));
+            LOGGER.debug("applicationContext info:{}", JsonUtil.format(getApplicationContextForLogMap(applicationContext)));
         }
-
     }
 }

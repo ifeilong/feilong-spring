@@ -118,8 +118,9 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
         doAfterCompletion(request, response, (HandlerMethod) handler, ex);
 
         logEnd(request, methodName, beginDate);
-
     }
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)

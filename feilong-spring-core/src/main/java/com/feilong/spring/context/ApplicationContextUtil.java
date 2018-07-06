@@ -24,6 +24,7 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -55,27 +56,22 @@ public final class ApplicationContextUtil{
         Validate.notNull(applicationContext, "applicationContext can't be null!");
 
         //---------------------------------------------------------------
-
         Map<String, Object> map = newLinkedHashMap();
 
+        map.put("id", applicationContext.getId());
+        map.put("class", applicationContext.getClass());
+        map.put("displayName", applicationContext.getDisplayName());
         map.put("beanDefinitionCount", applicationContext.getBeanDefinitionCount());
         map.put("startupDate", applicationContext.getStartupDate());
 
         map.put("applicationName", applicationContext.getApplicationName());
-        map.put("displayName", applicationContext.getDisplayName());
 
-        map.put("class", applicationContext.getClass());
-
-        map.put("id", applicationContext.getId());
+        //---------------------------------------------------------------
 
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
         sortArray(beanDefinitionNames);
 
-        //map.put("beanDefinitionNames", beanDefinitionNames);
-
-        Map<String, Object> beanDefinitionNamesAndClassMap = buildBeanDefinitionNamesAndClassMap(applicationContext, beanDefinitionNames);
-
-        map.put("beanDefinitionNamesAndClassMap", beanDefinitionNamesAndClassMap);
+        map.put("beanDefinitionNamesAndClassMap", buildBeanDefinitionNamesAndClassMap(applicationContext, beanDefinitionNames));
 
         //        Environment environment = applicationContext.getEnvironment();
         //        map.put("environment", environment);
@@ -101,23 +97,46 @@ public final class ApplicationContextUtil{
      * @return the map
      * @since 1.10.4
      */
-    private static Map<String, Object> buildBeanDefinitionNamesAndClassMap(
+    private static Map<String, String> buildBeanDefinitionNamesAndClassMap(
                     ApplicationContext applicationContext,
                     String[] beanDefinitionNames){
-        Map<String, Object> beanDefinitionNamesAndClassMap = new TreeMap<>();
+        Map<String, String> map = new TreeMap<>();
+
+        //---------------------------------------------------------------
         for (String beanDefinitionName : beanDefinitionNames){
+            String value = "";
             try{
                 Object bean = applicationContext.getBean(beanDefinitionName);
-                String canonicalName = bean.getClass().getCanonicalName();
 
-                Object vObject = canonicalName + (applicationContext.isPrototype(beanDefinitionName) ? "[Prototype]"
-                                : (applicationContext.isSingleton(beanDefinitionName) ? "[Singleton]" : ""));
-
-                beanDefinitionNamesAndClassMap.put(beanDefinitionName, vObject);
+                value = buildValue(applicationContext, beanDefinitionName, bean);
             }catch (BeansException e){
-                beanDefinitionNamesAndClassMap.put(beanDefinitionName, e.getMessage());
+                value = e.getMessage();
             }
+            map.put(beanDefinitionName, value);
         }
-        return beanDefinitionNamesAndClassMap;
+        return map;
+    }
+
+    //---------------------------------------------------------------
+    /**
+     * Builds the value.
+     *
+     * @param applicationContext
+     *            the application context
+     * @param beanDefinitionName
+     *            the bean definition name
+     * @param bean
+     *            the bean
+     * @return the string
+     * @throws NoSuchBeanDefinitionException
+     *             the no such bean definition exception
+     * @since 1.12.6
+     */
+    private static String buildValue(ApplicationContext applicationContext,String beanDefinitionName,Object bean)
+                    throws NoSuchBeanDefinitionException{
+        String canonicalName = bean.getClass().getCanonicalName();
+
+        return canonicalName + (applicationContext.isPrototype(beanDefinitionName) ? "[Prototype]"
+                        : (applicationContext.isSingleton(beanDefinitionName) ? "[Singleton]" : ""));
     }
 }
