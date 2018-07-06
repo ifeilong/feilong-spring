@@ -32,10 +32,15 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import com.feilong.servlet.http.RequestUtil;
 
 /**
- * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor} ,而参数中传入了 不存在的/不支持的 locale 调用
+ * 支持语言的 change 拦截器.
+ * 
+ * <p>
+ * 如果直接使用 {@link org.springframework.web.servlet.i18n.LocaleChangeInterceptor},而参数中传入了<code>不存在的/不支持的 locale</code> 调用
  * {@link org.springframework.util.StringUtils#parseLocaleString(String)}会报错
+ * </p>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
+ * @see LocaleChangeInterceptor
  * @since 1.0.9
  */
 public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
@@ -43,7 +48,7 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
     /** The Constant log. */
     private static final Logger LOGGER = LoggerFactory.getLogger(SupportLocaleChangeInterceptor.class);
 
-    /** The support locales. */
+    /** 支持的语言. */
     private List<String>        supportLocales;
 
     //---------------------------------------------------------------
@@ -65,7 +70,6 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
         }
 
         //---------------------------------------------------------------
-
         boolean canHandle = isSupport(request);
         if (canHandle){
             super.preHandle(request, response, handler);
@@ -73,6 +77,8 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
         //不管支不支持  都return true
         return true;
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Checks if is support.
@@ -84,11 +90,18 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
      */
     private boolean isSupport(HttpServletRequest request){
         if (isNullOrEmpty(supportLocales)){
-            LOGGER.warn("SupportLocaleChangeInterceptor's supportLocales is isNullOrEmpty,you can direct use LocaleChangeInterceptor");
-            return true; //如果isNotNullOrEmpty supportLocales,那么 就是个普通的  LocaleChangeInterceptor
+            LOGGER.warn("SupportLocaleChangeInterceptor's supportLocales isNullOrEmpty,you maybe can direct use LocaleChangeInterceptor");
+            return true; //如果isNotNullOrEmpty supportLocales,那么就是个普通的  LocaleChangeInterceptor
         }
 
+        //---------------------------------------------------------------
         String newLocaleValue = request.getParameter(getParamName());
+        //since 1.12.6
+        if (isNullOrEmpty(newLocaleValue)){
+            return true;
+        }
+
+        //---------------------------------------------------------------
         boolean contains = supportLocales.contains(newLocaleValue);
         if (!contains){
             LOGGER.warn("SupportLocaleChangeInterceptor's supportLocales:[{}] not contains [{}]", supportLocales, newLocaleValue);
