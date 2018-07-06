@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.servlet.http.RequestUtil;
+
 /**
  * 所有 HandlerMethodInterceptor 的父类.
  * 
@@ -56,6 +58,12 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
             return true;//容错
         }
 
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("[in] will doPreHandle:[{}]", RequestUtil.getRequestFullURL(request, UTF8));
+        }
+        //---------------------------------------------------------------
+
         return doPreHandle(request, response, (HandlerMethod) handler);
     }
 
@@ -73,6 +81,12 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
             return;
         }
 
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("[out] will doPostHandle:[{}]", RequestUtil.getRequestFullURL(request, UTF8));
+        }
+        //---------------------------------------------------------------
+
         doPostHandle(request, response, (HandlerMethod) handler, modelAndView);
     }
 
@@ -88,6 +102,12 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
             logNoHandlerMethod(request, handler);
             return;
         }
+
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("will doAfterCompletion:[{}]", RequestUtil.getRequestFullURL(request, UTF8));
+        }
+        //---------------------------------------------------------------
         doAfterCompletion(request, response, (HandlerMethod) handler, ex);
     }
 
@@ -103,6 +123,12 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
             logNoHandlerMethod(request, handler);
             return;
         }
+
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("will doAfterConcurrentHandlingStarted:[{}]", RequestUtil.getRequestFullURL(request, UTF8));
+        }
+        //---------------------------------------------------------------
         doAfterConcurrentHandlingStarted(request, response, (HandlerMethod) handler);
     }
 
