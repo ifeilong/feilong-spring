@@ -181,8 +181,6 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
         }
     }
 
-    //---------------------------------------------------------------
-
     /**
      * Log no handler method.
      *
