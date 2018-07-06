@@ -137,11 +137,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      *            the handler method
      * @return true, if successful
      */
-    @SuppressWarnings("static-method")
-    public boolean doPreHandle(
-                    @SuppressWarnings("unused") HttpServletRequest request,
-                    @SuppressWarnings("unused") HttpServletResponse response,
-                    @SuppressWarnings("unused") HandlerMethod handlerMethod){
+    @SuppressWarnings({ "static-method", "unused" })
+    public boolean doPreHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
         return true;
     }
 
@@ -157,11 +154,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @param modelAndView
      *            the model and view
      */
-    public void doPostHandle(
-                    @SuppressWarnings("unused") HttpServletRequest request,
-                    @SuppressWarnings("unused") HttpServletResponse response,
-                    @SuppressWarnings("unused") HandlerMethod handlerMethod,
-                    @SuppressWarnings("unused") ModelAndView modelAndView){
+    @SuppressWarnings("unused")
+    public void doPostHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,ModelAndView modelAndView){
 
     }
 
@@ -177,11 +171,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @param ex
      *            the ex
      */
-    public void doAfterCompletion(
-                    @SuppressWarnings("unused") HttpServletRequest request,
-                    @SuppressWarnings("unused") HttpServletResponse response,
-                    @SuppressWarnings("unused") HandlerMethod handlerMethod,
-                    @SuppressWarnings("unused") Exception ex){
+    @SuppressWarnings("unused")
+    public void doAfterCompletion(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,Exception ex){
 
     }
 
@@ -195,10 +186,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @param handlerMethod
      *            the handler method
      */
-    public void doAfterConcurrentHandlingStarted(
-                    @SuppressWarnings("unused") HttpServletRequest request,
-                    @SuppressWarnings("unused") HttpServletResponse response,
-                    @SuppressWarnings("unused") HandlerMethod handlerMethod){
+    @SuppressWarnings("unused")
+    public void doAfterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
 
     }
 
