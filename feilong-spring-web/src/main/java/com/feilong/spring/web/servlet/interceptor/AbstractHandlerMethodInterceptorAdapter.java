@@ -159,7 +159,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      */
     private void logBegin(HttpServletRequest request,String methodName){
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("will [{}]:[{}],[{}]", methodName, getRequestFullURL(request, UTF8), getClass().getName());
+            LOGGER.debug("will [{}]#[{}],[{}]", getClass().getSimpleName(), methodName, getRequestFullURL(request, UTF8));
         }
     }
 
@@ -178,8 +178,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      */
     private void logEnd(HttpServletRequest request,String methodName,Date beginDate){
         if (LOGGER.isInfoEnabled()){
-            String message = "end [{}],[{}] use time: [{}],[{}]";
-            LOGGER.info(message, methodName, getClass().getName(), formatDuration(beginDate), getRequestFullURL(request, UTF8));
+            String message = "end [{}]#[{}],use time: [{}],[{}]";
+            LOGGER.info(message, getClass().getSimpleName(), methodName, formatDuration(beginDate), getRequestFullURL(request, UTF8));
         }
     }
 
