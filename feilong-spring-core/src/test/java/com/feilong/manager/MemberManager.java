@@ -15,12 +15,9 @@
  */
 package com.feilong.manager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 /**
- * 
+ * The Interface MemberManager.
+ *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.10.2
  */

@@ -15,21 +15,20 @@
  */
 package com.feilong;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * 
+ * The Class AbstractManager.
+ *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.11.4
  */
 public class AbstractManager{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractManager.class);
-
-    private String              name   = "feilong";
+    /** The name. */
+    private String name = "feilong";
 
     /**
+     * Gets the name.
+     *
      * @return the name
      */
     public String getName(){
@@ -37,6 +36,8 @@ public class AbstractManager{
     }
 
     /**
+     * Sets the name.
+     *
      * @param name
      *            the name to set
      */
