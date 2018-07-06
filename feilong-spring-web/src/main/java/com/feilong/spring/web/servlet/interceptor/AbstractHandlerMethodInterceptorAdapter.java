@@ -16,7 +16,10 @@
 package com.feilong.spring.web.servlet.interceptor;
 
 import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 import static com.feilong.servlet.http.RequestUtil.getRequestFullURL;
+
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,8 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.feilong.servlet.http.RequestUtil;
 
 /**
  * 所有 HandlerMethodInterceptor 的父类.
@@ -41,7 +42,7 @@ import com.feilong.servlet.http.RequestUtil;
 public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHandlerInterceptorAdapter{
 
     /** The Constant log. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractHandlerMethodInterceptorAdapter.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     //---------------------------------------------------------------
 
@@ -58,13 +59,17 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
             return true;//容错
         }
 
+        String methodName = "doPreHandle";
         //---------------------------------------------------------------
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("[in] will doPreHandle:[{}]", RequestUtil.getRequestFullURL(request, UTF8));
-        }
-        //---------------------------------------------------------------
+        Date beginDate = new Date();
 
-        return doPreHandle(request, response, (HandlerMethod) handler);
+        logBegin(request, methodName);
+
+        boolean doPreHandle = doPreHandle(request, response, (HandlerMethod) handler);
+
+        logEnd(request, methodName, beginDate);
+
+        return doPreHandle;
     }
 
     /*
@@ -81,13 +86,14 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
             return;
         }
 
+        String methodName = "doPostHandle";
         //---------------------------------------------------------------
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("[out] will doPostHandle:[{}]", RequestUtil.getRequestFullURL(request, UTF8));
-        }
-        //---------------------------------------------------------------
+        Date beginDate = new Date();
+        logBegin(request, methodName);
 
         doPostHandle(request, response, (HandlerMethod) handler, modelAndView);
+
+        logEnd(request, methodName, beginDate);
     }
 
     /*
@@ -103,12 +109,16 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
             return;
         }
 
+        String methodName = "doAfterCompletion";
         //---------------------------------------------------------------
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("will doAfterCompletion:[{}]", RequestUtil.getRequestFullURL(request, UTF8));
-        }
-        //---------------------------------------------------------------
+        Date beginDate = new Date();
+
+        logBegin(request, methodName);
+
         doAfterCompletion(request, response, (HandlerMethod) handler, ex);
+
+        logEnd(request, methodName, beginDate);
+
     }
 
     /*
@@ -124,12 +134,53 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
             return;
         }
 
+        String methodName = "doAfterConcurrentHandlingStarted";
+
         //---------------------------------------------------------------
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("will doAfterConcurrentHandlingStarted:[{}]", RequestUtil.getRequestFullURL(request, UTF8));
-        }
-        //---------------------------------------------------------------
+        Date beginDate = new Date();
+
+        logBegin(request, methodName);
+
         doAfterConcurrentHandlingStarted(request, response, (HandlerMethod) handler);
+
+        logEnd(request, methodName, beginDate);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Log begin.
+     *
+     * @param request
+     *            the request
+     * @param methodName
+     *            the method name
+     * @since 1.12.6
+     */
+    private void logBegin(HttpServletRequest request,String methodName){
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("will [{}]:[{}],[{}]", methodName, getRequestFullURL(request, UTF8), getClass().getName());
+        }
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Log end.
+     *
+     * @param request
+     *            the request
+     * @param methodName
+     *            the method name
+     * @param beginDate
+     *            the begin date
+     * @since 1.12.6
+     */
+    private void logEnd(HttpServletRequest request,String methodName,Date beginDate){
+        if (LOGGER.isInfoEnabled()){
+            String message = "end [{}],[{}] use time: [{}],[{}]";
+            LOGGER.info(message, methodName, getClass().getName(), formatDuration(beginDate), getRequestFullURL(request, UTF8));
+        }
     }
 
     //---------------------------------------------------------------
@@ -142,12 +193,10 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      * @param handler
      *            the handler
      */
-    private static void logNoHandlerMethod(HttpServletRequest request,Object handler){
+    private void logNoHandlerMethod(HttpServletRequest request,Object handler){
         if (LOGGER.isWarnEnabled()){
-            LOGGER.warn(
-                            "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
-                            getRequestFullURL(request, UTF8),
-                            handler.getClass().getName());
+            String message = "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,";
+            LOGGER.warn(message, getRequestFullURL(request, UTF8), handler.getClass().getName());
         }
     }
     //---------------------------------------------------------------
@@ -182,7 +231,6 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      */
     @SuppressWarnings("unused")
     public void doPostHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,ModelAndView modelAndView){
-
     }
 
     /**
@@ -199,7 +247,6 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      */
     @SuppressWarnings("unused")
     public void doAfterCompletion(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,Exception ex){
-
     }
 
     /**
@@ -214,7 +261,6 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      */
     @SuppressWarnings("unused")
     public void doAfterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
-
     }
 
 }

@@ -32,8 +32,8 @@ import com.feilong.spring.BeanLogMessageBuilder;
  */
 public abstract class AbstractHandlerInterceptorAdapter extends HandlerInterceptorAdapter implements Ordered{
 
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractHandlerInterceptorAdapter.class);
+    /** The logger. */
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     //---------------------------------------------------------------
 
