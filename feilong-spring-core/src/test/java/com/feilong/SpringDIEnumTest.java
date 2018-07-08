@@ -22,8 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.coreextension.entity.Site;
 import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.net.HttpMethodType;
 
 /**
  * The Class UserTest.
@@ -38,14 +38,14 @@ public class SpringDIEnumTest extends AbstractJUnit4SpringContextTests{
 
     /** The platform. */
     @Autowired
-    private Site                site;
+    private HttpMethodType      httpMethodType;
 
     /**
      * Test platform.
      */
     @Test
     public void testPlatform(){
-        String aString = "china".equals("china") ? "" : ("china".equals("china") ? "" : "");
-        LOGGER.debug(JsonUtil.format(site));
+        // String aString = "china".equals("china") ? "" : ("china".equals("china") ? "" : "");
+        LOGGER.debug(JsonUtil.format(httpMethodType));
     }
 }

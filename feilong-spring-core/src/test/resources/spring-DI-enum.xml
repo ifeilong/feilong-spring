@@ -8,8 +8,12 @@
 			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
 			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		">
-	<util:constant id="site"
-		static-field="com.feilong.coreextension.entity.Site.#{ systemProperties['feilong.site'] == 'china'?'CHINA':(systemProperties['feilong.site']=='hongkong'?'HONGKONG':'TAIWAN')}" />
+	<!-- <util:constant id="site"
+		static-field="com.feilong.coreextension.entity.Site.#{ systemProperties['feilong.site'] == 'china'?'CHINA':(systemProperties['feilong.site']=='hongkong'?'HONGKONG':'TAIWAN')}" 
+		/>
+	-->
+	
+	<util:constant id="httpMethodType" static-field="com.feilong.net.HttpMethodType.GET" />
 
 
 	<!-- <util:constant id="site" static-field="com.feilong.coreextension.entity.Site.HONGKONG" /> -->
