@@ -21,28 +21,51 @@ import static com.feilong.servlet.http.RequestUtil.getRequestFullURL;
 
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.feilong.spring.BeanLogMessageBuilder;
 
 /**
  * 所有 HandlerMethodInterceptor 的父类.
  * 
- * <p>
- * 如果不是 HandlerMethod,将会以 warn级别日志输出
- * </p>
+ * <h3>作用以及说明:</h3>
+ * <blockquote>
+ * <ol>
+ * <li>必须是 HandlerMethod 方法,才能进入相关方法;<br>
+ * 如果不是 HandlerMethod,将会以 warn级别日志输出</li>
+ * <li>提供了记录方法耗时记录日志功能</li>
+ * </ol>
+ * </blockquote>
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
+ * @see HandlerInterceptorAdapter
+ * @see org.springframework.web.servlet.handler.MappedInterceptor
+ * @see com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder
  * @since 1.10.4
  */
-public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHandlerInterceptorAdapter{
+public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInterceptorAdapter implements Ordered{
 
     /** The Constant log. */
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+
+    //---------------------------------------------------------------
+
+    /** Post construct. */
+    @PostConstruct
+    protected void postConstruct(){
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(BeanLogMessageBuilder.buildFieldsSimpleMessage(this));
+        }
+    }
 
     //---------------------------------------------------------------
 
@@ -258,6 +281,18 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends AbstractHa
      */
     @SuppressWarnings("unused")
     public void doAfterConcurrentHandlingStarted(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
+    }
+
+    //---------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.springframework.core.Ordered#getOrder()
+     */
+    @Override
+    public int getOrder(){
+        return 0;
     }
 
 }

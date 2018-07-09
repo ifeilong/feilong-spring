@@ -20,7 +20,7 @@ import org.springframework.context.ApplicationContext;
 import com.feilong.spring.messagesource.MessageSourceUtil;
 
 /**
- * The Class SeoViewCommandFromMessageBuilder.
+ * 构造 {@link SeoViewCommand}.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.11.1

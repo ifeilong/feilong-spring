@@ -16,7 +16,7 @@
 package com.feilong.spring.web.servlet.interceptor.seo;
 
 /**
- * The Interface SeoViewCommandFromAttributeValueBuilder.
+ * 提供从 <code>request/model attributeValue</code>中提取/构造 {@link SeoViewCommand}的扩展点.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.11.2
@@ -27,7 +27,7 @@ public interface SeoViewCommandFromAttributeValueBuilder{
      * 提供从 <code>request/model attributeValue</code>中提取/构造 {@link SeoViewCommand}的扩展点.
      * 
      * <p>
-     * 如果结果不是null,那么使用当前的结果<br>
+     * 如果结果不是null,那么使用此结果<br>
      * 如果结果是null,那么将处理下一个 attributeName
      * </p>
      *
@@ -36,7 +36,6 @@ public interface SeoViewCommandFromAttributeValueBuilder{
      * @param attributeValue
      *            request/model 作用域 属性值
      * @return the seo view command
-     * @since 1.11.2 rename
      */
     SeoViewCommand build(String attributeName,Object attributeValue);
 

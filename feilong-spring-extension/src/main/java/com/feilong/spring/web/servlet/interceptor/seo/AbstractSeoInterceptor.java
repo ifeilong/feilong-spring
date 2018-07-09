@@ -15,9 +15,6 @@
  */
 package com.feilong.spring.web.servlet.interceptor.seo;
 
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
-
-import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,7 +87,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
     private SeoViewCommandCustomBuilder             seoViewCommandCustomBuilder;
 
     /**
-     * The seo view command from attribute value builder.
+     * 提供从 <code>request/model attributeValue</code>中提取/构造 {@link SeoViewCommand}的扩展点.
      * 
      * @since 1.11.2
      */
@@ -107,29 +104,18 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
      */
     @Override
     public void doPostHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,ModelAndView modelAndView){
-        Date beginDate = new Date();
-
-        //---------------------------------------------------------------
         SeoViewCommand seoViewCommand = build(request, modelAndView);
 
         seoViewCommand = detect(seoViewCommand, request);
 
         if (LOGGER.isTraceEnabled()){
-            LOGGER.trace(
-                            "set seoViewCommand to request,attributeName:[{}],value :{}",
-                            seoViewCommandRequestAttributeName,
-                            JsonUtil.format(seoViewCommand));
+            String pattern = "set seoViewCommand to request,attributeName:[{}],value :{}";
+            LOGGER.trace(pattern, seoViewCommandRequestAttributeName, JsonUtil.format(seoViewCommand));
         }
 
         //---------------------------------------------------------------
 
         request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
-
-        //---------------------------------------------------------------
-
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("use time:[{}]", formatDuration(beginDate));
-        }
     }
 
     //---------------------------------------------------------------
@@ -177,7 +163,6 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
         }
 
         //---------------------------------------------------------------
-
         return null;
     }
 
@@ -206,10 +191,8 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
             //---------------------① 如果有 seoViewCommandRequestAttributeName变量,那么log 并且直接跳出-----------------------------------
             if (attributeName.equals(seoViewCommandRequestAttributeName)){
                 if (LOGGER.isDebugEnabled()){
-                    LOGGER.debug(
-                                    "find attributeName:[{}] in map,value is:{},break and go-on",
-                                    seoViewCommandRequestAttributeName,
-                                    JsonUtil.format(attributeValue));
+                    String pattern = "find attributeName:[{}] in map,value is:{},break and go-on";
+                    LOGGER.debug(pattern, seoViewCommandRequestAttributeName, JsonUtil.format(attributeValue));
                 }
 
                 // may be case exception,if somebody cover the seoViewCommandRequestAttributeName
@@ -271,10 +254,11 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
     }
 
     /**
-     * Sets the seo view command from attribute value builder.
+     * 提供从 <code>request/model attributeValue</code>中提取/构造 {@link SeoViewCommand}的扩展点.
      *
      * @param seoViewCommandFromAttributeValueBuilder
      *            the seoViewCommandFromAttributeValueBuilder to set
+     * @since 1.11.2
      */
     public void setSeoViewCommandFromAttributeValueBuilder(SeoViewCommandFromAttributeValueBuilder seoViewCommandFromAttributeValueBuilder){
         this.seoViewCommandFromAttributeValueBuilder = seoViewCommandFromAttributeValueBuilder;

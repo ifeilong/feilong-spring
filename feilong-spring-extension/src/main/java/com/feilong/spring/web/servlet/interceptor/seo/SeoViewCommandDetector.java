@@ -21,7 +21,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The Class SeoViewCommandDetect.
+ * {@link SeoViewCommand} 检测器.
+ * 
+ * <p>
+ * 主要作用是容错,当发现某个属性没有值,那么以默认值来替代
+ * </p>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.11.1

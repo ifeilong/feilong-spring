@@ -26,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * 专门处理每个页面的seo信息,在 {@link HandlerInterceptorAdapter#preHandle(HttpServletRequest, HttpServletResponse, Object)}流程中,查找 request作用域中的数据.
+ * 专门处理每个页面的seo信息,在
+ * {@link HandlerInterceptorAdapter#postHandle(HttpServletRequest, HttpServletResponse, Object, org.springframework.web.servlet.ModelAndView)}流程中,查找
+ * request作用域中的数据.
  * 
  * <h3>配置方式:</h3>
  * 

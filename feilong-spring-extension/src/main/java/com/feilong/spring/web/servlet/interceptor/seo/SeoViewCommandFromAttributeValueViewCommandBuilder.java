@@ -15,45 +15,11 @@
  */
 package com.feilong.spring.web.servlet.interceptor.seo;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import com.feilong.context.SubViewCommand;
 import com.feilong.context.ViewCommand;
 import com.feilong.core.bean.PropertyUtil;
 
 /**
- * 专门处理每个页面的seo信息,在 {@link HandlerInterceptorAdapter#preHandle(HttpServletRequest, HttpServletResponse, Object)}流程中,查找 request作用域中的数据.
- * 
- * <h3>使用指南:</h3>
- * 
- * <blockquote>
- * <ol>
- * <li>Model1:什么都不设置,那么使用默认配置的 {@link #defaultSeoViewCommand},如果这些参数也没有设置,那么页面相关地方会输出空</li>
- * <li>Model2:可以在controller {@link RequestMapping} 方法体里面,使用
- * 
- * <pre class="code">
- * SeoViewCommand defaultSeoViewCommand = new DefaultSeoViewCommand();
- * defaultSeoViewCommand.setSeoDescription(xxx);
- * defaultSeoViewCommand.setSeoKeywords(xxx);
- * defaultSeoViewCommand.setSeoTitle(xxx);
- * </pre>
- * 
- * 自定义设置一个SeoViewCommand对象, 然后,将此对象 设置到 request/model中</li>
- * 
- * <li>Model3:如果使用了 {@link ViewCommand}作为整体数据返回,那么只需要让 您自己的{@link ViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
- * 
- * <li>Model4:如果使用了 {@link ViewCommand}作为整体数据返回,并且也使用了 {@link SubViewCommand},并且想将参数设置到该{@link SubViewCommand}内,你可以让 您自己的
- * {@link SubViewCommand} 实现 {@link SeoViewCommand}接口,实现里面的方法即可</li>
- * </ol>
- * </blockquote>
- * 
- * <p>
- * 更多说明,请参考 {@link StandardSeoInterceptor}
- * </p>
+ * 提供从 {@link ViewCommand} 中提取/构造 {@link SeoViewCommand}的扩展点.
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see StandardSeoInterceptor
