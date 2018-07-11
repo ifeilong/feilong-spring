@@ -80,8 +80,8 @@ public class SupportLocaleChangeInterceptor extends AbstractHandlerMethodInterce
      */
     @Override
     public boolean doPreHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
-        boolean canHandle = isSupport(request);
-        if (canHandle){
+        boolean isDoHandlerSupport = isDoHandlerSupport(request);
+        if (isDoHandlerSupport){
             handler(request, response);
         }
         //不管支不支持  都return true
@@ -99,6 +99,7 @@ public class SupportLocaleChangeInterceptor extends AbstractHandlerMethodInterce
      *            the response
      * @return true, if successful
      * @since 1.12.7
+     * @see LocaleChangeInterceptor#preHandle(HttpServletRequest, HttpServletResponse, Object)
      */
     private boolean handler(HttpServletRequest request,HttpServletResponse response){
         LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
@@ -121,9 +122,9 @@ public class SupportLocaleChangeInterceptor extends AbstractHandlerMethodInterce
      * @return true, if checks if is support
      * @since 1.0.9
      */
-    private boolean isSupport(HttpServletRequest request){
+    private boolean isDoHandlerSupport(HttpServletRequest request){
         if (isNullOrEmpty(supportLocales)){
-            LOGGER.warn("SupportLocaleChangeInterceptor's supportLocales isNullOrEmpty,you maybe can direct use LocaleChangeInterceptor");
+            LOGGER.warn("SupportLocaleChangeInterceptor's supportLocales isNullOrEmpty,use like LocaleChangeInterceptor");
             return true; //如果isNotNullOrEmpty supportLocales,那么就是个普通的  LocaleChangeInterceptor
         }
 
@@ -131,7 +132,8 @@ public class SupportLocaleChangeInterceptor extends AbstractHandlerMethodInterce
         String newLocaleValue = request.getParameter(paramName);
         //since 1.12.6
         if (isNullOrEmpty(newLocaleValue)){
-            return true;
+            LOGGER.trace("request param :[{}] 's value isNullOrEmpty,return false ,will skip handler", paramName);
+            return false;
         }
 
         //---------------------------------------------------------------
