@@ -15,21 +15,22 @@
  */
 package com.feilong.spring.web.servlet.interceptor.i18n;
 
-import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.core.Validator.isNullOrEmpty;
 
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.feilong.servlet.http.RequestUtil;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;
 
 /**
  * 支持语言的 change 拦截器.
@@ -43,13 +44,31 @@ import com.feilong.servlet.http.RequestUtil;
  * @see LocaleChangeInterceptor
  * @since 1.0.9
  */
-public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
+public class SupportLocaleChangeInterceptor extends AbstractHandlerMethodInterceptorAdapter{
 
     /** The Constant log. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SupportLocaleChangeInterceptor.class);
+    private static final Logger LOGGER             = LoggerFactory.getLogger(SupportLocaleChangeInterceptor.class);
+
+    //---------------------------------------------------------------
+
+    /**
+     * Default name of the locale specification parameter: "locale".
+     * 
+     * @since 1.12.7
+     */
+    public static final String  DEFAULT_PARAM_NAME = "locale";
+
+    //---------------------------------------------------------------
 
     /** 支持的语言. */
     private List<String>        supportLocales;
+
+    /**
+     * The param name.
+     * 
+     * @since 1.12.7
+     */
+    private String              paramName          = DEFAULT_PARAM_NAME;
 
     //---------------------------------------------------------------
 
@@ -60,21 +79,35 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
      * javax.servlet.http.HttpServletResponse, java.lang.Object)
      */
     @Override
-    public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws ServletException{
-        if (!(handler instanceof HandlerMethod)){
-            LOGGER.warn(
-                            "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,",
-                            RequestUtil.getRequestFullURL(request, UTF8),
-                            handler.getClass().getName());
-            return true;
-        }
-
-        //---------------------------------------------------------------
+    public boolean doPreHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
         boolean canHandle = isSupport(request);
         if (canHandle){
-            super.preHandle(request, response, handler);
+            handler(request, response);
         }
         //不管支不支持  都return true
+        return true;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * copy from {@link LocaleChangeInterceptor}.
+     *
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     * @return true, if successful
+     * @since 1.12.7
+     */
+    private boolean handler(HttpServletRequest request,HttpServletResponse response){
+        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        if (localeResolver == null){
+            throw new IllegalStateException("No LocaleResolver found: not in a DispatcherServlet request?");
+        }
+        String newLocale = request.getParameter(this.paramName);
+        localeResolver.setLocale(request, response, StringUtils.parseLocaleString(newLocale));
+        // Proceed in any case.
         return true;
     }
 
@@ -95,7 +128,7 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
         }
 
         //---------------------------------------------------------------
-        String newLocaleValue = request.getParameter(getParamName());
+        String newLocaleValue = request.getParameter(paramName);
         //since 1.12.6
         if (isNullOrEmpty(newLocaleValue)){
             return true;
@@ -120,4 +153,22 @@ public class SupportLocaleChangeInterceptor extends LocaleChangeInterceptor{
     public void setSupportLocales(List<String> supportLocales){
         this.supportLocales = supportLocales;
     }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Set the name of the parameter that contains a locale specification in a locale change request.
+     * 
+     * <p>
+     * Default is "locale".
+     * </p>
+     *
+     * @param paramName
+     *            the new param name
+     * @since 1.12.7
+     */
+    public void setParamName(String paramName){
+        this.paramName = paramName;
+    }
+
 }

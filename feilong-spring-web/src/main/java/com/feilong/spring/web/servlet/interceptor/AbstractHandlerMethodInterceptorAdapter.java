@@ -127,6 +127,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         return doPreHandle;
     }
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -148,6 +150,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
 
         logEnd(request, METHOD_NAME_POST_HANDLE, beginDate);
     }
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)

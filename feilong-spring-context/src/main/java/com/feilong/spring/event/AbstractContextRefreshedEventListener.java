@@ -99,6 +99,8 @@ public abstract class AbstractContextRefreshedEventListener implements Applicati
         }
     }
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -108,8 +110,8 @@ public abstract class AbstractContextRefreshedEventListener implements Applicati
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
         Date beginDate = new Date();
 
-        if (LOGGER.isInfoEnabled()){
-            LOGGER.info("begin [{}] 's onApplicationEvent", buildKeyMessage());
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("begin [{}] 's onApplicationEvent", buildKeyMessage());
         }
         //---------------------------------------------------------------
 
