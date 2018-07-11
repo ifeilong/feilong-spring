@@ -54,7 +54,7 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
      */
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
+    public void doOnApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
         if (!LOGGER.isInfoEnabled()){
             return;
         }

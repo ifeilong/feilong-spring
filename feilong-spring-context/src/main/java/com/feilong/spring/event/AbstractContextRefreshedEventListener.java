@@ -15,6 +15,10 @@
  */
 package com.feilong.spring.event;
 
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -94,4 +98,37 @@ public abstract class AbstractContextRefreshedEventListener implements Applicati
             LOGGER.info(BeanLogMessageBuilder.buildFieldsMessage(this));
         }
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+     */
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
+        Date beginDate = new Date();
+
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("begin [{}] 's onApplicationEvent", this.getClass().getName());
+        }
+        //---------------------------------------------------------------
+
+        doOnApplicationEvent(contextRefreshedEvent);
+
+        //---------------------------------------------------------------
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info("end [{}] 's onApplicationEvent,use time: [{}]", this.getClass().getName(), formatDuration(beginDate));
+        }
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Do on application event.
+     *
+     * @param contextRefreshedEvent
+     *            the context refreshed event
+     * @since 1.12.7
+     */
+    public abstract void doOnApplicationEvent(ContextRefreshedEvent contextRefreshedEvent);
 }

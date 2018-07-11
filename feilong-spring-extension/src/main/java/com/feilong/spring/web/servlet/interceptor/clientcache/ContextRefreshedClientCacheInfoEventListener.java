@@ -83,7 +83,6 @@ public class ContextRefreshedClientCacheInfoEventListener extends AbstractContex
      */
     @Override
     protected void doLogging(Map<RequestMappingInfo, HandlerMethod> requestMappingInfoAndHandlerMethodMap){
-
         Map<String, String> urlAndClientCacheMap = HandlerMappingUtil.buildUrlAndAnnotationStringMap(
                         requestMappingInfoAndHandlerMethodMap,
                         ClientCache.class,
@@ -91,7 +90,7 @@ public class ContextRefreshedClientCacheInfoEventListener extends AbstractContex
 
         //---------------------------------------------------------------
         if (isNullOrEmpty(urlAndClientCacheMap)){
-            LOGGER.info("urlAndClientCacheMap is null or empty");
+            LOGGER.info("no @RequestMapping method has [@ClientCache] annotation,do nothing~");
             return;
         }
 

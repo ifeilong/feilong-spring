@@ -15,14 +15,17 @@
  */
 package com.feilong.spring.context;
 
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static com.feilong.core.util.SortUtil.sortArray;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.Validate;
-import org.springframework.beans.BeansException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
@@ -36,6 +39,11 @@ import org.springframework.core.io.support.ResourcePatternResolver;
  * @since 1.0.8
  */
 public final class ApplicationContextUtil{
+
+    /** The Constant log. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextUtil.class);
+
+    //---------------------------------------------------------------
 
     /** Don't let anyone instantiate this class. */
     private ApplicationContextUtil(){
@@ -52,13 +60,18 @@ public final class ApplicationContextUtil{
      *            the application context
      * @return 如果 <code>applicationContext</code> 是null,抛出 {@link NullPointerException}<br>
      */
-    public static Map<String, Object> getApplicationContextForLogMap(ApplicationContext applicationContext){
+    public static Map<String, Object> getApplicationContextInfoMapForLog(ApplicationContext applicationContext){
         Validate.notNull(applicationContext, "applicationContext can't be null!");
 
+        Date beginDate = new Date();
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("begin read [{}] info", buildKeyMessage(applicationContext));
+        }
         //---------------------------------------------------------------
         Map<String, Object> map = newLinkedHashMap();
 
-        map.put("id", applicationContext.getId());
+        map.put("id", buildKeyMessage(applicationContext));
         map.put("class", applicationContext.getClass());
         map.put("displayName", applicationContext.getDisplayName());
         map.put("beanDefinitionCount", applicationContext.getBeanDefinitionCount());
@@ -71,17 +84,22 @@ public final class ApplicationContextUtil{
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
         sortArray(beanDefinitionNames);
 
-        map.put("beanDefinitionNamesAndClassMap", buildBeanDefinitionNamesAndClassMap(applicationContext, beanDefinitionNames));
+        map.put("beanDefinitionNamesAndClassMap", buildBeanDefinitionNameAndClassMap(applicationContext, beanDefinitionNames));
 
-        //        Environment environment = applicationContext.getEnvironment();
-        //        map.put("environment", environment);
+        //Environment environment = applicationContext.getEnvironment();
+        //map.put("environment", environment);
 
         map.put("ApplicationContext.CLASSPATH_ALL_URL_PREFIX", ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX);
         map.put("ApplicationContext.CLASSPATH_URL_PREFIX", ResourceLoader.CLASSPATH_URL_PREFIX);
         map.put("ApplicationContext.FACTORY_BEAN_PREFIX", BeanFactory.FACTORY_BEAN_PREFIX);
 
         ApplicationContext parent = applicationContext.getParent();
-        map.put("parent info", null == parent ? null : getApplicationContextForLogMap(parent));
+        map.put("parent info", null == parent ? null : getApplicationContextInfoMapForLog(parent));
+
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("end read [{}] info,use time: [{}]", buildKeyMessage(applicationContext), formatDuration(beginDate));
+        }
         return map;
     }
 
@@ -97,24 +115,62 @@ public final class ApplicationContextUtil{
      * @return the map
      * @since 1.10.4
      */
-    private static Map<String, String> buildBeanDefinitionNamesAndClassMap(
+    private static Map<String, String> buildBeanDefinitionNameAndClassMap(
                     ApplicationContext applicationContext,
                     String[] beanDefinitionNames){
         Map<String, String> map = new TreeMap<>();
 
+        Date beginDate = new Date();
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("begin build [{}] BeanDefinitionNameAndClassMap", buildKeyMessage(applicationContext));
+        }
+
         //---------------------------------------------------------------
         for (String beanDefinitionName : beanDefinitionNames){
-            String value = "";
-            try{
-                Object bean = applicationContext.getBean(beanDefinitionName);
+            map.put(beanDefinitionName, buildValue(applicationContext, beanDefinitionName));
+        }
 
-                value = buildValue(applicationContext, beanDefinitionName, bean);
-            }catch (BeansException e){
-                value = e.getMessage();
-            }
-            map.put(beanDefinitionName, value);
+        //---------------------------------------------------------------
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(
+                            "end build [{}] BeanDefinitionNameAndClassMap,use time: [{}]",
+                            buildKeyMessage(applicationContext),
+                            formatDuration(beginDate));
         }
         return map;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * @param applicationContext
+     * @return
+     * @since 1.12.7
+     */
+    private static String buildKeyMessage(ApplicationContext applicationContext){
+        return applicationContext.getDisplayName();
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Builds the value.
+     *
+     * @param applicationContext
+     *            the application context
+     * @param beanDefinitionName
+     *            the bean definition name
+     * @return the string
+     * @since 1.12.7
+     */
+    private static String buildValue(ApplicationContext applicationContext,String beanDefinitionName){
+        try{
+            Object bean = applicationContext.getBean(beanDefinitionName);
+            return buildValue(applicationContext, beanDefinitionName, bean);
+        }catch (Exception e){
+            return e.getMessage();
+        }
     }
 
     //---------------------------------------------------------------
@@ -135,7 +191,6 @@ public final class ApplicationContextUtil{
     private static String buildValue(ApplicationContext applicationContext,String beanDefinitionName,Object bean)
                     throws NoSuchBeanDefinitionException{
         String canonicalName = bean.getClass().getCanonicalName();
-
         return canonicalName + (applicationContext.isPrototype(beanDefinitionName) ? "[Prototype]"
                         : (applicationContext.isSingleton(beanDefinitionName) ? "[Singleton]" : ""));
     }

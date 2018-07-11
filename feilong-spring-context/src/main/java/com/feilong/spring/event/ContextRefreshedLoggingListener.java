@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.event;
 
-import static com.feilong.spring.context.ApplicationContextUtil.getApplicationContextForLogMap;
+import static com.feilong.spring.context.ApplicationContextUtil.getApplicationContextInfoMapForLog;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,13 +161,14 @@ public class ContextRefreshedLoggingListener extends AbstractContextRefreshedEve
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+     * @see com.feilong.spring.event.AbstractContextRefreshedEventListener#doOnApplicationEvent(org.springframework.context.event.
+     * ContextRefreshedEvent)
      */
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
+    public void doOnApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
         if (LOGGER.isDebugEnabled()){
             ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
-            LOGGER.debug("applicationContext info:{}", JsonUtil.format(getApplicationContextForLogMap(applicationContext)));
+            LOGGER.debug("applicationContext info:{}", JsonUtil.format(getApplicationContextInfoMapForLog(applicationContext)));
         }
     }
 }

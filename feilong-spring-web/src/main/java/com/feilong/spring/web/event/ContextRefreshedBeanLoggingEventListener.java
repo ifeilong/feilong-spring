@@ -37,15 +37,13 @@ import com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder;
  * 启动的时候显示相关bean的日志信息.
  * 
  * <p>
- * 详细使用方法, 参见 {@link com.feilong.spring.web.event.builder.CookieAccessorBeanToMapBuilder}, {@link HandlerExceptionResolverBeanToMapBuilder},
- * {@link MappedInterceptorBeanToMapBuilder} 等类上注释
+ * 详细使用方法, 参见 {@link HandlerExceptionResolverBeanToMapBuilder},{@link MappedInterceptorBeanToMapBuilder} 等类上注释
  * </p>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @param <T>
  *            the generic type
  * @see org.springframework.context.event.SmartApplicationListener
- * @see com.feilong.spring.web.event.builder.CookieAccessorBeanToMapBuilder
  * @see HandlerExceptionResolverBeanToMapBuilder
  * @see MappedInterceptorBeanToMapBuilder
  * @since 1.10.4
@@ -68,10 +66,11 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     /*
      * (non-Javadoc)
      * 
-     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+     * @see com.feilong.spring.event.AbstractContextRefreshedEventListener#doOnApplicationEvent(org.springframework.context.event.
+     * ContextRefreshedEvent)
      */
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
+    public void doOnApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
         if (!LOGGER.isInfoEnabled()){
             return;
         }
