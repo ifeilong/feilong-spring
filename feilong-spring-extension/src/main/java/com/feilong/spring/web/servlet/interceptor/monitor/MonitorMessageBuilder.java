@@ -59,7 +59,9 @@ public class MonitorMessageBuilder{
      * @return the string
      */
     static String buildPreMessage(MonitorMessageEntity monitorMessageEntity,HttpServletRequest request){
-        String requestBaseInfo = JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, monitorMessageEntity.getRequestLogSwitch()));
+        String requestBaseInfo = JsonUtil.format(
+                        RequestUtil.getRequestInfoMapForLog(request, monitorMessageEntity.getRequestLogSwitch()),
+                        PreJavaToJsonConfigBuilder.build(monitorMessageEntity));
 
         if (monitorMessageEntity.getIsShowRequestAttribute()){
             return Slf4jUtil.format(

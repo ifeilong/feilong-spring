@@ -39,11 +39,9 @@ import com.feilong.tools.slf4j.Slf4jUtil;
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
  * 
- * <h3>如果不想用</h3>
- * 
- * <blockquote>
- * 该Interceptor本身对性能的影响几乎为0, 如果不想使用, 可以在spring Interceptor配置文件中去掉该配置
- * </blockquote>
+ * <p>
+ * 该Interceptor本身对性能的影响几乎为0
+ * </p>
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.2.2
@@ -203,6 +201,8 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
                             formatDuration(time));
         }
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 获得 stop watch.

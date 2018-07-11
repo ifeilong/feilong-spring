@@ -18,6 +18,7 @@ package com.feilong.spring.web.servlet.interceptor.monitor;
 import static com.feilong.core.TimeInterval.MILLISECOND_PER_SECONDS;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import com.feilong.json.jsonlib.JsonUtil;
@@ -77,6 +78,19 @@ public class MonitorMessageEntity implements Serializable{
      * 是否显示AfterConcurrentHandlingStarted 方法日志.
      */
     private boolean             isShowAfterConcurrentHandlingStartedLog = true;
+
+    //---------------------------------------------------------------
+
+    /**
+     * 敏感参数的名字.
+     * 
+     * <p>
+     * 在这list中的参数 值将会以*** 的形式,输出在日志里面
+     * </p>
+     *
+     * @since 1.12.7
+     */
+    private List<String>        sensitiveRequestParamNameList;
 
     //---------------------------------------------------------------
 
@@ -234,6 +248,37 @@ public class MonitorMessageEntity implements Serializable{
      */
     public void setIsShowPostHandleLog(boolean isShowPostHandleLog){
         this.isShowPostHandleLog = isShowPostHandleLog;
+    }
+
+    /**
+     * 获得 敏感参数的名字.
+     * 
+     * <p>
+     * 在这list中的参数 值将会以*** 的形式,输出在日志里面
+     * </p>
+     * 
+     * @return the sensitiveRequestParamNameList
+     * 
+     * @since 1.12.7
+     */
+    public List<String> getSensitiveRequestParamNameList(){
+        return sensitiveRequestParamNameList;
+    }
+
+    /**
+     * 设置 敏感参数的名字.
+     * 
+     * <p>
+     * 在这list中的参数 值将会以*** 的形式,输出在日志里面
+     * </p>
+     * 
+     * @param sensitiveRequestParamNameList
+     *            the sensitiveRequestParamNameList to set
+     * 
+     * @since 1.12.7
+     */
+    public void setSensitiveRequestParamNameList(List<String> sensitiveRequestParamNameList){
+        this.sensitiveRequestParamNameList = sensitiveRequestParamNameList;
     }
 
 }
