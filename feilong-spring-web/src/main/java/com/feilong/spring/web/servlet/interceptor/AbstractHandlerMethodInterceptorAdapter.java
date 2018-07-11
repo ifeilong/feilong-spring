@@ -18,6 +18,7 @@ package com.feilong.spring.web.servlet.interceptor;
 import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 import static com.feilong.servlet.http.RequestUtil.getRequestFullURL;
+import static com.feilong.tools.slf4j.Slf4jUtil.format;
 
 import java.util.Date;
 
@@ -33,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.spring.BeanLogMessageBuilder;
+import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * 所有 HandlerMethodInterceptor 的父类.
@@ -55,8 +57,38 @@ import com.feilong.spring.BeanLogMessageBuilder;
 public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInterceptorAdapter implements Ordered{
 
     /** The Constant log. */
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+    private static final Logger LOGGER                                        = LoggerFactory
+                    .getLogger(AbstractHandlerMethodInterceptorAdapter.class);
 
+    //---------------------------------------------------------------
+
+    /**
+     * The Constant METHOD_NAME_PRE_HANDLE.
+     * 
+     * @since 1.12.7
+     */
+    private static final String METHOD_NAME_PRE_HANDLE                        = "doPreHandle";
+
+    /**
+     * The Constant METHOD_NAME_POST_HANDLE.
+     * 
+     * @since 1.12.7
+     */
+    private static final String METHOD_NAME_POST_HANDLE                       = "doPostHandle";
+
+    /**
+     * The Constant METHOD_NAME_AFTER_COMPLETION.
+     * 
+     * @since 1.12.7
+     */
+    private static final String METHOD_NAME_AFTER_COMPLETION                  = "doAfterCompletion";
+
+    /**
+     * The Constant METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED.
+     * 
+     * @since 1.12.7
+     */
+    private static final String METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED = "doAfterConcurrentHandlingStarted";
     //---------------------------------------------------------------
 
     /** Post construct. */
@@ -81,16 +113,16 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             logNoHandlerMethod(request, handler);
             return true;//容错
         }
-
-        String methodName = "doPreHandle";
         //---------------------------------------------------------------
         Date beginDate = new Date();
 
-        logBegin(request, methodName);
+        logBegin(request, METHOD_NAME_PRE_HANDLE);
 
         boolean doPreHandle = doPreHandle(request, response, (HandlerMethod) handler);
 
-        logEnd(request, methodName, beginDate);
+        //---------------------------------------------------------------
+
+        logEnd(request, METHOD_NAME_PRE_HANDLE, beginDate);
 
         return doPreHandle;
     }
@@ -108,15 +140,13 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             logNoHandlerMethod(request, handler);
             return;
         }
-
-        String methodName = "doPostHandle";
         //---------------------------------------------------------------
         Date beginDate = new Date();
-        logBegin(request, methodName);
+        logBegin(request, METHOD_NAME_POST_HANDLE);
 
         doPostHandle(request, response, (HandlerMethod) handler, modelAndView);
 
-        logEnd(request, methodName, beginDate);
+        logEnd(request, METHOD_NAME_POST_HANDLE, beginDate);
     }
 
     /*
@@ -132,15 +162,14 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             return;
         }
 
-        String methodName = "doAfterCompletion";
         //---------------------------------------------------------------
         Date beginDate = new Date();
 
-        logBegin(request, methodName);
+        logBegin(request, METHOD_NAME_AFTER_COMPLETION);
 
         doAfterCompletion(request, response, (HandlerMethod) handler, ex);
 
-        logEnd(request, methodName, beginDate);
+        logEnd(request, METHOD_NAME_AFTER_COMPLETION, beginDate);
     }
 
     //---------------------------------------------------------------
@@ -158,16 +187,31 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             return;
         }
 
-        String methodName = "doAfterConcurrentHandlingStarted";
-
         //---------------------------------------------------------------
         Date beginDate = new Date();
 
-        logBegin(request, methodName);
+        logBegin(request, METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED);
 
         doAfterConcurrentHandlingStarted(request, response, (HandlerMethod) handler);
 
-        logEnd(request, methodName, beginDate);
+        logEnd(request, METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED, beginDate);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Log no handler method.
+     *
+     * @param request
+     *            the request
+     * @param handler
+     *            the handler
+     */
+    private static void logNoHandlerMethod(HttpServletRequest request,Object handler){
+        if (LOGGER.isWarnEnabled()){
+            String message = "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,";
+            LOGGER.warn(message, getRequestFullURL(request, UTF8), handler.getClass().getName());
+        }
     }
 
     //---------------------------------------------------------------
@@ -182,10 +226,20 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * @since 1.12.6
      */
     private void logBegin(HttpServletRequest request,String methodName){
+        if (METHOD_NAME_AFTER_COMPLETION.equals(methodName) || METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED.equals(methodName)){
+            if (LOGGER.isTraceEnabled()){
+                LOGGER.trace(buildBeginMessage(request, methodName));
+            }
+            return;
+        }
+
+        //---------------------------------------------------------------
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("will [{}.{}],[{}]", getClass().getSimpleName(), methodName, getRequestFullURL(request, UTF8));
+            LOGGER.debug(buildBeginMessage(request, methodName));
         }
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Log end.
@@ -199,26 +253,55 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * @since 1.12.6
      */
     private void logEnd(HttpServletRequest request,String methodName,Date beginDate){
+        if (METHOD_NAME_AFTER_COMPLETION.equals(methodName) || METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED.equals(methodName)){
+            if (LOGGER.isTraceEnabled()){
+                LOGGER.trace(buildEndMessage(request, methodName, beginDate));
+            }
+            return;
+        }
+
+        //---------------------------------------------------------------
+
         if (LOGGER.isDebugEnabled()){
-            String message = "end [{}.{}],use time: [{}],[{}]";
-            LOGGER.debug(message, getClass().getSimpleName(), methodName, formatDuration(beginDate), getRequestFullURL(request, UTF8));
+            LOGGER.debug(buildEndMessage(request, methodName, beginDate));
         }
     }
 
+    //---------------------------------------------------------------
+
     /**
-     * Log no handler method.
+     * Builds the begin message.
      *
      * @param request
      *            the request
-     * @param handler
-     *            the handler
+     * @param methodName
+     *            the method name
+     * @return the string
+     * @since 1.12.7
      */
-    private void logNoHandlerMethod(HttpServletRequest request,Object handler){
-        if (LOGGER.isWarnEnabled()){
-            String message = "request info:[{}],not [HandlerMethod],handler is [{}],What ghost~~,";
-            LOGGER.warn(message, getRequestFullURL(request, UTF8), handler.getClass().getName());
-        }
+    private String buildBeginMessage(HttpServletRequest request,String methodName){
+        return Slf4jUtil.format("will [{}.{}],[{}]", getClass().getSimpleName(), methodName, getRequestFullURL(request, UTF8));
     }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Builds the end message.
+     *
+     * @param request
+     *            the request
+     * @param methodName
+     *            the method name
+     * @param beginDate
+     *            the begin date
+     * @return the string
+     * @since 1.12.7
+     */
+    private String buildEndMessage(HttpServletRequest request,String methodName,Date beginDate){
+        String pattern = "end [{}.{}],use time: [{}],[{}]";
+        return format(pattern, getClass().getSimpleName(), methodName, formatDuration(beginDate), getRequestFullURL(request, UTF8));
+    }
+
     //---------------------------------------------------------------
 
     /**

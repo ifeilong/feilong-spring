@@ -23,6 +23,9 @@ import static java.util.Collections.emptyMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -32,6 +35,7 @@ import com.feilong.spring.event.AbstractContextRefreshedEventListener;
 import com.feilong.spring.web.event.builder.BeanToMapBuilder;
 import com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder;
 import com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder;
+import com.feilong.spring.web.event.builder.SimpleBeanToMapBuilder;
 
 /**
  * 启动的时候显示相关bean的日志信息.
@@ -51,7 +55,7 @@ import com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder;
 public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
+    private static final Logger LOGGER           = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
 
     //---------------------------------------------------------------
 
@@ -59,7 +63,15 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     private Class<T>            beanClass;
 
     /** 提取bean信息到map. */
-    private BeanToMapBuilder<T> beanToMapBuilder;
+    private BeanToMapBuilder<T> beanToMapBuilder = new SimpleBeanToMapBuilder<T>();
+
+    //---------------------------------------------------------------
+
+    /** Post construct. */
+    @PostConstruct
+    protected void postConstructCurrent(){
+        Validate.notNull(beanClass, "beanClass can't be null!");
+    }
 
     //---------------------------------------------------------------
 
@@ -99,6 +111,10 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
         if (LOGGER.isInfoEnabled()){
             LOGGER.info("[{}] list size:[{}], Info:{}", beanClass, list.size(), formatToSimpleTable(list));
         }
+
+        //String name = "CookieAccessor";
+        //LOGGER.info("{} size:[{}], Info:{}", name, list.size(), formatToSimpleTable(sortListByPropertyNamesValue(list, "name")));
+
     }
 
     //---------------------------------------------------------------
@@ -142,6 +158,18 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
             return emptyMap();
         }
         return beanNameAndBeanMap;
+    }
+
+    //---------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.feilong.spring.event.AbstractContextRefreshedEventListener#keyMessage()
+     */
+    @Override
+    protected String buildKeyMessage(){
+        return "ContextRefreshedBeanLoggingEventListener [" + beanClass.getSimpleName() + "]";
     }
 
     //---------------------------------------------------------------

@@ -109,7 +109,7 @@ public abstract class AbstractContextRefreshedEventListener implements Applicati
         Date beginDate = new Date();
 
         if (LOGGER.isInfoEnabled()){
-            LOGGER.info("begin [{}] 's onApplicationEvent", this.getClass().getName());
+            LOGGER.info("begin [{}] 's onApplicationEvent", buildKeyMessage());
         }
         //---------------------------------------------------------------
 
@@ -117,8 +117,18 @@ public abstract class AbstractContextRefreshedEventListener implements Applicati
 
         //---------------------------------------------------------------
         if (LOGGER.isInfoEnabled()){
-            LOGGER.info("end [{}] 's onApplicationEvent,use time: [{}]", this.getClass().getName(), formatDuration(beginDate));
+            LOGGER.info("end [{}] 's onApplicationEvent,use time: [{}]", buildKeyMessage(), formatDuration(beginDate));
         }
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * @return
+     * @since 1.12.7
+     */
+    protected String buildKeyMessage(){
+        return this.getClass().getName();
     }
 
     //---------------------------------------------------------------

@@ -15,11 +15,6 @@
  */
 package com.feilong.spring.web.event.builder;
 
-import static com.feilong.core.util.MapUtil.newLinkedHashMap;
-
-import java.util.Map;
-
-import org.springframework.core.Ordered;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 /**
@@ -69,30 +64,9 @@ simpleMappingHandlerMethodExceptionResolver                                     
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.11.4
  */
-public class HandlerExceptionResolverBeanToMapBuilder implements BeanToMapBuilder<HandlerExceptionResolver>{
+public class HandlerExceptionResolverBeanToMapBuilder extends SimpleBeanToMapBuilder<HandlerExceptionResolver>{
 
     /** Static instance. */
     // the static instance works for all types
     public static final BeanToMapBuilder<HandlerExceptionResolver> INSTANCE = new HandlerExceptionResolverBeanToMapBuilder();
-
-    //---------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.feilong.spring.web.event.builder.BeanToMapBuilder#build(java.lang.String, java.lang.Object)
-     */
-    @Override
-    public Map<String, Object> build(String beanName,HandlerExceptionResolver handlerExceptionResolver){
-
-        Map<String, Object> map = newLinkedHashMap();
-        map.put("beanName", beanName);
-        map.put("name", handlerExceptionResolver.getClass().getName());
-        map.put(
-                        "order",
-                        handlerExceptionResolver instanceof Ordered ? ((Ordered) handlerExceptionResolver).getOrder()
-                                        : Ordered.LOWEST_PRECEDENCE);
-
-        return map;
-    }
 }
