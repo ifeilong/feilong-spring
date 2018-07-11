@@ -61,6 +61,21 @@ public final class ApplicationContextUtil{
      * @return 如果 <code>applicationContext</code> 是null,抛出 {@link NullPointerException}<br>
      */
     public static Map<String, Object> getApplicationContextInfoMapForLog(ApplicationContext applicationContext){
+        return getApplicationContextInfoMapForLog(applicationContext, true);
+    }
+
+    //---------------------------------------------------------------
+    /**
+     * 获得 application context for log map.
+     *
+     * @param applicationContext
+     *            the application context
+     * @param loadParent
+     *            the load parent
+     * @return 如果 <code>applicationContext</code> 是null,抛出 {@link NullPointerException}<br>
+     * @since 1.12.7
+     */
+    public static Map<String, Object> getApplicationContextInfoMapForLog(ApplicationContext applicationContext,boolean loadParent){
         Validate.notNull(applicationContext, "applicationContext can't be null!");
 
         Date beginDate = new Date();
@@ -93,8 +108,10 @@ public final class ApplicationContextUtil{
         map.put("ApplicationContext.CLASSPATH_URL_PREFIX", ResourceLoader.CLASSPATH_URL_PREFIX);
         map.put("ApplicationContext.FACTORY_BEAN_PREFIX", BeanFactory.FACTORY_BEAN_PREFIX);
 
-        ApplicationContext parent = applicationContext.getParent();
-        map.put("parent info", null == parent ? null : getApplicationContextInfoMapForLog(parent));
+        if (loadParent){
+            ApplicationContext parent = applicationContext.getParent();
+            map.put("parent info", null == parent ? null : getApplicationContextInfoMapForLog(parent));
+        }
 
         //---------------------------------------------------------------
         if (LOGGER.isDebugEnabled()){
@@ -144,8 +161,11 @@ public final class ApplicationContextUtil{
     //---------------------------------------------------------------
 
     /**
+     * Builds the key message.
+     *
      * @param applicationContext
-     * @return
+     *            the application context
+     * @return the string
      * @since 1.12.7
      */
     private static String buildKeyMessage(ApplicationContext applicationContext){

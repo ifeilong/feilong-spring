@@ -145,6 +145,16 @@ import com.feilong.json.jsonlib.JsonUtil;
 }
  * </pre>
  * 
+ * 如果加载 parent bean 时间比较长, 你还可以使用 <b>isShowParentInfo</b> 参数
+ * 
+ * <pre class="code">
+{@code 
+    <bean id="contextRefreshedLoggingListener" class="com.feilong.spring.event.ContextRefreshedLoggingListener" >
+         <property name="isShowParentInfo" value="false" />
+    </bean>
+}
+ * </pre>
+ * 
  * </blockquote>
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
@@ -154,7 +164,14 @@ import com.feilong.json.jsonlib.JsonUtil;
 public class ContextRefreshedLoggingListener extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedLoggingListener.class);
+    private static final Logger LOGGER           = LoggerFactory.getLogger(ContextRefreshedLoggingListener.class);
+
+    /**
+     * 是否显示父容器信息.
+     * 
+     * @since 1.12.7
+     */
+    private boolean             isShowParentInfo = true;
 
     //---------------------------------------------------------------
 
@@ -168,7 +185,22 @@ public class ContextRefreshedLoggingListener extends AbstractContextRefreshedEve
     public void doOnApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
         if (LOGGER.isDebugEnabled()){
             ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
-            LOGGER.debug("applicationContext info:{}", JsonUtil.format(getApplicationContextInfoMapForLog(applicationContext)));
+            LOGGER.debug(
+                            "applicationContext info:{}",
+                            JsonUtil.format(getApplicationContextInfoMapForLog(applicationContext, isShowParentInfo)));
         }
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 设置 是否显示父容器信息.
+     *
+     * @param isShowParentInfo
+     *            the isShowParentInfo to set
+     * @since 1.12.7
+     */
+    public void setIsShowParentInfo(boolean isShowParentInfo){
+        this.isShowParentInfo = isShowParentInfo;
     }
 }
