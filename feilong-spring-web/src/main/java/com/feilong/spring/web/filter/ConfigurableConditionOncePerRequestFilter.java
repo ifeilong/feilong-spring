@@ -107,6 +107,8 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
     @Override
     protected final boolean shouldNotFilter(HttpServletRequest request) throws ServletException{
         String requestURI = request.getRequestURI();
+
+        //判断后缀
         boolean shouldNotFilterSuffix = isShouldNotFilterSuffix(requestURI);
         if (shouldNotFilterSuffix){
             LOGGER.debug("[{}],requestURI:[{}],suffix should not filter", this.getClass().getSimpleName(), requestURI);
@@ -115,6 +117,7 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
 
         //---------------------------------------------------------------
         String method = request.getMethod();
+        //判断请求的方法
         boolean shouldNotFilterMethod = isShouldNotFilterMethod(method);
         if (shouldNotFilterMethod){
             LOGGER.debug("[{}],requestURI:[{}],method:[{}] ,should not filter", this.getClass().getSimpleName(), requestURI, method);
@@ -122,7 +125,7 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
         }
 
         //---------------------------------------------------------------
-
+        //判断是否是ajax 请求
         if (isNotFilterAjax){
             if (RequestUtil.isAjaxRequest(request)){
                 LOGGER.debug("[{}],requestURI:[{}],is ajax request,should not filter", this.getClass().getSimpleName(), requestURI);
@@ -131,6 +134,22 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
         }
 
         //---------------------------------------------------------------
+        //自定义校验
+        return doCustomShouldNotFilter(request);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 自定义的校验是否需要过滤.
+     *
+     * @param request
+     *            the request
+     * @return 返回如果是 true ,表示不继续走该过滤器
+     * @since 1.12.8
+     */
+    @SuppressWarnings({ "static-method", "unused" })
+    protected boolean doCustomShouldNotFilter(HttpServletRequest request){
         return false;
     }
 
@@ -150,8 +169,6 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
                     return true;
                 }
             }
-            //TODO 忽视大小写
-            //return ArrayUtils.contains(filterHttpMethods, method);
         }
         return false;
     }
@@ -302,13 +319,9 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
      */
     @Override
     protected void initFilterBean() throws ServletException{
-        //---------------------------------------------------------------
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug("[{}],propertty infos:{}", this.getClass().getName(), BeanLogMessageBuilder.buildFieldsSimpleMessage(this));
         }
-
-        //---------------------------------------------------------------
-
         super.initFilterBean();
     }
 
