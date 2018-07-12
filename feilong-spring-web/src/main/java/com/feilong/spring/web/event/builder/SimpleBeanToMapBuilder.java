@@ -44,7 +44,7 @@ public class SimpleBeanToMapBuilder<T> implements BeanToMapBuilder<T>{
 
         map.put("beanName", beanName);
         map.put("name", buildName(filter));
-        map.put("order", ClassUtil.isInstance(filter, Ordered.class) ? ((Ordered) filter).getOrder() : Ordered.LOWEST_PRECEDENCE);
+        map.put("order", ClassUtil.isInstance(filter, Ordered.class) ? "" + ((Ordered) filter).getOrder() : "-");
 
         packExtentionInfo(map);
 
