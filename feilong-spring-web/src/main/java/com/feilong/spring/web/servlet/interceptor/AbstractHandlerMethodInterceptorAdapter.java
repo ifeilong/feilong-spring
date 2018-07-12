@@ -238,8 +238,9 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         }
 
         //---------------------------------------------------------------
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug(buildBeginMessage(request, methodName));
+        //since 1.12.9 change to trace
+        if (LOGGER.isTraceEnabled()){
+            LOGGER.trace(buildBeginMessage(request, methodName));
         }
     }
 
