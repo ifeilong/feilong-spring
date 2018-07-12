@@ -15,6 +15,7 @@
  */
 package com.feilong.spring.web.event;
 
+import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
@@ -31,6 +32,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 
+import com.feilong.core.util.SortUtil;
+import com.feilong.formatter.entity.BeanFormatterConfig;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
 import com.feilong.spring.web.event.builder.BeanToMapBuilder;
 import com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder;
@@ -61,6 +64,20 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
 
     /** The bean class. */
     private Class<T>            beanClass;
+
+    /**
+     * list 排序,属性和order 配置.
+     * 
+     * @since 1.12.8
+     */
+    private String[]            listSortPropertyNameAndOrders;
+
+    /**
+     * 提供格式化的时候,相关参数控制.
+     * 
+     * @since 1.12.8
+     */
+    private BeanFormatterConfig beanFormatterConfig;
 
     /** 提取bean信息到map. */
     private BeanToMapBuilder<T> beanToMapBuilder = new SimpleBeanToMapBuilder<T>();
@@ -109,12 +126,11 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      */
     protected void doLog(List<Map<String, Object>> list){
         if (LOGGER.isInfoEnabled()){
-            LOGGER.info("[{}] list size:[{}], Info:{}", beanClass, list.size(), formatToSimpleTable(list));
+            if (isNotNullOrEmpty(listSortPropertyNameAndOrders)){
+                list = SortUtil.sortListByPropertyNamesValue(list, listSortPropertyNameAndOrders);
+            }
+            LOGGER.info("[{}] list size:[{}], Info:{}", beanClass, list.size(), formatToSimpleTable(list, beanFormatterConfig));
         }
-
-        //String name = "CookieAccessor";
-        //LOGGER.info("{} size:[{}], Info:{}", name, list.size(), formatToSimpleTable(sortListByPropertyNamesValue(list, "name")));
-
     }
 
     //---------------------------------------------------------------
@@ -173,9 +189,8 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     }
 
     //---------------------------------------------------------------
-
     /**
-     * Gets the bean class.
+     * 获得 bean class.
      *
      * @return the beanClass
      */
@@ -184,7 +199,7 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     }
 
     /**
-     * Sets the bean class.
+     * 设置 bean class.
      *
      * @param beanClass
      *            the beanClass to set
@@ -194,7 +209,49 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     }
 
     /**
-     * Gets the bean to map builder.
+     * 获得 list 排序,属性和order 配置.
+     *
+     * @return the listSortPropertyNameAndOrders
+     * @since 1.12.8
+     */
+    public String[] getListSortPropertyNameAndOrders(){
+        return listSortPropertyNameAndOrders;
+    }
+
+    /**
+     * 设置 list 排序,属性和order 配置.
+     *
+     * @param listSortPropertyNameAndOrders
+     *            the listSortPropertyNameAndOrders to set
+     * @since 1.12.8
+     */
+    public void setListSortPropertyNameAndOrders(String[] listSortPropertyNameAndOrders){
+        this.listSortPropertyNameAndOrders = listSortPropertyNameAndOrders;
+    }
+
+    /**
+     * 获得 提供格式化的时候,相关参数控制.
+     *
+     * @return the beanFormatterConfig
+     * @since 1.12.8
+     */
+    public BeanFormatterConfig getBeanFormatterConfig(){
+        return beanFormatterConfig;
+    }
+
+    /**
+     * 设置 提供格式化的时候,相关参数控制.
+     *
+     * @param beanFormatterConfig
+     *            the beanFormatterConfig to set
+     * @since 1.12.8
+     */
+    public void setBeanFormatterConfig(BeanFormatterConfig beanFormatterConfig){
+        this.beanFormatterConfig = beanFormatterConfig;
+    }
+
+    /**
+     * 获得 提取bean信息到map.
      *
      * @return the beanToMapBuilder
      */
@@ -203,7 +260,7 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     }
 
     /**
-     * Sets the bean to map builder.
+     * 设置 提取bean信息到map.
      *
      * @param beanToMapBuilder
      *            the beanToMapBuilder to set
