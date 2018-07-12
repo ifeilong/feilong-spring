@@ -15,12 +15,15 @@
  */
 package com.feilong.spring.web.event.builder;
 
+import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.core.Ordered;
 
+import com.feilong.core.bean.PropertyUtil;
 import com.feilong.core.lang.ClassUtil;
 
 /**
@@ -33,18 +36,38 @@ import com.feilong.core.lang.ClassUtil;
  */
 public class SimpleBeanToMapBuilder<T> implements BeanToMapBuilder<T>{
 
+    /**
+     * 自动提取属性的名字.
+     * 
+     * @since 1.12.8
+     */
+    private List<String> autoExtractPropertyNameList;
+
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
      * @see com.feilong.spring.web.event.builder.BeanToMapBuilder#build(java.lang.String, java.lang.Object)
      */
     @Override
-    public Map<String, Object> build(String beanName,T filter){
+    public Map<String, Object> build(String beanName,T bean){
         Map<String, Object> map = newLinkedHashMap();
 
         map.put("beanName", beanName);
-        map.put("name", buildName(filter));
-        map.put("order", ClassUtil.isInstance(filter, Ordered.class) ? "" + ((Ordered) filter).getOrder() : "-");
+        map.put("name", buildName(bean));
+
+        //---------------------------------------------------------------
+
+        //since 1.12.8
+        if (isNotNullOrEmpty(autoExtractPropertyNameList)){
+            for (String autoExtractPropertyName : autoExtractPropertyNameList){
+                map.put(autoExtractPropertyName, PropertyUtil.getProperty(bean, autoExtractPropertyName));
+            }
+        }
+
+        //---------------------------------------------------------------
+        map.put("order", ClassUtil.isInstance(bean, Ordered.class) ? "" + ((Ordered) bean).getOrder() : "-");
 
         packExtentionInfo(map);
 
@@ -76,4 +99,18 @@ public class SimpleBeanToMapBuilder<T> implements BeanToMapBuilder<T>{
     protected String buildName(T filter){
         return filter.getClass().getName();
     }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 设置 自动提取属性的名字.
+     *
+     * @param autoExtractPropertyNameList
+     *            the autoExtractPropertyNameList to set
+     * @since 1.12.8
+     */
+    public void setAutoExtractPropertyNameList(List<String> autoExtractPropertyNameList){
+        this.autoExtractPropertyNameList = autoExtractPropertyNameList;
+    }
+
 }
