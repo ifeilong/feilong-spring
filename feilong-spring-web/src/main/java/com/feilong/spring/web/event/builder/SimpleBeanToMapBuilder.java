@@ -39,7 +39,7 @@ public class SimpleBeanToMapBuilder<T> implements BeanToMapBuilder<T>{
     /**
      * 自动提取属性的名字.
      * 
-     * @since 1.12.8
+     * @since 1.12.9
      */
     private List<String> autoExtractPropertyNameList;
 
@@ -59,7 +59,7 @@ public class SimpleBeanToMapBuilder<T> implements BeanToMapBuilder<T>{
 
         //---------------------------------------------------------------
 
-        //since 1.12.8
+        //since 1.12.9
         if (isNotNullOrEmpty(autoExtractPropertyNameList)){
             for (String autoExtractPropertyName : autoExtractPropertyNameList){
                 map.put(autoExtractPropertyName, PropertyUtil.getProperty(bean, autoExtractPropertyName));
@@ -107,7 +107,7 @@ public class SimpleBeanToMapBuilder<T> implements BeanToMapBuilder<T>{
      *
      * @param autoExtractPropertyNameList
      *            the autoExtractPropertyNameList to set
-     * @since 1.12.8
+     * @since 1.12.9
      */
     public void setAutoExtractPropertyNameList(List<String> autoExtractPropertyNameList){
         this.autoExtractPropertyNameList = autoExtractPropertyNameList;

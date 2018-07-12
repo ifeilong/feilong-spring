@@ -68,14 +68,14 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     /**
      * list 排序,属性和order 配置.
      * 
-     * @since 1.12.8
+     * @since 1.12.9
      */
     private String[]            listSortPropertyNameAndOrders;
 
     /**
      * 提供格式化的时候,相关参数控制.
      * 
-     * @since 1.12.8
+     * @since 1.12.9
      */
     private BeanFormatterConfig beanFormatterConfig;
 
@@ -212,7 +212,7 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      * 获得 list 排序,属性和order 配置.
      *
      * @return the listSortPropertyNameAndOrders
-     * @since 1.12.8
+     * @since 1.12.9
      */
     public String[] getListSortPropertyNameAndOrders(){
         return listSortPropertyNameAndOrders;
@@ -223,7 +223,7 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      *
      * @param listSortPropertyNameAndOrders
      *            the listSortPropertyNameAndOrders to set
-     * @since 1.12.8
+     * @since 1.12.9
      */
     public void setListSortPropertyNameAndOrders(String[] listSortPropertyNameAndOrders){
         this.listSortPropertyNameAndOrders = listSortPropertyNameAndOrders;
@@ -233,7 +233,7 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      * 获得 提供格式化的时候,相关参数控制.
      *
      * @return the beanFormatterConfig
-     * @since 1.12.8
+     * @since 1.12.9
      */
     public BeanFormatterConfig getBeanFormatterConfig(){
         return beanFormatterConfig;
@@ -244,7 +244,7 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      *
      * @param beanFormatterConfig
      *            the beanFormatterConfig to set
-     * @since 1.12.8
+     * @since 1.12.9
      */
     public void setBeanFormatterConfig(BeanFormatterConfig beanFormatterConfig){
         this.beanFormatterConfig = beanFormatterConfig;
