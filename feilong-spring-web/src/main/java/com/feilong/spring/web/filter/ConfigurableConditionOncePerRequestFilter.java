@@ -17,6 +17,7 @@ package com.feilong.spring.web.filter;
 
 import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.core.Validator.isNotNullOrEmpty;
+import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toArray;
 import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
@@ -65,7 +66,13 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
     private boolean             isNotFilterAjax           = false;
 
     //---------------------------------------------------------------
-    /** 支持过滤的 http 请求 method. */
+    /**
+     * 支持过滤的 http 请求 method.
+     * 
+     * <p>
+     * 默认支持 get /post,不在这些定义的支持范围内的请求method,将不会使用 该filter 过滤
+     * </p>
+     */
     private String[]            filterHttpMethods         = toArray("get", "post");
 
     //---------------------------------------------------------------
@@ -156,21 +163,26 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
     //---------------------------------------------------------------
 
     /**
-     * 是否是不过滤的方法.
+     * 是否是不过滤的method 方法.
      *
      * @param method
      *            the method
-     * @return true, if is should not filter method
+     * @return 如果不过滤,返回 true ; 如果要过滤 返回false
      */
     private boolean isShouldNotFilterMethod(String method){
-        if (isNotNullOrEmpty(filterHttpMethods)){
-            for (String filterHttpMethod : filterHttpMethods){
-                if (StringUtils.equalsIgnoreCase(filterHttpMethod, method)){
-                    return true;
-                }
+        //null 或者 empty 表示没有一个 method 支持的,不过滤
+        if (isNullOrEmpty(filterHttpMethods)){
+            return true;
+        }
+
+        //---------------------------------------------------------------
+        for (String filterHttpMethod : filterHttpMethods){
+            //如果当前的请求 method ,在支持的列表里面, 那么表示要过滤
+            if (StringUtils.equalsIgnoreCase(filterHttpMethod, method)){
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     //---------------------------------------------------------------
@@ -361,7 +373,11 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
 
     /**
      * 设置 支持过滤的 http 请求 method.
-     *
+     * 
+     * <p>
+     * 默认支持 get /post,不在这些定义的支持范围内的请求method,将不会使用 该filter 过滤
+     * </p>
+     * 
      * @param filterHttpMethods
      *            the filterHttpMethods to set
      */
@@ -371,7 +387,7 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
 
     /**
      * 设置 是否不过滤ajax.
-     *
+     * 
      * @param isNotFilterAjax
      *            the isNotFilterAjax to set
      */
