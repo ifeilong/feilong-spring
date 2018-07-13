@@ -89,6 +89,66 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * @since 1.12.7
      */
     private static final String METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED = "doAfterConcurrentHandlingStarted";
+
+    //---------------------------------------------------------------
+
+    /**
+     * 是否需要执行 preHandle方法.
+     * 
+     * <p>
+     * 比如 seo 之类的,只需要执行 post 即可
+     * </p>
+     * 
+     * @since 1.12.9
+     */
+    private boolean             isNeedDoPreHandle                             = true;
+
+    /**
+     * 是否需要执行 postHandle方法.
+     * 
+     * <p>
+     * 比如 seo 之类的,只需要执行 post 即可
+     * </p>
+     * 
+     * @since 1.12.9
+     */
+    private boolean             isNeedDoPostHandle                            = true;
+
+    //---------------------------------------------------------------
+
+    /**
+     * 是否需要执行 AfterCompletion 方法.
+     * 
+     * <p>
+     * 比如 seo 之类的,只需要执行 post 即可
+     * </p>
+     * 
+     * @since 1.12.9
+     */
+    private boolean             isNeedDoAfterCompletion                       = false;
+
+    /**
+     * 是否需要执行 AfterConcurrentHandlingStarted 方法.
+     * 
+     * <p>
+     * 比如 seo 之类的,只需要执行 post 即可
+     * </p>
+     * 
+     * @since 1.12.9
+     */
+    private boolean             isNeedDoAfterConcurrentHandlingStarted        = false;
+
+    //---------------------------------------------------------------
+    //    /**
+    //     * preHandle 的条件参数
+    //     */
+    //    private InterceptorConditionEntity preHandleInterceptorConditionEntity;
+    //
+    //    /**
+    //     * postHandle 的条件参数
+    //     */
+    //    private InterceptorConditionEntity postHandleInterceptorConditionEntity;
+
     //---------------------------------------------------------------
 
     /** Post construct. */
@@ -113,6 +173,12 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             logNoHandlerMethod(request, handler);
             return true;//容错
         }
+
+        //---------------------------------------------------------------
+        if (!isNeedDoPreHandle){
+            logNoNeedDo(request, (HandlerMethod) handler, METHOD_NAME_PRE_HANDLE);
+            return true;
+        }
         //---------------------------------------------------------------
         Date beginDate = new Date();
 
@@ -121,9 +187,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         boolean doPreHandle = doPreHandle(request, response, (HandlerMethod) handler);
 
         //---------------------------------------------------------------
-
         logEnd(request, METHOD_NAME_PRE_HANDLE, beginDate);
-
         return doPreHandle;
     }
 
@@ -140,6 +204,12 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
                     throws Exception{
         if (!(handler instanceof HandlerMethod)){
             logNoHandlerMethod(request, handler);
+            return;
+        }
+
+        //---------------------------------------------------------------
+        if (!isNeedDoPostHandle){
+            logNoNeedDo(request, (HandlerMethod) handler, METHOD_NAME_POST_HANDLE);
             return;
         }
         //---------------------------------------------------------------
@@ -167,6 +237,11 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         }
 
         //---------------------------------------------------------------
+        if (!isNeedDoAfterCompletion){
+            logNoNeedDo(request, (HandlerMethod) handler, METHOD_NAME_AFTER_COMPLETION);
+            return;
+        }
+        //---------------------------------------------------------------
         Date beginDate = new Date();
 
         logBegin(request, METHOD_NAME_AFTER_COMPLETION);
@@ -190,7 +265,11 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             logNoHandlerMethod(request, handler);
             return;
         }
-
+        //---------------------------------------------------------------
+        if (!isNeedDoAfterConcurrentHandlingStarted){
+            logNoNeedDo(request, (HandlerMethod) handler, METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED);
+            return;
+        }
         //---------------------------------------------------------------
         Date beginDate = new Date();
 
@@ -199,6 +278,26 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         doAfterConcurrentHandlingStarted(request, response, (HandlerMethod) handler);
 
         logEnd(request, METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED, beginDate);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Log no need do.
+     *
+     * @param request
+     *            the request
+     * @param handlerMethod
+     *            the handler method
+     * @param methodName
+     *            the method name
+     * @since 1.12.9
+     */
+    private static void logNoNeedDo(HttpServletRequest request,HandlerMethod handlerMethod,String methodName){
+        if (LOGGER.isDebugEnabled()){
+            String message = "request info:[{}],no need do [{} {}],skip~";
+            LOGGER.debug(message, getRequestFullURL(request, UTF8), handlerMethod.getClass().getSimpleName(), methodName);
+        }
     }
 
     //---------------------------------------------------------------
@@ -381,6 +480,48 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
     @Override
     public int getOrder(){
         return 0;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 设置 是否需要执行 preHandle方法.
+     *
+     * @param isDoPreHandle
+     *            the isDoPreHandle to set
+     */
+    public void setIsNeedDoPreHandle(boolean isDoPreHandle){
+        this.isNeedDoPreHandle = isDoPreHandle;
+    }
+
+    /**
+     * 设置 是否需要执行 postHandle方法.
+     *
+     * @param isNeedDoPostHandle
+     *            the isNeedDoPostHandle to set
+     */
+    public void setIsNeedDoPostHandle(boolean isNeedDoPostHandle){
+        this.isNeedDoPostHandle = isNeedDoPostHandle;
+    }
+
+    /**
+     * 设置 是否需要执行 AfterCompletion 方法.
+     *
+     * @param isNeedDoAfterCompletion
+     *            the isNeedDoAfterCompletion to set
+     */
+    public void setIsNeedDoAfterCompletion(boolean isNeedDoAfterCompletion){
+        this.isNeedDoAfterCompletion = isNeedDoAfterCompletion;
+    }
+
+    /**
+     * 设置 是否需要执行 AfterConcurrentHandlingStarted 方法.
+     *
+     * @param isNeedDoAfterConcurrentHandlingStarted
+     *            the isNeedDoAfterConcurrentHandlingStarted to set
+     */
+    public void setIsNeedDoAfterConcurrentHandlingStarted(boolean isNeedDoAfterConcurrentHandlingStarted){
+        this.isNeedDoAfterConcurrentHandlingStarted = isNeedDoAfterConcurrentHandlingStarted;
     }
 
 }
