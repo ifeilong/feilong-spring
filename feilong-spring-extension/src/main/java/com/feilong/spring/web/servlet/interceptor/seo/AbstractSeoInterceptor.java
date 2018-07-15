@@ -71,6 +71,8 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
     /** request作用域,关于 SEOVIEWCOMMAND 属性的里面的值. */
     private static final String                     REQUEST_ATTRIBUTE_SEOVIEWCOMMAND   = "seoViewCommand";
 
+    //---------------------------------------------------------------
+
     /** 您可以修改seoViewCommand在 作用域里面的名称,默认是 {@link #REQUEST_ATTRIBUTE_SEOVIEWCOMMAND}. */
     private String                                  seoViewCommandRequestAttributeName = REQUEST_ATTRIBUTE_SEOVIEWCOMMAND;
 
@@ -105,7 +107,6 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
     @Override
     public void doPostHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod,ModelAndView modelAndView){
         SeoViewCommand seoViewCommand = build(request, modelAndView);
-
         seoViewCommand = detect(seoViewCommand, request);
 
         if (LOGGER.isTraceEnabled()){
@@ -114,7 +115,6 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
         }
 
         //---------------------------------------------------------------
-
         request.setAttribute(seoViewCommandRequestAttributeName, seoViewCommand);
     }
 
@@ -161,8 +161,6 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
         if (null != seoViewCommandCustomBuilder){
             return seoViewCommandCustomBuilder.build(LocaleUtil.getLocale(), request);
         }
-
-        //---------------------------------------------------------------
         return null;
     }
 
@@ -183,7 +181,6 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
         Map<String, Object> requestAndModelAttributeMap = ModelAndViewUtil.getRequestAndModelAttributeMap(request, modelAndView);
 
         //---------------------------------------------------------------
-
         for (Map.Entry<String, Object> entry : requestAndModelAttributeMap.entrySet()){
             String attributeName = entry.getKey();
             Object attributeValue = entry.getValue();
@@ -211,7 +208,6 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
                     return seoViewCommand;
                 }
             }
-
         }
         return null;
     }
@@ -263,5 +259,4 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
     public void setSeoViewCommandFromAttributeValueBuilder(SeoViewCommandFromAttributeValueBuilder seoViewCommandFromAttributeValueBuilder){
         this.seoViewCommandFromAttributeValueBuilder = seoViewCommandFromAttributeValueBuilder;
     }
-
 }

@@ -40,10 +40,11 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * 所有 HandlerMethodInterceptor 的父类.
  * 
  * <h3>作用以及说明:</h3>
+ * 
  * <blockquote>
  * <ol>
- * <li>必须是 HandlerMethod 方法,才能进入相关方法;<br>
- * 如果不是 HandlerMethod,将会以 warn级别日志输出</li>
+ * <li>必须是 HandlerMethod 方法,才能进入相关方法;</li>
+ * <li>如果不是 HandlerMethod,将会以 warn级别日志输出</li>
  * <li>提供了记录方法耗时记录日志功能</li>
  * </ol>
  * </blockquote>
