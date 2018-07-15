@@ -176,7 +176,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
 
         //---------------------------------------------------------------
         if (!isNeedDoPreHandle){
-            logNoNeedDo(request, (HandlerMethod) handler, METHOD_NAME_PRE_HANDLE);
+            logNoNeedDo(request, METHOD_NAME_PRE_HANDLE);
             return true;
         }
         //---------------------------------------------------------------
@@ -209,7 +209,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
 
         //---------------------------------------------------------------
         if (!isNeedDoPostHandle){
-            logNoNeedDo(request, (HandlerMethod) handler, METHOD_NAME_POST_HANDLE);
+            logNoNeedDo(request, METHOD_NAME_POST_HANDLE);
             return;
         }
         //---------------------------------------------------------------
@@ -238,7 +238,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
 
         //---------------------------------------------------------------
         if (!isNeedDoAfterCompletion){
-            logNoNeedDo(request, (HandlerMethod) handler, METHOD_NAME_AFTER_COMPLETION);
+            logNoNeedDo(request, METHOD_NAME_AFTER_COMPLETION);
             return;
         }
         //---------------------------------------------------------------
@@ -267,7 +267,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         }
         //---------------------------------------------------------------
         if (!isNeedDoAfterConcurrentHandlingStarted){
-            logNoNeedDo(request, (HandlerMethod) handler, METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED);
+            logNoNeedDo(request, METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED);
             return;
         }
         //---------------------------------------------------------------
@@ -287,20 +287,16 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      *
      * @param request
      *            the request
-     * @param handlerMethod
-     *            the handler method
      * @param methodName
      *            the method name
      * @since 1.12.9
      */
-    private static void logNoNeedDo(HttpServletRequest request,HandlerMethod handlerMethod,String methodName){
+    private void logNoNeedDo(HttpServletRequest request,String methodName){
         if (LOGGER.isDebugEnabled()){
-            String message = "request info:[{}],no need do [{} {}],skip~";
-            LOGGER.debug(message, getRequestFullURL(request, UTF8), handlerMethod.getClass().getSimpleName(), methodName);
+            String message = "request info:[{}],no need [{}] [{}],skip~";
+            LOGGER.debug(message, getRequestFullURL(request, UTF8), methodName, this.getClass().getSimpleName());
         }
     }
-
-    //---------------------------------------------------------------
 
     /**
      * Log no handler method.
@@ -316,8 +312,6 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             LOGGER.warn(message, getRequestFullURL(request, UTF8), handler.getClass().getName());
         }
     }
-
-    //---------------------------------------------------------------
 
     /**
      * Log begin.
@@ -342,8 +336,6 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             LOGGER.trace(buildBeginMessage(request, methodName));
         }
     }
-
-    //---------------------------------------------------------------
 
     /**
      * Log end.
@@ -522,6 +514,44 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      */
     public void setIsNeedDoAfterConcurrentHandlingStarted(boolean isNeedDoAfterConcurrentHandlingStarted){
         this.isNeedDoAfterConcurrentHandlingStarted = isNeedDoAfterConcurrentHandlingStarted;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 获得 是否需要执行 preHandle方法.
+     *
+     * @return the isNeedDoPreHandle
+     */
+    public boolean getIsNeedDoPreHandle(){
+        return isNeedDoPreHandle;
+    }
+
+    /**
+     * 获得 是否需要执行 postHandle方法.
+     *
+     * @return the isNeedDoPostHandle
+     */
+    public boolean getIsNeedDoPostHandle(){
+        return isNeedDoPostHandle;
+    }
+
+    /**
+     * 获得 是否需要执行 AfterCompletion 方法.
+     *
+     * @return the isNeedDoAfterCompletion
+     */
+    public boolean getIsNeedDoAfterCompletion(){
+        return isNeedDoAfterCompletion;
+    }
+
+    /**
+     * 获得 是否需要执行 AfterConcurrentHandlingStarted 方法.
+     *
+     * @return the isNeedDoAfterConcurrentHandlingStarted
+     */
+    public boolean getIsNeedDoAfterConcurrentHandlingStarted(){
+        return isNeedDoAfterConcurrentHandlingStarted;
     }
 
 }

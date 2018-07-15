@@ -85,17 +85,19 @@ public class CookieAccessorBeanToMapBuilder implements BeanToMapBuilder<CookieAc
         Map<String, Object> map = newLinkedHashMap();
         map.put("beanName", beanName);
         map.put("name", cookieEntity.getName());
-        map.put("httpOnly", cookieEntity.getHttpOnly());
+        map.put("httpOnly", BeanToMapBuilderUtil.build(cookieEntity.getHttpOnly()));
         map.put("path", cookieEntity.getPath());
+
+        //---------------------------------------------------------------
 
         int maxAge = cookieEntity.getMaxAge();
 
         map.put("maxAge", toShowMaxAge(maxAge));
 
         map.put("domain", cookieEntity.getDomain());
-        map.put("secure", cookieEntity.getSecure());
+        map.put("secure", BeanToMapBuilderUtil.build(cookieEntity.getSecure()));
         map.put("version", cookieEntity.getVersion());
-        map.put("isValueEncoding", cookieAccessor.getIsValueEncoding());
+        map.put("isValueEncoding", BeanToMapBuilderUtil.build(cookieAccessor.getIsValueEncoding()));
 
         return map;
     }

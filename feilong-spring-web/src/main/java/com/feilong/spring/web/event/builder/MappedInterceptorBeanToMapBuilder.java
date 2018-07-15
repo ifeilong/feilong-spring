@@ -25,6 +25,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.handler.MappedInterceptor;
 
+import com.feilong.core.lang.ClassUtil;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;
+
 /**
  * {@link HandlerInterceptor} 相关信息转成map.
  * 
@@ -95,8 +98,31 @@ public class MappedInterceptorBeanToMapBuilder implements BeanToMapBuilder<Mappe
         //---------------------------------------------------------------
         Map<String, Object> map = newLinkedHashMap();
         map.put("handlerInterceptor", handlerInterceptor.getClass().getName());
+
+        //---------------------------------------------------------------
+
+        if (ClassUtil.isInstance(handlerInterceptor, AbstractHandlerMethodInterceptorAdapter.class)){
+            AbstractHandlerMethodInterceptorAdapter abstractHandlerMethodInterceptorAdapter = (AbstractHandlerMethodInterceptorAdapter) handlerInterceptor;
+            map.put("needDoPreHandle", BeanToMapBuilderUtil.build(abstractHandlerMethodInterceptorAdapter.getIsNeedDoPreHandle()));
+            map.put("needDoPostHandle", BeanToMapBuilderUtil.build(abstractHandlerMethodInterceptorAdapter.getIsNeedDoPostHandle()));
+            map.put(
+                            "needDoAfterCompletion",
+                            BeanToMapBuilderUtil.build(abstractHandlerMethodInterceptorAdapter.getIsNeedDoAfterCompletion()));
+            map.put(
+                            "needDoAfterConcurrentHandlingStarted",
+                            BeanToMapBuilderUtil
+                                            .build(abstractHandlerMethodInterceptorAdapter.getIsNeedDoAfterConcurrentHandlingStarted()));
+        }else{
+            map.put("needDoPreHandle", "-");
+            map.put("needDoPostHandle", "-");
+            map.put("needDoAfterCompletion", "-");
+            map.put("needDoAfterConcurrentHandlingStarted", "-");
+        }
+
+        //---------------------------------------------------------------
         map.put("includePatterns", pathPatterns);
         map.put("excludePatterns", readField);
+
         map.put("beanName", beanName);
         return map;
     }
