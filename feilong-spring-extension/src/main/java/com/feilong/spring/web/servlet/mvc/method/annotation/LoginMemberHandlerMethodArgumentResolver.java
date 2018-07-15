@@ -29,9 +29,9 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import com.feilong.context.BeanLogMessageBuilder;
 import com.feilong.core.bean.PropertyUtil;
 import com.feilong.servlet.http.SessionUtil;
-import com.feilong.spring.BeanLogMessageBuilder;
 import com.feilong.spring.web.bind.annotation.LoginMember;
 
 /**

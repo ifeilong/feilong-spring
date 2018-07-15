@@ -38,8 +38,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.core.env.Environment;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.feilong.context.BeanLogMessageBuilder;
 import com.feilong.servlet.http.RequestUtil;
-import com.feilong.spring.BeanLogMessageBuilder;
 
 /**
  * 可以配置条件的 OncePerRequestFilter.

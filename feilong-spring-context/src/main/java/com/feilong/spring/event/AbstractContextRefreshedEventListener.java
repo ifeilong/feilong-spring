@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import com.feilong.spring.BeanLogMessageBuilder;
+import com.feilong.context.BeanLogMessageBuilder;
 
 /**
  * The listener interface for receiving contextStartedLogging events.
