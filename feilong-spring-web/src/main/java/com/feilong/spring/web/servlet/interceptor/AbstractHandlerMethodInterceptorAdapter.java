@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.context.BeanLogMessageBuilder;
+import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
@@ -58,7 +59,7 @@ import com.feilong.tools.slf4j.Slf4jUtil;
 public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInterceptorAdapter implements Ordered{
 
     /** The Constant log. */
-    private static final Logger LOGGER                                        = LoggerFactory
+    private static final Logger        LOGGER                                        = LoggerFactory
                     .getLogger(AbstractHandlerMethodInterceptorAdapter.class);
 
     //---------------------------------------------------------------
@@ -68,28 +69,28 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * 
      * @since 1.12.7
      */
-    private static final String METHOD_NAME_PRE_HANDLE                        = "doPreHandle";
+    private static final String        METHOD_NAME_PRE_HANDLE                        = "doPreHandle";
 
     /**
      * The Constant METHOD_NAME_POST_HANDLE.
      * 
      * @since 1.12.7
      */
-    private static final String METHOD_NAME_POST_HANDLE                       = "doPostHandle";
+    private static final String        METHOD_NAME_POST_HANDLE                       = "doPostHandle";
 
     /**
      * The Constant METHOD_NAME_AFTER_COMPLETION.
      * 
      * @since 1.12.7
      */
-    private static final String METHOD_NAME_AFTER_COMPLETION                  = "doAfterCompletion";
+    private static final String        METHOD_NAME_AFTER_COMPLETION                  = "doAfterCompletion";
 
     /**
      * The Constant METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED.
      * 
      * @since 1.12.7
      */
-    private static final String METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED = "doAfterConcurrentHandlingStarted";
+    private static final String        METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED = "doAfterConcurrentHandlingStarted";
 
     //---------------------------------------------------------------
 
@@ -102,7 +103,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * 
      * @since 1.12.9
      */
-    private boolean             isNeedDoPreHandle                             = true;
+    private boolean                    isNeedDoPreHandle                             = true;
 
     /**
      * 是否需要执行 postHandle方法.
@@ -113,7 +114,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * 
      * @since 1.12.9
      */
-    private boolean             isNeedDoPostHandle                            = true;
+    private boolean                    isNeedDoPostHandle                            = true;
 
     //---------------------------------------------------------------
 
@@ -126,7 +127,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * 
      * @since 1.12.9
      */
-    private boolean             isNeedDoAfterCompletion                       = false;
+    private boolean                    isNeedDoAfterCompletion                       = false;
 
     /**
      * 是否需要执行 AfterConcurrentHandlingStarted 方法.
@@ -137,18 +138,36 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * 
      * @since 1.12.9
      */
-    private boolean             isNeedDoAfterConcurrentHandlingStarted        = false;
+    private boolean                    isNeedDoAfterConcurrentHandlingStarted        = false;
 
     //---------------------------------------------------------------
-    //    /**
-    //     * preHandle 的条件参数
-    //     */
-    //    private InterceptorConditionEntity preHandleInterceptorConditionEntity;
-    //
-    //    /**
-    //     * postHandle 的条件参数
-    //     */
-    //    private InterceptorConditionEntity postHandleInterceptorConditionEntity;
+    /**
+     * preHandle 的条件参数.
+     *
+     * @since 1.12.10
+     */
+    private InterceptorConditionEntity preHandleInterceptorConditionEntity;
+
+    /**
+     * postHandle 的条件参数.
+     *
+     * @since 1.12.10
+     */
+    private InterceptorConditionEntity postHandleInterceptorConditionEntity;
+
+    /**
+     * AfterCompletion 的条件参数.
+     *
+     * @since 1.12.10
+     */
+    private InterceptorConditionEntity afterCompletionInterceptorConditionEntity;
+
+    /**
+     * AfterConcurrentHandlingStarted 的条件参数.
+     *
+     * @since 1.12.10
+     */
+    private InterceptorConditionEntity afterConcurrentHandlingStartedInterceptorConditionEntity;
 
     //---------------------------------------------------------------
 
@@ -178,6 +197,14 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         //---------------------------------------------------------------
         if (!isNeedDoPreHandle){
             logNoNeedDo(request, METHOD_NAME_PRE_HANDLE);
+            return true;
+        }
+
+        //---------------------------------------------------------------
+
+        //since 1.12.10 是否不支持
+        if (!InterceptorConditionEntityUtil.isIntercept(request, preHandleInterceptorConditionEntity)){
+            logNoInConditionDo(request, METHOD_NAME_PRE_HANDLE, preHandleInterceptorConditionEntity);
             return true;
         }
         //---------------------------------------------------------------
@@ -213,6 +240,15 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             logNoNeedDo(request, METHOD_NAME_POST_HANDLE);
             return;
         }
+
+        //---------------------------------------------------------------
+
+        //since 1.12.10 是否不支持
+        if (!InterceptorConditionEntityUtil.isIntercept(request, postHandleInterceptorConditionEntity)){
+            logNoInConditionDo(request, METHOD_NAME_POST_HANDLE, postHandleInterceptorConditionEntity);
+            return;
+        }
+
         //---------------------------------------------------------------
         Date beginDate = new Date();
         logBegin(request, METHOD_NAME_POST_HANDLE);
@@ -240,6 +276,13 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         //---------------------------------------------------------------
         if (!isNeedDoAfterCompletion){
             logNoNeedDo(request, METHOD_NAME_AFTER_COMPLETION);
+            return;
+        }
+        //---------------------------------------------------------------
+
+        //since 1.12.10 是否不支持
+        if (!InterceptorConditionEntityUtil.isIntercept(request, afterCompletionInterceptorConditionEntity)){
+            logNoInConditionDo(request, METHOD_NAME_AFTER_COMPLETION, afterCompletionInterceptorConditionEntity);
             return;
         }
         //---------------------------------------------------------------
@@ -271,6 +314,17 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
             logNoNeedDo(request, METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED);
             return;
         }
+
+        //---------------------------------------------------------------
+
+        //since 1.12.10 是否不支持
+        if (!InterceptorConditionEntityUtil.isIntercept(request, afterConcurrentHandlingStartedInterceptorConditionEntity)){
+            logNoInConditionDo(
+                            request,
+                            METHOD_NAME_AFTER_CONCURRENT_HANDLING_STARTED,
+                            afterConcurrentHandlingStartedInterceptorConditionEntity);
+            return;
+        }
         //---------------------------------------------------------------
         Date beginDate = new Date();
 
@@ -296,6 +350,23 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
         if (LOGGER.isDebugEnabled()){
             String message = "request info:[{}],no need [{}] [{}],skip~";
             LOGGER.debug(message, getRequestFullURL(request, UTF8), methodName, this.getClass().getSimpleName());
+        }
+    }
+
+    /**
+     * @param request
+     * @param methodName
+     * @since 1.12.10
+     */
+    private void logNoInConditionDo(HttpServletRequest request,String methodName,InterceptorConditionEntity interceptorConditionEntity){
+        if (LOGGER.isDebugEnabled()){
+            String message = "request info:[{}],not in [{}] [{}] condition [{}],skip~";
+            LOGGER.debug(
+                            message,
+                            getRequestFullURL(request, UTF8),
+                            this.getClass().getSimpleName(),
+                            methodName,
+                            JsonUtil.format(interceptorConditionEntity, 0, 0));
         }
     }
 
@@ -553,6 +624,45 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      */
     public boolean getIsNeedDoAfterConcurrentHandlingStarted(){
         return isNeedDoAfterConcurrentHandlingStarted;
+    }
+
+    /**
+     * 设置 preHandle 的条件参数.
+     *
+     * @param preHandleInterceptorConditionEntity
+     *            the preHandleInterceptorConditionEntity to set
+     * @since 1.12.10
+     */
+    public void setPreHandleInterceptorConditionEntity(InterceptorConditionEntity preHandleInterceptorConditionEntity){
+        this.preHandleInterceptorConditionEntity = preHandleInterceptorConditionEntity;
+    }
+
+    /**
+     * 设置 postHandle 的条件参数.
+     *
+     * @param postHandleInterceptorConditionEntity
+     *            the postHandleInterceptorConditionEntity to set
+     * @since 1.12.10
+     */
+    public void setPostHandleInterceptorConditionEntity(InterceptorConditionEntity postHandleInterceptorConditionEntity){
+        this.postHandleInterceptorConditionEntity = postHandleInterceptorConditionEntity;
+    }
+
+    /**
+     * @param afterCompletionInterceptorConditionEntity
+     *            the afterCompletionInterceptorConditionEntity to set
+     */
+    public void setAfterCompletionInterceptorConditionEntity(InterceptorConditionEntity afterCompletionInterceptorConditionEntity){
+        this.afterCompletionInterceptorConditionEntity = afterCompletionInterceptorConditionEntity;
+    }
+
+    /**
+     * @param afterConcurrentHandlingStartedInterceptorConditionEntity
+     *            the afterConcurrentHandlingStartedInterceptorConditionEntity to set
+     */
+    public void setAfterConcurrentHandlingStartedInterceptorConditionEntity(
+                    InterceptorConditionEntity afterConcurrentHandlingStartedInterceptorConditionEntity){
+        this.afterConcurrentHandlingStartedInterceptorConditionEntity = afterConcurrentHandlingStartedInterceptorConditionEntity;
     }
 
 }
