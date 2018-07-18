@@ -17,7 +17,6 @@ package com.feilong.spring.web.filter;
 
 import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.core.Validator.isNotNullOrEmpty;
-import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toArray;
 import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 
@@ -50,7 +49,7 @@ import com.feilong.servlet.http.RequestUtil;
 public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerRequestFilter{
 
     /** The Constant log. */
-    private static final Logger LOGGER                    = LoggerFactory.getLogger(ConfigurableConditionOncePerRequestFilter.class);
+    private static final Logger LOGGER                 = LoggerFactory.getLogger(ConfigurableConditionOncePerRequestFilter.class);
 
     //---------------------------------------------------------------
 
@@ -59,11 +58,19 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
 
     //---------------------------------------------------------------
 
-    /** 是否不过滤静态资源. */
-    private boolean             isNotFilterStaticResource = true;
+    /**
+     * 是否过滤静态资源.
+     * 
+     * @since 1.12.10 change name
+     */
+    private boolean             isFilterStaticResource = false;
 
-    /** 是否不过滤ajax. */
-    private boolean             isNotFilterAjax           = false;
+    /**
+     * 是否过滤ajax.
+     * 
+     * @since 1.12.10 change name
+     */
+    private boolean             isFilterAjax           = true;
 
     //---------------------------------------------------------------
     /**
@@ -73,7 +80,7 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
      * 默认支持 get /post,不在这些定义的支持范围内的请求method,将不会使用 该filter 过滤
      * </p>
      */
-    private String[]            filterHttpMethods         = toArray("get", "post");
+    private String[]            filterHttpMethods      = toArray("get", "post");
 
     //---------------------------------------------------------------
 
@@ -125,7 +132,8 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
         //---------------------------------------------------------------
         String method = request.getMethod();
         //判断请求的方法
-        boolean shouldNotFilterMethod = isShouldNotFilterMethod(method);
+        //是否是不过滤的method 方法.
+        boolean shouldNotFilterMethod = !RequestUtil.isSupportMethod(filterHttpMethods, method);
         if (shouldNotFilterMethod){
             LOGGER.debug("[{}],requestURI:[{}],method:[{}] ,should not filter", this.getClass().getSimpleName(), requestURI, method);
             return true;
@@ -133,7 +141,7 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
 
         //---------------------------------------------------------------
         //判断是否是ajax 请求
-        if (isNotFilterAjax){
+        if (!isFilterAjax){
             if (RequestUtil.isAjaxRequest(request)){
                 LOGGER.debug("[{}],requestURI:[{}],is ajax request,should not filter", this.getClass().getSimpleName(), requestURI);
                 return true;
@@ -158,31 +166,6 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
     @SuppressWarnings({ "static-method", "unused" })
     protected boolean doCustomShouldNotFilter(HttpServletRequest request){
         return false;
-    }
-
-    //---------------------------------------------------------------
-
-    /**
-     * 是否是不过滤的method 方法.
-     *
-     * @param method
-     *            the method
-     * @return 如果不过滤,返回 true ; 如果要过滤 返回false
-     */
-    private boolean isShouldNotFilterMethod(String method){
-        //null 或者 empty 表示没有一个 method 支持的,不过滤
-        if (isNullOrEmpty(filterHttpMethods)){
-            return true;
-        }
-
-        //---------------------------------------------------------------
-        for (String filterHttpMethod : filterHttpMethods){
-            //如果当前的请求 method ,在支持的列表里面, 那么表示要过滤
-            if (StringUtils.equalsIgnoreCase(filterHttpMethod, method)){
-                return false;
-            }
-        }
-        return true;
     }
 
     //---------------------------------------------------------------
@@ -219,8 +202,8 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
      * @return true, if is should not filter suffix
      */
     protected boolean isShouldNotFilterSuffix(String requestURI){
-        if (isNotFilterStaticResource){
-            if (ConfigurableConditionHelper.isStaticResource(requestURI)){
+        if (!isFilterStaticResource){
+            if (RequestUtil.isStaticResource(requestURI)){
                 return true;
             }
         }
@@ -235,7 +218,6 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
             }
         }
         return false;
-
     }
 
     //---------------------------------------------------------------
@@ -362,37 +344,35 @@ public abstract class ConfigurableConditionOncePerRequestFilter extends OncePerR
     }
 
     /**
-     * 设置 是否不过滤静态资源.
+     * 设置 是否过滤静态资源.
      *
-     * @param isNotFilterStaticResource
-     *            the isNotFilterStaticResource to set
+     * @param isFilterStaticResource
+     *            the isFilterStaticResource to set
+     * @since 1.12.10 change name
      */
-    public void setIsNotFilterStaticResource(boolean isNotFilterStaticResource){
-        this.isNotFilterStaticResource = isNotFilterStaticResource;
+    public void setIsFilterStaticResource(boolean isFilterStaticResource){
+        this.isFilterStaticResource = isFilterStaticResource;
+    }
+
+    /**
+     * 设置 是否过滤ajax.
+     *
+     * @param isFilterAjax
+     *            the isFilterAjax to set
+     * @since 1.12.10 change name
+     */
+    public void setIsFilterAjax(boolean isFilterAjax){
+        this.isFilterAjax = isFilterAjax;
     }
 
     /**
      * 设置 支持过滤的 http 请求 method.
-     * 
-     * <p>
-     * 默认支持 get /post,不在这些定义的支持范围内的请求method,将不会使用 该filter 过滤
-     * </p>
-     * 
+     *
      * @param filterHttpMethods
      *            the filterHttpMethods to set
      */
     public void setFilterHttpMethods(String[] filterHttpMethods){
         this.filterHttpMethods = filterHttpMethods;
-    }
-
-    /**
-     * 设置 是否不过滤ajax.
-     * 
-     * @param isNotFilterAjax
-     *            the isNotFilterAjax to set
-     */
-    public void setIsNotFilterAjax(boolean isNotFilterAjax){
-        this.isNotFilterAjax = isNotFilterAjax;
     }
 
 }
