@@ -23,6 +23,8 @@ import java.util.Map;
 import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.core.date.DateExtensionUtil;
 import com.feilong.servlet.http.entity.CookieEntity;
+import com.feilong.spring.event.builder.BeanToMapBuilder;
+import com.feilong.spring.event.builder.BeanToMapBuilderUtil;
 
 /**
  * {@link CookieEntity} 相关信息转成map.

@@ -13,33 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.event.builder;
-
-import java.util.Map;
+package com.feilong.spring.event.builder;
 
 /**
- * 将bean信息转成map 数据.
  * 
- * <p>
- * 方便使用 {@link com.feilong.formatter.FormatterUtil#formatToSimpleTable(Iterable)} 来渲染输出数据
- * </p>
- *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @param <T>
- *            the generic type
- * @since 1.10.5
+ * @since 1.12.10
  */
-public interface BeanToMapBuilder<T> {
+public class BeanToMapBuilderUtil{
 
     /**
-     * 构造.
-     *
-     * @param beanName
-     *            bean名字
-     * @param bean
-     *            bean对象
-     * @return the map
+     * @param abstractHandlerMethodInterceptorAdapter
+     * @return
      */
-    Map<String, Object> build(String beanName,T bean);
-
+    public static String build(boolean flag){
+        return flag ? "√" : "×";
+    }
 }

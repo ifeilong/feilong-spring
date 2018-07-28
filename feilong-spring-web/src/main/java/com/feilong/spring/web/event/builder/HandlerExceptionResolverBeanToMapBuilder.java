@@ -17,6 +17,9 @@ package com.feilong.spring.web.event.builder;
 
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import com.feilong.spring.event.builder.BeanToMapBuilder;
+import com.feilong.spring.event.builder.SimpleBeanToMapBuilder;
+
 /**
  * {@link HandlerExceptionResolver} 信息提取.
  * 

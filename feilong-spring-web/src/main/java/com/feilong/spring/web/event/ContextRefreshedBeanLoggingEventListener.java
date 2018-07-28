@@ -35,10 +35,10 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import com.feilong.core.util.SortUtil;
 import com.feilong.formatter.entity.BeanFormatterConfig;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
-import com.feilong.spring.web.event.builder.BeanToMapBuilder;
+import com.feilong.spring.event.builder.BeanToMapBuilder;
+import com.feilong.spring.event.builder.SimpleBeanToMapBuilder;
 import com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder;
 import com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder;
-import com.feilong.spring.web.event.builder.SimpleBeanToMapBuilder;
 
 /**
  * 启动的时候显示相关bean的日志信息.
