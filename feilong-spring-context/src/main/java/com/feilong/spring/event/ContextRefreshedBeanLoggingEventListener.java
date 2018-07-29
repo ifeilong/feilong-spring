@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.web.event;
+package com.feilong.spring.event;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
@@ -34,26 +34,26 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.feilong.core.util.SortUtil;
 import com.feilong.formatter.entity.BeanFormatterConfig;
-import com.feilong.spring.event.AbstractContextRefreshedEventListener;
 import com.feilong.spring.event.builder.BeanToMapBuilder;
 import com.feilong.spring.event.builder.SimpleBeanToMapBuilder;
-import com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder;
-import com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder;
 
 /**
  * 启动的时候显示相关bean的日志信息.
  * 
  * <p>
- * 详细使用方法, 参见 {@link HandlerExceptionResolverBeanToMapBuilder},{@link MappedInterceptorBeanToMapBuilder} 等类上注释
+ * 详细使用方法, 参见
+ * {@link "com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder"},{@link "com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder"}
+ * 等类上注释
  * </p>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @param <T>
  *            the generic type
  * @see org.springframework.context.event.SmartApplicationListener
- * @see HandlerExceptionResolverBeanToMapBuilder
- * @see MappedInterceptorBeanToMapBuilder
+ * @see "com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder"
+ * @see "com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder"
  * @since 1.10.4
+ * @since 1.13.0 move from feilong-spring-web
  */
 public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContextRefreshedEventListener{
 
