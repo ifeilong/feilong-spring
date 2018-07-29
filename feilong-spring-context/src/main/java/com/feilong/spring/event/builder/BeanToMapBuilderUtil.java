@@ -19,6 +19,7 @@ package com.feilong.spring.event.builder;
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.12.10
+ * @since 1.13.0 move from feilong-spring-web
  */
 public class BeanToMapBuilderUtil{
 

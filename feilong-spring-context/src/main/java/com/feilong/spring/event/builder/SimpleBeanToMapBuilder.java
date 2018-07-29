@@ -33,6 +33,7 @@ import com.feilong.core.lang.ClassUtil;
  * @param <T>
  *            the generic type
  * @since 1.12.7
+ * @since 1.13.0 move from feilong-spring-web
  */
 public class SimpleBeanToMapBuilder<T> implements BeanToMapBuilder<T>{
 
