@@ -17,7 +17,6 @@ package com.feilong.spring.event;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
 import static java.util.Collections.emptyMap;
 
@@ -34,8 +33,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.feilong.core.util.SortUtil;
 import com.feilong.formatter.entity.BeanFormatterConfig;
-import com.feilong.spring.event.builder.BeanToMapBuilder;
-import com.feilong.spring.event.builder.SimpleBeanToMapBuilder;
+import com.feilong.spring.event.builder.MapListBuilder;
 
 /**
  * 启动的时候显示相关bean的日志信息.
@@ -58,7 +56,7 @@ import com.feilong.spring.event.builder.SimpleBeanToMapBuilder;
 public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER           = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
 
     //---------------------------------------------------------------
 
@@ -79,8 +77,10 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      */
     private BeanFormatterConfig beanFormatterConfig;
 
-    /** 提取bean信息到map. */
-    private BeanToMapBuilder<T> beanToMapBuilder = new SimpleBeanToMapBuilder<T>();
+    /**
+     * @since 1.13.0
+     */
+    private MapListBuilder<T>   mapListBuilder;
 
     //---------------------------------------------------------------
 
@@ -111,7 +111,7 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
             return;
         }
         //---------------------------------------------------------------
-        List<Map<String, Object>> list = buildList(beanNameAndBeanMap);
+        List<Map<String, Object>> list = mapListBuilder.buildList(beanNameAndBeanMap);
         doLog(list);
     }
 
@@ -131,23 +131,6 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
             }
             LOGGER.info("[{}] list size:[{}], Info:{}", beanClass, list.size(), formatToSimpleTable(list, beanFormatterConfig));
         }
-    }
-
-    //---------------------------------------------------------------
-
-    /**
-     * Builds the list.
-     *
-     * @param beanNameAndBeanMap
-     *            the build bean name and bean map
-     * @return the list
-     */
-    protected List<Map<String, Object>> buildList(Map<String, T> beanNameAndBeanMap){
-        List<Map<String, Object>> list = newArrayList();
-        for (Map.Entry<String, T> entry : beanNameAndBeanMap.entrySet()){
-            list.add(beanToMapBuilder.build(entry.getKey(), entry.getValue()));
-        }
-        return list;
     }
 
     //---------------------------------------------------------------
@@ -251,22 +234,12 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     }
 
     /**
-     * 获得 提取bean信息到map.
-     *
-     * @return the beanToMapBuilder
+     * @param mapListBuilder
+     *            the mapListBuilder to set
+     * @since 1.13.0
      */
-    public BeanToMapBuilder<T> getBeanToMapBuilder(){
-        return beanToMapBuilder;
-    }
-
-    /**
-     * 设置 提取bean信息到map.
-     *
-     * @param beanToMapBuilder
-     *            the beanToMapBuilder to set
-     */
-    public void setBeanToMapBuilder(BeanToMapBuilder<T> beanToMapBuilder){
-        this.beanToMapBuilder = beanToMapBuilder;
+    public void setMapListBuilder(MapListBuilder<T> mapListBuilder){
+        this.mapListBuilder = mapListBuilder;
     }
 
 }

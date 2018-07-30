@@ -28,6 +28,21 @@
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
 
+		<!-- spring-tx -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
+		<!-- quartz -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<optional>true</optional>
+			<version>2.2.1</version>
+		</dependency>
+
+
 		<!-- java mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
