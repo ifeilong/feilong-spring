@@ -347,21 +347,29 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * @since 1.12.9
      */
     private void logNoNeedDo(HttpServletRequest request,String methodName){
-        if (LOGGER.isDebugEnabled()){
+        //since 1.13.0 change to trace
+        if (LOGGER.isTraceEnabled()){
             String message = "request info:[{}],no need [{}] [{}],skip~";
-            LOGGER.debug(message, getRequestFullURL(request, UTF8), methodName, this.getClass().getSimpleName());
+            LOGGER.trace(message, getRequestFullURL(request, UTF8), methodName, this.getClass().getSimpleName());
         }
     }
 
     /**
+     * Log no in condition do.
+     *
      * @param request
+     *            the request
      * @param methodName
+     *            the method name
+     * @param interceptorConditionEntity
+     *            the interceptor condition entity
      * @since 1.12.10
      */
     private void logNoInConditionDo(HttpServletRequest request,String methodName,InterceptorConditionEntity interceptorConditionEntity){
-        if (LOGGER.isDebugEnabled()){
+        //since 1.13.0 change to trace
+        if (LOGGER.isTraceEnabled()){
             String message = "request info:[{}],not in [{}] [{}] condition [{}],skip~";
-            LOGGER.debug(
+            LOGGER.trace(
                             message,
                             getRequestFullURL(request, UTF8),
                             this.getClass().getSimpleName(),
@@ -649,6 +657,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
     }
 
     /**
+     * 设置 afterCompletion 的条件参数.
+     *
      * @param afterCompletionInterceptorConditionEntity
      *            the afterCompletionInterceptorConditionEntity to set
      */
@@ -657,6 +667,8 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
     }
 
     /**
+     * 设置 afterConcurrentHandlingStarted 的条件参数.
+     *
      * @param afterConcurrentHandlingStartedInterceptorConditionEntity
      *            the afterConcurrentHandlingStartedInterceptorConditionEntity to set
      */
