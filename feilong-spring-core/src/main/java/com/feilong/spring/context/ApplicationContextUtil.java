@@ -20,6 +20,7 @@ import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static com.feilong.core.util.SortUtil.sortArray;
 import static java.util.Collections.emptyMap;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -132,14 +133,14 @@ public final class ApplicationContextUtil{
      *            the application context
      * @param klass
      *            the klass
-     * @return the map
+     * @return 如果 applicationContext 中没有指定的klass ,返回 {@link Collections#emptyMap()}<br>
      * @see org.springframework.beans.factory.BeanFactoryUtils#beansOfTypeIncludingAncestors(org.springframework.beans.factory.ListableBeanFactory,
      *      Class, boolean, boolean)
      * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class)
      * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class, boolean, boolean)
      * @since 4.0.0
      */
-    public static <T> Map<String, T> buildBeanNameAndBeanMap(ApplicationContext applicationContext,Class<T> klass){
+    public static <T> Map<String, T> getBeanNameAndBeanMap(ApplicationContext applicationContext,Class<T> klass){
         //LinkedHashMap
         Map<String, T> beanNameAndBeanMap = applicationContext.getBeansOfType(klass);
         if (null == beanNameAndBeanMap){

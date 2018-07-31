@@ -47,7 +47,7 @@ public class SpringDIInnerBeanTest extends AbstractJUnit4SpringContextTests{
     @Test
     public void testUser(){
         //UserInfo bean = applicationContext.getBean(UserInfo.class);
-        Map<String, UserInfo> beansOfType = ApplicationContextUtil.buildBeanNameAndBeanMap(applicationContext, UserInfo.class);
+        Map<String, UserInfo> beansOfType = ApplicationContextUtil.getBeanNameAndBeanMap(applicationContext, UserInfo.class);
 
         //        getBeansOfType(Class),获取某一类的所有的bean。
         //        getBeansOfType(Class,boolean,boolean)，后面两个布尔值，
