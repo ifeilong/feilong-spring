@@ -5,11 +5,9 @@
 		<artifactId>parent</artifactId>
 		<version>4.0.0</version>
 	</parent>
-
-	<artifactId>feilong-spring-context</artifactId>
+	<artifactId>feilong-spring-context-concurrent</artifactId>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-core</artifactId>
@@ -21,12 +19,5 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- spring-context -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-
 	</dependencies>
 </project>

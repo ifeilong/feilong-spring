@@ -12,42 +12,72 @@
 
 	<dependencies>
 
-		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
-			<artifactId>feilong-spring-aop</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
-			<artifactId>feilong-spring-context</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
+		<!-- feilong-spring-core -->
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- feilong-spring-aop -->
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-aop</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- feilong-spring-context -->
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-context</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- feilong-spring-context-concurrent -->
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-context-concurrent</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- feilong-spring-context-support-quartz -->
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-context-support-quartz</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- feilong-spring-context-concurrent -->
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-context-concurrent</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- feilong-spring-jdbc -->
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-jdbc</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- feilong-spring-mobile -->
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-mobile</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
+
+		<!-- feilong-spring-web -->
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-web</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
+
+		<!-- feilong-spring-extension -->
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-extension</artifactId>

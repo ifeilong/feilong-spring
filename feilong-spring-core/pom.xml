@@ -9,6 +9,7 @@
 	<artifactId>feilong-spring-core</artifactId>
 
 	<dependencies>
+	
 		<!-- *******************spring********************************* -->
 		<!-- spring-core -->
 		<dependency>
