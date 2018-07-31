@@ -47,12 +47,6 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- feilong-spring-context-concurrent -->
-		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
-			<artifactId>feilong-spring-context-concurrent</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 
 		<!-- feilong-spring-jdbc -->
 		<dependency>
