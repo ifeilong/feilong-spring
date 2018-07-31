@@ -28,7 +28,7 @@ import java.util.Map;
  * @param <T>
  *            the generic type
  * @since 1.10.5
- * @since 1.13.0 move from feilong-spring-web
+ * @since 4.0.0 move from feilong-spring-web
  */
 public interface BeanToMapBuilder<T> {
 

@@ -16,16 +16,20 @@
 package com.feilong.spring.event.builder;
 
 /**
- * 
+ * The Class BeanToMapBuilderUtil.
+ *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.12.10
- * @since 1.13.0 move from feilong-spring-web
+ * @since 4.0.0 move from feilong-spring-web
  */
 public class BeanToMapBuilderUtil{
 
     /**
-     * @param abstractHandlerMethodInterceptorAdapter
-     * @return
+     * Builds the.
+     *
+     * @param flag
+     *            the flag
+     * @return the string
      */
     public static String build(boolean flag){
         return flag ? "√" : "×";
