@@ -26,6 +26,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.spring.context.ApplicationContextUtil;
 import com.feilong.store.member.UserInfo;
 
 /**
@@ -46,7 +47,7 @@ public class SpringDIInnerBeanTest extends AbstractJUnit4SpringContextTests{
     @Test
     public void testUser(){
         //UserInfo bean = applicationContext.getBean(UserInfo.class);
-        Map<String, UserInfo> beansOfType = applicationContext.getBeansOfType(UserInfo.class);
+        Map<String, UserInfo> beansOfType = ApplicationContextUtil.buildBeanNameAndBeanMap(applicationContext, UserInfo.class);
 
         //        getBeansOfType(Class),获取某一类的所有的bean。
         //        getBeansOfType(Class,boolean,boolean)，后面两个布尔值，

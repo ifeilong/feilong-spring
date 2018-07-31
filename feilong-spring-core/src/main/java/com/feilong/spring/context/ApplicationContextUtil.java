@@ -18,6 +18,7 @@ package com.feilong.spring.context;
 import static com.feilong.core.date.DateExtensionUtil.formatDuration;
 import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static com.feilong.core.util.SortUtil.sortArray;
+import static java.util.Collections.emptyMap;
 
 import java.util.Date;
 import java.util.Map;
@@ -118,6 +119,33 @@ public final class ApplicationContextUtil{
             LOGGER.debug("end read [{}] info,use time: [{}]", buildKeyMessage(applicationContext), formatDuration(beginDate));
         }
         return map;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Builds the bean name and bean map.
+     *
+     * @param <T>
+     *            the generic type
+     * @param applicationContext
+     *            the application context
+     * @param klass
+     *            the klass
+     * @return the map
+     * @see org.springframework.beans.factory.BeanFactoryUtils#beansOfTypeIncludingAncestors(org.springframework.beans.factory.ListableBeanFactory,
+     *      Class, boolean, boolean)
+     * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class)
+     * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class, boolean, boolean)
+     * @since 4.0.0
+     */
+    public static <T> Map<String, T> buildBeanNameAndBeanMap(ApplicationContext applicationContext,Class<T> klass){
+        //LinkedHashMap
+        Map<String, T> beanNameAndBeanMap = applicationContext.getBeansOfType(klass);
+        if (null == beanNameAndBeanMap){
+            return emptyMap();
+        }
+        return beanNameAndBeanMap;
     }
 
     //---------------------------------------------------------------
