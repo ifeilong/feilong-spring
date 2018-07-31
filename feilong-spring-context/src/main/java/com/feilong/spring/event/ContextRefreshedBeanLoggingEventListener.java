@@ -18,7 +18,6 @@ package com.feilong.spring.event;
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
-import static java.util.Collections.emptyMap;
 
 import java.util.List;
 import java.util.Map;
@@ -28,12 +27,12 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.feilong.core.util.SortUtil;
 import com.feilong.formatter.entity.BeanFormatterConfig;
-import com.feilong.spring.event.builder.MapListBuilder;
+import com.feilong.spring.context.ApplicationContextUtil;
+import com.feilong.spring.event.builder.MapBeanToMapListBuilder;
 
 /**
  * 启动的时候显示相关bean的日志信息.
@@ -51,36 +50,40 @@ import com.feilong.spring.event.builder.MapListBuilder;
  * @see "com.feilong.spring.web.event.builder.HandlerExceptionResolverBeanToMapBuilder"
  * @see "com.feilong.spring.web.event.builder.MappedInterceptorBeanToMapBuilder"
  * @since 1.10.4
- * @since 1.13.0 move from feilong-spring-web
+ * @since 4.0.0 move from feilong-spring-web
  */
-public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContextRefreshedEventListener{
+public final class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
+    private static final Logger        LOGGER = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
 
     //---------------------------------------------------------------
 
     /** The bean class. */
-    private Class<T>            beanClass;
+    private Class<T>                   beanClass;
 
     /**
      * list 排序,属性和order 配置.
      * 
      * @since 1.12.9
      */
-    private String[]            listSortPropertyNameAndOrders;
+    private String[]                   listSortPropertyNameAndOrders;
 
     /**
      * 提供格式化的时候,相关参数控制.
      * 
      * @since 1.12.9
      */
-    private BeanFormatterConfig beanFormatterConfig;
+    private BeanFormatterConfig        beanFormatterConfig;
+
+    //---------------------------------------------------------------
 
     /**
-     * @since 1.13.0
+     * 将 {@code Map<String, T> beanNameAndBeanMap} 转成 {@code List<Map<String, Object>>} 的构造器.
+     * 
+     * @since 4.0.0
      */
-    private MapListBuilder<T>   mapListBuilder;
+    private MapBeanToMapListBuilder<T> mapBeanToMapListBuilder;
 
     //---------------------------------------------------------------
 
@@ -105,13 +108,16 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
         }
 
         //---------------------------------------------------------------
-        Map<String, T> beanNameAndBeanMap = buildBeanNameAndBeanMap(contextRefreshedEvent.getApplicationContext(), beanClass);
+        Map<String, T> beanNameAndBeanMap = ApplicationContextUtil
+                        .getBeanNameAndBeanMap(contextRefreshedEvent.getApplicationContext(), beanClass);
         if (isNullOrEmpty(beanNameAndBeanMap)){
             LOGGER.info("can't find [{}] bean", beanClass.getName());
             return;
         }
         //---------------------------------------------------------------
-        List<Map<String, Object>> list = mapListBuilder.buildList(beanNameAndBeanMap);
+
+        List<Map<String, Object>> list = mapBeanToMapListBuilder.build(beanNameAndBeanMap);
+
         doLog(list);
     }
 
@@ -124,39 +130,13 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
      *            the list
      * @since 1.11.4
      */
-    protected void doLog(List<Map<String, Object>> list){
+    private void doLog(List<Map<String, Object>> list){
         if (LOGGER.isInfoEnabled()){
             if (isNotNullOrEmpty(listSortPropertyNameAndOrders)){
                 list = SortUtil.sortListByPropertyNamesValue(list, listSortPropertyNameAndOrders);
             }
             LOGGER.info("[{}] list size:[{}], Info:{}", beanClass, list.size(), formatToSimpleTable(list, beanFormatterConfig));
         }
-    }
-
-    //---------------------------------------------------------------
-
-    /**
-     * Builds the bean name and bean map.
-     *
-     * @param <T>
-     *            the generic type
-     * @param applicationContext
-     *            the application context
-     * @param klass
-     *            the klass
-     * @return the map
-     * @see org.springframework.beans.factory.BeanFactoryUtils#beansOfTypeIncludingAncestors(org.springframework.beans.factory.ListableBeanFactory,
-     *      Class, boolean, boolean)
-     * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class)
-     * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class, boolean, boolean)
-     */
-    protected static <T> Map<String, T> buildBeanNameAndBeanMap(ApplicationContext applicationContext,Class<T> klass){
-        //LinkedHashMap
-        Map<String, T> beanNameAndBeanMap = applicationContext.getBeansOfType(klass);
-        if (null == beanNameAndBeanMap){
-            return emptyMap();
-        }
-        return beanNameAndBeanMap;
     }
 
     //---------------------------------------------------------------
@@ -234,12 +214,14 @@ public class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContext
     }
 
     /**
-     * @param mapListBuilder
-     *            the mapListBuilder to set
-     * @since 1.13.0
+     * 将 {@code Map<String, T> beanNameAndBeanMap} 转成 {@code List<Map<String, Object>>} 的构造器.
+     *
+     * @param mapBeanToMapListBuilder
+     *            the mapBeanToMapListBuilder to set
+     * @since 4.0.0
      */
-    public void setMapListBuilder(MapListBuilder<T> mapListBuilder){
-        this.mapListBuilder = mapListBuilder;
+    public void setMapBeanToMapListBuilder(MapBeanToMapListBuilder<T> mapBeanToMapListBuilder){
+        this.mapBeanToMapListBuilder = mapBeanToMapListBuilder;
     }
 
 }
