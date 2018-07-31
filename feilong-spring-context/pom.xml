@@ -8,12 +8,22 @@
 
 	<artifactId>feilong-spring-context</artifactId>
 
+	<properties>
+		<version.quartz>2.3.0</version.quartz>
+	</properties>
+
 	<dependencies>
 
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>
 			<artifactId>feilong-spring-core</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- spring-context -->
@@ -39,9 +49,26 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<optional>true</optional>
-			<version>2.2.1</version>
+			<version>${version.quartz}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.mchange</groupId>
+					<artifactId>c3p0</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.mchange</groupId>
+					<artifactId>mchange-commons-java</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.zaxxer</groupId>
+					<artifactId>HikariCP-java6</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
 
 		<!-- java mail -->
 		<dependency>
