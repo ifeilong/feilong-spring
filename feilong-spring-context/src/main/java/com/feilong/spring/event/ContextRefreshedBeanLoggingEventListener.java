@@ -32,6 +32,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import com.feilong.core.util.SortUtil;
 import com.feilong.formatter.entity.BeanFormatterConfig;
 import com.feilong.spring.context.ApplicationContextUtil;
+import com.feilong.spring.event.builder.DefaultMapBeanToMapListBuilder;
 import com.feilong.spring.event.builder.MapBeanToMapListBuilder;
 
 /**
@@ -55,7 +56,7 @@ import com.feilong.spring.event.builder.MapBeanToMapListBuilder;
 public final class ContextRefreshedBeanLoggingEventListener<T> extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
-    private static final Logger        LOGGER = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
+    private static final Logger        LOGGER                  = LoggerFactory.getLogger(ContextRefreshedBeanLoggingEventListener.class);
 
     //---------------------------------------------------------------
 
@@ -83,7 +84,7 @@ public final class ContextRefreshedBeanLoggingEventListener<T> extends AbstractC
      * 
      * @since 4.0.0
      */
-    private MapBeanToMapListBuilder<T> mapBeanToMapListBuilder;
+    private MapBeanToMapListBuilder<T> mapBeanToMapListBuilder = new DefaultMapBeanToMapListBuilder<T>();
 
     //---------------------------------------------------------------
 
