@@ -29,9 +29,10 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.lang.annotation.AnnotationToStringBuilder;
+import com.feilong.spring.web.method.HandlerMethodUtil;
 
 /**
- * HandlerMethodInfo 信息提取.
+ * {@link RequestMappingInfo} 信息提取.
  * 
  * <h3>作用:</h3>
  * 
@@ -120,11 +121,33 @@ public class HandlerMethodInfoExtractor{
         //塞RequestMappingInfo 本身的信息,比如 url ,method,header 等信息进去.
         putRequestMappingInfo(keyAndValueMap, requestMappingInfo);
 
+        //塞handlerMethod 本身的信息,比如 class类等信息进去.
+        //4.0.1
+        putHandlerMethod(keyAndValueMap, handlerMethod);
+
         //塞配置的要提取的annotaion信息进去.
         putAnnotationInfo(keyAndValueMap, handlerMethod, annotationAndAnnotationToStringBuilderMap);
 
         return keyAndValueMap;
     }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Put handler method.
+     *
+     * @param keyAndValueMap
+     *            the key and value map
+     * @param handlerMethod
+     *            the handler method
+     * @since 4.0.1
+     */
+    private static void putHandlerMethod(Map<String, Object> keyAndValueMap,HandlerMethod handlerMethod){
+        keyAndValueMap.put("Controller", HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod));
+        keyAndValueMap.put("Method", HandlerMethodUtil.getHandlerMethodName(handlerMethod));
+    }
+
+    //---------------------------------------------------------------
 
     /**
      * 塞RequestMappingInfo 本身的信息,比如 url ,method,header 等信息进去.
