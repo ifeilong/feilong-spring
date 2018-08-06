@@ -91,6 +91,8 @@ public class UriTemplateUtil{
         return uriTemplateVariables.get(pathVarName);
     }
 
+    //---------------------------------------------------------------
+
     /**
      * 判断模板请求里面是否有指定的变量名称.
      * 
@@ -105,6 +107,8 @@ public class UriTemplateUtil{
         Map<String, String> uriTemplateVariables = getUriTemplateVariables(request);
         return null != uriTemplateVariables && uriTemplateVariables.containsKey(pathVarName);
     }
+
+    //---------------------------------------------------------------
 
     /**
      * Gets the uri template variables.
@@ -136,6 +140,8 @@ public class UriTemplateUtil{
     public static String getBestMatchingPattern(HttpServletRequest request){
         return RequestUtil.getAttribute(request, HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 自动寻找matchingPatternPath 扩充模板值.
@@ -170,6 +176,8 @@ public class UriTemplateUtil{
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         return urlPathHelper.getOriginatingContextPath(request) + expandUrl + (isNullOrEmpty(queryString) ? "?" + queryString : "");
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 扩充模板值.
@@ -377,6 +385,7 @@ public class UriTemplateUtil{
     }
 
     //---------------------------------------------------------------
+
     /**
      * 扩充模板值.
      * 
@@ -427,6 +436,8 @@ public class UriTemplateUtil{
         URI uri = uriTemplate.expand(opMap);
         return uri.toString();
     }
+
+    //---------------------------------------------------------------
 
     /**
      * 变量名称 Return the names of the variables in the template, in order.
