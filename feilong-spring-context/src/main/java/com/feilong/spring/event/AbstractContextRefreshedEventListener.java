@@ -30,12 +30,13 @@ import com.feilong.context.BeanLogMessageBuilder;
 
 /**
  * The listener interface for receiving contextStartedLogging events.
- * The class that is interested in processing a contextStartedLogging
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addContextStartedLoggingListener<code> method. When
- * the contextStartedLogging event occurs, that object's appropriate
- * method is invoked.
+ * 
+ * <p>
+ * The class that is interested in processing a contextStartedLogging event implements this interface, and the object created
+ * with that class is registered with a component using the component's <code>addContextStartedLoggingListener<code> method.<br>
+ * 
+ * When the contextStartedLogging event occurs, that object's appropriate method is invoked.
+ * </p>
  * 
  * <p>
  * 只有一个ApplicationContextEvent,表示ApplicationContext容器事件,且其又有如下实现：

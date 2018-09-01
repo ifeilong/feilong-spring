@@ -67,9 +67,6 @@ public class MemberManagerTest //extends AbstractJUnit4SpringContextTests
         memberManager.getUserExcludeJsonException(object);
     }
 
-    /**
-     * Test method for {@link com.feilong.spring.manager.java.MemberManager#getUser(java.lang.String)}.
-     */
     @Test
     public void testGetUser(){
         memberManager.getUser("feilong");
