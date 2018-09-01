@@ -13,15 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.aspects;
+package com.feilong.spring.aspects.usetimelogable;
 
 import org.aspectj.lang.JoinPoint;
 
-/**
- * The Interface MySecurityManager.
- * 
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- */
 public interface MySecurityManager{
 
     /**

@@ -13,29 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.javass.spring.chapter6.service.impl;
+package com.feilong.spring.aspects.usetimelogable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//@Log
+public interface UserManager{
 
-import cn.javass.spring.chapter6.service.IHelloWorldService;
-
-/**
- * The Class HelloWorldService.
- */
-@SuppressWarnings("all")
-public class HelloWorldService implements IHelloWorldService{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldService.class);
-
-    /*
-     * (non-Javadoc)
+    /**
+     * Adds the user.
      * 
-     * @see cn.javass.spring.chapter6.service.IHelloWorldService#sayHello()
+     * @param string
+     *            the string
+     * @param name
+     *            the name
      */
-    @Override
-    public void sayHello(){
-        LOGGER.info("============Hello World!");
-    }
+    void addUser(String string,String name);
+
+    /**
+     * Del user.
+     * 
+     * @param id
+     *            the id
+     */
+    void delUser(int id);
+
+    /**
+     * Modify user.
+     * 
+     * @param id
+     *            the id
+     * @param name
+     *            the name
+     * @param age
+     *            the age
+     */
+    void modifyUser(int id,String name,int age);
 }

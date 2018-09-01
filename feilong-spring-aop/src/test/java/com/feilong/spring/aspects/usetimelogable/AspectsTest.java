@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.aspects;
+package com.feilong.spring.aspects.usetimelogable;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +32,11 @@ public class AspectsTest extends AbstractJUnit4SpringContextTests{
     @Autowired
     private UserManager userManager;
 
-    /**
-     * 添加 user.
-     */
     @Test
     public void addUser(){
         userManager.addUser("1018", "Jummy");
     }
 
-    /**
-     * Del user.
-     */
     @Test
     public void delUser(){
         userManager.delUser(5);

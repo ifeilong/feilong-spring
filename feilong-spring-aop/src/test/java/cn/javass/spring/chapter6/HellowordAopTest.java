@@ -21,18 +21,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.javass.spring.chapter6.service.IHelloWorldService;
 
-/**
- * The Class AopTest.
- */
-public class AopTest{
+public class HellowordAopTest{
 
-    /**
-     * Test helloworld.
-     */
     @Test
-    public void testHelloworld(){
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("test.xml");
-        IHelloWorldService helloworldService = ctx.getBean("helloWorldService", IHelloWorldService.class);
+    public void test(){
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("test-helloword.xml");
+
+        IHelloWorldService helloworldService = applicationContext.getBean("helloWorldService", IHelloWorldService.class);
         helloworldService.sayHello();
     }
 }

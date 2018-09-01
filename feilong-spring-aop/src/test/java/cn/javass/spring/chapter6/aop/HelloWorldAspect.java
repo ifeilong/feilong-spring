@@ -15,51 +15,42 @@
  */
 package cn.javass.spring.chapter6.aop;
 
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+
 import java.util.Date;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
-
-/**
- * The Class HelloWorldAspect.
- */
 @SuppressWarnings("all")
 public class HelloWorldAspect{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldAspect.class);
 
+    //---------------------------------------------------------------
+
     /** The begin. */
     private Date                begin;
 
-    // 前置通知
     /**
-     * Before advice.
+     * 前置通知 (Before advice).
      */
     public void beforeAdvice(){
         begin = new Date();
         LOGGER.info("1.......before advice,{}", begin);
     }
 
-    // 后置最终通知
+    //---------------------------------------------------------------
+
     /**
-     * After finally advice.
+     * 后置最终通知 (After finally advice).
      */
     public void afterFinallyAdvice(){
         LOGGER.info("2.......after finally advice,{},耗时:{}", begin, formatDuration(begin));
     }
 
-    /**
-     * Around.
-     *
-     * @param proceedingJoinPoint
-     *            the proceeding join point
-     * @throws Throwable
-     *             the throwable
-     */
     public void around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
         Object[] args = { "a" };
         proceedingJoinPoint.proceed();

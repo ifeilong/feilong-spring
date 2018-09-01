@@ -15,7 +15,16 @@
  */
 package cn.javass.spring.chapter6.service;
 
-public interface IHelloWorldService{
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    void sayHello();
+public class HelloWorldServiceImpl implements IHelloWorldService{
+
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldServiceImpl.class);
+
+    @Override
+    public void sayHello(){
+        LOGGER.info("============Hello World!");
+    }
 }
