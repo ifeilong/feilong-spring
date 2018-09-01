@@ -67,22 +67,37 @@ public class JoinPointUtil{
         Validate.notNull(annotationClass, "annotationClass can't be null!");
 
         //---------------------------------------------------------------
-
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Object target = joinPoint.getTarget();
         Method method = methodSignature.getMethod();
 
+        return findAnnotation(method, target, annotationClass);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 获得运行的annotaion.
+     *
+     * @param <T>
+     *            the generic type
+     * @param method
+     *            the method
+     * @param target
+     *            具体实现类
+     * @param annotationClass
+     *            the annotation class
+     * @return the t
+     * @since 4.0.2
+     */
+    static <T extends Annotation> T findAnnotation(Method method,Object target,Class<T> annotationClass){
         T annotation = AnnotationUtils.findAnnotation(method, annotationClass);
         if (null != annotation){
             return annotation;
         }
 
         //---------------------------------------------------------------
-        Method targetMethod = MethodUtils
-                        .getAccessibleMethod(joinPoint.getTarget().getClass(), method.getName(), method.getParameterTypes());
-        annotation = AnnotationUtils.findAnnotation(targetMethod, annotationClass);
-        if (null != annotation){
-            return annotation;
-        }
-        return null;
+        Method targetMethod = MethodUtils.getAccessibleMethod(target.getClass(), method.getName(), method.getParameterTypes());
+        return AnnotationUtils.findAnnotation(targetMethod, annotationClass);
     }
 }

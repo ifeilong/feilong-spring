@@ -25,6 +25,6 @@ public interface MySecurityManager{
      * @param joinPoint
      *            the join point
      */
-    public void security(JoinPoint joinPoint);
+    void security(JoinPoint joinPoint);
 
 }

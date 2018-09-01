@@ -21,42 +21,22 @@ import org.slf4j.LoggerFactory;
 import com.feilong.spring.aop.log.Log;
 import com.feilong.spring.aop.log.UseTimeLogable;
 
-/**
- * The Class UserManagerImpl.
- * 
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- */
 public class UserManagerImpl implements UserManager,UseTimeLogable{
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(UserManagerImpl.class);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.feilong.spring.aspects.UserManager#addUser(java.lang.String, java.lang.String)
-     */
     @Override
     @Log(level = "debug")
     public void addUser(String id,String name){
         LOGGER.info("---UsreManagerImpl中的addUser方法的实现-----");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.feilong.spring.aspects.UserManager#delUser(int)
-     */
     @Override
     public void delUser(int id){
         LOGGER.info("-----UserManagerImpl delUser方法的实现-----");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.feilong.spring.aspects.UserManager#modifyUser(int, java.lang.String, int)
-     */
     @Override
     public void modifyUser(int id,String name,int age){
         LOGGER.info("----UserManagerImpl modifyUser方法的实现-----");

@@ -37,5 +37,5 @@
 		</aop:aspect>
 	</aop:config>
 
-	<import resource="classpath*:feilong-aop.xml" />
+	<import resource="classpath*:feilong-aop-UseTimeLogableAspect.xml" />
 </beans>

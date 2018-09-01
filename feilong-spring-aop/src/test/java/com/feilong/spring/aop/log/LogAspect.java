@@ -15,6 +15,8 @@
  */
 package com.feilong.spring.aop.log;
 
+import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -30,8 +32,6 @@ import com.feilong.core.lang.StringUtil;
 import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
 
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
-
 /**
  * 日志切面 aspect,作用于 所有使用 {@link com.feilong.spring.aop.log.Log}标注 的方法.
  * 
@@ -45,7 +45,6 @@ public class LogAspect extends AbstractAspect{
     /** The LOGGER. */
     private static final Logger LOGGER = Logger.getLogger(LogAspect.class);
 
-    /** The _LOGGER. */
     private Log                 log;
 
     /**
@@ -56,16 +55,6 @@ public class LogAspect extends AbstractAspect{
         //only pointcut
     }
 
-    // com.feilong.spring.aspects.UserManager
-    /**
-     * Around.
-     *
-     * @param proceedingJoinPoint
-     *            the join point
-     * @return the object
-     * @throws Throwable
-     *             the throwable
-     */
     @Around(value = "pointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
         // LoggerFactory.
@@ -89,7 +78,6 @@ public class LogAspect extends AbstractAspect{
         String message = StringUtil
                         .format("method:%s(%s),use time:[%s]", method.getName(), proceedingJoinPoint.getArgs(), formatDuration(begin));
         LOGGER.log(Level.toLevel(level), message);
-
         return result;
     }
 }
