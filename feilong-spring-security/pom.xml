@@ -9,7 +9,8 @@
 	<artifactId>feilong-spring-security</artifactId>
 
 	<properties>
-		<version.spring-security>3.2.9.RELEASE</version.spring-security>
+		<!-- <version.spring-security>3.2.10.RELEASE</version.spring-security> -->
+		<version.spring-security>4.2.7.RELEASE</version.spring-security>
 	</properties>
 
 	<dependencies>
@@ -50,24 +51,32 @@
 		</dependency>
 
 		<!-- 提供CAS集成的支持 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-cas</artifactId>
 			<version>${version.spring-security}</version>
 			<exclusions>
 				<exclusion>
-					<artifactId>esapi</artifactId>
 					<groupId>org.owasp.esapi</groupId>
+					<artifactId>esapi</artifactId>
 				</exclusion>
 				<exclusion>
-					<artifactId>velocity</artifactId>
 					<groupId>velocity</groupId>
+					<artifactId>velocity</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>joda-time</groupId>
 					<artifactId>joda-time</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>log4j-over-slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jul-to-slf4j</artifactId>
+				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 </project>
