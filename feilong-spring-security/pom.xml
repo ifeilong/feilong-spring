@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.feilong.platform.spring</groupId>
+		<artifactId>parent</artifactId>
+		<version>4.0.2-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>feilong-spring-security</artifactId>
+
+	<properties>
+		<version.spring-security>3.2.9.RELEASE</version.spring-security>
+	</properties>
+
+	<dependencies>
+
+<!-- 		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc5</artifactId>
+			<version>11.2.0.3</version>
+		</dependency> -->
+
+
+		<!-- 核心包，包含Security的核心功能组件 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${version.spring-security}</version>
+		</dependency>
+
+		<!-- 提供基于ServletAPI的web应用支持 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${version.spring-security}</version>
+		</dependency>
+
+		<!-- 提供namespace配置的应用支持 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${version.spring-security}</version>
+		</dependency>
+
+		<!-- 提供JSP TAG的支持 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${version.spring-security}</version>
+		</dependency>
+
+		<!-- 提供CAS集成的支持 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas</artifactId>
+			<version>${version.spring-security}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>esapi</artifactId>
+					<groupId>org.owasp.esapi</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>velocity</artifactId>
+					<groupId>velocity</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>joda-time</groupId>
+					<artifactId>joda-time</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+</project>
