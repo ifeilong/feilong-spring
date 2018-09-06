@@ -78,6 +78,13 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- feilong-spring-security since 4.0.2 -->
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-security</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
