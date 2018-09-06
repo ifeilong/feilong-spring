@@ -15,18 +15,12 @@
 
 	<dependencies>
 
-<!-- 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc5</artifactId>
-			<version>11.2.0.3</version>
-		</dependency> -->
-
-
 		<!-- 核心包，包含Security的核心功能组件 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>${version.spring-security}</version>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- 提供基于ServletAPI的web应用支持 -->
@@ -34,21 +28,22 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${version.spring-security}</version>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- 提供namespace配置的应用支持 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${version.spring-security}</version>
-		</dependency>
+			</dependency> -->
 
 		<!-- 提供JSP TAG的支持 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${version.spring-security}</version>
-		</dependency>
+			</dependency> -->
 
 		<!-- 提供CAS集成的支持 -->
 		<!-- <dependency>
@@ -56,27 +51,39 @@
 			<artifactId>spring-security-cas</artifactId>
 			<version>${version.spring-security}</version>
 			<exclusions>
-				<exclusion>
-					<groupId>org.owasp.esapi</groupId>
-					<artifactId>esapi</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>velocity</groupId>
-					<artifactId>velocity</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>joda-time</groupId>
-					<artifactId>joda-time</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>log4j-over-slf4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>jul-to-slf4j</artifactId>
-				</exclusion>
+			<exclusion>
+			<groupId>org.owasp.esapi</groupId>
+			<artifactId>esapi</artifactId>
+			</exclusion>
+			<exclusion>
+			<groupId>velocity</groupId>
+			<artifactId>velocity</artifactId>
+			</exclusion>
+			<exclusion>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			</exclusion>
+			<exclusion>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			</exclusion>
+			<exclusion>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			</exclusion>
 			</exclusions>
-		</dependency> -->
+			</dependency> -->
+
+		<!--*******************servlet-api && jsp-api************************* -->
+		<!-- servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
 	</dependencies>
 </project>

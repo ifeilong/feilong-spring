@@ -15,24 +15,9 @@
  */
 package com.feilong.spring.aspects.log;
 
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-@ContextConfiguration(locations = { //
-                                    "classpath:feilong-aop-logaspect.xml",
-                                    "classpath:spring-aop-EventListener.xml"
+public class LogAspectTest2 extends AbstractJUnit4SpringContextTests{
 
-})
-public class LogAspectTest extends AbstractJUnit4SpringContextTests{
-
-    @Autowired
-    private LogUserManager logUserManager;
-
-    @Test
-    public void addUser(){
-        logUserManager.addUser("1018", "Jummy");
-    }
-
+    //类名 方法名 注解
 }

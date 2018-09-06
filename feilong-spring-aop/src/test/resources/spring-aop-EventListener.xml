@@ -13,19 +13,4 @@
         <property name="isShowParentInfo" value="false" />
     </bean>
 
-    <bean id="contextRefreshedSessionAccessorEventListener" class="com.feilong.spring.event.ContextRefreshedBeanLoggingEventListener">
-        <property name="beanClass" value="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
-       <!--  <property name="listSortPropertyNameAndOrders" value="key" /> -->
-
-        <property name="beanFormatterConfig">
-            <bean class="com.feilong.formatter.entity.BeanFormatterConfig">
-                <property name="sorts" value="beanName,key" />
-            </bean>
-        </property>
-
-        <property name="mapBeanToMapListBuilder">
-            <bean class="com.feilong.spring.scheduling.quartz.SchedulerFactoryMapBeanToMapListBuilder"/>
-        </property>
-    </bean>
- 
 </beans>

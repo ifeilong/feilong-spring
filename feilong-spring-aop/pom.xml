@@ -13,6 +13,13 @@
 
 	<dependencies>
 
+		<!--feilong-spring-context -->
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-context</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- spring-context -->
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.broadleafcommerce.profile.web.core.security;
+package org.springframework.security.core.token;
 
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.token.Sha512DigestUtils;
 
 public class Sha512DigestUtilsTest{
 
@@ -26,8 +25,6 @@ public class Sha512DigestUtilsTest{
 
     @Test
     public void test(){
-        //l_b_s 2284208963  10.88.54.164    /   会话  15 B    ✓
-
         LOGGER.debug(Sha512DigestUtils.shaHex("2284208963"));
     }
 }
