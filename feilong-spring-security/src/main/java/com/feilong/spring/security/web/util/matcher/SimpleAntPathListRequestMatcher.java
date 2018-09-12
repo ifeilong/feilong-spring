@@ -101,6 +101,8 @@ public class SimpleAntPathListRequestMatcher implements RequestMatcher{
             return false;
         }
 
+        //---------------------------------------------------------------
+
         String requestURI = request.getRequestURI();
 
         //---------------------------------------------------------------
@@ -165,19 +167,22 @@ public class SimpleAntPathListRequestMatcher implements RequestMatcher{
         this.caseSensitive = caseSensitive;
     }
 
-    // private String[]                    ignoredRequestMethods         = toStrings("GET,HEAD,TRACE,OPTIONS");
+    /**
+     * 获得 模式list.
+     *
+     * @return the patternList
+     */
+    public List<String> getPatternList(){
+        return patternList;
+    }
 
-    //判断 method
-    //String method = request.getMethod();
-    //        if (RequestUtil.isSupportMethod(ignoredRequestMethods, method)){
-    //            LOGGER.debug("requestURI:[{}],method is [{}],should not csrf", requestURI, method);
-    //            return false;
-    //        }
-
-    //---------------------------------------------------------------
-    //        if (RequestUtil.isStaticResource(requestURI)){
-    //            LOGGER.debug("requestURI:[{}],isStaticResource,should not csrf", requestURI);
-    //            return false;
-    //        }
+    /**
+     * 获得 是否忽略大小写,默认是true.
+     *
+     * @return the caseSensitive
+     */
+    public boolean getCaseSensitive(){
+        return caseSensitive;
+    }
 
 }
