@@ -40,18 +40,21 @@ import org.springframework.security.web.util.matcher.RequestMatcherEditor;
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @see org.springframework.security.web.csrf.CsrfFilter#setRequireCsrfProtectionMatcher(RequestMatcher)
+ * 
  * @see AndRequestMatcher
  * @see AnyRequestMatcher
  * @see OrRequestMatcher
+ * 
  * @see AntPathRequestMatcher
  * @see RegexRequestMatcher
  * @see ELRequestMatcher
+ * 
  * @see IpAddressMatcher
  * @see MediaTypeRequestMatcher
  * @see NegatedRequestMatcher
  * @see RequestHeaderRequestMatcher
+ * 
  * @see RequestMatcherEditor
- * @see org.apache.commons.collections4.functors.NotPredicate
  * @since 4.0.2
  */
 public class NotRequestMatcher implements RequestMatcher{
