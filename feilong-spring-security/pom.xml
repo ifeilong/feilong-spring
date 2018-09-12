@@ -8,11 +8,6 @@
 
 	<artifactId>feilong-spring-security</artifactId>
 
-	<properties>
-		<!-- <version.spring-security>3.2.10.RELEASE</version.spring-security> -->
-		<version.spring-security>4.2.7.RELEASE</version.spring-security>
-	</properties>
-
 	<dependencies>
 
 		<!-- 核心包，包含Security的核心功能组件 -->
