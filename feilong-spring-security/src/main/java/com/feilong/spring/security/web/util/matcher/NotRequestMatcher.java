@@ -60,7 +60,7 @@ import org.springframework.security.web.util.matcher.RequestMatcherEditor;
 public class NotRequestMatcher implements RequestMatcher{
 
     /** The RequestMatcher to decorate. */
-    private final RequestMatcher requestMatcher;
+    private RequestMatcher requestMatcher;
 
     //---------------------------------------------------------------
 
@@ -105,6 +105,27 @@ public class NotRequestMatcher implements RequestMatcher{
     @Override
     public boolean matches(HttpServletRequest request){
         return !requestMatcher.matches(request);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 设置 RequestMatcher to decorate.
+     *
+     * @param requestMatcher
+     *            the requestMatcher to set
+     */
+    public void setRequestMatcher(RequestMatcher requestMatcher){
+        this.requestMatcher = requestMatcher;
+    }
+
+    /**
+     * 获得 RequestMatcher to decorate.
+     *
+     * @return the requestMatcher
+     */
+    public RequestMatcher getRequestMatcher(){
+        return requestMatcher;
     }
 
 }

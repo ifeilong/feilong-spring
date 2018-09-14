@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<!--
+		CSRF protection.
+		Here we only include the CsrfFilter instead of all of Spring Security.
+
+		See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf
+
+		for more information on Spring Security's CSRF protection
+	-->
+	<bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
+		<constructor-arg>
+			<bean class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
+		</constructor-arg>
+
+		<!--
+			需要 csrf 保护的 mather
+			如果不需要 csrf 保护的,那么将直接跳过
+		-->
+		<property name="requireCsrfProtectionMatcher">
+			<bean class="org.springframework.security.web.util.matcher.AndRequestMatcher">
+				<constructor-arg>
+					<array value-type="org.springframework.security.web.util.matcher.RequestMatcher">
+						<ref bean="updateRequestMethodListRequestMatcher" />
+						<ref bean="noNeedCsrfRequestPathListMatcher" />
+					</array>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- post,put,delete,patch 需要保护 -->
+	<bean id="updateRequestMethodListRequestMatcher" class="com.feilong.spring.security.web.util.matcher.SimpleRequestMethodListRequestMatcher">
+		<!-- GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE -->
+		<property name="methods" value="post,put,delete,patch" />
+	</bean>
+
+	<!-- 排除下面的 url -->
+	<bean id="noNeedCsrfRequestPathListMatcher" class="com.feilong.spring.security.web.util.matcher.NotRequestMatcher">
+		<property name="requestMatcher">
+			<bean class="com.feilong.spring.security.web.util.matcher.SimpleAntPathListRequestMatcher">
+				<property name="patternList">
+					<set>
+						<value>/pay/**/*</value>
+						<value>/payment/**/*</value>
+						<value>/signin/facebook</value>
+						<value>/signin/google</value>
+						<value>/imagesearch/uploadPicture</value>
+					</set>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+</beans>

@@ -87,14 +87,19 @@ public class SimpleRequestMethodListRequestMatcher implements RequestMatcher{
         //判断 method
         String method = request.getMethod();
 
+        String requestURI = request.getRequestURI();
+
+        String methodsValue = ConvertUtil.toString(methods, DEFAULT_CONNECTOR);
         if (RequestUtil.isSupportMethod(methods, method)){
-            LOGGER.debug(
-                            "requestURI:[{}],method is [{}],match config:[{}]",
-                            request.getRequestURI(),
-                            method,
-                            ConvertUtil.toString(methods, DEFAULT_CONNECTOR));
+            LOGGER.debug("requestURI:[{}],method is: [{}],in methods:[{}]", requestURI, method, methodsValue);
             return true;
         }
+
+        //---------------------------------------------------------------
+        if (LOGGER.isTraceEnabled()){
+            LOGGER.trace("requestURI:[{}],method is: [{}],not in methods:[{}]", requestURI, method, methodsValue);
+        }
+
         return false;
     }
 
