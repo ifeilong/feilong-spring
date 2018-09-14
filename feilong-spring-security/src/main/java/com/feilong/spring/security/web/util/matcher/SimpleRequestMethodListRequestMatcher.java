@@ -16,7 +16,6 @@
 package com.feilong.spring.security.web.util.matcher;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
-import static com.feilong.core.bean.ConvertUtil.toStrings;
 import static com.feilong.core.bean.ToStringConfig.DEFAULT_CONNECTOR;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,11 +63,11 @@ import com.feilong.servlet.http.RequestUtil;
 public class SimpleRequestMethodListRequestMatcher implements RequestMatcher{
 
     /** The Constant log. */
-    private static final Logger LOGGER  = LoggerFactory.getLogger(SimpleRequestMethodListRequestMatcher.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleRequestMethodListRequestMatcher.class);
 
     //---------------------------------------------------------------
     /** 需要匹配的请求method. */
-    private String[]            methods = toStrings("GET,HEAD,TRACE,OPTIONS");
+    private String[]            methods;
 
     //---------------------------------------------------------------
 
@@ -87,12 +86,11 @@ public class SimpleRequestMethodListRequestMatcher implements RequestMatcher{
         //---------------------------------------------------------------
         //判断 method
         String method = request.getMethod();
-        String requestURI = request.getRequestURI();
 
         if (RequestUtil.isSupportMethod(methods, method)){
             LOGGER.debug(
                             "requestURI:[{}],method is [{}],match config:[{}]",
-                            requestURI,
+                            request.getRequestURI(),
                             method,
                             ConvertUtil.toString(methods, DEFAULT_CONNECTOR));
             return true;

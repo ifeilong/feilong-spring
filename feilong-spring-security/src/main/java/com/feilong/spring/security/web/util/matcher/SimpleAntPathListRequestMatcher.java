@@ -102,12 +102,10 @@ public class SimpleAntPathListRequestMatcher implements RequestMatcher{
         }
 
         //---------------------------------------------------------------
-
         String requestURI = request.getRequestURI();
-
-        //---------------------------------------------------------------
         //如果在缓存里面，那么直接返回
         Boolean isMatch = CACHE.get(requestURI);
+
         if (null != isMatch){
             LOGGER.debug("requestURI:[{}],in cache,value is:[{}],will return it", requestURI, isMatch);
             return isMatch;
