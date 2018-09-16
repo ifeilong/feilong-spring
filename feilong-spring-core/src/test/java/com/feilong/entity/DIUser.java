@@ -54,6 +54,8 @@ public class DIUser extends BaseDIUser{
     /** The di user array. */
     private DIUserArray         diUserArray;
 
+    //---------------------------------------------------------------
+
     /**
      * Gets the list.
      * 

@@ -34,12 +34,8 @@ public class SpringVersionTest{
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringVersionTest.class);
 
-    /**
-     * Gets the version.
-     * 
-     */
     @Test
-    public void testGetVersion(){
+    public void test(){
         LOGGER.debug(SpringVersion.getVersion());
     }
 }

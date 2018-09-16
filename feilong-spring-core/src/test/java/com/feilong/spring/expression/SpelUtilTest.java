@@ -15,22 +15,16 @@
  */
 package com.feilong.spring.expression;
 
+import static com.feilong.core.bean.ConvertUtil.toList;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasItem;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.feilong.json.jsonlib.JsonUtil;
-
-/**
- * The Class SpelUtilTest.
- *
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 1.0.8
- */
 public class SpelUtilTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpelUtilTest.class);
 
     /**
      * 获得 value.
@@ -38,28 +32,30 @@ public class SpelUtilTest{
     @Test
     public void getValue(){
         String ex = "'Hello,World'";
-        LOGGER.debug("" + SpelUtil.getValue(ex));
-        LOGGER.debug("" + SpelUtil.getValue(ex + ".length()"));
-        LOGGER.debug("" + SpelUtil.getValue(ex + ".concat('!')"));
-        LOGGER.debug("" + SpelUtil.getValue(ex + ".class"));
-        LOGGER.debug("" + SpelUtil.getValue(ex + ".bytes.length"));
-        LOGGER.debug("" + SpelUtil.getValue("new String(" + ex + ").toUpperCase()"));
+
+        assertEquals("Hello,World", SpelUtil.getValue(ex));
+        assertEquals(11, SpelUtil.getValue(ex + ".length()"));
+        assertEquals("Hello,World!", SpelUtil.getValue(ex + ".concat('!')"));
+        assertEquals(String.class, SpelUtil.getValue(ex + ".class"));
+        assertEquals(11, SpelUtil.getValue(ex + ".bytes.length"));
+        assertEquals("HELLO,WORLD", SpelUtil.getValue("new String(" + ex + ").toUpperCase()"));
     }
 
     @Test
+    @Ignore
     public void getValue1(){
-        System.setProperty("feilong.site", "hongkong");
-        LOGGER.debug("" + SpelUtil.getValue("#systemProperties['feilong.site']"));
-        //LOGGER.debug("" + SpelUtil.getValue("${feilong.site}=='china'?'CHINA':(${feilong.site}=='hongkong'?'HONGKONG':'TAIWAN')"));
+        String value = "hongkong";
+        System.setProperty("feilong.site", value);
+
+        assertEquals(value, SpelUtil.getValue("#systemProperties['feilong.site']"));
+        //assertEquals("" + SpelUtil.getValue("${feilong.site}=='china'?'CHINA':(${feilong.site}=='hongkong'?'HONGKONG':'TAIWAN')"));
     }
 
     @Test
     public void getValue2(){
         String expressionString = "T(com.feilong.core.lang.StringUtil).tokenizeToStringArray('xin,jin',',')";
 
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug(JsonUtil.format(SpelUtil.getValue(expressionString)));
-        }
-
+        String[] values = SpelUtil.getValue(expressionString);
+        assertThat(toList(values), allOf(hasItem("xin"), hasItem("jin")));
     }
 }

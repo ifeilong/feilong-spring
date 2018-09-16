@@ -17,11 +17,6 @@ package com.feilong.manager;
 
 import org.springframework.stereotype.Service;
 
-/**
- * 
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 1.10.2
- */
 @Service
 public class MemberManagerImpl implements MemberManager{
 

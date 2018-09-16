@@ -43,13 +43,16 @@ public class SpelUtil{
 
     /**
      * Gets the value.
-     * 
+     *
+     * @param <T>
+     *            the generic type
      * @param expressionString
      *            the expression string
      * @return the value
      */
-    public static Object getValue(String expressionString){
+    @SuppressWarnings("unchecked")
+    public static <T> T getValue(String expressionString){
         Expression expression = expressionParser.parseExpression(expressionString);
-        return expression.getValue();
+        return (T) expression.getValue();
     }
 }

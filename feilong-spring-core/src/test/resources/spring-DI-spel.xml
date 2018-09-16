@@ -12,4 +12,6 @@
 	<bean class="com.feilong.entity.DIUser">
 		<property name="age" value="#{T(com.feilong.core.TimeInterval).SECONDS_PER_MONTH*3}" />
 	</bean>
+
+
 </beans>

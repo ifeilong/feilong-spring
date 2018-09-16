@@ -15,12 +15,6 @@
  */
 package com.feilong.manager;
 
-/**
- * The Interface MemberManager.
- *
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 1.10.2
- */
 public interface MemberManager{
 
 }

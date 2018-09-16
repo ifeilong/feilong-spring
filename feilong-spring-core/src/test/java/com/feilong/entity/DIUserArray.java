@@ -29,6 +29,8 @@ public class DIUserArray extends BaseDIUser{
     /** The secret strategys. */
     private String[] secretStrategys;
 
+    //---------------------------------------------------------------
+
     /**
      * 获得 skills.
      *

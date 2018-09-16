@@ -32,11 +32,8 @@ public class GenericTypeResolverTest{
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericTypeResolverTest.class);
 
-    /**
-     * TestGenericTypeResolverTest.
-     */
     @Test
-    public void testGenericTypeResolverTest(){
+    public void test(){
         SkuItemRepositoryImpl4<SkuItem> skuItemRepositoryImpl4 = new SkuItemRepositoryImpl4<SkuItem>();
         LOGGER.debug(JsonUtil.format(GenericTypeResolver.getTypeVariableMap(skuItemRepositoryImpl4.getClass())));
     }

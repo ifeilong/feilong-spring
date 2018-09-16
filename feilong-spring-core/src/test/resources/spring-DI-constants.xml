@@ -14,4 +14,6 @@
 		<property name="description" value="esprit mobile商城" />
 		<property name="type" value="mobile" />
 	</bean>
+
+
 </beans>
