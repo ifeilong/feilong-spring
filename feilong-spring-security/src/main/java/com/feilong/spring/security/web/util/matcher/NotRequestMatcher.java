@@ -79,6 +79,12 @@ public class NotRequestMatcher implements RequestMatcher{
     }
 
     //---------------------------------------------------------------
+    /**
+     * Instantiates a new not request matcher.
+     */
+    public NotRequestMatcher(){
+        super();
+    }
 
     /**
      * Constructor that performs no validation.
@@ -89,7 +95,6 @@ public class NotRequestMatcher implements RequestMatcher{
      *            the request matcher
      */
     public NotRequestMatcher(RequestMatcher requestMatcher){
-        super();
         this.requestMatcher = requestMatcher;
     }
 

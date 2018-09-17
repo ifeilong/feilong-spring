@@ -13,32 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong;
+package com.feilong.spring.security.web.util.matcher;
 
-public abstract class AbstractManager{
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-    /** The name. */
-    private String name = "feilong";
+@RunWith(Suite.class)
+@SuiteClasses({ //
 
-    //---------------------------------------------------------------
+                CsrfFilterTest.class
 
-    /**
-     * Gets the name.
-     *
-     * @return the name
-     */
-    public String getName(){
-        return name;
-    }
-
-    /**
-     * Sets the name.
-     *
-     * @param name
-     *            the name to set
-     */
-    public void setName(String name){
-        this.name = name;
-    }
+        //
+})
+public class FeiLongSpringSecuritySuiteTests{
 
 }

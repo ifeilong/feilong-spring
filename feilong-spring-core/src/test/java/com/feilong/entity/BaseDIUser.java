@@ -38,6 +38,8 @@ public abstract class BaseDIUser implements InitializingBean,DisposableBean{
         LOGGER.info("init.....:[{}]", this.getClass().getName());
     }
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -47,6 +49,8 @@ public abstract class BaseDIUser implements InitializingBean,DisposableBean{
     public void afterPropertiesSet() throws Exception{
         LOGGER.info("afterPropertiesSet.....:[{}]", this.getClass().getName());
     }
+
+    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)

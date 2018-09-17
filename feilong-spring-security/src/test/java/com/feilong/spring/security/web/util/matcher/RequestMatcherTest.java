@@ -13,38 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong;
+package com.feilong.spring.security.web.util.matcher;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.feilong.entity.ConstructorPropertiesEntity;
-import com.feilong.json.jsonlib.JsonUtil;
-
-/**
- * The Class SpringConstructorPropertiesTest.
- */
-@ContextConfiguration(locations = { "classpath:spring-DI-ConstructorProperties.xml" })
+@ContextConfiguration(locations = { "classpath:spring-filter-requestMatcher.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SpringConstructorPropertiesTest{
+public class RequestMatcherTest{
 
-    /** The Constant LOGGER. */
-    private static final Logger         LOGGER = LoggerFactory.getLogger(SpringConstructorPropertiesTest.class);
-
-    /** The constructor properties entity. */
-    @Autowired
-    private ConstructorPropertiesEntity constructorPropertiesEntity;
-
-    /**
-     * Test.
-     */
     @Test
-    public void testDIConstructorProperties(){
-        LOGGER.debug(JsonUtil.format(constructorPropertiesEntity));
+    public void test(){
+
     }
+
 }
