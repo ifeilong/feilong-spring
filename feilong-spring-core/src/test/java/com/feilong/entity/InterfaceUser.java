@@ -15,36 +15,15 @@
  */
 package com.feilong.entity;
 
-import java.beans.ConstructorProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
- * The Class ConstructorPropertiesEntity.
- *
+ * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 1.1.1
+ * @since 4.0.2
  */
-public class ConstructorPropertiesEntity{
+public interface InterfaceUser{
 
-    /** The name. */
-    private final String  name;
-
-    /** The age. */
-    private final Integer age;
-
-    //---------------------------------------------------------------
-
-    /**
-     * The Constructor.
-     *
-     * @param name
-     *            the name
-     * @param age
-     *            the age
-     */
-    @ConstructorProperties({ "name", "age" })
-    public ConstructorPropertiesEntity(String name, Integer age){
-        super();
-        this.name = name;
-        this.age = age;
-    }
 }

@@ -26,20 +26,36 @@ public class ConstructorArgsEntity{
     /** The name. */
     private String[] names;
 
+    /** The ages. */
     private int[]    ages;
+
+    //---------------------------------------------------------------
 
     /**
      * The Constructor.
+     *
+     * @param names
+     *            the names
      */
     public ConstructorArgsEntity(String...names){
         this.names = names;
     }
 
+    /**
+     * Instantiates a new constructor args entity.
+     *
+     * @param ages
+     *            the ages
+     */
     public ConstructorArgsEntity(int[] ages){
         this.ages = ages;
     }
 
+    //---------------------------------------------------------------
+
     /**
+     * 获得 name.
+     *
      * @return the names
      */
     public String[] getNames(){
@@ -47,6 +63,8 @@ public class ConstructorArgsEntity{
     }
 
     /**
+     * 设置 name.
+     *
      * @param names
      *            the names to set
      */
@@ -55,6 +73,8 @@ public class ConstructorArgsEntity{
     }
 
     /**
+     * Gets the ages.
+     *
      * @return the ages
      */
     public int[] getAges(){
@@ -62,6 +82,8 @@ public class ConstructorArgsEntity{
     }
 
     /**
+     * Sets the ages.
+     *
      * @param ages
      *            the ages to set
      */

@@ -15,36 +15,43 @@
  */
 package com.feilong.entity;
 
-import java.beans.ConstructorProperties;
+import com.feilong.store.member.User;
 
-/**
- * The Class ConstructorPropertiesEntity.
- *
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 1.1.1
- */
-public class ConstructorPropertiesEntity{
+public class ConstructorListBeanEntity{
 
     /** The name. */
-    private final String  name;
-
-    /** The age. */
-    private final Integer age;
+    private User[] users;
 
     //---------------------------------------------------------------
 
     /**
      * The Constructor.
      *
-     * @param name
-     *            the name
-     * @param age
-     *            the age
+     * @param users
+     *            the users
      */
-    @ConstructorProperties({ "name", "age" })
-    public ConstructorPropertiesEntity(String name, Integer age){
-        super();
-        this.name = name;
-        this.age = age;
+    public ConstructorListBeanEntity(User...users){
+        this.users = users;
     }
+
+    //---------------------------------------------------------------
+    /**
+     * 获得 name.
+     *
+     * @return the users
+     */
+    public User[] getUsers(){
+        return users;
+    }
+
+    /**
+     * 设置 name.
+     *
+     * @param users
+     *            the users to set
+     */
+    public void setUsers(User[] users){
+        this.users = users;
+    }
+
 }
