@@ -50,7 +50,7 @@ public class SpringDISimpleTest{
      * Test.
      */
     @Test
-    public void testUser(){
+    public void test(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("spring-DI-simple");
         LOGGER.debug(JsonUtil.format(diUser));
     }

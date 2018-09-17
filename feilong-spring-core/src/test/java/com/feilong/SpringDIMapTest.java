@@ -15,25 +15,21 @@
  */
 package com.feilong;
 
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.util.Map;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.feilong.entity.DIUser;
-import com.feilong.json.jsonlib.JsonUtil;
 
-/**
- * The Class UserTest.
- * 
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- */
 public class SpringDIMapTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger       LOGGER = LoggerFactory.getLogger(SpringDIMapTest.class);
 
     /** The file system context. */
     private static ApplicationContext fileSystemContext;
@@ -50,8 +46,11 @@ public class SpringDIMapTest{
      * Test.
      */
     @Test
-    public void testUser(){
+    public void test(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("feitian@");
-        LOGGER.debug("diUser:{}", JsonUtil.format(diUser));
+
+        Map<String, Object> map = diUser.getMap();
+        assertThat(map.get("五子良将"), allOf(hasProperty("isSuccess", is(false)), hasProperty("description", is("哈哈哈"))));
+        assertThat(map.get("八虎骑"), allOf(hasProperty("isSuccess", is(true)), hasProperty("description", is("呵呵呵"))));
     }
 }

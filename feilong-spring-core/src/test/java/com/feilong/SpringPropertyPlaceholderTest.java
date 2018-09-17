@@ -52,11 +52,13 @@ public class SpringPropertyPlaceholderTest extends AbstractJUnit4SpringContextTe
     @Value("${skills}")
     private String[]            skillsArray2;
 
+    //---------------------------------------------------------------
+
     /**
      * Test.
      */
     @Test
-    public void testDIUserArray(){
+    public void test(){
         LOGGER.debug(name);
         LOGGER.debug(skills);
         LOGGER.debug(JsonUtil.format(skillsArray));

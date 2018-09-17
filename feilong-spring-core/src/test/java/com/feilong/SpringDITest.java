@@ -57,7 +57,7 @@ public class SpringDITest{
      * Test.
      */
     @Test
-    public void testUser(){
+    public void test(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("feitian@");
         LOGGER.debug(JsonUtil.format(diUser));
         LOGGER.debug(diUser.getUserName());

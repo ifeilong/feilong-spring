@@ -37,7 +37,7 @@ public class SpringDIAutoWiredTest extends AbstractJUnit4SpringContextTests{
      * Test.
      */
     @Test
-    public void testUser(){
+    public void test(){
         LOGGER.debug("" + diUser.getAge());
     }
 }

@@ -15,35 +15,25 @@
  */
 package com.feilong;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
+import com.feilong.core.TimeInterval;
 import com.feilong.entity.DIUser;
-import com.feilong.json.jsonlib.JsonUtil;
 
-/**
- * The Class UserTest.
- * 
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- */
 @ContextConfiguration("classpath:spring-DI-spel.xml")
 public class SpringDISpelTest extends AbstractJUnit4SpringContextTests{
 
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpringDISpelTest.class);
-
     @Autowired
-    private DIUser              user;
+    private DIUser user;
 
-    /**
-     * Test platform.
-     */
     @Test
-    public void testPlatform(){
-        LOGGER.debug(JsonUtil.format(user));
+    public void test(){
+        //#{T(com.feilong.core.TimeInterval).SECONDS_PER_MONTH*3}
+        assertEquals(Integer.valueOf(TimeInterval.SECONDS_PER_MONTH * 3), user.getAge());
     }
 }

@@ -27,7 +27,7 @@ public class SpringDIPropertiesTest extends AbstractJUnit4SpringContextTests{
     private DiPropertiesManager diPropertiesManager;
 
     @Test
-    public void testPlatform(){
+    public void test(){
         diPropertiesManager.print();
     }
 }

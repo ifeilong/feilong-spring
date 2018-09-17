@@ -15,37 +15,23 @@
  */
 package com.feilong;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.net.HttpMethodType;
 
-/**
- * The Class UserTest.
- * 
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- */
 @ContextConfiguration("classpath:spring-DI-enum.xml")
 public class SpringDIEnumTest extends AbstractJUnit4SpringContextTests{
 
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpringDIEnumTest.class);
-
-    /** The platform. */
     @Autowired
-    private HttpMethodType      httpMethodType;
+    private HttpMethodType httpMethodType;
 
-    /**
-     * Test platform.
-     */
     @Test
-    public void testPlatform(){
-        // String aString = "china".equals("china") ? "" : ("china".equals("china") ? "" : "");
-        LOGGER.debug(JsonUtil.format(httpMethodType));
+    public void test(){
+        assertEquals(HttpMethodType.GET, httpMethodType);
     }
 }
