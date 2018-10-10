@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.feilong.platform.spring</groupId>
 		<artifactId>parent</artifactId>
-		<version>4.0.2</version>
+		<version>4.0.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>feilong-spring-security</artifactId>
