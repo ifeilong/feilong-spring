@@ -16,6 +16,7 @@
 package com.feilong.spring.security.web.util.matcher;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ToStringConfig.DEFAULT_CONNECTOR;
 import static com.feilong.core.util.MapUtil.newConcurrentHashMap;
 
 import java.util.List;
@@ -37,6 +38,8 @@ import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcherEditor;
+
+import com.feilong.core.bean.ConvertUtil;
 
 /**
  * 简单的 基于 {@link AntPathRequestMatcher} 的 patternList 的 {@link RequestMatcher} 实现.
@@ -107,7 +110,11 @@ public class SimpleAntPathListRequestMatcher implements RequestMatcher{
         Boolean isMatch = CACHE.get(requestURI);
 
         if (null != isMatch){
-            LOGGER.debug("requestURI:[{}],in cache,value is:[{}],will return it", requestURI, isMatch);
+            LOGGER.debug(
+                            "requestURI:[{}],return [{}] in cache.And patternList is:[{}]",
+                            requestURI,
+                            isMatch,
+                            ConvertUtil.toString(patternList, DEFAULT_CONNECTOR));
             return isMatch;
         }
 
