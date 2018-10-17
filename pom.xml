@@ -8,17 +8,17 @@
 
 	<groupId>com.feilong.platform.spring</groupId>
 	<artifactId>parent</artifactId>
-	<version>4.0.3</version>
+	<version>4.0.4-SNAPSHOT</version>
 
 	<url>https://github.com/venusdrogon/feilong-spring</url>
 
 	<packaging>pom</packaging>
 
 	<properties>
-		<version.spring>4.3.19.RELEASE</version.spring>
+		<version.spring>4.3.20.RELEASE</version.spring>
 
+		<version.spring-security>4.2.9.RELEASE</version.spring-security>
 		<!-- <version.spring-security>3.2.10.RELEASE</version.spring-security> -->
-		<version.spring-security>4.2.8.RELEASE</version.spring-security>
 	</properties>
 
 	<!-- 软件配置管理SCM (Software Configuration Management), 如cvs ,svn ,git -->
