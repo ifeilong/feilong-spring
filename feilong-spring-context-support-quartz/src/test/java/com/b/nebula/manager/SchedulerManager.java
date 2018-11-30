@@ -1,4 +1,4 @@
-package com.baozun.nebula.manager;
+package com.b.nebula.manager;
 
 import java.util.Date;
 

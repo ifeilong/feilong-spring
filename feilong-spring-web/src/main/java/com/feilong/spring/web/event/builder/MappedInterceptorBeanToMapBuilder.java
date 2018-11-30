@@ -50,7 +50,7 @@ com.feilong.spring.web.servlet.interceptor.monitor.MonitorInterceptor          /
 org.springframework.mobile.device.DeviceResolverHandlerInterceptor                                             org.springframework.web.servlet.handler.MappedInterceptor#1 
 org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor                                        org.springframework.web.servlet.handler.MappedInterceptor#2 
 org.springframework.web.servlet.handler.ConversionServiceExposingInterceptor                                   org.springframework.web.servlet.handler.MappedInterceptor#3 
-com.baozun.store.web.interceptor.StoreItemBrowsingHistoryInterceptor           /item/*                         org.springframework.web.servlet.handler.MappedInterceptor#4 
+com.b.store.web.interceptor.StoreItemBrowsingHistoryInterceptor           /item/*                         org.springframework.web.servlet.handler.MappedInterceptor#4 
 com.feilong.spring.web.servlet.interceptor.i18n.SupportLocaleChangeInterceptor                                 org.springframework.web.servlet.handler.MappedInterceptor#5 
 com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheInterceptor  /**                             org.springframework.web.servlet.handler.MappedInterceptor#6
  * 

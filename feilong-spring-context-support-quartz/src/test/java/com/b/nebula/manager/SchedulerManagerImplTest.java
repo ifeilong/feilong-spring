@@ -1,4 +1,4 @@
-package com.baozun.nebula.manager;
+package com.b.nebula.manager;
 
 import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
