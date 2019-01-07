@@ -40,6 +40,7 @@ import com.feilong.spring.expression.SpelUtilTest;
                 SpringConstructorArgsTest.class,
                 SpringDISpelTest.class,
 
+                SpringDIArrayTest.class,
                 SpringDIEnumTest.class,
                 SpringDIMapTest.class
 

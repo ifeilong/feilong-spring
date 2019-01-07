@@ -15,6 +15,10 @@
  */
 package com.feilong;
 
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasItemInArray;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,5 +41,9 @@ public class SpringDIArrayTest extends AbstractJUnit4SpringContextTests{
     public void test(){
         DIUserArray diUserArray = applicationContext.getBean(DIUserArray.class);
         LOGGER.debug(JsonUtil.format(diUserArray));
+
+        assertThat(diUserArray.getSecretStrategys(), allOf(hasItemInArray("求贤之策"), hasItemInArray("封印防策 毒泉防策")));
+        assertThat(diUserArray.getSkills(), allOf(hasItemInArray("商才"), hasItemInArray("耕作"), hasItemInArray("名士")));
+
     }
 }
