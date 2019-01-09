@@ -17,10 +17,13 @@ package com.feilong.spring.web.servlet.handler;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.spring.web.method.HandlerMethodUtil.getDeclaringClassSimpleName;
+import static com.feilong.spring.web.method.HandlerMethodUtil.getHandlerMethodName;
 
 import java.util.Map;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +33,9 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodExceptionResolver;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+
+import com.feilong.context.BeanLogMessageBuilder;
+import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * 借鉴了 {@link SimpleMappingExceptionResolver}, 但是适用于 HandlerMethodExceptionResolver.
@@ -70,6 +76,16 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
 
     //---------------------------------------------------------------
 
+    /** Post construct. */
+    @PostConstruct
+    protected void postConstruct(){
+        if (LOGGER.isInfoEnabled()){
+            LOGGER.info(BeanLogMessageBuilder.buildFieldsMessage(this));
+        }
+    }
+
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -83,7 +99,23 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
                     HttpServletResponse response,
                     HandlerMethod handlerMethod,
                     Exception exception){
+
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug(
+                            Slf4jUtil.format("[{}.{}()]", getDeclaringClassSimpleName(handlerMethod), getHandlerMethodName(handlerMethod)),
+                            exception);
+        }
+        //---------------------------------------------------------------
         String viewName = buildViewName(handlerMethod, exception, request, response);
+        if (LOGGER.isErrorEnabled()){
+            LOGGER.error(
+                            Slf4jUtil.format(
+                                            "[{}.{}()],viewName:[{}]",
+                                            getDeclaringClassSimpleName(handlerMethod),
+                                            getHandlerMethodName(handlerMethod),
+                                            viewName),
+                            exception);
+        }
 
         return isNotNullOrEmpty(viewName) ? packModelAndView(viewName, exception) : null;
     }

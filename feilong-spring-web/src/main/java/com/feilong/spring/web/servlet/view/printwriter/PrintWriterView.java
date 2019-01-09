@@ -72,7 +72,7 @@ public class PrintWriterView extends AbstractView{
                     throws Exception{
         //since 4.0.4 add log
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("will write:[{}]", content);
+            LOGGER.debug("[{}] will write:[{}]", request.getRequestURI(), content);
         }
         //---------------------------------------------------------------
         ResponseUtil.writeText(response, content);
