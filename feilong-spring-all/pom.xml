@@ -101,6 +101,12 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+
+							<!-- When true, transitive deps of removed dependencies are promoted to direct dependencies.
+								This should allow the drop in replacement of the removed deps with the new shaded jar and everything should still work. -->
+							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+
+
 							<!-- With version 2.2 of the maven-shade-plugin, they added a "shadeTestJar" option (see MSHADE-158): http://maven.apache.org/plugins/maven-shade-plugin/shade-mojo.html#shadeTestJar -->
 							<shadeTestJar>true</shadeTestJar>
 							<!-- When true, it will attempt to create a sources jar as well -->

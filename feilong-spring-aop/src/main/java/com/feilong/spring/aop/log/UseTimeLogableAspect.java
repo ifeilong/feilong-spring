@@ -28,6 +28,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.feilong.context.log.UseTimeLogable;
 import com.feilong.spring.aop.AbstractAspect;
 
 /**
@@ -47,7 +48,7 @@ public class UseTimeLogableAspect extends AbstractAspect{
     /**
      * Pointcut.
      */
-    @Pointcut("this(com.feilong.spring.aop.log.UseTimeLogable)")
+    @Pointcut("this(com.feilong.context.log.UseTimeLogable)")
     private void pointcut(){
         //only pointcut
     }
@@ -67,6 +68,8 @@ public class UseTimeLogableAspect extends AbstractAspect{
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
         Date beginDate = new Date();
 
+        //---------------------------------------------------------------
+
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = methodSignature.getMethod();
         String methodName = method.getName();
@@ -74,6 +77,8 @@ public class UseTimeLogableAspect extends AbstractAspect{
         String targetClassSimpleName = proceedingJoinPoint.getTarget().getClass().getSimpleName();
 
         LOGGER.debug("begin [{}.{}] ~~~~", targetClassSimpleName, methodName);
+
+        //---------------------------------------------------------------
 
         // 通过反射执行目标对象的连接点处的方法
         Object result = proceedingJoinPoint.proceed();

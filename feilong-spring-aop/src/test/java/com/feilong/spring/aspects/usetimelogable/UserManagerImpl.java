@@ -18,8 +18,8 @@ package com.feilong.spring.aspects.usetimelogable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.feilong.context.log.UseTimeLogable;
 import com.feilong.spring.aop.log.Log;
-import com.feilong.spring.aop.log.UseTimeLogable;
 
 public class UserManagerImpl implements UserManager,UseTimeLogable{
 

@@ -25,7 +25,11 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
-@ContextConfiguration(locations = "classpath:spring-aop.xml")
+@ContextConfiguration(locations = { //
+                                    "classpath:feilong-aop-UseTimeLogableAspect.xml",
+                                    "classpath:spring-aop-EventListener.xml"
+
+})
 public class AspectsTest extends AbstractJUnit4SpringContextTests{
 
     /** The user manager. */

@@ -9,8 +9,6 @@
 
 	<bean id="helloWorldService" class="cn.javass.spring.chapter6.service.HelloWorldServiceImpl" />
 
-
-
 	<bean id="aspect" class="cn.javass.spring.chapter6.aop.HelloWorldAspect" />
 
 	<aop:config>
