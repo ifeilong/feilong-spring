@@ -51,10 +51,10 @@ public class SchedulerFactoryMapBeanToMapListBuilder implements MapBeanToMapList
     @Override
     public List<Map<String, Object>> build(Map<String, SchedulerFactoryBean> beanNameAndBeanMap){
         List<Map<String, Object>> list = newArrayList();
-        for (Map.Entry<String, SchedulerFactoryBean> entry : beanNameAndBeanMap.entrySet()){
-            List<Map<String, Object>> map = build(entry.getKey(), entry.getValue());
 
-            addAllIgnoreNull(list, map);
+        //---------------------------------------------------------------
+        for (Map.Entry<String, SchedulerFactoryBean> entry : beanNameAndBeanMap.entrySet()){
+            addAllIgnoreNull(list, build(entry.getKey(), entry.getValue()));
         }
         return list;
     }
@@ -73,6 +73,8 @@ public class SchedulerFactoryMapBeanToMapListBuilder implements MapBeanToMapList
      */
     private static List<Map<String, Object>> build(String key,SchedulerFactoryBean schedulerFactoryBean){
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
+
+        //---------------------------------------------------------------
         try{
             return get(scheduler);
         }catch (SchedulerException e){
@@ -93,16 +95,18 @@ public class SchedulerFactoryMapBeanToMapListBuilder implements MapBeanToMapList
     public final static List<Map<String, Object>> get(Scheduler scheduler) throws SchedulerException{
         List<Map<String, Object>> list = newArrayList();
 
+        //---------------------------------------------------------------
+
         for (String groupName : scheduler.getJobGroupNames()){
-            GroupMatcher<JobKey> jobGroupEquals = GroupMatcher.jobGroupEquals(groupName);
-            Set<JobKey> jobKeys = scheduler.getJobKeys(jobGroupEquals);
+            GroupMatcher<JobKey> group = GroupMatcher.jobGroupEquals(groupName);
+            Set<JobKey> jobKeys = scheduler.getJobKeys(group);
 
             for (JobKey jobKey : jobKeys){
-                Map<String, Object> map = buildMap(scheduler, jobKey);
-
-                list.add(map);
+                list.add(buildMap(scheduler, jobKey));
             }
         }
+
+        //---------------------------------------------------------------
 
         return list;
     }
@@ -171,5 +175,4 @@ public class SchedulerFactoryMapBeanToMapListBuilder implements MapBeanToMapList
         //---------------------------------------------------------------
         return map;
     }
-
 }
