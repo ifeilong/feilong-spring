@@ -64,6 +64,7 @@ public class UseTimeLogableAspect extends AbstractAspect{
      * @throws Throwable
      *             the throwable
      */
+    @SuppressWarnings("static-method")
     @Around(value = "pointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
         Date beginDate = new Date();
