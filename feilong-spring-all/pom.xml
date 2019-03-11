@@ -85,6 +85,13 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- since 4.0.4 -->
+		<dependency>
+			<groupId>com.feilong.platform.spring</groupId>
+			<artifactId>feilong-spring-monitor</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
