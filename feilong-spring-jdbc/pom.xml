@@ -12,7 +12,7 @@
 		<!-- 9.2-1004-jdbc3 -->
 		<version.postgresql>9.2-1004-jdbc4</version.postgresql>
 		<version.loxia>2.5.2</version.loxia>
-		<version.c3p0>0.9.5.2</version.c3p0>
+		<version.c3p0>0.9.5.4</version.c3p0>
 	</properties>
 
 	<dependencies>
