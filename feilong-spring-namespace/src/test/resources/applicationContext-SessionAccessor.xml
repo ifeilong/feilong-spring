@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:feilong="http://www.feilong.com/schema/feilong"
+
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  
+    http://www.feilong.com/schema/feilong http://www.feilong.com/schema/feilong/feilong.xsd
+    ">
+    
+    <feilong:sessionKeyAccessor id="bSessionAccessor"/>
+    
+	<feilong:sessionAccessor id="aSessionAccessor" key="11511" />
+
+<!-- 
+	<feilong:sessionAccessor id="guestKeySessionAccessor" key="${guest.key}" />
+	<feilong:sessionAccessor id="guestAllowedSessionAccessor" key="${guest.allowed}" />
+	<feilong:sessionAccessor id="shopDogFlagSessionAccessor" key="${shopdog.flag}" />
+
+ -->
+
+	<!-- TODO:说明这个属性是干什么的 -->
+	<bean name="memeberResetPasswordMobileSessionAccessor" class="com.feilong.accessor.session.SessionAccessor">
+		<property name="key" value="jintian" />
+	</bean>
+
+
+</beans>  

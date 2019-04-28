@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:feilong="http://www.feilong.com/schema/feilong"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  
+    
+    http://www.feilong.com/schema/feilong http://www.feilong.com/schema/feilong/feilong.xsd
+    ">
+
+	<!-- -->
+	<feilong:log id="myLog" isPrintTime="true" company="cb" />
+
+	<feilong:httpResponseStringBuilder id="httpResponseStringBuilder" isPrintTime="true" company="cb" />
+
+	<!-- <bean id="log" class="com.log.LogBean">
+		<constructor-arg value="true"></constructor-arg>
+		<property name="company" value="cb"></property>
+		</bean> -->
+</beans>  
