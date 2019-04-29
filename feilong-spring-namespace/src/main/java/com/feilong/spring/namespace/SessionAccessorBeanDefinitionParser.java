@@ -15,9 +15,7 @@
  */
 package com.feilong.spring.namespace;
 
-import org.apache.commons.lang3.Validate;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser;
 import org.w3c.dom.Element;
 
 import com.feilong.accessor.session.SessionAccessor;
@@ -28,7 +26,7 @@ import com.feilong.accessor.session.SessionAccessor;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 4.0.5
  */
-public class SessionAccessorBeanDefinitionParser extends org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser{
+public class SessionAccessorBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser{
 
     /*
      * (non-Javadoc)
@@ -38,24 +36,6 @@ public class SessionAccessorBeanDefinitionParser extends org.springframework.bea
     @Override
     protected Class<?> getBeanClass(Element element){
         return SessionAccessor.class;
-    }
-
-    //---------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser#doParse(org.w3c.dom.Element,
-     * org.springframework.beans.factory.xml.ParserContext, org.springframework.beans.factory.support.BeanDefinitionBuilder)
-     */
-    @Override
-    protected void doParse(Element element,ParserContext parserContext,BeanDefinitionBuilder beanDefinitionBuilder){
-        String key = element.getAttribute("key");
-        Validate.notBlank(key, "key can't be blank!");
-
-        //---------------------------------------------------------------
-
-        beanDefinitionBuilder.addPropertyValue("key", key);
     }
 
 }

@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
-import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**
  * The Class FeilongNamespaceHandler.
@@ -29,7 +28,7 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 4.0.5
  */
-public class FeilongNamespaceHandler extends NamespaceHandlerSupport{
+public class FeilongNamespaceHandler extends org.springframework.beans.factory.xml.NamespaceHandlerSupport{
 
     /** The Constant map. */
     private static final Map<String, BeanDefinitionParser> map = toMapUseEntrys(//

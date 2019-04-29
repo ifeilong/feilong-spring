@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import com.feilong.accessor.cookie.CookieAccessor;
+import com.feilong.json.jsonlib.JsonUtil;
 
 @ContextConfiguration(locations = { "classpath*:applicationContext-CookieAccessor.xml" })
 public class CookieAccessorTagTest extends AbstractJUnit4SpringContextTests{
@@ -19,6 +20,6 @@ public class CookieAccessorTagTest extends AbstractJUnit4SpringContextTests{
 
     @Test
     public void test(){
-        System.out.println(cookieAccessor.getIsValueEncoding());
+        System.out.println(JsonUtil.format(cookieAccessor));
     }
 }

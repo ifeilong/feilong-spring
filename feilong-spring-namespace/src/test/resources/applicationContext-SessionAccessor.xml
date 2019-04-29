@@ -6,14 +6,14 @@
     http://www.feilong.com/schema/feilong http://www.feilong.com/schema/feilong/feilong.xsd
     ">
     
-    <feilong:sessionKeyAccessor id="bSessionAccessor"/>
+    <feilong:accessor-sessionkey id="bSessionAccessor"/>
     
-	<feilong:sessionAccessor id="aSessionAccessor" key="11511" />
+	<feilong:accessor-session id="aSessionAccessor" key="11511" />
 
 <!-- 
-	<feilong:sessionAccessor id="guestKeySessionAccessor" key="${guest.key}" />
-	<feilong:sessionAccessor id="guestAllowedSessionAccessor" key="${guest.allowed}" />
-	<feilong:sessionAccessor id="shopDogFlagSessionAccessor" key="${shopdog.flag}" />
+	<feilong:accessor-session id="guestKeySessionAccessor" key="${guest.key}" />
+	<feilong:accessor-session id="guestAllowedSessionAccessor" key="${guest.allowed}" />
+	<feilong:accessor-session id="shopDogFlagSessionAccessor" key="${shopdog.flag}" />
 
  -->
 

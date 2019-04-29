@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.namespace;
 
-import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
+import org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser;
 import org.w3c.dom.Element;
 
 import com.feilong.accessor.session.SessionKeyAccessor;
@@ -26,7 +26,7 @@ import com.feilong.accessor.session.SessionKeyAccessor;
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 4.0.5
  */
-public class SessionKeyAccessorBeanDefinitionParser extends AbstractSingleBeanDefinitionParser{
+public class SessionKeyAccessorBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser{
 
     /*
      * (non-Javadoc)

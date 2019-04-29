@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.feilong.platform.spring</groupId>
 		<artifactId>parent</artifactId>
-		<version>4.0.5-SNAPSHOT</version>
+		<version>4.0.5</version>
 	</parent>
 	<artifactId>feilong-spring-mobile</artifactId>
 

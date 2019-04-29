@@ -2,7 +2,7 @@
 <xsd:schema xmlns="http://www.springframework.org/schema/feilong" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
 	targetNamespace="http://www.feilong.com/schema/feilong" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-	<xsd:import namespace="http://www.springframework.org/schema/beans" />
+	<xsd:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans.xsd" />
 
 	<xsd:annotation>
 		<xsd:documentation>
@@ -37,106 +37,112 @@
 		</xsd:annotation>
 
 		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="beans:identifiedType">
 
-			<xsd:attribute name="id" type="xsd:string" />
-
-			<!-- name名称,名字和值都不能包含空白字符以及下列字符: @ : ;? , " / [ ] ( ) = 这些符号 -->
-			<xsd:attribute name="name" type="xsd:string" use="required">
-				<xsd:annotation>
-					<xsd:documentation>
+					<!-- name名称,名字和值都不能包含空白字符以及下列字符: @ : ;? , " / [ ] ( ) = 这些符号 -->
+					<xsd:attribute name="name" type="xsd:string" use="required">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							name名称,名字和值都不能包含空白字符以及下列字符: @ : ;? , " / [ ] ( ) = 这些符号
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
 
-			<!-- 设置存活时间,单位秒. -->
-			<xsd:attribute name="maxAge" type="xsd:integer">
-				<xsd:annotation>
-					<xsd:documentation>
+					<!-- 设置存活时间,单位秒. -->
+					<xsd:attribute name="maxAge" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							设置存活时间,单位秒.
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<!-- ;Comment=VALUE ... describes cookie's use ;Discard ... implied by maxAge {@code <} 0 -->
-			<xsd:attribute name="comment" type="xsd:string">
-				<xsd:annotation>
-					<xsd:documentation>
+							</xsd:documentation>
+						</xsd:annotation>
+
+
+					</xsd:attribute>
+
+					<!-- ;Comment=VALUE ... describes cookie's use ;Discard ... implied by maxAge {@code <} 0 -->
+					<xsd:attribute name="comment" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							;Comment=VALUE ... describes cookie's use ;Discard ... implied by maxAge {@code <} 0 
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
 
-			<!-- ;Domain=VALUE ... domain that sees cookie. -->
-			<xsd:attribute name="domain" type="xsd:string">
-				<xsd:annotation>
-					<xsd:documentation>
+					<!-- ;Domain=VALUE ... domain that sees cookie. -->
+					<xsd:attribute name="domain" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							;Domain=VALUE ... domain that sees cookie.
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
 
-			<!--;Path=VALUE ... URLs that see the cookie -->
-			<xsd:attribute name="path" type="xsd:string">
-				<xsd:annotation>
-					<xsd:documentation>
+					<!--;Path=VALUE ... URLs that see the cookie -->
+					<xsd:attribute name="path" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							;Path=VALUE ... URLs that see the cookie
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
 
-			<!-- ;Secure ... e.g. use SSL. -->
-			<xsd:attribute name="secure" type="xsd:boolean">
-				<xsd:annotation>
-					<xsd:documentation>
+					<!-- ;Secure ... e.g. use SSL. -->
+					<xsd:attribute name="secure" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							;Secure ... e.g. use SSL.
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
 
-			<!-- supports both the <b>Version 0 (by Netscape)</b> and <b>Version 1 (by RFC 2109)</b> cookie specifications. -->
-			<xsd:attribute name="version" type="xsd:string">
-				<xsd:annotation>
-					<xsd:documentation>
+					<!-- supports both the <b>Version 0 (by Netscape)</b> and <b>Version 1 (by RFC 2109)</b> cookie specifications. -->
+					<xsd:attribute name="version" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							supports both the <b>Version 0 (by Netscape)</b> and <b>Version 1 (by RFC 2109)</b> cookie specifications.
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
 
-			<!-- Not in cookie specs, but supported by browsers. -->
-			<xsd:attribute name="httpOnly" type="xsd:boolean">
-				<xsd:annotation>
-					<xsd:documentation>
+					<!-- Not in cookie specs, but supported by browsers. -->
+					<xsd:attribute name="httpOnly" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							Not in cookie specs, but supported by browsers.
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
 
-			<!--是否将值进行encode操作. URL-encoding -->
-			<xsd:attribute name="isValueEncoding" type="xsd:boolean">
-				<xsd:annotation>
-					<xsd:documentation>
+					<!--是否将值进行encode操作. URL-encoding -->
+					<xsd:attribute name="isValueEncoding" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:documentation>
 						<![CDATA[
 							是否将值进行encode操作. URL-encoding
 						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+
+				</xsd:extension>
+			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
 
@@ -144,23 +150,24 @@
 	<xsd:element name="accessor-session">
 		<xsd:annotation>
 			<xsd:documentation source="java:com.feilong.accessor.session.SessionAccessor">
-				<![CDATA[
-					Defines a com.feilong.accessor.session.SessionAccessor bean. 
-				]]>
+				<![CDATA[Defines a com.feilong.accessor.session.SessionAccessor bean. ]]>
 			</xsd:documentation>
 		</xsd:annotation>
 
 		<xsd:complexType>
-			<xsd:attribute name="id" type="xsd:string" />
-			<xsd:attribute name="key" type="xsd:string" use="required">
-				<xsd:annotation>
-					<xsd:documentation>
-						<![CDATA[
-							指定 session 中的 key
-						]]>
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
+
+			<xsd:complexContent>
+				<xsd:extension base="beans:identifiedType">
+					<xsd:attribute name="key" type="xsd:string" use="required">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[指定 session 中的 key]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+
+				</xsd:extension>
+			</xsd:complexContent>
 		</xsd:complexType>
 
 	</xsd:element>
@@ -176,7 +183,9 @@
 		</xsd:annotation>
 
 		<xsd:complexType>
-			<xsd:attribute name="id" type="xsd:string" />
+			<xsd:complexContent>
+				<xsd:extension base="beans:identifiedType" />
+			</xsd:complexContent>
 		</xsd:complexType>
 
 	</xsd:element>
