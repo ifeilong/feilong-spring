@@ -15,7 +15,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<version.spring>4.3.20.RELEASE</version.spring>
+		<version.spring>4.3.24.RELEASE</version.spring>
 
 		<version.spring-security>4.2.9.RELEASE</version.spring-security>
 		<!-- <version.spring-security>3.2.10.RELEASE</version.spring-security> -->
