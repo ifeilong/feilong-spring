@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.expression;
+package com.feilong.spring.expression.spelutil;
 
 import static com.feilong.core.bean.ConvertUtil.toList;
 import static org.hamcrest.Matchers.allOf;
@@ -24,7 +24,9 @@ import static org.junit.Assert.assertThat;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class SpelUtilTest{
+import com.feilong.spring.expression.SpelUtil;
+
+public class GetValueTest{
 
     /**
      * 获得 value.
@@ -40,6 +42,8 @@ public class SpelUtilTest{
         assertEquals(11, SpelUtil.getValue(ex + ".bytes.length"));
         assertEquals("HELLO,WORLD", SpelUtil.getValue("new String(" + ex + ").toUpperCase()"));
     }
+
+    //---------------------------------------------------------------
 
     @Test
     @Ignore
@@ -58,4 +62,7 @@ public class SpelUtilTest{
         String[] values = SpelUtil.getValue(expressionString);
         assertThat(toList(values), allOf(hasItem("xin"), hasItem("jin")));
     }
+
+    //---------------------------------------------------------------
+
 }

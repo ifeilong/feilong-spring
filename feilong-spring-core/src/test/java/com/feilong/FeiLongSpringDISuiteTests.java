@@ -23,13 +23,13 @@ import com.feilong.constructor.SpringConstructorArgsTest;
 import com.feilong.constructor.SpringConstructorListBeanTest;
 import com.feilong.constructor.SpringConstructorListStringTest;
 import com.feilong.spring.context.ApplicationContextUtilTest;
-import com.feilong.spring.expression.SpelUtilTest;
+import com.feilong.spring.expression.spelutil.FeiLongSpelUtilSuiteTests;
 
 @RunWith(Suite.class)
 @SuiteClasses({ //
 
                 ApplicationContextUtilTest.class,
-                SpelUtilTest.class,
+                FeiLongSpelUtilSuiteTests.class,
 
                 //---------------------------------------------------------------
 
