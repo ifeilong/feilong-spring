@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 
+import com.feilong.core.DatePattern;
+import com.feilong.core.date.DateUtil;
+
 @Service("schedulerManager")
 public class SchedulerManagerImpl implements SchedulerManager{
 
@@ -71,6 +74,16 @@ public class SchedulerManagerImpl implements SchedulerManager{
         //        //		ctb.getNextFireTime();
         //
         //        schedulerFactoryBean.getScheduler().scheduleJob(mifb.getObject(), ctb);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.b.nebula.manager.SchedulerManager#test()
+     */
+    @Override
+    public void test(){
+        LOGGER.debug("job run show [{}]", DateUtil.toString(new Date(), DatePattern.COMMON_DATE_AND_TIME));
     }
 
 }

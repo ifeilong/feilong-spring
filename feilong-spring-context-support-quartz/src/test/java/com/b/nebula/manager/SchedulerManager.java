@@ -44,4 +44,6 @@ public interface SchedulerManager{
      * 
      */
     void timerClean();
+
+    void test();
 }
