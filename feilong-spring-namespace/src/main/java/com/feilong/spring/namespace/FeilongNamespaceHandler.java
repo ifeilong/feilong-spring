@@ -32,7 +32,8 @@ public class FeilongNamespaceHandler extends org.springframework.beans.factory.x
 
     /** The Constant map. */
     private static final Map<String, BeanDefinitionParser> map = toMapUseEntrys(//
-                    // Pair.of("httpResponseStringBuilder", (BeanDefinitionParser) new HttpResponseStringBuilderBeanDefinitionParser()),
+                    //Pair.of("http-responseStringBuilder", (BeanDefinitionParser) new HttpResponseStringBuilderBeanDefinitionParser()),
+
                     Pair.of("accessor-session", (BeanDefinitionParser) new SessionAccessorBeanDefinitionParser()),
                     Pair.of("accessor-sessionkey", (BeanDefinitionParser) new SessionKeyAccessorBeanDefinitionParser()),
                     Pair.of("accessor-cookie", (BeanDefinitionParser) new CookieAccessorBeanDefinitionParser())
