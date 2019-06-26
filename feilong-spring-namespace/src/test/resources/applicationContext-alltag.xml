@@ -11,5 +11,4 @@
 
 	<feilong:accessor-session id="sessionAccessor" key="#{T(com.feilong.core.TimeInterval).SECONDS_PER_YEAR}" />
 
-
 </beans>  
