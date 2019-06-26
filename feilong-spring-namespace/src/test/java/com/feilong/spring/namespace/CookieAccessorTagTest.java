@@ -1,5 +1,7 @@
 package com.feilong.spring.namespace;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,7 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import com.feilong.accessor.cookie.CookieAccessor;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.core.TimeInterval;
+import com.feilong.servlet.http.entity.CookieEntity;
 
 @ContextConfiguration(locations = { "classpath*:applicationContext-CookieAccessor.xml" })
 public class CookieAccessorTagTest extends AbstractJUnit4SpringContextTests{
@@ -20,6 +23,10 @@ public class CookieAccessorTagTest extends AbstractJUnit4SpringContextTests{
 
     @Test
     public void test(){
-        System.out.println(JsonUtil.format(cookieAccessor));
+        CookieEntity cookieEntity = cookieAccessor.getCookieEntity();
+
+        assertEquals("aaa", cookieEntity.getName());
+        assertEquals(true, cookieEntity.getHttpOnly());
+        assertEquals(TimeInterval.SECONDS_PER_YEAR, cookieEntity.getMaxAge());
     }
 }
