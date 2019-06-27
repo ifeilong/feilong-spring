@@ -16,6 +16,9 @@
 package com.feilong.spring.web.event;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.bean.ConvertUtil.toArray;
+import static com.feilong.core.lang.ObjectUtil.defaultIfNullOrEmpty;
+import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
 import static java.util.Collections.emptyMap;
 
@@ -23,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -33,6 +37,9 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
+import com.feilong.tools.office.csv.CsvWrite;
+import com.feilong.tools.office.csv.DefaultCsvWrite;
+import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * {@link ApplicationContext} 初始化或刷新完成后触发的事件,用来分析 {@link HandlerMethod} 信息的父类.
@@ -44,7 +51,40 @@ import com.feilong.spring.event.AbstractContextRefreshedEventListener;
 public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener extends AbstractContextRefreshedEventListener{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractContextRefreshedHandlerMethodLogginEventListener.class);
+    private static final Logger LOGGER                      = LoggerFactory
+                    .getLogger(AbstractContextRefreshedHandlerMethodLogginEventListener.class);
+
+    //---------------------------------------------------------------
+
+    /**
+     * The default write cvs file path.
+     * 
+     * @see <a href="https://github.com/venusdrogon/feilong-spring/issues/173">新增生成 CVS 文件支持</a>
+     * @since 4.0.6
+     */
+    private final String        DEFAULT_WRITE_CVS_FILE_PATH = Slf4jUtil
+                    .format("{}/{}.csv", SystemUtils.getUserDir().getAbsolutePath(), getClass().getName());
+
+    //---------------------------------------------------------------
+    /**
+     * 是否输出 cvs.
+     *
+     * @see <a href="https://github.com/venusdrogon/feilong-spring/issues/173">新增生成 CVS 文件支持</a>
+     * @since 4.0.6
+     */
+    private boolean             writeCvs                    = true;
+
+    /**
+     * CVS 文件路径.
+     * 
+     * <p>
+     * 如果 writeCvs 是 true,但是writeCvsFilePath没有设置,那么将使用 默认的
+     * </p>
+     * 
+     * @see <a href="https://github.com/venusdrogon/feilong-spring/issues/173">新增生成 CVS 文件支持</a>
+     * @since 4.0.6
+     */
+    private String              writeCvsFilePath            = DEFAULT_WRITE_CVS_FILE_PATH;
 
     //---------------------------------------------------------------
 
@@ -104,9 +144,51 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
         if (LOGGER.isInfoEnabled()){
             LOGGER.info("handler method ,size:[{}],info:{}", list.size(), formatToSimpleTable(list));
         }
+
+        //---------------------------------------------------------------
+
+        //since 4.0.6
+        if (writeCvs){
+            write(defaultIfNullOrEmpty(writeCvsFilePath, DEFAULT_WRITE_CVS_FILE_PATH), list);
+        }
     }
 
     //---------------------------------------------------------------
+
+    /**
+     * Write.
+     *
+     * @param fileName
+     *            the file name
+     * @param list
+     *            the list
+     * @since 4.0.6
+     */
+    private static void write(String fileName,List<Map<String, Object>> list){
+        CsvWrite csvWrite = new DefaultCsvWrite();
+        String[] columnTitles = toArray(list.get(0).keySet(), String.class);
+
+        List<Object[]> dataList = toArrayList(list);
+        csvWrite.write(fileName, columnTitles, dataList);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * To list 1.
+     *
+     * @param list
+     *            the list
+     * @return the list
+     * @since 4.0.6
+     */
+    private static List<Object[]> toArrayList(List<Map<String, Object>> list){
+        List<Object[]> list2 = newArrayList();
+        for (Map<String, Object> map : list){
+            list2.add(toArray(map.values(), Object.class));
+        }
+        return list2;
+    }
 
     /**
      * 构造数据.
@@ -139,6 +221,29 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
         }
 
         return requestMappingHandlerMapping.getHandlerMethods();
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 设置 是否输出 cvs.
+     *
+     * @param writeCvs
+     *            the writeCvs to set
+     * @since 4.0.6
+     */
+    public void setWriteCvs(boolean writeCvs){
+        this.writeCvs = writeCvs;
+    }
+
+    /**
+     * 设置 cVS 文件路径.
+     *
+     * @param writeCvsFilePath
+     *            the writeCvsFilePath to set
+     */
+    public void setWriteCvsFilePath(String writeCvsFilePath){
+        this.writeCvsFilePath = writeCvsFilePath;
     }
 
 }
