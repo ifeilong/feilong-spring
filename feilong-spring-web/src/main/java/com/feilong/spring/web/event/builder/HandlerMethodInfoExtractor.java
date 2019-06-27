@@ -15,14 +15,18 @@
  */
 package com.feilong.spring.web.event.builder;
 
+import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ToStringConfig.DEFAULT_CONFIG;
 import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
+import java.util.Set;
 
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.HeadersRequestCondition;
+import org.springframework.web.servlet.mvc.condition.NameValueExpression;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -30,6 +34,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.lang.annotation.AnnotationToStringBuilder;
 import com.feilong.spring.web.method.HandlerMethodUtil;
+import com.feilong.spring.web.servlet.mvc.ControllerUtil;
 
 /**
  * {@link RequestMappingInfo} 信息提取.
@@ -162,9 +167,72 @@ public class HandlerMethodInfoExtractor{
         RequestMethodsRequestCondition requestMethodsRequestCondition = requestMappingInfo.getMethodsCondition();
         HeadersRequestCondition headersRequestCondition = requestMappingInfo.getHeadersCondition();
 
+        Set<RequestMethod> methods = requestMethodsRequestCondition.getMethods();
+
         keyAndValueMap.put("url", ConvertUtil.toString(patternsRequestCondition.getPatterns(), DEFAULT_CONFIG));
-        keyAndValueMap.put("method", ConvertUtil.toString(requestMethodsRequestCondition.getMethods(), DEFAULT_CONFIG));
-        keyAndValueMap.put("header", ConvertUtil.toString(headersRequestCondition.getExpressions(), DEFAULT_CONFIG));
+
+        //---------------------------------------------------------------
+        //since 4.0.6
+        keyAndValueMap.put("get", contains(methods, RequestMethod.GET));
+        keyAndValueMap.put("post", contains(methods, RequestMethod.POST));
+        keyAndValueMap.put("put", contains(methods, RequestMethod.PUT));
+        keyAndValueMap.put("head", contains(methods, RequestMethod.HEAD));
+        keyAndValueMap.put("patch", contains(methods, RequestMethod.PATCH));
+        keyAndValueMap.put("delete", contains(methods, RequestMethod.DELETE));
+        keyAndValueMap.put("options", contains(methods, RequestMethod.OPTIONS));
+        keyAndValueMap.put("trace", contains(methods, RequestMethod.TRACE));
+
+        //---------------------------------------------------------------
+        Set<NameValueExpression<String>> expressions = headersRequestCondition.getExpressions();
+        //since 4.0.6
+        keyAndValueMap.put("isAjax", isAjax(expressions));
+        keyAndValueMap.put("header", ConvertUtil.toString(expressions, DEFAULT_CONFIG));
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Checks if is ajax.
+     *
+     * @param expressions
+     *            the expressions
+     * @return true, if is ajax
+     * @since 4.0.6
+     */
+    private static boolean isAjax(Set<NameValueExpression<String>> expressions){
+        if (isNullOrEmpty(expressions)){
+            return false;
+        }
+
+        //---------------------------------------------------------------
+        for (NameValueExpression<String> nameValueExpression : expressions){
+            if (null == nameValueExpression){
+                continue;
+            }
+
+            //---------------------------------------------------------------
+            if (ControllerUtil.HEADER_WITH_AJAX_SPRINGMVC.equals(nameValueExpression.toString())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Contains.
+     *
+     * @param methods
+     *            the methods
+     * @param requestMethod
+     *            the request method
+     * @return true, if successful
+     * @since 4.0.6
+     */
+    private static boolean contains(Set<RequestMethod> methods,RequestMethod requestMethod){
+        if (isNullOrEmpty(methods)){
+            return true;
+        }
+        return methods.contains(requestMethod);
     }
 
     //---------------------------------------------------------------
