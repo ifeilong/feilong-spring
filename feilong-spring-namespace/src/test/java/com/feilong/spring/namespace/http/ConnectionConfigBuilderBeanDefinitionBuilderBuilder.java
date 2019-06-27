@@ -13,23 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.feilong.spring.namespace;
+package com.feilong.spring.namespace.http;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toInteger;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 import com.feilong.context.invoker.http.ConnectionConfigBuilder;
 import com.feilong.net.entity.ConnectionConfig;
+import com.feilong.spring.namespace.RuntimeBeanReferenceBuilder;
 
 /**
- * 
+ * The Class HttpRequestBuilderParserUtil.
+ *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 4.0.5
+ * @since 4.0.6
  */
-public class ConnectionConfigBuilderParserUtil{
+public class ConnectionConfigBuilderBeanDefinitionBuilderBuilder{
+
+    public static BeanDefinitionBuilder build(Element element,ParserContext parserContext){
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
+                        .genericBeanDefinition("com.feilong.context.invoker.http.DefaultHttpRequestBuilder");
+
+        beanDefinitionBuilder.addPropertyValue(
+                        "httpTypeBeanProperty",
+                        RuntimeBeanReferenceBuilder
+                                        .build(parserContext, SimpleHttpTypeBeanPropertyBeanDefinitionBuilderBuilder.build(element)));
+
+        return beanDefinitionBuilder;
+    }
 
     public static ConnectionConfigBuilder build(Element element){
 
@@ -90,4 +106,5 @@ public class ConnectionConfigBuilderParserUtil{
         };
         return connectionConfigBuilder;
     }
+
 }

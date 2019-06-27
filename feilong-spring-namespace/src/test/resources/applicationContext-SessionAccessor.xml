@@ -10,7 +10,6 @@
 
 	<feilong:accessor-session id="guestAllowedSessionAccessor" key="11511" />
 
-
 	<bean name="memeberResetPasswordMobileSessionAccessor" class="com.feilong.accessor.session.SessionAccessor">
 		<property name="key" value="jintian" />
 	</bean>
