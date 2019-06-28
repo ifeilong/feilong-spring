@@ -85,6 +85,8 @@ public class MappedInterceptorBeanToMapBuilder implements BeanToMapBuilder<Mappe
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(MappedInterceptorBeanToMapBuilder.class);
 
+    //---------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -93,16 +95,11 @@ public class MappedInterceptorBeanToMapBuilder implements BeanToMapBuilder<Mappe
     @Override
     public Map<String, Object> build(String beanName,MappedInterceptor mappedInterceptor){
         HandlerInterceptor handlerInterceptor = mappedInterceptor.getInterceptor();
-        String[] pathPatterns = mappedInterceptor.getPathPatterns();
-
-        Object readField = getExcludePatterns(mappedInterceptor);
-
         //---------------------------------------------------------------
         Map<String, Object> map = newLinkedHashMap();
         map.put("handlerInterceptor", handlerInterceptor.getClass().getName());
 
         //---------------------------------------------------------------
-
         if (ClassUtil.isInstance(handlerInterceptor, AbstractHandlerMethodInterceptorAdapter.class)){
             AbstractHandlerMethodInterceptorAdapter abstractHandlerMethodInterceptorAdapter = (AbstractHandlerMethodInterceptorAdapter) handlerInterceptor;
             map.put("needDoPreHandle", BeanToMapBuilderUtil.build(abstractHandlerMethodInterceptorAdapter.getIsNeedDoPreHandle()));
@@ -122,8 +119,8 @@ public class MappedInterceptorBeanToMapBuilder implements BeanToMapBuilder<Mappe
         }
 
         //---------------------------------------------------------------
-        map.put("includePatterns", pathPatterns);
-        map.put("excludePatterns", readField);
+        map.put("includePatterns", mappedInterceptor.getPathPatterns());
+        map.put("excludePatterns", getExcludePatterns(mappedInterceptor));
 
         map.put("beanName", beanName);
         return map;
@@ -138,9 +135,9 @@ public class MappedInterceptorBeanToMapBuilder implements BeanToMapBuilder<Mappe
      *            the mapped interceptor
      * @return the exclude patterns
      */
-    private static Object getExcludePatterns(MappedInterceptor mappedInterceptor){
+    private static String[] getExcludePatterns(MappedInterceptor mappedInterceptor){
         try{
-            return FieldUtils.readField(mappedInterceptor, "excludePatterns", true);
+            return (String[]) FieldUtils.readField(mappedInterceptor, "excludePatterns", true);
         }catch (IllegalAccessException e){
             LOGGER.error("", e);
         }
