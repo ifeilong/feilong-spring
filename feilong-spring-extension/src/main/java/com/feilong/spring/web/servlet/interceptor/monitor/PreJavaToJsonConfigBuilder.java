@@ -81,23 +81,37 @@ public class PreJavaToJsonConfigBuilder{
             LOGGER.debug("will build JavaToJsonConfig,use sensitiveRequestParamNameList:{}", sensitiveRequestParamNameList);
         }
 
+        String[] ignoreRequestParamNames = monitorMessageEntity.getIgnoreRequestParamNames();
+
         //---------------------------------------------------------------
-        if (isNullOrEmpty(sensitiveRequestParamNameList)){
+        //都是 NullOrEmpty
+        if (isNullOrEmpty(sensitiveRequestParamNameList) && isNullOrEmpty(ignoreRequestParamNames)){
             return new JavaToJsonConfig();
         }
 
         //---------------------------------------------------------------
+        JavaToJsonConfig javaToJsonConfig = new JavaToJsonConfig();
+        javaToJsonConfig.setPropertyNameAndJsonValueProcessorMap(buildPropertyNameAndJsonValueProcessorMap(sensitiveRequestParamNameList));
+        javaToJsonConfig.setExcludes(ignoreRequestParamNames);
+        return javaToJsonConfig;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Builds the property name and json value processor map.
+     *
+     * @param sensitiveRequestParamNameList
+     *            the sensitive request param name list
+     * @return the map
+     * @since 4.0.6
+     */
+    static Map<String, JsonValueProcessor> buildPropertyNameAndJsonValueProcessorMap(List<String> sensitiveRequestParamNameList){
         Map<String, JsonValueProcessor> propertyNameAndJsonValueProcessorMap = newHashMap(sensitiveRequestParamNameList.size());
         for (String sensitiveRequestParamName : sensitiveRequestParamNameList){
             propertyNameAndJsonValueProcessorMap.put(sensitiveRequestParamName, SensitiveWordsJsonValueProcessor.INSTANCE);
         }
-
-        //---------------------------------------------------------------
-
-        JavaToJsonConfig javaToJsonConfig = new JavaToJsonConfig();
-        javaToJsonConfig.setPropertyNameAndJsonValueProcessorMap(propertyNameAndJsonValueProcessorMap);
-
-        return javaToJsonConfig;
+        return propertyNameAndJsonValueProcessorMap;
     }
 
 }

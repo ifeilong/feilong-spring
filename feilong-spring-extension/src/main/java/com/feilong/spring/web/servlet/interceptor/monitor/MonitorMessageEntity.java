@@ -21,6 +21,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.feilong.json.jsonlib.JsonUtil;
 import com.feilong.servlet.http.entity.RequestLogSwitch;
 
@@ -91,6 +94,20 @@ public class MonitorMessageEntity implements Serializable{
      * @since 1.12.7
      */
     private List<String>        sensitiveRequestParamNameList;
+
+    /**
+     * 忽略输出的参数名字.
+     * 
+     * <p>
+     * 有些框架 ajax 访问的时候会追加时间戳参数,防止浏览器缓存, 比如会加上参数 <code>_=1561899090516</code>这种参数对于后端代码是没有任何价值的
+     * </p>
+     * <p>
+     * 反而会增加 log 大小,并且干扰 log 的阅读, 完全可以忽略
+     * </p>
+     * 
+     * @since 4.0.6
+     */
+    private String[]            ignoreRequestParamNames;
 
     //---------------------------------------------------------------
 
@@ -279,6 +296,53 @@ public class MonitorMessageEntity implements Serializable{
      */
     public void setSensitiveRequestParamNameList(List<String> sensitiveRequestParamNameList){
         this.sensitiveRequestParamNameList = sensitiveRequestParamNameList;
+    }
+
+    /**
+     * 忽略输出的参数名字.
+     * 
+     * <p>
+     * 有些框架 ajax 访问的时候会追加时间戳参数,防止浏览器缓存, 比如会加上参数 <code>_=1561899090516</code>这种参数对于后端代码是没有任何价值的
+     * </p>
+     * <p>
+     * 反而会增加 log 大小,并且干扰 log 的阅读, 完全可以忽略
+     * </p>
+     * 
+     * @since 4.0.6
+     * @return the ignoreRequestParamNames
+     */
+    public String[] getIgnoreRequestParamNames(){
+        return ignoreRequestParamNames;
+    }
+
+    /**
+     * 
+     * 忽略输出的参数名字.
+     * 
+     * <p>
+     * 有些框架 ajax 访问的时候会追加时间戳参数,防止浏览器缓存, 比如会加上参数 <code>_=1561899090516</code>这种参数对于后端代码是没有任何价值的
+     * </p>
+     * <p>
+     * 反而会增加 log 大小,并且干扰 log 的阅读, 完全可以忽略
+     * </p>
+     * 
+     * @since 4.0.6
+     * @param ignoreRequestParamNames
+     *            the ignoreRequestParamNames to set
+     */
+    public void setIgnoreRequestParamNames(String[] ignoreRequestParamNames){
+        this.ignoreRequestParamNames = ignoreRequestParamNames;
+    }
+
+    //---------------------------------------------------------------
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString(){
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
     }
 
 }
