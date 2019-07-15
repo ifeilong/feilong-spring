@@ -22,6 +22,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.feilong.spring.expression.SpelUtil;
 import com.feilong.store.member.Member;
@@ -29,6 +31,10 @@ import com.feilong.store.order.SalesOrder;
 
 public class GetValueRootObjectTest{
 
+    /** The Constant log. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetValueRootObjectTest.class);
+
+    //---------------------------------------------------------------
     @Test
     public void getValue4(){
         SalesOrder salesOrder = new SalesOrder();
