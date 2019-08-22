@@ -15,7 +15,9 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<version.spring>4.3.24.RELEASE</version.spring>
+
+		<!-- https://github.com/spring-projects/spring-framework/releases -->
+		<version.spring>4.3.25.RELEASE</version.spring>
 
 		<version.spring-security>4.2.9.RELEASE</version.spring-security>
 		<!-- <version.spring-security>3.2.10.RELEASE</version.spring-security> -->
