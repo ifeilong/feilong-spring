@@ -9,27 +9,26 @@
 			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		">
 
-	<description>^_^,测试</description>
-
-	<util:map id="sanguoMap">
-		<description>五子良将</description>
-		<entry key="五子良将">
-			<bean class="com.feilong.coreextension.entity.BackWarnEntity">
-				<property name="isSuccess" value="false"></property>
-				<property name="description" value="哈哈哈"></property>
-			</bean>
+	<util:map id="sanguoMapCollectionMap">
+		<entry key="五虎上将">
+			<util:list>
+				<value>张飞</value>
+				<value>关羽</value>
+				<value>赵云</value>
+				<value>马超</value>
+				<value>黄忠</value>
+			</util:list>
 		</entry>
-		<entry key="八虎骑">
-			<bean class="com.feilong.coreextension.entity.BackWarnEntity">
-				<property name="isSuccess" value="true"></property>
-				<property name="description" value="呵呵呵"></property>
-			</bean>
+
+		<entry key="君主">
+			<util:list>
+				<value>刘备</value>
+				<value>曹操</value>
+				<value>孙权</value>
+			</util:list>
 		</entry>
 
 	</util:map>
 
 
-	<bean name="useraaa,feitian@" class="com.feilong.entity.DIUser" abstract="false" lazy-init="default" autowire="byType" init-method="init" destroy-method="destroy">
-		<property name="map" ref="sanguoMap" />
-	</bean>
 </beans>
