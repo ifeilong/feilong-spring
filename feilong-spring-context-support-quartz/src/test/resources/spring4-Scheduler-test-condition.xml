@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:loxia="http://loxia.benjamin.cn/schema/core" xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://loxia.benjamin.cn/schema/core http://loxia.benjamin.cn/schema/core/loxia-spring-ext.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd	
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		">
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.b.nebula.manager" />
+
+	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="showJobTrigger" />
+				<ref bean="pixiboConditionTrigger" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
+	<bean id="showJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+				<property name="targetObject">
+					<bean class="com.feilong.spring.scheduling.quartz.ShowTask"></bean>
+				</property>
+				<property name="targetMethod" value="run" />
+
+				<property name="concurrent" value="false" />
+			</bean>
+		</property>
+
+		<property name="cronExpression">
+			<value>*/5 * * * * ?</value>
+		</property>
+	</bean>
+
+	<bean id="pixiboConditionTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+				<property name="targetObject">
+					<bean class="com.feilong.context.ConditionableTask">
+						<property name="condition">
+							<bean class="com.feilong.spring.scheduling.quartz.NebulaMetaInfoSimpleParamNameConfigCondition">
+								<property name="paramName" value="isCanSendToPixibo" />
+							</bean>
+						</property>
+
+						<property name="task">
+							<bean class="com.feilong.spring.scheduling.quartz.PixiboTask"></bean>
+						</property>
+					</bean>
+
+				</property>
+				<property name="targetMethod" value="run" />
+
+				<property name="concurrent" value="false" />
+			</bean>
+		</property>
+
+		<property name="cronExpression">
+			<!---->
+			<value>*/5 * * * * ?</value>
+			<!-- <value>0 0 10 L-7 * ?</value> -->
+		</property>
+	</bean>
+
+
+</beans>

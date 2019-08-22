@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:loxia="http://loxia.benjamin.cn/schema/core" xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://loxia.benjamin.cn/schema/core http://loxia.benjamin.cn/schema/core/loxia-spring-ext.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd	
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		">
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.b.nebula.manager" />
+
+	<!-- ################################################################################################# -->
+
+	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="eventCompensationTrigger" />
+			</list>
+		</property>
+
+
+		<!-- ################################################################################################# -->
+
+		<!-- SchedulerListener[] schedulerListeners; -->
+		<property name="schedulerListeners">
+			<array>
+				<!-- <bean class="org.quartz.core.SampledStatisticsImpl">
+				</bean> -->
+				
+				<bean class="com.feilong.spring.scheduling.quartz.listener.TestSchedulerListener">
+				</bean>
+			</array>
+		</property>
+
+		<!-- JobListener[] globalJobListeners; -->
+		<property name="globalJobListeners">
+			<array>
+				<!-- <bean class="org.quartz.plugins.history.LoggingJobHistoryPlugin">
+					<property name="name" value="loggingJobHistoryPlugin" />
+				</bean> -->
+				<bean class="com.feilong.spring.scheduling.quartz.listener.TestJobListener">
+				</bean>
+			</array>
+		</property>
+
+		<!-- TriggerListener[] globalTriggerListeners; -->
+		<property name="globalTriggerListeners">
+			<array>
+				<bean class="com.feilong.spring.scheduling.quartz.listener.TestTriggerListener">
+				</bean>
+				<!-- <bean class="org.quartz.plugins.history.LoggingTriggerHistoryPlugin">
+					<property name="name" value="loggingTriggerHistoryPlugin" />
+				</bean> -->
+				<!-- <bean class="org.quartz.plugins.interrupt.JobInterruptMonitorPlugin">
+					<property name="name" value="jobInterruptMonitorPlugin" />
+				</bean> -->
+			</array>
+		</property>
+
+	</bean>
+
+	<!-- ################################################################################################# -->
+
+
+	<bean id="eventCompensationTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="eventCompensationJob" />
+		<property name="cronExpression">
+			<value>0/10 * * * * ?</value>
+		</property>
+	</bean>
+	<bean id="eventCompensationJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="schedulerManager" />
+		<property name="targetMethod" value="test" />
+
+		<property name="concurrent" value="false" />
+	</bean>
+
+
+</beans>
