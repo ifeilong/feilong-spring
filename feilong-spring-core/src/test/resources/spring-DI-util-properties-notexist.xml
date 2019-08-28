@@ -10,7 +10,7 @@
 		">
 
 	<!--不存在 -->
-	<util:properties id="p_AlipayAdvanceNotExist" local-override="true" location="classpath:test1.properties">
+	<util:properties id="p_AlipayAdvanceNotExist" local-override="true" location="classpath:test1.properties" ignore-resource-not-found="true">
 		<prop key="_input_charset">UTF-8</prop>
 		<prop key="service.close_trade">close_trade</prop>
 		<prop key="service.single_trade_query">single_trade_query</prop>
