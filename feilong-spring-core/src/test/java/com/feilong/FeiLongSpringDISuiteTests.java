@@ -28,6 +28,8 @@ import com.feilong.spring.expression.spelutil.FeiLongSpelUtilSuiteTests;
 @RunWith(Suite.class)
 @SuiteClasses({ //
 
+                SpringDIUtilPropertiesAutowiredTest.class,
+
                 ApplicationContextUtilTest.class,
                 FeiLongSpelUtilSuiteTests.class,
 
