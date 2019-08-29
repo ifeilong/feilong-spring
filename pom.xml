@@ -8,7 +8,7 @@
 
 	<groupId>com.feilong.platform.spring</groupId>
 	<artifactId>parent</artifactId>
-	<version>4.0.7</version>
+	<version>4.1.0</version>
 
 	<url>https://github.com/venusdrogon/feilong-spring</url>
 
@@ -44,7 +44,6 @@
 		<module>feilong-spring-context-concurrent</module>
 		<module>feilong-spring-security</module>
 		<module>feilong-spring-monitor</module>
-		<module>feilong-spring-namespace</module>
 	</modules>
 
 	<dependencies>
