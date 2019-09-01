@@ -45,10 +45,23 @@
 		<property name="jobDetail">
 			<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 				<property name="targetObject">
+				
 					<bean class="com.feilong.context.ConditionableTask">
+						
 						<property name="condition">
-							<bean class="com.feilong.spring.scheduling.quartz.NebulaMetaInfoSimpleParamNameConfigCondition">
-								<property name="paramName" value="isCanSendToPixibo" />
+							<bean class="com.feilong.context.SimpleParamNameConfigCondition">
+							
+								<property name="simpleParamNameValueLoader">
+
+									<bean class="com.feilong.context.SimpleParamNameValueLoader">
+										<property name="paramName" value="isCanSendToPixibo" />
+										<property name="stringValueParamLoader">
+											<bean class="com.feilong.spring.scheduling.quartz.NebulaMetaInfoSimpleParamNameStringValueParamLoader"></bean>
+										</property>
+									</bean>
+
+								</property>
+
 							</bean>
 						</property>
 

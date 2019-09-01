@@ -15,22 +15,22 @@
  */
 package com.feilong.spring.scheduling.quartz;
 
-import com.feilong.context.SimpleParamNameConfigCondition;
+import com.feilong.context.StringValueParamLoader;
 
 /**
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 4.0.7
  */
-public class NebulaMetaInfoSimpleParamNameConfigCondition extends SimpleParamNameConfigCondition{
+public class NebulaMetaInfoSimpleParamNameStringValueParamLoader implements StringValueParamLoader<String>{
 
     /*
      * (non-Javadoc)
      * 
-     * @see com.feilong.spring.scheduling.quartz.SimpleParamNameConfigCondition#loadValue(java.lang.String)
+     * @see com.feilong.context.ValueParamLoader#load(java.lang.Object)
      */
     @Override
-    protected Object loadValue(String paramName){
-        return 1;
+    public String load(String t){
+        return "1";
     }
 }
