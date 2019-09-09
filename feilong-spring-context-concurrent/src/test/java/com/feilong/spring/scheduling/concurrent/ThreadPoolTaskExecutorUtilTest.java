@@ -28,9 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.feilong.core.lang.PartitionRunnableBuilder;
-import com.feilong.core.lang.PartitionThreadEntity;
-import com.feilong.core.lang.PartitionThreadExecutor;
+import com.feilong.core.lang.thread.PartitionRunnableBuilder;
+import com.feilong.core.lang.thread.PartitionThreadEntity;
+import com.feilong.core.lang.thread.PartitionThreadExecutor;
 
 @ContextConfiguration(locations = { "classpath:spring-taskExecutor.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,7 +49,7 @@ public class ThreadPoolTaskExecutorUtilTest{
     public void test(){
         final List<Integer> list = toList(1, 2, 3, 4, 5);
 
-        partitionThreadExecutor.excute(list, 2, new PartitionRunnableBuilder<Integer>(){
+        partitionThreadExecutor.execute(list, 2, new PartitionRunnableBuilder<Integer>(){
 
             @Override
             public Runnable build(List<Integer> perBatchList,final PartitionThreadEntity partitionThreadEntity,Map<String, ?> paramsMap){

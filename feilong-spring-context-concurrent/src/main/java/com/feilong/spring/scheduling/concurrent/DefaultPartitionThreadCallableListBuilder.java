@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.apache.commons.collections4.ListUtils;
 
-import com.feilong.core.lang.PartitionRunnableBuilder;
+import com.feilong.core.lang.thread.PartitionRunnableBuilder;
 
 /**
  * The Class DefaultPartitionThreadCallableListBuilder.

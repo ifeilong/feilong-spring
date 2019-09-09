@@ -24,8 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.context.ReturnResult;
-import com.feilong.core.lang.AbstractPartitionThreadExecutor;
-import com.feilong.core.lang.PartitionRunnableBuilder;
+import com.feilong.core.lang.thread.AbstractPartitionThreadExecutor;
+import com.feilong.core.lang.thread.PartitionRunnableBuilder;
 
 /**
  * The Class AsyncTaskExecutorPartitionThreadExecutor.
@@ -55,7 +55,7 @@ public class AsyncTaskExecutorPartitionThreadExecutor extends AbstractPartitionT
      * com.feilong.core.lang.PartitionRunnableBuilder)
      */
     @Override
-    protected <T> void actualExcute(
+    protected <T> void actualExecute(
                     List<T> list,
                     int eachSize,
                     Map<String, ?> paramsMap,

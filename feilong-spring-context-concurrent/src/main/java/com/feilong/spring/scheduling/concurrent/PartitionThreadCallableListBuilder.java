@@ -18,7 +18,7 @@ package com.feilong.spring.scheduling.concurrent;
 import java.util.List;
 import java.util.Map;
 
-import com.feilong.core.lang.PartitionRunnableBuilder;
+import com.feilong.core.lang.thread.PartitionRunnableBuilder;
 
 /**
  * 专门用来构造 PartitionThreadCallable list的.

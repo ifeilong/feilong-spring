@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import com.feilong.context.ReturnResult;
-import com.feilong.core.lang.PartitionRunnableBuilder;
-import com.feilong.core.lang.PartitionThreadEntity;
+import com.feilong.core.lang.thread.PartitionRunnableBuilder;
+import com.feilong.core.lang.thread.PartitionThreadEntity;
 
 /**
  * Callable 的实现.
