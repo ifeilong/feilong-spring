@@ -25,18 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.feilong.core.util.ResourceBundleUtil;
 import com.feilong.json.jsonlib.JsonUtil;
 
-/**
- * The Class GitInfoController.
- */
 @Controller
 public class GitInfoController{
 
-    /**
-     * Show git info.
-     *
-     * @return the string
-     */
-    @SuppressWarnings("static-method")
     @RequestMapping("/monitor/gitinfo")
     @ResponseBody
     public String showGitInfo(){
