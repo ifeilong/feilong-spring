@@ -15,23 +15,26 @@
  */
 package com.feilong.spring.expression.spelutil;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import static com.feilong.core.bean.ConvertUtil.toMap;
 
-@RunWith(Suite.class)
-@SuiteClasses({ //
+import java.util.Map;
 
-                BeanTest.class,
-                FunctionTest.class,
-                StringTest.class,
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-                GetValueRootObjectNullTest.class,
+import com.feilong.spring.expression.SpelUtil;
 
-                GetValueNullTest.class,
+public class MapTest{
 
-        //
-})
-public class FeiLongSpelUtilSuiteTests{
+    /** The Constant log. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapTest.class);
 
+    @Test
+    public void getValueMap(){
+        Map<String, Object> map = toMap("logisticsStatus", (Object) 10);
+
+        LOGGER.debug("" + SpelUtil.getValue("logisticsStatus", map));
+
+    }
 }

@@ -27,6 +27,8 @@ public class GetValueRootObjectNullTest{
         SpelUtil.getValue(null, new Member());
     }
 
+    //---------------------------------------------------------------
+
     @Test(expected = IllegalArgumentException.class)
     public void testSpelUtilTestEmpty(){
         SpelUtil.getValue("", new Member());
@@ -37,5 +39,4 @@ public class GetValueRootObjectNullTest{
         SpelUtil.getValue(" ", new Member());
     }
 
-    //---------------------------------------------------------------
 }

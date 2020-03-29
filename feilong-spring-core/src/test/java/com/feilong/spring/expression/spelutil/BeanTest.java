@@ -15,26 +15,15 @@
  */
 package com.feilong.spring.expression.spelutil;
 
-import static com.feilong.core.bean.ConvertUtil.toList;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.feilong.spring.expression.SpelUtil;
-import com.feilong.store.member.Member;
 import com.feilong.store.order.SalesOrder;
 
-public class GetValueRootObjectTest{
+public class BeanTest{
 
-    /** The Constant log. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(GetValueRootObjectTest.class);
-
-    //---------------------------------------------------------------
     @Test
     public void getValue4(){
         SalesOrder salesOrder = new SalesOrder();
@@ -52,21 +41,4 @@ public class GetValueRootObjectTest{
         assertEquals("系统超时取消", SpelUtil.getValue("logisticsStatus==10?\"系统超时取消\":\"用户主动取消\"", salesOrder));
     }
 
-    //---------------------------------------------------------------
-
-    @Test
-    public void getValue2(){
-        String expressionString = "T(com.feilong.core.lang.StringUtil).tokenizeToStringArray('xin,jin',',')";
-
-        String[] values = SpelUtil.getValue(expressionString, null);
-        assertThat(toList(values), allOf(hasItem("xin"), hasItem("jin")));
-    }
-
-    @Test
-    public void getValue222(){
-        String expressionString = "T(com.feilong.core.lang.StringUtil).tokenizeToStringArray('xin,jin',',')";
-
-        String[] values = SpelUtil.getValue(expressionString, new Member());
-        assertThat(toList(values), allOf(hasItem("xin"), hasItem("jin")));
-    }
 }

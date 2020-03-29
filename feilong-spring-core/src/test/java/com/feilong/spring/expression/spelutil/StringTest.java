@@ -15,31 +15,32 @@
  */
 package com.feilong.spring.expression.spelutil;
 
-import static com.feilong.core.util.MapUtil.newLinkedHashMap;
-
-import java.util.Map;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.feilong.spring.expression.SpelUtil;
 
-public class GetValueRootObjectMapTest{
+public class StringTest{
 
-    /** The Constant log. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(GetValueRootObjectMapTest.class);
-
+    /**
+     * 获得 value.
+     */
     @Test
-    public void getValueMap(){
-        Map<String, Object> map = newLinkedHashMap();
-        map.put("logisticsStatus", 10);
+    public void getValue(){
+        String ex = "'Hello,World'";
 
-        //---------------------------------------------------------------
+        assertEquals("Hello,World", SpelUtil.getValue(ex));
 
-        if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("" + SpelUtil.getValue("logisticsStatus", map));
-        }
+        assertEquals(11, SpelUtil.getValue(ex + ".length()"));
 
+        assertEquals("Hello,World!", SpelUtil.getValue(ex + ".concat('!')"));
+
+        assertEquals(String.class, SpelUtil.getValue(ex + ".class"));
+
+        assertEquals(11, SpelUtil.getValue(ex + ".bytes.length"));
+
+        assertEquals("HELLO,WORLD", SpelUtil.getValue("new String(" + ex + ").toUpperCase()"));
     }
+
 }
