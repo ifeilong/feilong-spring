@@ -23,6 +23,7 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.ParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
@@ -63,6 +64,26 @@ public final class SpelUtil{
     }
 
     //---------------------------------------------------------------
+
+    /**
+     * Gets the template value.
+     *
+     * @param <T>
+     *            the generic type
+     * @param expressionString
+     *            the expression string
+     * @return the template value
+     * @see org.springframework.expression.ParserContext#TEMPLATE_EXPRESSION
+     * @see org.springframework.expression.common.TemplateParserContext
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getTemplateValue(String expressionString){
+        Validate.notBlank(expressionString, "expressionString can't be blank!");
+
+        //---------------------------------------------------------------
+        Expression expression = load(expressionString, ParserContext.TEMPLATE_EXPRESSION);
+        return (T) expression.getValue();
+    }
 
     /**
      * Gets the value.
@@ -115,7 +136,7 @@ public final class SpelUtil{
         Validate.notBlank(expressionString, "expressionString can't be blank!");
 
         //---------------------------------------------------------------
-        Expression expression = load(expressionString);
+        Expression expression = load(expressionString, null);
         return (T) expression.getValue();
     }
 
@@ -138,6 +159,8 @@ public final class SpelUtil{
      *         如果 <code>expressionString</code> 是blank,抛出 {@link IllegalArgumentException}<br>
      *         如果 <code>rootObject</code> 是null或者empty,返回 {@link #getValue(String)}<br>
      * @see org.springframework.expression.Expression#getValue(EvaluationContext)
+     * @see StandardEvaluationContext
+     * @see org.springframework.expression.spel.support.SimpleEvaluationContext
      * @since 4.0.6
      */
     @SuppressWarnings("unchecked")
@@ -151,7 +174,7 @@ public final class SpelUtil{
         //---------------------------------------------------------------
         EvaluationContext evaluationContext = new StandardEvaluationContext(rootObject);
 
-        Expression expression = load(expressionString);
+        Expression expression = load(expressionString, null);
         return (V) expression.getValue(evaluationContext);
     }
 
@@ -162,17 +185,19 @@ public final class SpelUtil{
      *
      * @param expressionString
      *            the expression string
+     * @param context
+     *            the context
      * @return the expression
-     * @since 4.0.6
+     * @since 4.1.2
      */
-    private static Expression load(String expressionString){
+    private static Expression load(String expressionString,ParserContext context){
         Expression expression = EXPRESSION_STRING_AND_EXPRESSION_MAP.get(expressionString);
         if (null != expression){
             return expression;
         }
 
         //---------------------------------------------------------------
-        expression = expressionParser.parseExpression(expressionString);
+        expression = expressionParser.parseExpression(expressionString, context);
 
         EXPRESSION_STRING_AND_EXPRESSION_MAP.put(expressionString, expression);
 
