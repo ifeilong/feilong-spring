@@ -50,7 +50,7 @@ public class SpringDIMapTest{
         DIUser diUser = (DIUser) fileSystemContext.getBean("feitian@");
 
         Map<String, Object> map = diUser.getMap();
-        assertThat(map.get("五子良将"), allOf(hasProperty("isSuccess", is(false)), hasProperty("description", is("哈哈哈"))));
-        assertThat(map.get("八虎骑"), allOf(hasProperty("isSuccess", is(true)), hasProperty("description", is("呵呵呵"))));
+        assertThat(map.get("五子良将"), allOf(hasProperty("code", is("false")), hasProperty("loginName", is("哈哈哈"))));
+        assertThat(map.get("八虎骑"), allOf(hasProperty("code", is("true")), hasProperty("loginName", is("呵呵呵"))));
     }
 }
