@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
@@ -14,22 +15,23 @@
 	<util:map id="sanguoMap">
 		<description>五子良将</description>
 		<entry key="五子良将">
-			<bean class="com.feilong.coreextension.entity.BackWarnEntity">
-				<property name="isSuccess" value="false"></property>
-				<property name="description" value="哈哈哈"></property>
+			<bean class="com.feilong.store.member.Member">
+				<property name="code" value="false"></property>
+				<property name="loginName" value="哈哈哈"></property>
 			</bean>
 		</entry>
 		<entry key="八虎骑">
-			<bean class="com.feilong.coreextension.entity.BackWarnEntity">
-				<property name="isSuccess" value="true"></property>
-				<property name="description" value="呵呵呵"></property>
+			<bean class="com.feilong.store.member.Member">
+				<property name="code" value="true"></property>
+				<property name="loginName" value="呵呵呵"></property>
 			</bean>
 		</entry>
 
 	</util:map>
 
 
-	<bean name="useraaa,feitian@" class="com.feilong.entity.DIUser" abstract="false" lazy-init="default" autowire="byType" init-method="init" destroy-method="destroy">
+	<bean name="useraaa,feitian@" class="com.feilong.entity.DIUser" abstract="false" lazy-init="default" autowire="byType" init-method="init"
+		destroy-method="destroy">
 		<property name="map" ref="sanguoMap" />
 	</bean>
 </beans>
