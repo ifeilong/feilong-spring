@@ -84,7 +84,7 @@ public final class ContextRefreshedBeanLoggingEventListener<T> extends AbstractC
      * 
      * @since 4.0.0
      */
-    private MapBeanToMapListBuilder<T> mapBeanToMapListBuilder = new DefaultMapBeanToMapListBuilder<T>();
+    private MapBeanToMapListBuilder<T> mapBeanToMapListBuilder = new DefaultMapBeanToMapListBuilder<>();
 
     //---------------------------------------------------------------
 

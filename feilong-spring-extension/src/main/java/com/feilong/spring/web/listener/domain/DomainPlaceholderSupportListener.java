@@ -129,8 +129,7 @@ public class DomainPlaceholderSupportListener extends AbstractDomainListener{
             return PropertiesLoaderUtils.loadProperties(resource);
         }catch (IOException e){
             String messagePattern = "load domainConfigLocation:[{}] exception";
-            LOGGER.error(Slf4jUtil.format(messagePattern, domainConfigLocation), e);
-            throw new UncheckedIOException(e);
+            throw new UncheckedIOException(Slf4jUtil.format(messagePattern, domainConfigLocation), e);
         }
     }
 

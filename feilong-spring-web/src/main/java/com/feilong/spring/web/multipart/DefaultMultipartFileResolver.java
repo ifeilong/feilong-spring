@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.feilong.core.UncheckedIOException;
 import com.feilong.io.IOWriteUtil;
 import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * 需要在spring相关xml里面配置
@@ -63,18 +64,15 @@ public class DefaultMultipartFileResolver implements MultipartFileResolver{
         }
 
         //---------------------------------------------------------------
-
         if (LOGGER.isDebugEnabled()){
             Map<String, Object> map = MultipartFileUtil.getMultipartFileInfoMapForLogMap(multipartFile);
             LOGGER.debug(JsonUtil.format(map));
         }
 
-        try{
-            InputStream inputStream = multipartFile.getInputStream();
+        try (InputStream inputStream = multipartFile.getInputStream()){
             IOWriteUtil.write(inputStream, directoryName, fileName);
         }catch (IOException e){
-            LOGGER.error("", e);
-            throw new UncheckedIOException(e);
+            throw new UncheckedIOException(Slf4jUtil.format("directoryName:[{}],fileName:[{}]", directoryName, fileName), e);
         }
     }
 

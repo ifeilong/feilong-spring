@@ -129,7 +129,6 @@ class BasenamesResolver{
             }
             return list;
         }catch (IOException e){
-            LOGGER.error("", e);
             throw new UncheckedIOException(e);
         }
     }

@@ -212,7 +212,6 @@ public final class ResourceUtil{
         try{
             return ResourceUtils.getURL(resourceLocation);
         }catch (FileNotFoundException e){
-            LOGGER.error("", e);
             throw new UncheckedIOException("resourceLocation:[" + resourceLocation + "] not found!!!", e);
         }
     }

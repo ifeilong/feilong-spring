@@ -31,7 +31,7 @@ import java.util.Map;
 public class DefaultMapBeanToMapListBuilder<T> implements MapBeanToMapListBuilder<T>{
 
     /** 提取bean信息到map. */
-    private BeanToMapBuilder<T> beanToMapBuilder = new SimpleBeanToMapBuilder<T>();
+    private BeanToMapBuilder<T> beanToMapBuilder = new SimpleBeanToMapBuilder<>();
 
     //---------------------------------------------------------------
 
