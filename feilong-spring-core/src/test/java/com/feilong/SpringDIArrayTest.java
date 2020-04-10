@@ -26,7 +26,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import com.feilong.entity.DIUserArray;
-import com.feilong.json.jsonlib.JsonUtil;
 
 @ContextConfiguration(locations = { "classpath:spring-DI-Array.xml" })
 public class SpringDIArrayTest extends AbstractJUnit4SpringContextTests{
@@ -34,13 +33,10 @@ public class SpringDIArrayTest extends AbstractJUnit4SpringContextTests{
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringDIArrayTest.class);
 
-    /**
-     * Test.
-     */
     @Test
     public void test(){
         DIUserArray diUserArray = applicationContext.getBean(DIUserArray.class);
-        LOGGER.debug(JsonUtil.format(diUserArray));
+        //LOGGER.debug(JsonUtil.format(diUserArray));
 
         assertThat(diUserArray.getSecretStrategys(), allOf(hasItemInArray("求贤之策"), hasItemInArray("封印防策 毒泉防策")));
         assertThat(diUserArray.getSkills(), allOf(hasItemInArray("商才"), hasItemInArray("耕作"), hasItemInArray("名士")));

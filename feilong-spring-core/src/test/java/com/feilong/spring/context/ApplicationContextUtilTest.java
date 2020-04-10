@@ -37,9 +37,6 @@ public class ApplicationContextUtilTest extends AbstractJUnit4SpringContextTests
     /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextUtilTest.class);
 
-    /**
-     * Test.
-     */
     @Test
     public void test(){
         Map<String, Object> applicationContextForLogMap = ApplicationContextUtil.getApplicationContextInfoMapForLog(applicationContext);

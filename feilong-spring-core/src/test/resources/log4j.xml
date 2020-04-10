@@ -33,11 +33,28 @@
 		<priority value="info" />
 	</category>
 
+	<category name="org.springframework">
+		<priority value="warn" />
+	</category>
+
 	<category name="org.springframework.test.annotation.ProfileValueUtils">
 		<priority value="info" />
 	</category>
 
 	<category name="org.springframework.beans.factory.support">
+		<priority value="info" />
+	</category>
+
+	<category name="org.springframework.beans.factory.annotation.InjectionMetadata">
+		<priority value="info" />
+	</category>
+
+	<category name="org.springframework.core.env.StandardEnvironment">
+		<priority value="info" />
+	</category>
+
+	<!-- Found XML schema [http://www.springframework.org/schema/beans/spring-beans-3.2.xsd] in classpath: org/springframework/beans/factory/xml/spring-beans-3.2.xsd -->
+	<category name="org.springframework.beans.factory.xml.PluggableSchemaResolver">
 		<priority value="info" />
 	</category>
 

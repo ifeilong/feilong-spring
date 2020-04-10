@@ -23,43 +23,46 @@ import static org.junit.Assert.assertThat;
 import java.util.Properties;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.json.jsonlib.JsonUtil;
-
 @ContextConfiguration("classpath:spring-DI-util-properties.xml")
 public class SpringDIUtilPropertiesAutowiredTest extends AbstractJUnit4SpringContextTests{
 
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpringDIUtilPropertiesAutowiredTest.class);
-
     @Autowired(required = false)
     @Qualifier("p_AlipayAdvance")
-    private Properties          properties;
+    private Properties properties;
 
     @Autowired(required = false)
     @Qualifier("p_AlipayAdvance_Append")
-    private Properties          propertiesAppend;
+    private Properties propertiesAppend;
 
     @Autowired(required = false)
     @Qualifier("p_AlipayAdvance_PropertiesFactoryBean")
-    private Properties          propertiesPropertiesFactoryBean;
+    private Properties propertiesPropertiesFactoryBean;
 
     //---------------------------------------------------------------
 
     @Test
     public void test1222(){
-        LOGGER.debug(JsonUtil.format(propertiesPropertiesFactoryBean));
+        assertThat(
+                        toMap(propertiesPropertiesFactoryBean, String.class, String.class),
+                        allOf(//
+                                        hasEntry(
+                                                        "solr.solrServerUrl",
+                                                        "http://10.12.38.41:8080/solr4/adidas_pro http://10.12.38.42:8080/solr4/adidas_pro , http://10.12.38.43:8080/solr4/adidas_pro; ;http://10.12.38.43:8080/solr4/adidas_pro"),
+                                        hasEntry("skills", "豪杰,远射;神速 水练"),
+                                        hasEntry("name", "关羽")
+
+                        )
+
+        );
     }
 
     @Test
     public void test1(){
-        LOGGER.debug(JsonUtil.format(propertiesAppend));
         assertThat(
                         toMap(propertiesAppend, String.class, String.class),
                         allOf(
@@ -70,8 +73,6 @@ public class SpringDIUtilPropertiesAutowiredTest extends AbstractJUnit4SpringCon
 
     @Test
     public void test(){
-        LOGGER.debug(JsonUtil.format(properties));
-
         assertThat(
                         toMap(properties, String.class, String.class),
                         allOf(
