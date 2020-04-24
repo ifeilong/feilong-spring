@@ -1,0 +1,287 @@
+/*
+ * Copyright (C) 2008 feilong
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.feilong.spring.web.servlet.interceptor.loginsessionbind;
+
+import static com.feilong.core.Validator.isNullOrEmpty;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.method.HandlerMethod;
+
+import com.baozun.nebula.web.HelixConfig;
+import com.baozun.nebula.web.HelixConstants;
+import com.baozun.nebula.web.MemberDetails;
+import com.baozun.nebula.web.constants.SessionKeyConstants;
+import com.feilong.accessor.cookie.CookieAccessor;
+import com.feilong.accessor.session.SessionKeyAccessor;
+import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.servlet.http.RequestUtil;
+import com.feilong.servlet.http.ResponseUtil;
+import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;
+
+/**
+ * 用来处理 session hijacking 的 拦截器.
+ * 
+ * <h3>使用方式:</h3>
+ * 
+ * <blockquote>
+ * 1. 第一步 添加拦截器
+ * 
+ * <pre class="code">
+    <!-- 自定义的拦截器 --> 
+    <mvc:interceptors> 
+
+        <mvc:interceptor> 
+
+            <!-- 排除掉 json请求 --> 
+            <mvc:mapping path="/**" /> 
+            <bean class="com.baozun.nebula.web.interceptor.LoginSessionBindInterceptor" /> 
+        </mvc:interceptor> 
+    </mvc:interceptors>
+ * </pre>
+ * 
+ * 2 . 第二步 ,登录成功的时候
+ * 
+ * <p>
+ * 保存 cookie 以及 保存 session 即可
+ * </p>
+ * 
+ * <pre class="code">
+ * cookieAccessor.save(accessorValue, response);
+ * sessionKeyAccessor.save(
+ *                 LoginSessionBindInterceptor.BIND_CLIENT_INFO,
+ *                 new ClientInfo(RequestUtil.getHeaderUserAgent(request), accessorValue),
+ *                 request);
+ * </pre>
+ * 
+ * </blockquote>
+ *
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
+ * @see <a href="http://jira.baozun.cn/browse/AD-1247">session hijacking</a>
+ * @see <a href="http://jira.baozun.cn/browse/NB-738">新增 LoginSessionBindInterceptor</a>
+ * @since 1.12.6
+ */
+public class LoginSessionBindInterceptor extends AbstractHandlerMethodInterceptorAdapter{
+
+    /** The Constant LOGGER. */
+    private static final Logger LOGGER           = LoggerFactory.getLogger(LoginSessionBindInterceptor.class);
+
+    /** The Constant BIND_CLIENT_INFO. */
+    public static final String  BIND_CLIENT_INFO = LoginSessionBindInterceptor.class.getName() + "_BIND_CLIENT_INFO";
+
+    //---------------------------------------------------------------
+
+    /** The ajax error code. */
+    private final int           ajaxErrorCode    = 901;
+
+    //---------------------------------------------------------------------
+
+    /** The session key accessor. */
+    @Autowired
+    @Qualifier("loginBindSessionKeyAccessor")
+    private SessionKeyAccessor  sessionKeyAccessor;
+
+    /** The cookie accessor. */
+    @Autowired
+    @Qualifier("loginBindCookieAccessor")
+    private CookieAccessor      cookieAccessor;
+
+    //---------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter#preHandle(javax.servlet.http.HttpServletRequest,
+     * javax.servlet.http.HttpServletResponse, java.lang.Object)
+     */
+    @Override
+    public boolean doPreHandle(HttpServletRequest request,HttpServletResponse response,HandlerMethod handlerMethod){
+        if (LOGGER.isDebugEnabled()){
+            Map<String, Object> requestInfoMapForLog = RequestUtil.getRequestInfoMapForLog(request);
+            LOGGER.debug(JsonUtil.format(requestInfoMapForLog));
+        }
+        //---------------------------------------------------------------------
+        //获取Session中的MemberDetails，该信息是在登录成功后放入会话的，具体可以看 NebulaLoginController中的onAuthenticationSuccess方法
+        HttpSession session = request.getSession(false);
+        // If there is no session (session == null) then there isn't anything to worry about
+
+        // 1 没有session ,直接返回true
+        if (null == session){
+            LOGGER.debug("session is null,return true");
+            return true;
+        }
+
+        //---------------------------------------------------------------------
+        MemberDetails memberDetails = (MemberDetails) session.getAttribute(SessionKeyConstants.MEMBER_CONTEXT);
+
+        // 2 session中没有会员信息 ,表示用户还没有登录,直接返回true
+        if (null == memberDetails){
+            LOGGER.debug("no find memberDetails in session,return true");
+            return true;
+        }
+
+        //---------------------------------------------------------------
+        return doWithData(request, response);
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * doWithData.
+     *
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     * @return true, if successful
+     */
+    private boolean doWithData(HttpServletRequest request,HttpServletResponse response) throws IOException{
+        String clientIp = RequestUtil.getClientIp(request);
+
+        //---------------------------------------------------------------
+
+        ClientInfo clientInfo = sessionKeyAccessor.get(BIND_CLIENT_INFO, request);
+
+        // 3 session中取不到客户端信息,退出并失败处理(跳转默认登录页面)
+        if (null == clientInfo){
+            LOGGER.error("session clientInfo is null,will goToError,clientIp:[{}]", clientIp);
+            return goToError(request, response);
+        }
+
+        //---------------------------------------------------------------------
+
+        // 4 request中没有 UA,退出并失败处理(跳转默认登录页面)
+        String headerUserAgent = RequestUtil.getHeaderUserAgent(request);
+        if (isNullOrEmpty(headerUserAgent)){
+            LOGGER.error("headerUserAgent is null or empty,will goToError,clientIp:[{}]", clientIp);
+            return goToError(request, response);
+        }
+
+        //---------------------------------------------------------------------
+        // 5 session 中 UA和当前请求中UA 不相等,退出并失败处理(跳转默认登录页面)
+        String sessionUserAgent = clientInfo.getUserAgent();
+        if (!Objects.equals(headerUserAgent, sessionUserAgent)){//没值 或者被删除了   
+            LOGGER.error(
+                            "sessionUserAgent:[{}] not equals headerUserAgent:[{}],will goToError,clientIp:[{}]",
+                            sessionUserAgent,
+                            headerUserAgent,
+                            clientIp);
+            return goToError(request, response);
+        }
+
+        //---------------------------------------------------------------------
+        // 6 session 中 clientInfo 的指纹不存在,退出并失败处理(跳转默认登录页面)
+        String sessionBindValue = clientInfo.getFingerPrint();
+        if (isNullOrEmpty(sessionBindValue)){//没值 或者被删除了   
+            LOGGER.error("sessionBindValue is null or empty,will goToError,clientIp:[{}]", clientIp);
+            return goToError(request, response);
+        }
+
+        //---------------------------------------------------------------------
+        // 7 cookie 中 指纹值不存在,退出并失败处理(跳转默认登录页面)
+        String cookieBindValue = cookieAccessor.get(request);
+        if (isNullOrEmpty(cookieBindValue)){//没值 或者被删除了
+            LOGGER.error("cookieBindValue is null or empty,will goToError,clientIp:[{}]", clientIp);
+            return goToError(request, response);
+        }
+
+        //---------------------------------------------------------------------
+        // 8 cookie 中 指纹值 不等于 session中的,退出并失败处理(跳转默认登录页面)
+        if (!Objects.equals(sessionBindValue, cookieBindValue)){
+            LOGGER.error(
+                            "sessionBindValue :[{}],not equals cookieBindValue:[{}],will goToError,clientIp:[{}]",
+                            sessionBindValue,
+                            cookieBindValue,
+                            clientIp);
+            return goToError(request, response);
+        }
+
+        //---------------------------------------------------------------
+
+        LOGGER.debug("sessionBindValue :[{}],equals cookieBindValue,return [true],clientIp:[{}]", sessionBindValue, clientIp);
+        return true;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Go to error.
+     *
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     * @return true, if successful
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @since 5.3.2.18
+     */
+    private boolean goToError(HttpServletRequest request,HttpServletResponse response) throws IOException{
+        abortUser(request, response);
+        onMemberCheckFailure(request, response);
+        return false;
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * 用户会话检查失败后的方法，可重载，默认是去往会话检查失败的URL.
+     *
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    private void onMemberCheckFailure(HttpServletRequest request,HttpServletResponse response) throws IOException{
+        if (RequestUtil.isNotAjaxRequest(request)){
+            ResponseUtil.sendRedirect(
+                            response,
+                            request.getContextPath() + HelixConfig.getInstance().get(HelixConstants.SECURITY_SESSION_CHECK_FAILURE_URL));
+        }else{
+            //TODO 升级
+            response.sendError(ajaxErrorCode);
+        }
+    }
+
+    //---------------------------------------------------------------
+
+    /**
+     * Abort user.
+     *
+     * @param request
+     *            the request
+     * @param response
+     *            the response
+     */
+    private void abortUser(HttpServletRequest request,HttpServletResponse response){
+        cookieAccessor.remove(response);
+        request.getSession().invalidate();
+    }
+
+}
