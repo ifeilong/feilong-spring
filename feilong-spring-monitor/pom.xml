@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.feilong.platform.spring</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>feilong-spring-parent</artifactId>
 		<version>5.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>feilong-spring-monitor</artifactId>
