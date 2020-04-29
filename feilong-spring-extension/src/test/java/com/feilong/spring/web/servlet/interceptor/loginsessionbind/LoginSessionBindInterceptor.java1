@@ -31,10 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.method.HandlerMethod;
 
-import com.baozun.nebula.web.HelixConfig;
-import com.baozun.nebula.web.HelixConstants;
-import com.baozun.nebula.web.MemberDetails;
-import com.baozun.nebula.web.constants.SessionKeyConstants;
 import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.accessor.session.SessionKeyAccessor;
 import com.feilong.json.jsonlib.JsonUtil;
@@ -58,7 +54,7 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodIntercept
 
             <!-- 排除掉 json请求 --> 
             <mvc:mapping path="/**" /> 
-            <bean class="com.baozun.nebula.web.interceptor.LoginSessionBindInterceptor" /> 
+            <bean class="com.feilong.nebula.web.interceptor.LoginSessionBindInterceptor" /> 
         </mvc:interceptor> 
     </mvc:interceptors>
  * </pre>
@@ -80,8 +76,8 @@ import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodIntercept
  * </blockquote>
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @see <a href="http://jira.baozun.cn/browse/AD-1247">session hijacking</a>
- * @see <a href="http://jira.baozun.cn/browse/NB-738">新增 LoginSessionBindInterceptor</a>
+ * @see <a href="http://jira.feilong.cn/browse/AD-1247">session hijacking</a>
+ * @see <a href="http://jira.feilong.cn/browse/NB-738">新增 LoginSessionBindInterceptor</a>
  * @since 1.12.6
  */
 public class LoginSessionBindInterceptor extends AbstractHandlerMethodInterceptorAdapter{

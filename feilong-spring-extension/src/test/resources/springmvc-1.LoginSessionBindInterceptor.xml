@@ -14,7 +14,7 @@
 
             <mvc:mapping path="/**" />
 
-            <bean class="com.baozun.nebula.web.interceptor.LoginSessionBindInterceptor" />
+            <bean class="com.feilong.web.interceptor.LoginSessionBindInterceptor" />
 
         </mvc:interceptor>
     </mvc:interceptors>
