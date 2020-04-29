@@ -48,12 +48,11 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
 import com.feilong.coreextension.lang.ThreadExtensionUtil;
 import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.lib.json.JSONException;
 import com.feilong.spring.aop.AbstractAspect;
 import com.feilong.spring.aop.JoinPointUtil;
 import com.feilong.spring.aop.ProceedingJoinPointUtil;
 import com.feilong.spring.transaction.interceptor.TransactionAttributeUtil;
-
-import net.sf.json.JSONException;
 
 /**
  * 使用拦截器,确定使用那个组/类型数据库,以及那种(读还是写)的数据库.

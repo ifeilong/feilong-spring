@@ -30,7 +30,8 @@ public class BeanTest{
         salesOrder.setLogisticsStatus(10);
 
         //---------------------------------------------------------------
-        assertEquals(10, SpelUtil.getValue("logisticsStatus", salesOrder));
+        Object Object = SpelUtil.getValue("logisticsStatus", salesOrder);
+        assertEquals(10, Object);
     }
 
     @Test

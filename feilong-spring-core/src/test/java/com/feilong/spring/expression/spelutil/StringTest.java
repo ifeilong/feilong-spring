@@ -32,13 +32,15 @@ public class StringTest{
 
         assertEquals("Hello,World", SpelUtil.getValue(ex));
 
-        assertEquals(11, SpelUtil.getValue(ex + ".length()"));
+        Object value = SpelUtil.getValue(ex + ".length()");
+        assertEquals(11, value);
 
         assertEquals("Hello,World!", SpelUtil.getValue(ex + ".concat('!')"));
 
         assertEquals(String.class, SpelUtil.getValue(ex + ".class"));
 
-        assertEquals(11, SpelUtil.getValue(ex + ".bytes.length"));
+        Object value2 = SpelUtil.getValue(ex + ".bytes.length");
+        assertEquals(11, value2);
 
         assertEquals("HELLO,WORLD", SpelUtil.getValue("new String(" + ex + ").toUpperCase()"));
     }

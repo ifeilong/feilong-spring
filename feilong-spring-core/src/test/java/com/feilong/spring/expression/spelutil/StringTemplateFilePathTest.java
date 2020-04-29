@@ -30,7 +30,7 @@ public class StringTemplateFilePathTest{
     @Test
     public void getValue12222(){
         String expressionString = "/Users/feilong/Downloads/adidas-cn-productData-#{T(com.feilong.core.date.DateUtil).nowString('yyyyMMdd')}.zip";
-        LOGGER.debug("{}", SpelUtil.getTemplateValue(expressionString));
+        LOGGER.debug("" + SpelUtil.getTemplateValue(expressionString));
     }
 
 }
