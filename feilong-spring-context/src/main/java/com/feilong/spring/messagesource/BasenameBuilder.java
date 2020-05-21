@@ -28,7 +28,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 
 import com.feilong.core.lang.StringUtil;
-import com.feilong.lib.lang3.Validate;
+import com.feilong.core.Validate;
 
 /**
  * The Class BasenameBuilder.

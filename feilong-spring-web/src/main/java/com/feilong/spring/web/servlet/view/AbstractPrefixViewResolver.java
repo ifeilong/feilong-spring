@@ -24,7 +24,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractCachingViewResolver;
 
 import com.feilong.lib.lang3.StringUtils;
-import com.feilong.lib.lang3.Validate;
+import com.feilong.core.Validate;
 
 /**
  * 抽象的前缀 view resolver.

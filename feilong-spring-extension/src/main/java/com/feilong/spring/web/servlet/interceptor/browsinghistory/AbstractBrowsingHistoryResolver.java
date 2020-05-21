@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.json.JsonUtil;
 import com.feilong.lib.lang3.StringUtils;
-import com.feilong.lib.lang3.Validate;
+import com.feilong.core.Validate;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 
 /**

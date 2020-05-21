@@ -22,7 +22,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
 
-import com.feilong.lib.lang3.Validate;
+import com.feilong.core.Validate;
 import com.feilong.lib.lang3.reflect.MethodUtils;
 
 /**

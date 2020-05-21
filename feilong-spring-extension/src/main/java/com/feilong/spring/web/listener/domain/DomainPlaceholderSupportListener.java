@@ -26,7 +26,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.feilong.lib.lang3.Validate;
+import com.feilong.core.Validate;
 import com.feilong.spring.web.util.WebSpringUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
