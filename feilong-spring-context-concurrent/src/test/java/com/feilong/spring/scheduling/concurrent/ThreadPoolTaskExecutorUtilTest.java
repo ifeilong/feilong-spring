@@ -22,8 +22,6 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,15 +29,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.feilong.core.lang.thread.PartitionRunnableBuilder;
 import com.feilong.core.lang.thread.PartitionThreadEntity;
 import com.feilong.core.lang.thread.PartitionThreadExecutor;
+import com.feilong.test.AbstractTest;
 
 @ContextConfiguration(locations = { "classpath:spring-taskExecutor.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class ThreadPoolTaskExecutorUtilTest{
+public class ThreadPoolTaskExecutorUtilTest extends AbstractTest{
 
-    /** The Constant log. */
-    private static final Logger     LOGGER = LoggerFactory.getLogger(ThreadPoolTaskExecutorUtilTest.class);
-
-    //---------------------------------------------------------------
     @Autowired
     private PartitionThreadExecutor partitionThreadExecutor;
 

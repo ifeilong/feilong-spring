@@ -20,15 +20,11 @@ import static com.feilong.core.bean.ConvertUtil.toMap;
 import java.util.Map;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.feilong.spring.expression.SpelUtil;
+import com.feilong.test.AbstractTest;
 
-public class MapTest{
-
-    /** The Constant log. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MapTest.class);
+public class MapTest extends AbstractTest{
 
     @Test
     public void getValueMap(){

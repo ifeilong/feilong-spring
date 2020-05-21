@@ -18,20 +18,17 @@ package com.feilong.spring.messagesource;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 
 import com.feilong.spring.io.ResourceUtil;
+import com.feilong.test.AbstractTest;
 
 /**
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.11.0
  */
-public class BasenameBuilderTest{
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(BasenameBuilderTest.class);
+public class BasenameBuilderTest extends AbstractTest{
 
     @Test
     public void test() throws IOException{

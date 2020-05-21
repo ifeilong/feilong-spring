@@ -19,21 +19,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.feilong.json.JsonUtil;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.DefaultBrowsingHistoryCommand;
+import com.feilong.test.AbstractTest;
 
 /**
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.5
  */
-public class BrowsingHistoryResolverTest{
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(BrowsingHistoryResolverTest.class);
+public class BrowsingHistoryResolverTest extends AbstractTest{
 
     @Test
     public final void test(){

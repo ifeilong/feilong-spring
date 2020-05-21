@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -45,18 +43,14 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import com.feilong.core.DefaultRuntimeException;
 import com.feilong.json.JsonUtil;
 import com.feilong.spring.context.ApplicationContextUtil;
+import com.feilong.test.AbstractTest;
 
 //Spring-mvc-test does not read the web.xml file, but you can configure the filters this way:
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:springmvc/springmvc-servlet.xml" })
 //测试环境使用,用来表示测试环境使用的ApplicationContext将是WebApplicationContext类型的;value指定web应用的根;
 @WebAppConfiguration(value = "src/main/webapp")
-public class BaseControllerTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger       LOGGER = LoggerFactory.getLogger(BaseControllerTest.class);
-
-    //---------------------------------------------------------------
+public class BaseControllerTest extends AbstractTest{
 
     /** The mock mvc. */
     protected MockMvc                 mockMvc;

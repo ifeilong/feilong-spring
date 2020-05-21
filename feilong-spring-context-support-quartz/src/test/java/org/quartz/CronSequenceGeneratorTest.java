@@ -19,28 +19,19 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.junit.Test;
-import org.quartz.CronExpression;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.support.CronSequenceGenerator;
 
 import com.feilong.core.DatePattern;
 import com.feilong.core.date.DateUtil;
+import com.feilong.test.AbstractTest;
 
 /**
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 4.0.4
  */
-public class CronSequenceGeneratorTest{
+public class CronSequenceGeneratorTest extends AbstractTest{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CronSequenceGeneratorTest.class);
-
-    /**
-     * TestCronSequenceGeneratorTest.
-     * 
-     * @throws ParseException
-     */
     @Test
     public void test() throws ParseException{
 

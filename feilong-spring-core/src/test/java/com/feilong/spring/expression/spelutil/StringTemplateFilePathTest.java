@@ -16,17 +16,12 @@
 package com.feilong.spring.expression.spelutil;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.feilong.spring.expression.SpelUtil;
+import com.feilong.test.AbstractTest;
 
-public class StringTemplateFilePathTest{
+public class StringTemplateFilePathTest extends AbstractTest{
 
-    /** The Constant log. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(StringTemplateFilePathTest.class);
-
-    //---------------------------------------------------------------
     @Test
     public void getValue12222(){
         String expressionString = "/Users/feilong/Downloads/adidas-cn-productData-#{T(com.feilong.core.date.DateUtil).nowString('yyyyMMdd')}.zip";

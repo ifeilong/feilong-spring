@@ -17,24 +17,20 @@ package com.feilong.constructor;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.feilong.entity.ConstructorPropertiesEntity;
 import com.feilong.json.JsonUtil;
+import com.feilong.test.AbstractTest;
 
 /**
  * The Class SpringConstructorPropertiesTest.
  */
 @ContextConfiguration(locations = { "classpath:spring-DI-ConstructorProperties.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SpringConstructorPropertiesTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger         LOGGER = LoggerFactory.getLogger(SpringConstructorPropertiesTest.class);
+public class SpringConstructorPropertiesTest extends AbstractTest{
 
     @Autowired
     private ConstructorPropertiesEntity constructorPropertiesEntity;
