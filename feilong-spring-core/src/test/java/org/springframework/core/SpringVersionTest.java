@@ -16,8 +16,8 @@
 package org.springframework.core;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.feilong.test.AbstractTest;
 
 /**
  * Class that exposes the Spring version. Fetches the "Implementation-Version" manifest attribute from the jar file.
@@ -29,10 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Juergen Hoeller
  * @since 1.1
  */
-public class SpringVersionTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpringVersionTest.class);
+public class SpringVersionTest extends AbstractTest{
 
     @Test
     public void test(){

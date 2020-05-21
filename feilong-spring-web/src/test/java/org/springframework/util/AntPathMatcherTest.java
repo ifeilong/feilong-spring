@@ -21,21 +21,17 @@ import java.net.URI;
 import java.util.Map;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriTemplate;
 
 import com.feilong.json.JsonUtil;
+import com.feilong.test.AbstractTest;
 
 /**
  * The Class AntPathMatcherTest.
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
-public class AntPathMatcherTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger      LOGGER       = LoggerFactory.getLogger(AntPathMatcherTest.class);
+public class AntPathMatcherTest extends AbstractTest{
 
     /** The Constant PATH_MATCHER. */
     private static final PathMatcher PATH_MATCHER = new AntPathMatcher();

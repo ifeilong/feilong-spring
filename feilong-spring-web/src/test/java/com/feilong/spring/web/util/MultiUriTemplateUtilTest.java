@@ -15,26 +15,22 @@
  */
 package com.feilong.spring.web.util;
 
+import static com.feilong.core.CharsetType.UTF8;
+import static com.feilong.core.bean.ConvertUtil.toMap;
+
 import java.util.Map;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.feilong.core.net.URIUtil;
-
-import static com.feilong.core.CharsetType.UTF8;
-import static com.feilong.core.bean.ConvertUtil.toMap;
+import com.feilong.test.AbstractTest;
 
 /**
  * The Class MultiUriTemplateUtilTest.
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
-public class MultiUriTemplateUtilTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultiUriTemplateUtilTest.class);
+public class MultiUriTemplateUtilTest extends AbstractTest{
 
     @Test
     public void testExpandWithMultiVariable(){

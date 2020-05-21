@@ -17,20 +17,16 @@
 package org.springframework.core;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.res.SkuItem;
 import org.springframework.core.res.SkuItemRepositoryImpl4;
 
 import com.feilong.json.JsonUtil;
+import com.feilong.test.AbstractTest;
 
 /**
  * The Class GenericTypeResolverTest.
  */
-public class GenericTypeResolverTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericTypeResolverTest.class);
+public class GenericTypeResolverTest extends AbstractTest{
 
     @Test
     public void test(){

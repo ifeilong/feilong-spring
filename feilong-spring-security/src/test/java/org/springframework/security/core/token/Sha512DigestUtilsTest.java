@@ -16,12 +16,10 @@
 package org.springframework.security.core.token;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class Sha512DigestUtilsTest{
+import com.feilong.test.AbstractTest;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Sha512DigestUtilsTest.class);
+public class Sha512DigestUtilsTest extends AbstractTest{
 
     @Test
     public void test(){

@@ -22,20 +22,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.feilong.json.JsonUtil;
+import com.feilong.test.AbstractTest;
 
 /**
  * The Class UriTemplateUtilTest.
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
-public class UriTemplateUtilTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(UriTemplateUtilTest.class);
+public class UriTemplateUtilTest extends AbstractTest{
 
     @Test
     public void testGetVariableNames(){

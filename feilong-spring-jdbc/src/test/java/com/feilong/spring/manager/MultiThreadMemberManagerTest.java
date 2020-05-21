@@ -15,10 +15,10 @@
  */
 package com.feilong.spring.manager;
 
+import static com.feilong.core.TimeInterval.SECONDS_PER_MINUTE;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,8 +27,7 @@ import com.feilong.coreextension.lang.ThreadExtensionUtil;
 import com.feilong.json.JsonUtil;
 import com.feilong.spring.manager.java.MemberManager;
 import com.feilong.spring.manager.java.SalesOrderManager;
-
-import static com.feilong.core.TimeInterval.SECONDS_PER_MINUTE;
+import com.feilong.test.AbstractTest;
 
 /**
  * The Class MemberManagerTest.
@@ -38,19 +37,15 @@ import static com.feilong.core.TimeInterval.SECONDS_PER_MINUTE;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml" })
-public class MultiThreadMemberManagerTest //extends AbstractJUnit4SpringContextTests
-{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultiThreadMemberManagerTest.class);
+public class MultiThreadMemberManagerTest extends AbstractTest{
 
     /** The member manager. */
     @Autowired
-    private MemberManager       memberManager;
+    private MemberManager     memberManager;
 
     /** The sales order manager. */
     @Autowired
-    private SalesOrderManager   salesOrderManager;
+    private SalesOrderManager salesOrderManager;
 
     /**
      * Test add user2.

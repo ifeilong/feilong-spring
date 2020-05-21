@@ -17,21 +17,18 @@ package org.springframework.web.util;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.feilong.test.AbstractTest;
 
 /**
  * The Class HtmlUtilsTest.
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
-public class HtmlUtilsTest{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(HtmlUtilsTest.class);
+public class HtmlUtilsTest extends AbstractTest{
 
     /** The a. */
-    String                      a      = "m&eacute;n&nbsp;";
+    String a = "m&eacute;n&nbsp;";
 
     /**
      * Test html utils.

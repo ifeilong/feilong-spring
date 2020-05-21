@@ -15,22 +15,20 @@
  */
 package org.springframework.web.util;
 
+import static com.feilong.core.CharsetType.UTF8;
+
 import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import static com.feilong.core.CharsetType.UTF8;
+import com.feilong.test.AbstractTest;
 
 /**
  *
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  * @since 1.5.4
  */
-public class UriUtilsTest{
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UriUtilsTest.class);
+public class UriUtilsTest extends AbstractTest{
 
     /**
      * TestUriUtilsTest.
