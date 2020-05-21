@@ -16,7 +16,7 @@
 package com.feilong.spring.web.servlet.interceptor;
 
 import static com.feilong.core.CharsetType.UTF8;
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+import static com.feilong.core.date.DateUtil.formatDuration;
 import static com.feilong.servlet.http.RequestUtil.getRequestFullURL;
 import static com.feilong.tools.slf4j.Slf4jUtil.format;
 
@@ -34,7 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.context.BeanLogMessageBuilder;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**

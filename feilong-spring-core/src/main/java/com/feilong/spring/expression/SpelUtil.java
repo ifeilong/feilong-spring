@@ -19,7 +19,7 @@ import static com.feilong.core.util.MapUtil.newConcurrentHashMap;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.Validate;
+import com.feilong.core.Validate;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;

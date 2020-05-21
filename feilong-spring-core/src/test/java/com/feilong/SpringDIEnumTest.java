@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.net.HttpMethodType;
+import com.feilong.net.http.HttpMethodType;
 
 @ContextConfiguration("classpath:spring-DI-enum.xml")
 public class SpringDIEnumTest extends AbstractJUnit4SpringContextTests{

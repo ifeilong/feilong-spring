@@ -21,7 +21,7 @@ import static com.feilong.core.Validator.isNullOrEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 
 /**
  * {@link DomainConfig} 构造器.

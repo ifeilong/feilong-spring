@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.messagesource;
 
-import org.apache.commons.lang3.Validate;
+import com.feilong.core.Validate;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 

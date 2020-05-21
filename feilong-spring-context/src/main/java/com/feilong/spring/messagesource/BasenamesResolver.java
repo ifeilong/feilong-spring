@@ -21,6 +21,7 @@ import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.core.util.CollectionsUtil.removeDuplicate;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -28,8 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import com.feilong.core.UncheckedIOException;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 
 /**
  * The Class BasenamesResolver.

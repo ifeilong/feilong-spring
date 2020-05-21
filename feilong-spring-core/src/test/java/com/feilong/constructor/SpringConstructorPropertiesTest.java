@@ -24,7 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.feilong.entity.ConstructorPropertiesEntity;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 
 /**
  * The Class SpringConstructorPropertiesTest.

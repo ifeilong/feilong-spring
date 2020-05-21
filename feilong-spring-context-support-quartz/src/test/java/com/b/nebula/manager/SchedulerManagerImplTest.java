@@ -18,7 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import com.feilong.core.DefaultRuntimeException;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.spring.scheduling.quartz.SchedulerFactoryMapBeanToMapListBuilder;
 
 @ContextConfiguration(locations = { "classpath:spring4-Scheduler-test.xml", "classpath:spring-EventListener.xml" })

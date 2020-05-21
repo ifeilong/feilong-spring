@@ -19,11 +19,12 @@ import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractCachingViewResolver;
+
+import com.feilong.lib.lang3.StringUtils;
+import com.feilong.lib.lang3.Validate;
 
 /**
  * 抽象的前缀 view resolver.

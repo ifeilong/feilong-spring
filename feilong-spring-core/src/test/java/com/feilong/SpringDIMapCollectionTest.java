@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 
 @ContextConfiguration(locations = { "classpath:spring-DI-MapCollection.xml" })
 public class SpringDIMapCollectionTest extends AbstractJUnit4SpringContextTests{

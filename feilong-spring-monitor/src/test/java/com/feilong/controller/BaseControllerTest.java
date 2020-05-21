@@ -43,7 +43,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import com.feilong.core.DefaultRuntimeException;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.spring.context.ApplicationContextUtil;
 
 //Spring-mvc-test does not read the web.xml file, but you can configure the filters this way:

@@ -16,19 +16,17 @@
 package com.feilong.spring.web.listener.domain;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.lang3.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.feilong.core.UncheckedIOException;
+import com.feilong.lib.lang3.Validate;
 import com.feilong.spring.web.util.WebSpringUtil;
 import com.feilong.tools.slf4j.Slf4jUtil;
 
@@ -104,10 +102,6 @@ import com.feilong.tools.slf4j.Slf4jUtil;
  * @since 1.1.1
  */
 public class DomainPlaceholderSupportListener extends AbstractDomainListener{
-
-    /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DomainPlaceholderSupportListener.class);
-    //---------------------------------------------------------------
 
     /*
      * (non-Javadoc)

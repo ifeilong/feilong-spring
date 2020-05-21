@@ -18,6 +18,7 @@ package com.feilong.spring.io;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.net.URL;
 
 import org.slf4j.Logger;
@@ -31,8 +32,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.ResourceUtils;
-
-import com.feilong.core.UncheckedIOException;
 
 /**
  * {@link org.springframework.core.io.Resource} 工具类.

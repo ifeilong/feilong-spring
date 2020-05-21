@@ -17,7 +17,7 @@ package com.feilong.spring.web.method;
 
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang3.Validate;
+import com.feilong.core.Validate;
 import org.springframework.web.method.HandlerMethod;
 
 /**

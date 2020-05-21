@@ -20,8 +20,6 @@ import static com.feilong.core.bean.ToStringConfig.DEFAULT_CONNECTOR;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
@@ -38,6 +36,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcherEditor;
 
 import com.feilong.core.bean.ConvertUtil;
+import com.feilong.lib.lang3.builder.ToStringBuilder;
+import com.feilong.lib.lang3.builder.ToStringStyle;
 import com.feilong.servlet.http.RequestUtil;
 
 /**

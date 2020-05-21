@@ -17,7 +17,7 @@ package com.feilong.spring.security.web.util.matcher;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.Validate;
+import com.feilong.core.Validate;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.AnyRequestMatcher;

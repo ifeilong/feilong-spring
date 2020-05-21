@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.context;
 
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+import static com.feilong.core.date.DateUtil.formatDuration;
 import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import static com.feilong.core.util.SortUtil.sortArray;
 import static java.util.Collections.emptyMap;
@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.lang3.Validate;
+import com.feilong.core.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;

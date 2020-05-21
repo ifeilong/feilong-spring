@@ -37,7 +37,7 @@ import org.springframework.web.util.UriTemplate;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.feilong.core.util.MapUtil;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.servlet.http.RequestUtil;
 
 /**

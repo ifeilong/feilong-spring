@@ -15,20 +15,20 @@
  */
 package com.feilong.spring.messagesource;
 
-import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static com.feilong.core.lang.StringUtil.EMPTY;
 import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
 import static org.springframework.util.ResourceUtils.JAR_URL_SEPARATOR;
 
 import java.io.IOException;
 import java.net.URL;
 
-import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 
 import com.feilong.core.lang.StringUtil;
+import com.feilong.lib.lang3.Validate;
 
 /**
  * The Class BasenameBuilder.

@@ -23,7 +23,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.ResourceUtils;
 
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 
 /**
  * 支持通配符配置的 {@link ReloadableResourceBundleMessageSource}.

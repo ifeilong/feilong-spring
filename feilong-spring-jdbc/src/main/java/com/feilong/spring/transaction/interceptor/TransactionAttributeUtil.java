@@ -17,7 +17,7 @@ package com.feilong.spring.transaction.interceptor;
 
 import static com.feilong.core.bean.ConvertUtil.toMapUseEntrys;
 import static com.feilong.core.util.MapUtil.newLinkedHashMap;
-import static org.apache.commons.lang3.tuple.Pair.of;
+import static com.feilong.lib.lang3.tuple.Pair.of;
 import static org.springframework.transaction.TransactionDefinition.ISOLATION_DEFAULT;
 import static org.springframework.transaction.TransactionDefinition.ISOLATION_READ_COMMITTED;
 import static org.springframework.transaction.TransactionDefinition.ISOLATION_READ_UNCOMMITTED;

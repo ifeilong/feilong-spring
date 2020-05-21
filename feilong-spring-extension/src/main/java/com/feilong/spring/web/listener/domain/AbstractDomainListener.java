@@ -16,7 +16,7 @@
 package com.feilong.spring.web.listener.domain;
 
 import static com.feilong.core.Validator.isNotNullOrEmpty;
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+import static com.feilong.core.date.DateUtil.formatDuration;
 
 import java.util.Date;
 import java.util.Map;
@@ -29,7 +29,7 @@ import javax.servlet.ServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 
 /**
  * 初始化配置监听器.

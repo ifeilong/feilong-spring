@@ -15,7 +15,7 @@
  */
 package cn.javass.spring.chapter6.aop;
 
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+import static com.feilong.core.date.DateUtil.formatDuration;
 
 import java.util.Date;
 

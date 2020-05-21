@@ -21,7 +21,7 @@ import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 import java.util.Map;
 
 import com.feilong.accessor.cookie.CookieAccessor;
-import com.feilong.core.date.DateExtensionUtil;
+import com.feilong.core.date.DateUtil;
 import com.feilong.servlet.http.entity.CookieEntity;
 import com.feilong.spring.event.builder.BeanToMapBuilder;
 import com.feilong.spring.event.builder.BeanToMapBuilderUtil;
@@ -117,6 +117,6 @@ public class CookieAccessorBeanToMapBuilder implements BeanToMapBuilder<CookieAc
         if (maxAge <= 0){
             return String.valueOf(maxAge);
         }
-        return DateExtensionUtil.formatDuration(toLong(maxAge) * 1000);
+        return DateUtil.formatDuration(toLong(maxAge) * 1000);
     }
 }

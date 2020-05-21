@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.ListUtils;
-
 import com.feilong.core.lang.thread.PartitionRunnableBuilder;
+import com.feilong.lib.collection4.ListUtils;
 
 /**
  * The Class DefaultPartitionThreadCallableListBuilder.

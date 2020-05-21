@@ -18,7 +18,7 @@ package com.feilong.spring.web.filter;
 import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.core.Validator.isNotNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toArray;
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+import static com.feilong.core.date.DateUtil.formatDuration;
 
 import java.io.IOException;
 import java.util.Date;
@@ -29,7 +29,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapper;
@@ -38,6 +37,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.feilong.context.BeanLogMessageBuilder;
+import com.feilong.lib.lang3.StringUtils;
 import com.feilong.servlet.http.RequestUtil;
 
 /**

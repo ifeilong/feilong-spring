@@ -27,13 +27,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.Validate;
+import com.feilong.core.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.core.CharsetType;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.security.symmetric.SymmetricEncryption;
 import com.feilong.security.symmetric.SymmetricType;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;

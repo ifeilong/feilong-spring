@@ -16,7 +16,6 @@
 package com.feilong.spring.web.util;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
-import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +30,7 @@ import org.springframework.web.util.UrlPathHelper;
 import com.feilong.core.bean.ConvertUtil;
 import com.feilong.core.bean.ToStringConfig;
 import com.feilong.core.lang.StringUtil;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.servlet.http.RequestUtil;
 
 /**
@@ -173,6 +172,17 @@ public class MultiUriTemplateUtil{
         String oldValue = opMap.get(variableName);
         opMap.put(variableName, isNullOrEmpty(oldValue) ? value : buildMutiValue(value, valueSeparator, oldValue));
         return UriTemplateUtil.expand(matchingPatternPath, opMap);
+    }
+
+    /**
+     * @param map
+     * @param hashMap
+     * @return
+     * @since 4.2.0
+     */
+    private static Map<String, String> defaultIfNull(Map<String, String> map,HashMap<String, String> hashMap){
+        // TODO Auto-generated method stub
+        return null;
     }
 
     /**

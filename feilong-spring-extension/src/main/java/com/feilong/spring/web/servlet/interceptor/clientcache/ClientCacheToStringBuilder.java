@@ -15,8 +15,8 @@
  */
 package com.feilong.spring.web.servlet.interceptor.clientcache;
 
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static com.feilong.core.date.DateUtil.formatDuration;
+import static com.feilong.core.lang.StringUtil.EMPTY;
 
 import com.feilong.core.lang.annotation.AnnotationToStringBuilder;
 

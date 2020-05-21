@@ -24,7 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.feilong.coreextension.lang.ThreadExtensionUtil;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.spring.manager.java.MemberManager;
 import com.feilong.spring.manager.java.SalesOrderManager;
 

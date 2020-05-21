@@ -19,13 +19,13 @@ import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.handler.MappedInterceptor;
 
 import com.feilong.core.lang.ClassUtil;
+import com.feilong.lib.lang3.reflect.FieldUtils;
 import com.feilong.spring.event.builder.BeanToMapBuilder;
 import com.feilong.spring.event.builder.BeanToMapBuilderUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;

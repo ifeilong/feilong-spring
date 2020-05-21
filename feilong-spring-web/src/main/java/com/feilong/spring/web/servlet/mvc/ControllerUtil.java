@@ -20,7 +20,7 @@ import static com.feilong.servlet.http.HttpHeaders.X_REQUESTED_WITH_VALUE_AJAX;
 import static org.springframework.web.servlet.view.UrlBasedViewResolver.FORWARD_URL_PREFIX;
 import static org.springframework.web.servlet.view.UrlBasedViewResolver.REDIRECT_URL_PREFIX;
 
-import org.apache.commons.lang3.Validate;
+import com.feilong.core.Validate;
 
 /**
  * Controller 相关常用工具方法.

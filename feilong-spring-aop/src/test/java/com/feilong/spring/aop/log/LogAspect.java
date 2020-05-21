@@ -15,7 +15,7 @@
  */
 package com.feilong.spring.aop.log;
 
-import static com.feilong.core.date.DateExtensionUtil.formatDuration;
+import static com.feilong.core.date.DateUtil.formatDuration;
 
 import java.lang.reflect.Method;
 import java.util.Date;

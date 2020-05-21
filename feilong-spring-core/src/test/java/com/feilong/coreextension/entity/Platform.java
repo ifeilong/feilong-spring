@@ -17,8 +17,8 @@ package com.feilong.coreextension.entity;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.feilong.lib.lang3.builder.ToStringBuilder;
+import com.feilong.lib.lang3.builder.ToStringStyle;
 
 /**
  * 平台的配置,支持Spring注入.

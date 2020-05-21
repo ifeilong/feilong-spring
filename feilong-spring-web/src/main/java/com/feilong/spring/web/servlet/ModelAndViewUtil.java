@@ -16,8 +16,8 @@
 package com.feilong.spring.web.servlet;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
+import static com.feilong.core.lang.StringUtil.EMPTY;
 import static com.feilong.core.util.MapUtil.newHashMap;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import java.util.Map;
 
@@ -44,7 +44,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBody
 import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
 
 import com.feilong.core.util.MapUtil;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.servlet.http.RequestUtil;
 
 /**

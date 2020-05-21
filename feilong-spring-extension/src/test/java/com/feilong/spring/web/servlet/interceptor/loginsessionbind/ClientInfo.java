@@ -2,8 +2,8 @@ package com.feilong.spring.web.servlet.interceptor.loginsessionbind;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.feilong.lib.lang3.builder.ToStringBuilder;
+import com.feilong.lib.lang3.builder.ToStringStyle;
 
 /**
  * 保存用户请求客户端信息.

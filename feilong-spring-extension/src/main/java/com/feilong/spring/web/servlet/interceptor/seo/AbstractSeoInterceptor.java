@@ -26,7 +26,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.feilong.core.lang.ClassUtil;
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.spring.web.servlet.LocaleUtil;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;

@@ -24,10 +24,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.feilong.json.jsonlib.JavaToJsonConfig;
-import com.feilong.json.jsonlib.processor.SensitiveWordsJsonValueProcessor;
-
-import net.sf.json.processors.JsonValueProcessor;
+import com.feilong.json.JavaToJsonConfig;
+import com.feilong.json.processor.SensitiveWordsJsonValueProcessor;
+import com.feilong.lib.json.processors.JsonValueProcessor;
 
 /**
  * The Class PreJavaToJsonConfigBuilder.

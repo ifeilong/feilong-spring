@@ -16,7 +16,7 @@
 package com.feilong.spring.web.servlet.mvc.method.annotation;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
-import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
+import static com.feilong.core.lang.ObjectUtil.defaultIfNull;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;

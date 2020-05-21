@@ -25,7 +25,7 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.feilong.json.jsonlib.JsonUtil;
+import com.feilong.json.JsonUtil;
 import com.feilong.spring.context.ApplicationContextUtil;
 import com.feilong.store.member.UserInfo;
 
