@@ -15,7 +15,6 @@
  */
 package org.springframework.web.util;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Test;
 
 import com.feilong.test.AbstractTest;
@@ -30,9 +29,6 @@ public class HtmlUtilsTest extends AbstractTest{
     /** The a. */
     String a = "m&eacute;n&nbsp;";
 
-    /**
-     * Test html utils.
-     */
     @Test
     public void testHtmlUtils(){
         String specialStr = "<div id=\"testDiv\">test1;test2</div>";
@@ -50,9 +46,9 @@ public class HtmlUtilsTest extends AbstractTest{
         LOGGER.debug(HtmlUtils.htmlUnescape(str2));
         LOGGER.debug(HtmlUtils.htmlUnescape(str3));
 
-        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str1));
-        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str2));
-        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str3));
+        //        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str1));
+        //        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str2));
+        //        LOGGER.debug(StringEscapeUtils.unescapeHtml4(str3));
     }
 
     /**
@@ -68,7 +64,7 @@ public class HtmlUtilsTest extends AbstractTest{
      */
     @Test
     public void stringEscapeUtils(){
-        LOGGER.debug(StringEscapeUtils.unescapeHtml4(a));
+        //        LOGGER.debug(StringEscapeUtils.unescapeHtml4(a));
     }
 
     /**
@@ -76,6 +72,6 @@ public class HtmlUtilsTest extends AbstractTest{
      */
     @Test
     public void stringEscapeUtils2(){
-        LOGGER.debug(StringEscapeUtils.unescapeHtml4(a));
+        //        LOGGER.debug(StringEscapeUtils.unescapeHtml4(a));
     }
 }

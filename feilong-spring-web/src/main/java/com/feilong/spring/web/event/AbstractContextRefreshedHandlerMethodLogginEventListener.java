@@ -17,6 +17,7 @@ package com.feilong.spring.web.event;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toArray;
+import static com.feilong.core.date.DateUtil.nowTimestamp;
 import static com.feilong.core.lang.ObjectUtil.defaultIfNullOrEmpty;
 import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
@@ -26,7 +27,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -36,6 +36,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.feilong.core.lang.SystemUtil;
 import com.feilong.csv.CsvWrite;
 import com.feilong.csv.DefaultCsvWrite;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
@@ -63,7 +64,7 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      * @since 4.0.6
      */
     private final String        DEFAULT_WRITE_CVS_FILE_PATH = Slf4jUtil
-                    .format("{}/{}.csv", SystemUtils.getUserDir().getAbsolutePath(), getClass().getName());
+                    .format("{}/RequestMappingInfo-{}.csv", SystemUtil.USER_HOME, nowTimestamp());
 
     //---------------------------------------------------------------
     /**
@@ -139,7 +140,6 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      * @param list
      *            the list
      */
-    @SuppressWarnings("static-method")
     protected void render(List<Map<String, Object>> list){
         if (LOGGER.isInfoEnabled()){
             LOGGER.info("handler method ,size:[{}],info:{}", list.size(), formatToSimpleTable(list));
@@ -197,7 +197,6 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      *            the handler methods
      * @return the list
      */
-    @SuppressWarnings("static-method")
     protected List<Map<String, Object>> buildList(@SuppressWarnings("unused") Map<RequestMappingInfo, HandlerMethod> handlerMethods){
         return null;
     }

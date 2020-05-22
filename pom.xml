@@ -10,13 +10,12 @@
 	<groupId>com.feilong.platform.spring</groupId>
 	<artifactId>feilong-spring-parent</artifactId>
 	<version>5.0.0-SNAPSHOT</version>
+	
 	<packaging>pom</packaging>
 
 	<url>https://github.com/ifeilong/feilong-spring</url>
 
-
 	<properties>
-
 		<!-- https://github.com/spring-projects/spring-framework/releases -->
 		<version.spring>4.3.25.RELEASE</version.spring>
 
@@ -34,7 +33,7 @@
 	<modules>
 		<module>feilong-spring-core</module>
 		<module>feilong-spring-aop</module>
-		<module>feilong-spring-jdbc</module>
+		<!-- <module>feilong-spring-jdbc</module> -->
 		<module>feilong-spring-web</module>
 		<module>feilong-spring-context</module>
 		<module>feilong-spring-mobile</module>

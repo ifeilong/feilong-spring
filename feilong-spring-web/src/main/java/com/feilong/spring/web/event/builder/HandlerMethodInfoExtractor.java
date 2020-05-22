@@ -157,36 +157,36 @@ public class HandlerMethodInfoExtractor{
     /**
      * 塞RequestMappingInfo 本身的信息,比如 url ,method,header 等信息进去.
      *
-     * @param keyAndValueMap
+     * @param map
      *            the key and value map
      * @param requestMappingInfo
      *            the request mapping info
      */
-    private static void putRequestMappingInfo(Map<String, Object> keyAndValueMap,RequestMappingInfo requestMappingInfo){
+    private static void putRequestMappingInfo(Map<String, Object> map,RequestMappingInfo requestMappingInfo){
         PatternsRequestCondition patternsRequestCondition = requestMappingInfo.getPatternsCondition();
         RequestMethodsRequestCondition requestMethodsRequestCondition = requestMappingInfo.getMethodsCondition();
         HeadersRequestCondition headersRequestCondition = requestMappingInfo.getHeadersCondition();
 
         Set<RequestMethod> methods = requestMethodsRequestCondition.getMethods();
 
-        keyAndValueMap.put("url", ConvertUtil.toString(patternsRequestCondition.getPatterns(), DEFAULT_CONFIG));
+        map.put("url", ConvertUtil.toString(patternsRequestCondition.getPatterns(), DEFAULT_CONFIG));
 
         //---------------------------------------------------------------
         //since 4.0.6
-        keyAndValueMap.put("get", contains(methods, RequestMethod.GET));
-        keyAndValueMap.put("post", contains(methods, RequestMethod.POST));
-        keyAndValueMap.put("put", contains(methods, RequestMethod.PUT));
-        keyAndValueMap.put("head", contains(methods, RequestMethod.HEAD));
-        keyAndValueMap.put("patch", contains(methods, RequestMethod.PATCH));
-        keyAndValueMap.put("delete", contains(methods, RequestMethod.DELETE));
-        keyAndValueMap.put("options", contains(methods, RequestMethod.OPTIONS));
-        keyAndValueMap.put("trace", contains(methods, RequestMethod.TRACE));
+        map.put("get", contains(methods, RequestMethod.GET));
+        map.put("post", contains(methods, RequestMethod.POST));
+        map.put("put", contains(methods, RequestMethod.PUT));
+        map.put("head", contains(methods, RequestMethod.HEAD));
+        map.put("patch", contains(methods, RequestMethod.PATCH));
+        map.put("delete", contains(methods, RequestMethod.DELETE));
+        map.put("options", contains(methods, RequestMethod.OPTIONS));
+        map.put("trace", contains(methods, RequestMethod.TRACE));
 
         //---------------------------------------------------------------
         Set<NameValueExpression<String>> expressions = headersRequestCondition.getExpressions();
         //since 4.0.6
-        keyAndValueMap.put("isAjax", isAjax(expressions));
-        keyAndValueMap.put("header", ConvertUtil.toString(expressions, DEFAULT_CONFIG));
+        map.put("isAjax", isAjax(expressions));
+        map.put("header", ConvertUtil.toString(expressions, DEFAULT_CONFIG));
     }
 
     //---------------------------------------------------------------
@@ -209,7 +209,6 @@ public class HandlerMethodInfoExtractor{
             if (null == nameValueExpression){
                 continue;
             }
-
             //---------------------------------------------------------------
             if (ControllerUtil.HEADER_WITH_AJAX_SPRINGMVC.equals(nameValueExpression.toString())){
                 return true;
@@ -228,11 +227,11 @@ public class HandlerMethodInfoExtractor{
      * @return true, if successful
      * @since 4.0.6
      */
-    private static boolean contains(Set<RequestMethod> methods,RequestMethod requestMethod){
+    private static String contains(Set<RequestMethod> methods,RequestMethod requestMethod){
         if (isNullOrEmpty(methods)){
-            return true;
+            return "√";
         }
-        return methods.contains(requestMethod);
+        return methods.contains(requestMethod) ? "√" : "";
     }
 
     //---------------------------------------------------------------
