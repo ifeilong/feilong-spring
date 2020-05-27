@@ -19,6 +19,7 @@ import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ConvertUtil.toArray;
 import static com.feilong.core.date.DateUtil.nowTimestamp;
 import static com.feilong.core.lang.ObjectUtil.defaultIfNullOrEmpty;
+import static com.feilong.core.lang.SystemUtil.USER_HOME;
 import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
 import static java.util.Collections.emptyMap;
@@ -36,7 +37,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.feilong.core.lang.SystemUtil;
 import com.feilong.csv.CsvWrite;
 import com.feilong.csv.DefaultCsvWrite;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
@@ -61,10 +61,13 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      * The default write cvs file path.
      * 
      * @see <a href="https://github.com/venusdrogon/feilong-spring/issues/173">新增生成 CVS 文件支持</a>
+     * @see <a href="https://github.com/ifeilong/feilong-spring/issues/215">AbstractContextRefreshedHandlerMethodLogginEventListener
+     *      默认输出所有路径到 userhome</a>
      * @since 4.0.6
+     * @since 4.2.0 change path
      */
     private final String        DEFAULT_WRITE_CVS_FILE_PATH = Slf4jUtil
-                    .format("{}/RequestMappingInfo-{}.csv", SystemUtil.USER_HOME, nowTimestamp());
+                    .format("{}/feilong/RequestMappingInfo/RequestMappingInfo-{}.csv", USER_HOME, nowTimestamp());
 
     //---------------------------------------------------------------
     /**
@@ -146,7 +149,6 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
         }
 
         //---------------------------------------------------------------
-
         //since 4.0.6
         if (writeCvs){
             write(defaultIfNullOrEmpty(writeCvsFilePath, DEFAULT_WRITE_CVS_FILE_PATH), list);
@@ -197,6 +199,7 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      *            the handler methods
      * @return the list
      */
+    @SuppressWarnings("static-method")
     protected List<Map<String, Object>> buildList(@SuppressWarnings("unused") Map<RequestMappingInfo, HandlerMethod> handlerMethods){
         return null;
     }

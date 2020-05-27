@@ -17,6 +17,7 @@ package com.feilong.spring.web.event.builder;
 
 import static com.feilong.core.Validator.isNullOrEmpty;
 import static com.feilong.core.bean.ToStringConfig.DEFAULT_CONFIG;
+import static com.feilong.core.lang.StringUtil.EMPTY;
 import static com.feilong.core.util.MapUtil.newLinkedHashMap;
 
 import java.lang.annotation.Annotation;
@@ -199,9 +200,9 @@ public class HandlerMethodInfoExtractor{
      * @return true, if is ajax
      * @since 4.0.6
      */
-    private static boolean isAjax(Set<NameValueExpression<String>> expressions){
+    private static String isAjax(Set<NameValueExpression<String>> expressions){
         if (isNullOrEmpty(expressions)){
-            return false;
+            return EMPTY;
         }
 
         //---------------------------------------------------------------
@@ -209,12 +210,11 @@ public class HandlerMethodInfoExtractor{
             if (null == nameValueExpression){
                 continue;
             }
-            //---------------------------------------------------------------
             if (ControllerUtil.HEADER_WITH_AJAX_SPRINGMVC.equals(nameValueExpression.toString())){
-                return true;
+                return "√";
             }
         }
-        return false;
+        return EMPTY;
     }
 
     /**
@@ -231,7 +231,7 @@ public class HandlerMethodInfoExtractor{
         if (isNullOrEmpty(methods)){
             return "√";
         }
-        return methods.contains(requestMethod) ? "√" : "";
+        return methods.contains(requestMethod) ? "√" : EMPTY;
     }
 
     //---------------------------------------------------------------
@@ -257,7 +257,6 @@ public class HandlerMethodInfoExtractor{
             AnnotationToStringBuilder<Annotation> annotationToStringBuilder = annotationEntry.getValue();
 
             Annotation annotation = handlerMethod.getMethodAnnotation(annotationClass);
-
             keyAndValueMap.put(annotationClass.getSimpleName(), annotationToStringBuilder.build(annotation));
         }
     }

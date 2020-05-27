@@ -7,7 +7,6 @@
 	<description>feilong spring el</description>
 	<uri>http://java.feilong.com/el-spring</uri>
 
-
 	<!-- 自动寻找matchingPatternPath 扩充模板值 -->
 	<function>
 		<description>自动寻找matchingPatternPath 扩充模板值</description>
