@@ -48,13 +48,6 @@
 		</dependency>
 
 
-		<!-- feilong-spring-jdbc -->
-<!-- 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
-			<artifactId>feilong-spring-jdbc</artifactId>
-			<version>${project.version}</version>
-		</dependency> -->
-
 		<!-- feilong-spring-mobile -->
 		<dependency>
 			<groupId>com.feilong.platform.spring</groupId>

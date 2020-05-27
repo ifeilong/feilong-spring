@@ -21,8 +21,6 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.URL;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -124,11 +122,6 @@ import org.springframework.util.ResourceUtils;
  * @since 1.0.9
  */
 public final class ResourceUtil{
-
-    /** The Constant log. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceUtil.class);
-
-    //---------------------------------------------------------------
 
     /** Don't let anyone instantiate this class. */
     private ResourceUtil(){
