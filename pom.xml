@@ -39,7 +39,6 @@
 		<module>feilong-spring-all</module>
 		<module>feilong-spring-extension</module>
 		<module>feilong-spring-context-support-quartz</module>
-		<module>feilong-spring-context-support-mail</module>
 		<module>feilong-spring-context-concurrent</module>
 		<module>feilong-spring-security</module>
 		<module>feilong-spring-monitor</module>
