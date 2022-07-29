@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.feilong.platform.spring</groupId>
+		<groupId>com.github.ifeilong</groupId>
 		<artifactId>feilong-spring-parent</artifactId>
 		<version>5.0.0-SNAPSHOT</version>
 	</parent>
@@ -14,35 +14,35 @@
 
 		<!-- feilong-spring-core -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- feilong-spring-aop -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-aop</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- feilong-spring-context -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-context</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- feilong-spring-context-concurrent -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-context-concurrent</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- feilong-spring-context-support-quartz -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-context-support-quartz</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -50,7 +50,7 @@
 
 		<!-- feilong-spring-mobile -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-mobile</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -58,7 +58,7 @@
 
 		<!-- feilong-spring-web -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-web</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -66,21 +66,21 @@
 
 		<!-- feilong-spring-extension -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-extension</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- feilong-spring-security since 4.0.3 -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-security</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- since 4.0.4 -->
 		<dependency>
-			<groupId>com.feilong.platform.spring</groupId>
+			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring-monitor</artifactId>
 			<version>${project.version}</version>
 		</dependency>
