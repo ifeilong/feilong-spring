@@ -26,7 +26,7 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 
 	....
 	<properties>
-		<version.feilong-spring>4.2.0</version.feilong-spring>
+		<version.feilong-spring>5.0.0</version.feilong-spring>
 		....
 	</properties>
 	
@@ -81,7 +81,7 @@ feilong spring jar你可以直接在 [仓库](https://github.com/venusdrogon/fei
 
 	....
 	<properties>
-		<version.feilong-spring>4.2.0</version.feilong-spring>
+		<version.feilong-spring>5.0.0</version.feilong-spring>
 		....
 	</properties>
 	

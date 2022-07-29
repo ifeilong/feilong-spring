@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.github.ifeilong</groupId>
 		<artifactId>feilong-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 
 	<groupId>com.feilong.platform.spring</groupId>
@@ -56,20 +56,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- slf4j-log4j12 -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<optional>true</optional><!-- 日志系统根据每个项目 决定 -->
-		</dependency>
-
-		<!-- log4j -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<optional>true</optional><!-- 日志系统根据每个项目 决定 -->
 		</dependency>
 
 	</dependencies>
