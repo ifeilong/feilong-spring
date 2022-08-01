@@ -35,7 +35,7 @@
 		<module>feilong-spring-web</module>
 		<module>feilong-spring-context</module>
 		<module>feilong-spring-mobile</module>
-		<module>feilong-spring-all</module>
+		<module>feilong-spring</module>
 		<module>feilong-spring-extension</module>
 		<module>feilong-spring-context-support-quartz</module>
 		<module>feilong-spring-context-concurrent</module>
