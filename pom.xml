@@ -41,6 +41,7 @@
 		<module>feilong-spring-context-concurrent</module>
 		<module>feilong-spring-security</module>
 		<module>feilong-spring-monitor</module>
+		<module>feilong-spring-example</module>
 	</modules>
 
 	<dependencies>
@@ -48,7 +49,6 @@
 			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong</artifactId>
 			<version>${version.feilong-platform}</version>
-			<optional>true</optional>
 		</dependency>
 
 		<dependency>
@@ -87,8 +87,6 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>${version.spring}</version>
 			</dependency>
-
-
 
 			<!-- spring-tx -->
 			<dependency>
