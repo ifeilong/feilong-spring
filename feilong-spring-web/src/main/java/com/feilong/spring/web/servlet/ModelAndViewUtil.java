@@ -113,7 +113,7 @@ public final class ModelAndViewUtil{
     public static Map<String, Object> getRequestAndModelAttributeMap(HttpServletRequest request,ModelAndView modelAndView){
         if (null == modelAndView){
             if (LOGGER.isDebugEnabled()){
-                LOGGER.debug("modelAndView is null,request info:[{}]", JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
+                LOGGER.debug("modelAndView is null,request info:[{}]", JsonUtil.toString(RequestUtil.getRequestInfoMapForLog(request)));
             }
         }
         //---------------------------------------------------------------

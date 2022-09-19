@@ -78,7 +78,7 @@ public class MultiUriTemplateUtil{
         String expandUrl = expandWithMultiVariable(requestPath, matchingPatternPath, variableName, value, valueSeparator);
 
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug(JsonUtil.format(UrlPathHelperUtil.getUrlPathHelperMapForLog(request)));
+            LOGGER.debug(JsonUtil.toString(UrlPathHelperUtil.getUrlPathHelperMapForLog(request)));
         }
 
         String queryString = request.getQueryString();

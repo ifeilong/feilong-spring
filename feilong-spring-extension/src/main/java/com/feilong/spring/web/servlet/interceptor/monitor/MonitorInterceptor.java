@@ -128,7 +128,8 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
                                             pattern,
                                             getDeclaringClassSimpleName(handlerMethod),
                                             getHandlerMethodName(handlerMethod),
-                                            JsonUtil.format(getRequestInfoMapForLog(request, monitorMessageEntity.getRequestLogSwitch()))),
+                                            JsonUtil.toString(
+                                                            getRequestInfoMapForLog(request, monitorMessageEntity.getRequestLogSwitch()))),
                             e);
         }
     }

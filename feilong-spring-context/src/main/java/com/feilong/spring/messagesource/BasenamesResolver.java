@@ -71,7 +71,7 @@ class BasenamesResolver{
         //---------------------------------------------------------------
 
         if (LOGGER.isInfoEnabled()){
-            LOGGER.info("resolver finalBaseNames:{}", JsonUtil.format(finalBaseNames));
+            LOGGER.info("resolver finalBaseNames:{}", JsonUtil.toString(finalBaseNames));
         }
 
         return finalBaseNames;

@@ -374,7 +374,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
                             getRequestFullURL(request, UTF8),
                             this.getClass().getSimpleName(),
                             methodName,
-                            JsonUtil.format(interceptorConditionEntity, 0, 0));
+                            JsonUtil.toString(interceptorConditionEntity));
         }
     }
 

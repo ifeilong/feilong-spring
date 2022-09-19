@@ -169,7 +169,7 @@ public class UriTemplateUtil{
         String expandUrl = expandWithVariable(requestPath, matchingPatternPath, variableName, value);
 
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug(JsonUtil.format(UrlPathHelperUtil.getUrlPathHelperMapForLog(request)));
+            LOGGER.debug(JsonUtil.toString(UrlPathHelperUtil.getUrlPathHelperMapForLog(request)));
         }
 
         String queryString = request.getQueryString();
@@ -224,7 +224,7 @@ public class UriTemplateUtil{
      * String requestPath = "/c/m-caaa-s-k-s-o.htm";
      * String matchingPatternPath = "/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm";
      * Map<String, String> map = UriTemplateUtil.extractUriTemplateVariables(requestPath, matchingPatternPath);
-     * LOGGER.debug("map:{}", JsonUtil.format(map));
+     * LOGGER.debug("map:{}", JsonUtil.toString(map));
      * 
      * </pre>
      * 
@@ -258,7 +258,7 @@ public class UriTemplateUtil{
         Map<String, String> map = matcher.extractUriTemplateVariables(matchingPatternPath, requestPath);
 
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("requestPath:[{}],matchingPatternPath:[{}],result:[{}]", requestPath, matchingPatternPath, JsonUtil.format(map));
+            LOGGER.debug("requestPath:[{}],matchingPatternPath:[{}],result:[{}]", requestPath, matchingPatternPath, JsonUtil.toString(map));
         }
         return map;
     }
@@ -449,7 +449,7 @@ public class UriTemplateUtil{
      * <pre class="code">
      * 
      * List{@code <String>} list = UriTemplateUtil.getVariableNames("/c{categoryCode}/m{material}-c{color}-s{size}-k{kind}-s{style}-o{order}.htm");
-     * LOGGER.debug("list:{}", JsonUtil.format(list));
+     * LOGGER.debug("list:{}", JsonUtil.toString(list));
      * 
      * </pre>
      * 

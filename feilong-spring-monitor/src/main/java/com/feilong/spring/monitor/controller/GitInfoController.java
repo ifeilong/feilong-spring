@@ -36,7 +36,7 @@ public class GitInfoController{
 
         ResourceBundle resourceBundle = ResourceBundleUtil.getResourceBundle(baseName);
         Map<String, String> map = ResourceBundleUtil.toMap(resourceBundle);
-        return JsonUtil.format(map);
+        return JsonUtil.toString(map);
     }
 
 }

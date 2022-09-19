@@ -88,7 +88,7 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerMethodIn
             if (LOGGER.isInfoEnabled()){
                 LOGGER.info(
                                 "current request:[{}] not support this BrowsingHistoryInterceptor,maybe you can config path in spring config 'mvc:exclude-mapping' node!",
-                                JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request)));
+                                JsonUtil.toString(RequestUtil.getRequestInfoMapForLog(request)));
             }
             return;
         }
@@ -104,7 +104,7 @@ public abstract class BrowsingHistoryInterceptor extends AbstractHandlerMethodIn
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(
                             "browsingHistoryCommand is null,don't add browsingHistory,request info:{}",
-                            JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, RequestLogSwitch.NORMAL)));
+                            JsonUtil.toString(RequestUtil.getRequestInfoMapForLog(request, RequestLogSwitch.NORMAL)));
         }
         return;
     }

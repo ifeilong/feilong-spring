@@ -59,7 +59,7 @@ public class MonitorMessageBuilder{
      * @return the string
      */
     static String buildPreMessage(MonitorMessageEntity monitorMessageEntity,HttpServletRequest request){
-        String requestBaseInfo = JsonUtil.format(
+        String requestBaseInfo = JsonUtil.toString(
                         RequestUtil.getRequestInfoMapForLog(request, monitorMessageEntity.getRequestLogSwitch()),
                         PreJavaToJsonConfigBuilder.build(monitorMessageEntity));
 
@@ -105,7 +105,7 @@ public class MonitorMessageBuilder{
                         "postHandle [{}.{}()],RequestInfoMapForLog:{},[request] attribute:{},modelAndView info:[{}],use time:[{}],[{}] performanceThreshold:[{}]",
                         HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                         HandlerMethodUtil.getHandlerMethodName(handlerMethod),
-                        JsonUtil.format(RequestUtil.getRequestInfoMapForLog(request, monitorMessageEntity.getRequestLogSwitch())),
+                        JsonUtil.toString(RequestUtil.getRequestInfoMapForLog(request, monitorMessageEntity.getRequestLogSwitch())),
                         getRequestAttributeMap(monitorMessageEntity, request),
                         getModelAndViewLogInfo(monitorMessageEntity, modelAndView),
                         formatDuration(useTime),

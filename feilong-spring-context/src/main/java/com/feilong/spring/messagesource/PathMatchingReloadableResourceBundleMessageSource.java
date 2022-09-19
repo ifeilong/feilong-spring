@@ -114,7 +114,7 @@ public class PathMatchingReloadableResourceBundleMessageSource extends Reloadabl
     @Override
     public void setBasenames(String...basenames){
         if (LOGGER.isInfoEnabled()){
-            LOGGER.info("begin parse input basenames:{}", JsonUtil.format(basenames));
+            LOGGER.info("begin parse input basenames:{}", JsonUtil.toString(basenames));
         }
 
         //---------------------------------------------------------------

@@ -27,12 +27,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.feilong.core.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.core.CharsetType;
+import com.feilong.core.Validate;
 import com.feilong.json.JsonUtil;
 import com.feilong.security.symmetric.SymmetricEncryption;
 import com.feilong.security.symmetric.SymmetricType;
@@ -228,7 +228,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
             return;
         }
 
-        String original = JsonUtil.format(browsingHistoryList, 0, 0);
+        String original = JsonUtil.toString(browsingHistoryList);
         String cookieValue = symmetricEncryption.encryptHex(original, symmetricEncryptionCharsetName);
 
         LOGGER.debug("will add to cookie,original:[{}],encryptHex:[{}]", original, cookieValue);

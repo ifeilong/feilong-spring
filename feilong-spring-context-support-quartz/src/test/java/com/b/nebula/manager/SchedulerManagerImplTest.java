@@ -43,7 +43,7 @@ public class SchedulerManagerImplTest extends AbstractJUnit4SpringContextTests{
     public void test1() throws SchedulerException{
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
 
-        LOGGER.debug(JsonUtil.format(getMapForLog(scheduler)));
+        LOGGER.debug(JsonUtil.toString(getMapForLog(scheduler)));
         LOGGER.debug("{}", formatToSimpleTable(schedulerFactoryMapBeanToMapListBuilder.get(scheduler)));
     }
 

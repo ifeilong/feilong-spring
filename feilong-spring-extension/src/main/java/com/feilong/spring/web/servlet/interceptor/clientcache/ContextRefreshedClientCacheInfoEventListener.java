@@ -98,7 +98,7 @@ public class ContextRefreshedClientCacheInfoEventListener extends AbstractContex
         LOGGER.info(
                         "url And ClientCache,size:[{}], info:{}",
                         urlAndClientCacheMap.size(),
-                        JsonUtil.format(sortMapByKeyAsc(urlAndClientCacheMap)));
+                        JsonUtil.toString(sortMapByKeyAsc(urlAndClientCacheMap)));
     }
 
 }

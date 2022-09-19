@@ -30,10 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.feilong.core.Validate;
 import com.feilong.core.util.CollectionsUtil;
 import com.feilong.json.JsonUtil;
 import com.feilong.lib.lang3.StringUtils;
-import com.feilong.core.Validate;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
 
 /**
@@ -63,7 +63,7 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
     public List<Long> getBrowsingHistoryIdListExcludeId(Long excludeId,HttpServletRequest request,HttpServletResponse response){
         List<Long> browsingHistoryItemIds = getBrowsingHistoryIdList(request, response);
         if (LOGGER.isDebugEnabled()){
-            LOGGER.debug("browsingHistoryItemIds:[{}],excludeId:[{}]", JsonUtil.format(browsingHistoryItemIds), excludeId);
+            LOGGER.debug("browsingHistoryItemIds:[{}],excludeId:[{}]", JsonUtil.toString(browsingHistoryItemIds), excludeId);
         }
 
         if (isNullOrEmpty(browsingHistoryItemIds)){
@@ -141,8 +141,8 @@ public abstract class AbstractBrowsingHistoryResolver implements BrowsingHistory
             if (LOGGER.isDebugEnabled()){
                 LOGGER.debug(
                                 "in cookie,list:[{}],contains:[{}],remove it~~",
-                                JsonUtil.format(list, 0, 0),
-                                JsonUtil.format(browsingHistoryCommand, 0, 0));
+                                JsonUtil.toString(list),
+                                JsonUtil.toString(browsingHistoryCommand));
             }
             list.remove(index);//如果有当前商品,那么删除掉
         }

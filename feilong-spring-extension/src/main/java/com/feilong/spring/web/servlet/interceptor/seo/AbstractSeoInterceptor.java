@@ -111,7 +111,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
 
         if (LOGGER.isTraceEnabled()){
             String pattern = "set seoViewCommand to request,attributeName:[{}],value :{}";
-            LOGGER.trace(pattern, seoViewCommandRequestAttributeName, JsonUtil.format(seoViewCommand));
+            LOGGER.trace(pattern, seoViewCommandRequestAttributeName, JsonUtil.toString(seoViewCommand));
         }
 
         //---------------------------------------------------------------
@@ -189,7 +189,7 @@ public abstract class AbstractSeoInterceptor extends AbstractHandlerMethodInterc
             if (attributeName.equals(seoViewCommandRequestAttributeName)){
                 if (LOGGER.isDebugEnabled()){
                     String pattern = "find attributeName:[{}] in map,value is:{},break and go-on";
-                    LOGGER.debug(pattern, seoViewCommandRequestAttributeName, JsonUtil.format(attributeValue));
+                    LOGGER.debug(pattern, seoViewCommandRequestAttributeName, JsonUtil.toString(attributeValue));
                 }
 
                 // may be case exception,if somebody cover the seoViewCommandRequestAttributeName

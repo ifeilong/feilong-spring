@@ -44,7 +44,7 @@ public class HealthController{
     @RequestMapping("/customize_health")
     @ResponseBody
     public String invoke(){
-        return JsonUtil.format(buildMapData(), 0, 0);
+        return JsonUtil.toString(buildMapData());
     }
 
     /**

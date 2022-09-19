@@ -107,7 +107,7 @@ public class BaseControllerTest extends AbstractTest{
     }
 
     protected ModelAndView handle(HttpServletRequest request){
-        LOGGER.debug(JsonUtil.format(ApplicationContextUtil.getApplicationContextInfoMapForLog(webApplicationContext)));
+        LOGGER.debug(JsonUtil.toString(ApplicationContextUtil.getApplicationContextInfoMapForLog(webApplicationContext)));
 
         HandlerMapping handlerMapping = webApplicationContext.getBean(HandlerMapping.class);
 
@@ -126,7 +126,7 @@ public class BaseControllerTest extends AbstractTest{
 
             ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
 
-            LOGGER.debug(JsonUtil.format(modelAndView));
+            LOGGER.debug(JsonUtil.toString(modelAndView));
             return modelAndView;
         }catch (Exception e){
             throw new DefaultRuntimeException(e);

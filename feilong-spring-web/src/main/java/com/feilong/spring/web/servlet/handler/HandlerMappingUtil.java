@@ -236,7 +236,7 @@ public class HandlerMappingUtil{
 
         if (LOGGER.isInfoEnabled()){
             Collection<RequestMappingInfo> requestMappingInfoCollection = methodAndRequestMappingInfoMap.values();
-            String format = JsonUtil.format(getPropertyValueList(requestMappingInfoCollection, "patternsCondition.patterns"));
+            String format = JsonUtil.toString(getPropertyValueList(requestMappingInfoCollection, "patternsCondition.patterns"));
             LOGGER.info("all requestMapping value:{}", format);
         }
         return methodAndRequestMappingInfoMap;

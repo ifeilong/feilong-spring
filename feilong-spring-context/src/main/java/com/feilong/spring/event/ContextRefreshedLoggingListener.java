@@ -187,7 +187,7 @@ public class ContextRefreshedLoggingListener extends AbstractContextRefreshedEve
             ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
             LOGGER.debug(
                             "applicationContext info:{}",
-                            JsonUtil.format(getApplicationContextInfoMapForLog(applicationContext, isShowParentInfo)));
+                            JsonUtil.toString(getApplicationContextInfoMapForLog(applicationContext, isShowParentInfo)));
         }
     }
 

@@ -130,7 +130,7 @@ public abstract class AbstractDomainListener implements ServletContextListener{
 
         setServletContextAttribute(servletContext, domainConfigMap);
 
-        LOGGER.info("domain config info:[{}]", JsonUtil.format(domainConfigMap));
+        LOGGER.info("domain config info:[{}]", JsonUtil.toString(domainConfigMap));
     }
 
     //---------------------------------------------------------------
