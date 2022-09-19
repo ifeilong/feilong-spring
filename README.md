@@ -46,6 +46,76 @@ com.github.ifeilong:feilong-spring:5.0.0
 - 如果你的项目使用 JDK7，请使用 feilong-spring 4.2.0 版本
 
 
+## 使用案例
+
+### 启动显示 requestmapping 
+
+
+
+```XML
+    <!-- 启动的时候,显示 路径 method等 信息 -->
+    <bean id="contextRefreshedHandlerMethodInfoEventListener" class=
+"com.feilong.spring.web.event.ContextRefreshedHandlerMethodInfoEventListener">
+        <property name="annotationAndAnnotationToStringBuilderMap">
+            <map>
+                <entry key="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCache">
+                    <bean class="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheToStringBuilder" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+ ```
+ 
+ spring-boot 场景配置
+ 
+ ```JAVA
+ 
+ /**
+ * 启动的时候,显示 路径 method等 信息
+ * 
+ * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
+ */
+@Configuration
+public class ContextRefreshedHandlerMethodInfoEventListenerIniter{
+
+    @Bean("contextRefreshedHandlerMethodInfoEventListener")
+    public ContextRefreshedHandlerMethodInfoEventListener init(){
+        ContextRefreshedHandlerMethodInfoEventListener bean = new ContextRefreshedHandlerMethodInfoEventListener();
+        bean.setAnnotationAndAnnotationToStringBuilderMap(emptyMap());
+        return bean;
+    }
+
+}
+
+ 
+ ```
+ 
+
+ 
+输出
+
+
+```
+17:02:34 INFO  (AbstractContextRefreshedHandlerMethodLogginEventListener.java:148) render() - handler method ,size:[74],info:
+url                                                get post put head patch delete options trace isAjax header Controller                           Method                       
+-------------------------------------------------- --- ---- --- ---- ----- ------ ------- ----- ------ ------ ------------------------------------ ---------------------------- 
+/b/allLibrary                                      √                                                          LibraryController                    getAllLibrary                
+/b/deleteIbeaconById                                   √                                                      LibraryController                    deleteIbeaconById            
+/b/handleAccessLimit/{libId}                       √                                                          LibraryController                    handleAccessLimit            
+/b/insertIbeacon                                       √                                                      LibraryController                    insertIbeacon                
+/b/libId/{libId}/QRCodes                           √                                                          LibQrCodeController                  getQRCodes                   
+/b/libId/{libId}/bind                                       √                                                 OrderController                      bindOrder                    
+/b/libId/{libId}/orders                            √                                                          OrderController                      getLibraryOrders             
+/b/libId/{libId}/propCode:bind                              √                                                 LibQrCodeController                  bindPropCode                 
+/b/libId/{libId}/propCode:unbind                            √                                                 LibQrCodeController                  unbindPropCode               
+/b/libId/{libId}/propCodes                         √                                                          LibQrCodeController                  getPropCodes                 
+/b/libId/{libId}/propCodes/info                    √                                                          LibQrCodeController                  getPropCodesInfo             
+/b/libId/{libId}/qrCodeId/{qrCodeId}/state/{state}          √                                                 LibQrCodeController                  updateQRCodeState            
+/b/libId/{libId}/unbind                                     √                                                 OrderController                      unbindOrder                  
+/b/menu                                            √                                                          MenuController      
+ ```
+
+
 ## :memo: 说明
 
 1. 基于 [Apache2](https://www.apache.org/licenses/LICENSE-2.0) 协议,您可以下载代码用于闭源项目,但每个修改的过的文件必须放置版权说明;
