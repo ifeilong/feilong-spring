@@ -8,7 +8,7 @@
 	<artifactId>feilong-spring-context-support-quartz</artifactId>
 
 	<properties>
-		<version.quartz>2.3.0</version.quartz>
+		<version.quartz>2.3.2</version.quartz>
 	</properties>
 
 	<dependencies>
