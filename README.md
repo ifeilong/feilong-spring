@@ -50,7 +50,7 @@ com.github.ifeilong:feilong-spring:5.0.0
 
 ### 启动显示 requestmapping 
 
-
+XML格式 配置
 
 ```XML
     <!-- 启动的时候,显示 路径 method等 信息 -->
@@ -114,14 +114,39 @@ url                                                get post put head patch delet
 /b/libId/{libId}/unbind                                     √                                                 OrderController                      unbindOrder                  
 /b/menu                                            √                                                          MenuController      
  ```
+ 
+ 你还可以设置 writeCvs 属性 来下载成cvs文件 
+ 
+ 
+ ```XML
+
+ 
+    <bean id="contextRefreshedHandlerMethodInfoEventListener" class=
+"com.feilong.spring.web.event.ContextRefreshedHandlerMethodInfoEventListener">
+        <property name="annotationAndAnnotationToStringBuilderMap">
+            <map>
+                <entry key="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCache">
+                    <bean class="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheToStringBuilder" />
+                </entry>
+            </map>
+        </property>
+        <property name="writeCvs" value="true"/>
+    </bean>
+```
+
+默认文件输出地址  `{USER_HOME}/feilong/RequestMappingInfo/RequestMappingInfo-{time}.csv`
+
+比如  `/Users/feilong/feilong/RequestMappingInfo/RequestMappingInfo-20220919184547.csv`
+
+你可以通过 设置 `writeCvsFilePath` 属性来改变这个输出地址
 
 
 ## :memo: 说明
 
 1. 基于 [Apache2](https://www.apache.org/licenses/LICENSE-2.0) 协议,您可以下载代码用于闭源项目,但每个修改的过的文件必须放置版权说明;
-1. 5.0.0及以上版本需要`jdk1.8`及以上环境
-1. 1.5.0及以上版本需要`jdk1.7`及以上环境
-1. 1.5.0以下版本需要`jdk1.6`及以上环境
+1. 5.0.0及以上版本需要 `jdk1.8`及以上环境
+1. 1.5.0及以上版本需要 `jdk1.7`及以上环境
+1. 1.5.0以下版本需要 `jdk1.6`及以上环境
 
 ## :cyclone: feilong 即时交流
 
