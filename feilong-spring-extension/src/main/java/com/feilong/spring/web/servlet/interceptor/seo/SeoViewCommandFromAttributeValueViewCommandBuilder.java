@@ -15,8 +15,8 @@
  */
 package com.feilong.spring.web.servlet.interceptor.seo;
 
-import com.feilong.context.ViewCommand;
 import com.feilong.core.bean.PropertyUtil;
+import com.feilong.spring.web.servlet.ViewCommand;
 
 /**
  * 提供从 {@link ViewCommand} 中提取/构造 {@link SeoViewCommand}的扩展点.

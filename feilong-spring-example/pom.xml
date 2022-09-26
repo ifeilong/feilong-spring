@@ -3,7 +3,7 @@
 
 	<groupId>com.github.ifeilong</groupId>
 	<artifactId>feilong-spring-example</artifactId>
-	<version>5.0.0</version>
+	<version>5.0.1</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>com.github.ifeilong</groupId>
 			<artifactId>feilong-spring</artifactId>
-			<version>5.0.0</version>
+			<version>5.0.1</version>
 		</dependency>
 
 		<!-- spring-beans version 不限制 -->
