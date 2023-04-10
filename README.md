@@ -48,28 +48,30 @@ com.github.ifeilong:feilong-spring:5.0.0
 
 ## 使用案例
 
-### 启动显示 requestmapping 
+### 启动显示 requestmapping
+
+项目老项目,想看看里面有哪些接口, 可以通过以下方式来做
+
+#### 第一步 配置 ContextRefreshedHandlerMethodInfoEventListener
 
 XML格式 配置
 
 ```XML
-    <!-- 启动的时候,显示 路径 method等 信息 -->
-    <bean id="contextRefreshedHandlerMethodInfoEventListener" class=
-"com.feilong.spring.web.event.ContextRefreshedHandlerMethodInfoEventListener">
-        <property name="annotationAndAnnotationToStringBuilderMap">
-            <map>
-                <entry key="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCache">
-                    <bean class="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheToStringBuilder" />
-                </entry>
-            </map>
-        </property>
-    </bean>
+<!-- 启动的时候,显示 路径 method等 信息 -->
+<bean id="contextRefreshedHandlerMethodInfoEventListener" class="com.feilong.spring.web.event.ContextRefreshedHandlerMethodInfoEventListener">
+    <property name="annotationAndAnnotationToStringBuilderMap">
+        <map>
+            <entry key="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCache">
+                <bean class="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheToStringBuilder" />
+            </entry>
+        </map>
+    </property>
+</bean>
  ```
  
  spring-boot 场景配置
  
  ```JAVA
- 
  /**
  * 启动的时候,显示 路径 method等 信息
  * 
@@ -84,16 +86,13 @@ public class ContextRefreshedHandlerMethodInfoEventListenerIniter{
         bean.setAnnotationAndAnnotationToStringBuilderMap(emptyMap());
         return bean;
     }
-
 }
-
  
  ```
  
+#### 第二步 启动输出即可
 
- 
 输出
-
 
 ```
 17:02:34 INFO  (AbstractContextRefreshedHandlerMethodLogginEventListener.java:148) render() - handler method ,size:[74],info:
@@ -115,30 +114,33 @@ url                                                get post put head patch delet
 /b/menu                                            √                                                          MenuController      
  ```
  
- 你还可以设置 writeCvs 属性 来下载成cvs文件 
+#### 我想要生成cvs文件,怎么做?
+
+你可以设置 writeCvs 属性,来下载成cvs文件 
+
+writeCvs 属性
  
  
  ```XML
-
- 
-    <bean id="contextRefreshedHandlerMethodInfoEventListener" class=
-"com.feilong.spring.web.event.ContextRefreshedHandlerMethodInfoEventListener">
-        <property name="annotationAndAnnotationToStringBuilderMap">
-            <map>
-                <entry key="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCache">
-                    <bean class="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheToStringBuilder" />
-                </entry>
-            </map>
-        </property>
-        <property name="writeCvs" value="true"/>
-    </bean>
+<bean id="contextRefreshedHandlerMethodInfoEventListener" class="com.feilong.spring.web.event.ContextRefreshedHandlerMethodInfoEventListener">
+    <property name="annotationAndAnnotationToStringBuilderMap">
+        <map>
+            <entry key="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCache">
+                <bean class="com.feilong.spring.web.servlet.interceptor.clientcache.ClientCacheToStringBuilder" />
+            </entry>
+        </map>
+    </property>
+    <property name="writeCvs" value="true"/>
+</bean>
 ```
 
-默认文件输出地址  `{USER_HOME}/feilong/RequestMappingInfo/RequestMappingInfo-{time}.csv`
+#### 我想要修改输出cvs文件路径,怎么做?
 
-比如  `/Users/feilong/feilong/RequestMappingInfo/RequestMappingInfo-20220919184547.csv`
+`writeCvsFilePath` 属性
 
-你可以通过 设置 `writeCvsFilePath` 属性来改变这个输出地址
+默认文件输出地址  `{USER_HOME}/feilong/RequestMappingInfo/RequestMappingInfo-{time}.csv` , 如 `/Users/feilong/feilong/RequestMappingInfo/RequestMappingInfo-20220919184547.csv`
+
+你可以通过设置 `writeCvsFilePath` 属性来改变这个输出地址
 
 
 ## :memo: 说明
