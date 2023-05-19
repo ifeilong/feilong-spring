@@ -28,6 +28,18 @@ feilong-spring 自从5.0.0开始,发布中央仓库 https://search.maven.org/art
   <groupId>com.github.ifeilong</groupId>
   <artifactId>feilong-spring</artifactId>
   <version>5.0.0</version>
+  
+  <!-- 如果你的项目环境不是 spring 5.2系列,或者spring jar有冲突 ,可以排除spring 的间接依赖 -->
+  <exclusions>
+	<exclusion>
+		<groupId>org.springframework</groupId>
+		<artifactId>*</artifactId>
+	</exclusion>
+	<exclusion>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+	</exclusion>
+  </exclusions>
 </dependency>
 ```
 
