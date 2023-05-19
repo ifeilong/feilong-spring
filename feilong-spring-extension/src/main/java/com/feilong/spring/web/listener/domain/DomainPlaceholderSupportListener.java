@@ -27,8 +27,8 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.feilong.core.Validate;
+import com.feilong.core.lang.StringUtil;
 import com.feilong.spring.web.util.WebSpringUtil;
-import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * 初始化域名配置监听器.
@@ -123,7 +123,7 @@ public class DomainPlaceholderSupportListener extends AbstractDomainListener{
             return PropertiesLoaderUtils.loadProperties(resource);
         }catch (IOException e){
             String messagePattern = "load domainConfigLocation:[{}] exception";
-            throw new UncheckedIOException(Slf4jUtil.format(messagePattern, domainConfigLocation), e);
+            throw new UncheckedIOException(StringUtil.formatPattern(messagePattern, domainConfigLocation), e);
         }
     }
 

@@ -15,11 +15,6 @@
  */
 package com.feilong;
 
-import static com.feilong.core.bean.ConvertUtil.toMap;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.junit.Assert.assertThat;
-
 import java.util.Properties;
 
 import org.junit.Test;

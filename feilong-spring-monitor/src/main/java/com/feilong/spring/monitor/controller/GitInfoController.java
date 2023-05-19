@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.feilong.core.util.ResourceBundleUtil;
 import com.feilong.json.JsonUtil;
 
+@SuppressWarnings("static-method")
 @Controller
 public class GitInfoController{
 

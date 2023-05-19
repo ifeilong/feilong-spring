@@ -33,13 +33,13 @@ public class SchedulerTest{
 
     //---------------------------------------------------------------
 
-    private JobDetail buildJobDetail(){
+    private static JobDetail buildJobDetail(){
         return JobBuilder.newJob(SimpleJob.class)//
                         .withIdentity(new JobKey("job名称", "job组名称")).//
                         build();
     }
 
-    private Trigger buildTrigger1(){
+    private static Trigger buildTrigger1(){
         JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put("key1", "value1");
         jobDataMap.put("key2", "value2");

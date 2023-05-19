@@ -30,6 +30,7 @@ import com.feilong.json.JsonUtil;
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
+@SuppressWarnings("static-method")
 public class SpringDISimpleTest{
 
     /** The Constant LOGGER. */

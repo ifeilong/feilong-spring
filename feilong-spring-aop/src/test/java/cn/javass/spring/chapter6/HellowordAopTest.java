@@ -21,6 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.javass.spring.chapter6.service.IHelloWorldService;
 
+@SuppressWarnings("static-method")
 public class HellowordAopTest{
 
     @Test

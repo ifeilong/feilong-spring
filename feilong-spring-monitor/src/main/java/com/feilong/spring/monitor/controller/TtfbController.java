@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.feilong.servlet.http.ResponseUtil;
 
+@SuppressWarnings("static-method")
 @Controller
 public class TtfbController{
 

@@ -20,6 +20,7 @@ import org.junit.Test;
 import com.feilong.spring.expression.SpelUtil;
 import com.feilong.store.member.Member;
 
+@SuppressWarnings("static-method")
 public class GetValueRootObjectNullTest{
 
     @Test(expected = NullPointerException.class)

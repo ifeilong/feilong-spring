@@ -18,7 +18,6 @@ package com.feilong.spring.web.servlet.interceptor;
 import static com.feilong.core.CharsetType.UTF8;
 import static com.feilong.core.date.DateUtil.formatDuration;
 import static com.feilong.servlet.http.RequestUtil.getRequestFullURL;
-import static com.feilong.tools.slf4j.Slf4jUtil.format;
 
 import java.util.Date;
 
@@ -34,8 +33,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.feilong.context.BeanLogMessageBuilder;
+import com.feilong.core.lang.StringUtil;
 import com.feilong.json.JsonUtil;
-import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * 所有 HandlerMethodInterceptor 的父类.
@@ -456,7 +455,7 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      * @since 1.12.7
      */
     private String buildBeginMessage(HttpServletRequest request,String methodName){
-        return Slf4jUtil.format("will [{}.{}],[{}]", getClass().getSimpleName(), methodName, getRequestFullURL(request, UTF8));
+        return StringUtil.formatPattern("will [{}.{}],[{}]", getClass().getSimpleName(), methodName, getRequestFullURL(request, UTF8));
     }
 
     //---------------------------------------------------------------
@@ -475,7 +474,12 @@ public abstract class AbstractHandlerMethodInterceptorAdapter extends HandlerInt
      */
     private String buildEndMessage(HttpServletRequest request,String methodName,Date beginDate){
         String pattern = "end [{}.{}],use time: [{}],[{}]";
-        return format(pattern, getClass().getSimpleName(), methodName, formatDuration(beginDate), getRequestFullURL(request, UTF8));
+        return StringUtil.formatPattern(
+                        pattern,
+                        getClass().getSimpleName(),
+                        methodName,
+                        formatDuration(beginDate),
+                        getRequestFullURL(request, UTF8));
     }
 
     //---------------------------------------------------------------

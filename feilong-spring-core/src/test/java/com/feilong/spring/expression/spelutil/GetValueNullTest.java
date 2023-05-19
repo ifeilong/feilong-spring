@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import com.feilong.spring.expression.SpelUtil;
 
+@SuppressWarnings("static-method")
 public class GetValueNullTest{
 
     @Test(expected = NullPointerException.class)

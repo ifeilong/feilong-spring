@@ -29,6 +29,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.feilong.entity.DIUser;
 
+@SuppressWarnings("static-method")
 public class SpringDIMapTest{
 
     /** The file system context. */

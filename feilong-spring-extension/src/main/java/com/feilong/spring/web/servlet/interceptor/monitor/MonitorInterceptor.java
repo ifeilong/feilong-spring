@@ -29,12 +29,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.core.lang.StringUtil;
 import com.feilong.json.JsonUtil;
 import com.feilong.lib.lang3.time.StopWatch;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.interceptor.AbstractHandlerMethodInterceptorAdapter;
-import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * 监控每个 {@link HandlerMethod}执行的时间, 输出log到日志,这些日志级别可以单独开启到专门的日志文件.
@@ -124,7 +124,7 @@ public class MonitorInterceptor extends AbstractHandlerMethodInterceptorAdapter{
         }catch (Exception e){//可能有异常,比如  往request/model里面设置了 不能被json处理的对象或者字段
             String pattern = "postHandle [{}.{}()] occur exception,but we need goon!,just log it,request info:[{}]";
             LOGGER.error(
-                            Slf4jUtil.format(
+                            StringUtil.formatPattern(
                                             pattern,
                                             getDeclaringClassSimpleName(handlerMethod),
                                             getHandlerMethodName(handlerMethod),

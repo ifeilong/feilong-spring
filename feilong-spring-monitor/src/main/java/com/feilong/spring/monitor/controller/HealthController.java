@@ -34,6 +34,7 @@ import com.feilong.json.JsonUtil;
  * @since 4.0.4
  */
 @Controller
+@SuppressWarnings("static-method")
 public class HealthController{
 
     /**

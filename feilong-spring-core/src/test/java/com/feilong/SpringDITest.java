@@ -35,6 +35,7 @@ import com.feilong.json.JsonUtil;
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
+@SuppressWarnings("static-method")
 public class SpringDITest{
 
     /** The Constant LOGGER. */
@@ -56,6 +57,7 @@ public class SpringDITest{
     /**
      * Test.
      */
+
     @Test
     public void test(){
         DIUser diUser = (DIUser) fileSystemContext.getBean("feitian@");

@@ -33,11 +33,11 @@ import org.slf4j.LoggerFactory;
 import com.feilong.accessor.cookie.CookieAccessor;
 import com.feilong.core.CharsetType;
 import com.feilong.core.Validate;
+import com.feilong.core.lang.StringUtil;
 import com.feilong.json.JsonUtil;
 import com.feilong.security.symmetric.SymmetricEncryption;
 import com.feilong.security.symmetric.SymmetricType;
 import com.feilong.spring.web.servlet.interceptor.browsinghistory.command.BrowsingHistoryCommand;
-import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * The Class DefaultBrowsingHistory.
@@ -178,7 +178,7 @@ public class BrowsingHistoryCookieResolver extends AbstractBrowsingHistoryResolv
             return new ArrayList<>(JsonUtil.toList(cookiePlainValue, beanClass));//TODO
         }catch (Exception e){
             String pattern = "getBrowsingHistory cookie value:[{}] error,charset:[{}],will clear";
-            LOGGER.error(Slf4jUtil.format(pattern, value, symmetricEncryptionCharsetName), e);
+            LOGGER.error(StringUtil.formatPattern(pattern, value, symmetricEncryptionCharsetName), e);
             clear(request, response); //如果出错了,那么就将cookie删掉
         }
         return emptyList();

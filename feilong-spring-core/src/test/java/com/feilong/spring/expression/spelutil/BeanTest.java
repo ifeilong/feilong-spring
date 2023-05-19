@@ -22,6 +22,7 @@ import org.junit.Test;
 import com.feilong.spring.expression.SpelUtil;
 import com.feilong.store.order.SalesOrder;
 
+@SuppressWarnings("static-method")
 public class BeanTest{
 
     @Test

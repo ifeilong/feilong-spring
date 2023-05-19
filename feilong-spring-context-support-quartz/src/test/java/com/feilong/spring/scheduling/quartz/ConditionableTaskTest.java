@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import com.feilong.core.TimeInterval;
 import com.feilong.core.lang.ThreadUtil;
 
+@SuppressWarnings("static-method")
 @ContextConfiguration(locations = { //
                                     "classpath:spring4-Scheduler-test-condition.xml",
                                     "classpath:spring-EventListener.xml" })

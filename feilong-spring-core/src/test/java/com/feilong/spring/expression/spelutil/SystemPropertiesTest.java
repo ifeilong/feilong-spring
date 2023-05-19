@@ -23,6 +23,7 @@ import com.feilong.spring.expression.SpelUtil;
 
 public class SystemPropertiesTest{
 
+    @SuppressWarnings("static-method")
     @Test
     //@Ignore
     public void getValue1(){

@@ -25,6 +25,7 @@ import com.feilong.core.lang.ThreadUtil;
 @ContextConfiguration(locations = { //
                                     "classpath:spring4-Scheduler-commonTest.xml",
                                     "classpath:spring-EventListener.xml" })
+@SuppressWarnings("static-method")
 public class TaskTest extends AbstractJUnit4SpringContextTests{
 
     @Test

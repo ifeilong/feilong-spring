@@ -26,14 +26,15 @@ import com.feilong.core.date.DateUtil;
 import com.feilong.test.AbstractTest;
 
 /**
- * 
- * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
- * @since 4.0.4
+ * The Class CronSequenceGeneratorTest.
  */
 public class CronSequenceGeneratorTest extends AbstractTest{
 
+    /**
+     * Test.
+     */
     @Test
-    public void test() throws ParseException{
+    public void test(){
 
         //      CronSequenceGenerator cronSequenceGenerator = new CronSequenceGenerator("*/10 * * * * *");
         //https://en.wikipedia.org/wiki/Cron#Special_characters
@@ -49,6 +50,9 @@ public class CronSequenceGeneratorTest extends AbstractTest{
 
     /**
      * TestCronSequenceGeneratorTest.
+     *
+     * @throws ParseException
+     *             the parse exception
      */
     @Test
     public void testCronSequenceGeneratorTest() throws ParseException{

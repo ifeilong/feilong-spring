@@ -15,10 +15,6 @@
  */
 package com.feilong.entity;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 /**
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>

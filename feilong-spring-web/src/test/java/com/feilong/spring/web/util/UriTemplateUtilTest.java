@@ -31,6 +31,7 @@ import com.feilong.test.AbstractTest;
  * 
  * @author <a href="http://feitianbenyue.iteye.com/">feilong</a>
  */
+@SuppressWarnings("static-method")
 public class UriTemplateUtilTest extends AbstractTest{
 
     @Test

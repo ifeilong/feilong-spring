@@ -37,10 +37,10 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.feilong.core.lang.StringUtil;
 import com.feilong.csv.CsvWrite;
 import com.feilong.csv.DefaultCsvWrite;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
-import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * {@link ApplicationContext} 初始化或刷新完成后触发的事件,用来分析 {@link HandlerMethod} 信息的父类.
@@ -66,8 +66,8 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
      * @since 4.0.6
      * @since 4.2.0 change path
      */
-    private final String        DEFAULT_WRITE_CVS_FILE_PATH = Slf4jUtil
-                    .format("{}/feilong/RequestMappingInfo/RequestMappingInfo-{}.csv", USER_HOME, nowTimestamp());
+    private final String        DEFAULT_WRITE_CVS_FILE_PATH = StringUtil
+                    .formatPattern("{}/feilong/RequestMappingInfo/RequestMappingInfo-{}.csv", USER_HOME, nowTimestamp());
 
     //---------------------------------------------------------------
     /**

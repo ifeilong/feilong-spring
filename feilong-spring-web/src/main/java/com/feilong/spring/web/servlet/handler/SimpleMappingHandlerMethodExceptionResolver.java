@@ -35,7 +35,7 @@ import org.springframework.web.servlet.handler.AbstractHandlerMethodExceptionRes
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import com.feilong.context.BeanLogMessageBuilder;
-import com.feilong.tools.slf4j.Slf4jUtil;
+import com.feilong.core.lang.StringUtil;
 
 /**
  * 借鉴了 {@link SimpleMappingExceptionResolver}, 但是适用于 HandlerMethodExceptionResolver.
@@ -102,14 +102,17 @@ public class SimpleMappingHandlerMethodExceptionResolver extends AbstractHandler
 
         if (LOGGER.isDebugEnabled()){
             LOGGER.debug(
-                            Slf4jUtil.format("[{}.{}()]", getDeclaringClassSimpleName(handlerMethod), getHandlerMethodName(handlerMethod)),
+                            StringUtil.formatPattern(
+                                            "[{}.{}()]",
+                                            getDeclaringClassSimpleName(handlerMethod),
+                                            getHandlerMethodName(handlerMethod)),
                             exception);
         }
         //---------------------------------------------------------------
         String viewName = buildViewName(handlerMethod, exception, request, response);
         if (LOGGER.isErrorEnabled()){
             LOGGER.error(
-                            Slf4jUtil.format(
+                            StringUtil.formatPattern(
                                             "[{}.{}()],viewName:[{}]",
                                             getDeclaringClassSimpleName(handlerMethod),
                                             getHandlerMethodName(handlerMethod),

@@ -25,12 +25,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.feilong.core.lang.StringUtil;
 import com.feilong.core.util.MapUtil;
 import com.feilong.json.JsonUtil;
 import com.feilong.servlet.http.RequestUtil;
 import com.feilong.spring.web.method.HandlerMethodUtil;
 import com.feilong.spring.web.servlet.ModelAndViewUtil;
-import com.feilong.tools.slf4j.Slf4jUtil;
 
 /**
  * 构造监控显示的message.
@@ -64,12 +64,12 @@ public class MonitorMessageBuilder{
                         PreJavaToJsonConfigBuilder.build(monitorMessageEntity));
 
         if (monitorMessageEntity.getIsShowRequestAttribute()){
-            return Slf4jUtil.format(
+            return StringUtil.formatPattern(
                             "[Request] base info:{},[request] attribute:{} ,start StopWatch",
                             requestBaseInfo,
                             getRequestAttributeMap(monitorMessageEntity, request));
         }
-        return Slf4jUtil.format("[Request] base info:{} ,start StopWatch", requestBaseInfo);
+        return StringUtil.formatPattern("[Request] base info:{} ,start StopWatch", requestBaseInfo);
     }
 
     //---------------------------------------------------------------
@@ -101,7 +101,7 @@ public class MonitorMessageBuilder{
         //---------------------------------------------------------------
 
         //一条日志输出, 这样的话,在并发的情况, 日志还是有上下文的
-        return Slf4jUtil.format(
+        return StringUtil.formatPattern(
                         "postHandle [{}.{}()],RequestInfoMapForLog:{},[request] attribute:{},modelAndView info:[{}],use time:[{}],[{}] performanceThreshold:[{}]",
                         HandlerMethodUtil.getDeclaringClassSimpleName(handlerMethod),
                         HandlerMethodUtil.getHandlerMethodName(handlerMethod),
@@ -134,8 +134,7 @@ public class MonitorMessageBuilder{
 
         Map<String, Object> model = modelAndView.getModel();
         String viewName = ModelAndViewUtil.getViewName(modelAndView);
-
-        return Slf4jUtil.format(
+        return StringUtil.formatPattern(
                         "model:[{}],view:[{}]",
                         JsonUtil.formatSimpleMap(model, monitorMessageEntity.getAllowFormatClassTypes()),
                         viewName);
