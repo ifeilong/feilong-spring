@@ -27,7 +27,7 @@ feilong-spring 自从5.0.0开始,发布中央仓库 https://search.maven.org/art
 <dependency>
   <groupId>com.github.ifeilong</groupId>
   <artifactId>feilong-spring</artifactId>
-  <version>5.0.0</version>
+  <version>5.1.0</version>
   
   <!-- 如果你的项目环境不是 spring 5.2系列,或者spring jar有冲突 ,可以排除spring 的间接依赖 -->
   <exclusions>
@@ -46,7 +46,7 @@ feilong-spring 自从5.0.0开始,发布中央仓库 https://search.maven.org/art
 ### `Gradle 配置` 
 
 ```
-com.github.ifeilong:feilong-spring:5.0.0
+com.github.ifeilong:feilong-spring:5.1.0
 ```
 
 ### `非Maven项目`

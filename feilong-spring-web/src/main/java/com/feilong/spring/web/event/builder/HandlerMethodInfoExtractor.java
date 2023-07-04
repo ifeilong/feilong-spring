@@ -250,7 +250,12 @@ public class HandlerMethodInfoExtractor{
                     Map<String, Object> keyAndValueMap,
                     HandlerMethod handlerMethod,
                     Map<Class<Annotation>, AnnotationToStringBuilder<Annotation>> annotationAndAnnotationToStringBuilderMap){
+        //since 5.1.0 see https://github.com/ifeilong/feilong-spring/issues/228
+        if (isNullOrEmpty(annotationAndAnnotationToStringBuilderMap)){
+            return;
+        }
 
+        //---------------------------------------------------------------
         for (Map.Entry<Class<Annotation>, AnnotationToStringBuilder<Annotation>> annotationEntry : annotationAndAnnotationToStringBuilderMap
                         .entrySet()){
             Class<Annotation> annotationClass = annotationEntry.getKey();
