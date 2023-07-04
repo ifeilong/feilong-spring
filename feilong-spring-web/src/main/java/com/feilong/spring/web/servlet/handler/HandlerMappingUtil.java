@@ -186,7 +186,8 @@ public class HandlerMappingUtil{
      * @return the request mapping handler mapping info map for log
      */
     public static final Map<String, Object> getRequestMappingHandlerMappingInfoMapForLog(WebApplicationContext webApplicationContext){
-        RequestMappingHandlerMapping requestMappingHandlerMapping = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping requestMappingHandlerMapping = RequestMappingHandlerMappingUtil
+                        .getRequestMappingHandlerMapping(webApplicationContext);
 
         Map<String, Object> mappingInfoMap = newLinkedHashMap();
 

@@ -22,25 +22,22 @@ import static com.feilong.core.lang.ObjectUtil.defaultIfNullOrEmpty;
 import static com.feilong.core.lang.SystemUtil.USER_HOME;
 import static com.feilong.core.util.CollectionsUtil.newArrayList;
 import static com.feilong.formatter.FormatterUtil.formatToSimpleTable;
-import static java.util.Collections.emptyMap;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.feilong.core.lang.StringUtil;
 import com.feilong.csv.CsvWrite;
 import com.feilong.csv.DefaultCsvWrite;
 import com.feilong.spring.event.AbstractContextRefreshedEventListener;
+import com.feilong.spring.web.servlet.handler.RequestMappingHandlerMappingUtil;
 
 /**
  * {@link ApplicationContext} 初始化或刷新完成后触发的事件,用来分析 {@link HandlerMethod} 信息的父类.
@@ -107,7 +104,8 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
         ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
 
         //RequestMappingInfo 和  HandlerMethod Map
-        Map<RequestMappingInfo, HandlerMethod> requestMappingInfoAndHandlerMethodMap = buildHandlerMethods(applicationContext);
+        Map<RequestMappingInfo, HandlerMethod> requestMappingInfoAndHandlerMethodMap = RequestMappingHandlerMappingUtil
+                        .buildHandlerMethods(applicationContext);
 
         if (isNullOrEmpty(requestMappingInfoAndHandlerMethodMap)){
             LOGGER.info("requestMappingInfo And HandlerMethod Map is null or empty!!");
@@ -202,27 +200,6 @@ public abstract class AbstractContextRefreshedHandlerMethodLogginEventListener e
     @SuppressWarnings("static-method")
     protected List<Map<String, Object>> buildList(@SuppressWarnings("unused") Map<RequestMappingInfo, HandlerMethod> handlerMethods){
         return null;
-    }
-
-    //---------------------------------------------------------------
-
-    /**
-     * Builds the handler methods.
-     *
-     * @param applicationContext
-     *            the application context
-     * @return 如果取不到 <code>RequestMappingHandlerMapping</code>,返回 {@link Collections#emptyMap()}<br>
-     * @throws BeansException
-     *             the beans exception
-     */
-    private static Map<RequestMappingInfo, HandlerMethod> buildHandlerMethods(ApplicationContext applicationContext){
-        RequestMappingHandlerMapping requestMappingHandlerMapping = applicationContext.getBean(RequestMappingHandlerMapping.class);//通过上下文对象获取RequestMappingHandlerMapping实例对象  
-
-        if (null == requestMappingHandlerMapping){
-            return emptyMap();
-        }
-
-        return requestMappingHandlerMapping.getHandlerMethods();
     }
 
     //---------------------------------------------------------------

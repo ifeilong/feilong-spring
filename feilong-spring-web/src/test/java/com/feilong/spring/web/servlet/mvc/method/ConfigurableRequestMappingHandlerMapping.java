@@ -16,7 +16,6 @@
 package com.feilong.spring.web.servlet.mvc.method;
 
 import java.lang.reflect.Method;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +29,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  */
 public class ConfigurableRequestMappingHandlerMapping extends RequestMappingHandlerMapping{
 
-    private static final Logger        LOGGER = LoggerFactory.getLogger(ConfigurableRequestMappingHandlerMapping.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableRequestMappingHandlerMapping.class);
 
-    private List<RequestMappingConfig> requestMappingConfigList;
+    //    private List<RequestMappingConfig> requestMappingConfigList;
 
     /*
      * (non-Javadoc)
@@ -124,11 +123,11 @@ public class ConfigurableRequestMappingHandlerMapping extends RequestMappingHand
         return super.getMappingForMethod(method, handlerType);
     }
 
-    /**
-     * @param requestMappingConfigList
-     *            the requestMappingConfigList to set
-     */
-    public void setRequestMappingConfigList(List<RequestMappingConfig> requestMappingConfigList){
-        this.requestMappingConfigList = requestMappingConfigList;
-    }
+    //    /**
+    //     * @param requestMappingConfigList
+    //     *            the requestMappingConfigList to set
+    //     */
+    //    public void setRequestMappingConfigList(List<RequestMappingConfig> requestMappingConfigList){
+    //        this.requestMappingConfigList = requestMappingConfigList;
+    //    }
 }
